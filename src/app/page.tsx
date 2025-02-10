@@ -13,6 +13,7 @@ import ContactInfo from "./contactDiv/page";
 import VisaApplication from "./visaApplication/page";
 
 import UmrahBookingForm from "./umrahForm/page";
+import WhatAreWe from "./whatAreWe/page";
 
 export default function Home() {
   return (
@@ -72,7 +73,7 @@ export default function Home() {
     <VisaApplication/>
   </div> */}
 
-
+<WhatAreWe/>
 
   <div>
     <ClientReviews/>

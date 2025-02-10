@@ -332,7 +332,7 @@ export default function VisaApplication() {
       <section>
         <h3 className="text-xl font-semibold text-blue-800 mb-2 mt-10"><u>Personal Information</u></h3>
         <p>First Name</p>
-        <input type="text" placeholder="Enter First Name" name="placeOfBirth" value={formData.placeOfBirth} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
+        <input type="text" placeholder="Enter First Name" name="firstName" value={formData.firstName} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
         <p>Surname</p>
         <input type="text" placeholder="Enter Surname" name="surname" value={formData.surname} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
         <p>Father’s Name</p>

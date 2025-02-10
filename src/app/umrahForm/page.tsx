@@ -32,7 +32,7 @@ const UmrahBookingForm = () => {
   <img src="/image/umrah2.jpg" className="w-full h-full object-cover" alt="Travel Image" />
   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
     <h2 className="text-white text-2xl md:text-4xl font-bold text-center">
-    Book Your Umrah Package !
+    Book now and take the first step towards a spiritual journey that will change your life forever!
     </h2>
   </div>
   </div>
