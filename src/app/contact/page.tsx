@@ -36,17 +36,6 @@ export default function ContactUs() {
 
         <ContactInfo/>
   
-        {/* <div className="m-10 text-center">
-          <h1 className="font-bold sm:text-xl mb-1">
-            For more info you can directly contact us on our WhatsApp:
-          </h1>
-          <p>📞 +92 300 9480157</p>
-          <p>📞 +92 326 4214241</p>
-          <h1 className="font-bold sm:text-xl mt-6">Office Address:</h1>
-          <p>
-            📍 7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore Pakistan.
-          </p>
-        </div> */}
   
         <div className="my-4">
           <ServicesSection />

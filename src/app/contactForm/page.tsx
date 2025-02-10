@@ -14,28 +14,28 @@ const ContactForm = () => {
     message: '',
   });
 
-  const visaPrices: Record<string, string> = {
-      Malaysia : '$150',
-    Thailand: '$120',
-    Indonesia: '$130',
-    Cambodia: '$140',
-    Veitnam: '',
-    Singapore: '',
-    Turkey:"",
-    Dubai: '',
-    EastAfrica: '',
-    Oman: '',
-    Kazakhstan: '',
-    Tajikistan: '',
-    Uzbekistan: '',
-    Azerbaijan: '',
-    Tanzania : '',
-    Ethopia : '',
-    Zambia : '',
-    SriLanka : '',
-    Nepal : '',
-    Pakistan: '',
-  };
+  // const visaPrices: Record<string, string> = {
+  //     Malaysia : '$150',
+  //   Thailand: '$120',
+  //   Indonesia: '$130',
+  //   Cambodia: '$140',
+  //   Veitnam: '',
+  //   Singapore: '',
+  //   Turkey:"",
+  //   Dubai: '',
+  //   EastAfrica: '',
+  //   Oman: '',
+  //   Kazakhstan: '',
+  //   Tajikistan: '',
+  //   Uzbekistan: '',
+  //   Azerbaijan: '',
+  //   Tanzania : '',
+  //   Ethopia : '',
+  //   Zambia : '',
+  //   SriLanka : '',
+  //   Nepal : '',
+  //   Pakistan: '',
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -88,20 +88,16 @@ const ContactForm = () => {
         <label className="block font-medium">Phone Number</label>
         <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone Number" className="w-full p-2 border rounded" required />
         
-        <label className="block font-medium">Select Your Visa Type</label>
+        <label className="block font-medium">Select:</label>
         <select name="visaType" value={formData.visaType} onChange={handleChange} className="w-full p-2 border rounded" required>
-          <option value="e-visa">E-Visa</option>
+       
           <option value="sticker-visa">Sticker Visa</option>
           <option value="tour-package">Tour Package</option>
         </select>
         
-        <label className="block font-medium">Choose the Country You Want a Visa For</label>
-        <select name="country" value={formData.country} onChange={handleChange} className="w-full p-2 border rounded" required>
-          <option value="">Select Country</option>
-          {Object.keys(visaPrices).map((country) => (
-            <option key={country} value={country}>{country}</option>
-          ))}
-        </select>
+        <label className="block font-medium">Enter the Country You Want a Visa For</label>
+        <input name="country" placeholder='Enter country name' value={formData.country} onChange={handleChange} className="w-full p-2 border rounded" required>
+        </input>
       
         
         <label className="block font-medium">Your Message</label>

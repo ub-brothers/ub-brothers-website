@@ -40,7 +40,7 @@ export default function VisaApplication() {
     approximateDepartureDate: "",
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
   
     const formDataToSend = new FormData();
@@ -92,13 +92,13 @@ export default function VisaApplication() {
     alert(result.message);
   };
   
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     setFormData({ 
       ...formData, 
       [e.target.name]: e.target.value 
     });
   };
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: any) => {
     setPhoto(e.target.files[0]); // Sirf ek file store karega
   };
 
@@ -216,19 +216,24 @@ export default function VisaApplication() {
    "Official Passport" ,
    "Emergency Passport" ];
 
-  const checkImageQuality = (file, checkWhiteBg, setValidState, setImage) => {
+  const checkImageQuality = (file: File, checkWhiteBg: boolean, setValidState: any , setImage: (image: string)=> void) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
   
     reader.onload = (event) => {
       const img = new Image();
-      img.src = event.target.result;
+      img.src = event.target?.result as string;
   
       img.onload = () => {
         const canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
         const ctx = canvas.getContext("2d");
+
+        if (!ctx) {
+          console.error("Canvas context is null"); // ✅ Null check for context
+          return;
+        }
   
         ctx.drawImage(img, 0, 0, img.width, img.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -269,8 +274,8 @@ export default function VisaApplication() {
     };
   };
   
-  const handleFileUpload = async (event, fileType, setValidState, checkWhiteBg = false) => {
-    const file = event.target.files[0];
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement> , fileType: string , setValidState:  any, checkWhiteBg = false) => {
+    const file = event.target.files?.[0];
     if (file) {
       await checkImageQuality(file, checkWhiteBg, setValidState, () => {
         // ✅ Image ko formData me store karna
@@ -283,7 +288,7 @@ export default function VisaApplication() {
   };
   
   
-
+    
 
   return (
     <div>

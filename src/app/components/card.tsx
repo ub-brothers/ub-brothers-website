@@ -37,11 +37,7 @@ const Card =()=>{
                     <h2 className="text-center text-sm sm:text-lg mt-2"><b>{destination.prize}</b> PKR/-</h2>
               
                     <button className="bg-orange-500 rounded-xl sm:w-[130px] w-[100px] text-white text-sm sm:text-md mb-4 mt-1 hover:bg-blue-500 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif">View Details</button>
-                    {/* <h1 className="country text-center font-bold text-xl ">{destination.countryName}</h1>
                    
-                  
-                    <h2 className="text-center fonr-sans ">{destination.availability}!</h2>
-                     */}
                 </div>
             ))}
         </div>

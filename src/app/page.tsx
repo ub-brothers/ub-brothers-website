@@ -2,17 +2,12 @@
 
 import ClientReviews from "./clientReview/page";
 import Hero from "./components/hero";
-import TravelPackageForm from "./customizePackage/page";
-import { motion } from "framer-motion";
 import Featured from "./featured/page";
 import ServicesSection from "./ourService/page";
 import PaymentDetails from "./payment/page";
 import WhyUs from "./whyUs/page";
 import TourPackage from "./tour/page";
 import ContactInfo from "./contactDiv/page";
-import VisaApplication from "./visaApplication/page";
-
-import UmrahBookingForm from "./umrahForm/page";
 import WhatAreWe from "./whatAreWe/page";
 
 export default function Home() {
@@ -25,7 +20,7 @@ export default function Home() {
         <h1 className="font-bold ml-6 text-xl md:text-3xl font-serif mt-4">Our Top Destinations</h1>
          <Featured/>
       </div>
-{/* <UmrahBookingForm/> */}
+
 
       {/* <div
       className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center min-h-screen py-20"
@@ -69,9 +64,6 @@ export default function Home() {
  
   </div>
 
-  {/* <div>
-    <VisaApplication/>
-  </div> */}
 
 <WhatAreWe/>
 

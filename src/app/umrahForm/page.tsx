@@ -1,5 +1,5 @@
-"use client"
 "use client";
+
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -8,11 +8,12 @@ import PaymentDetails from "../payment/page";
 
 const UmrahBookingForm = () => {
   const [visaStatus, setVisaStatus] = useState("yes");
-  const [days, setDays] = useState(7);
-  const [makkahHotel, setMakkahHotel] = useState("");
-  const [madinaHotel, setMadinaHotel] = useState("");
-  const [category, setCategory] = useState("sharing");
+  const [days, setDays] = useState<7 | 15 | 21 | 28>(7);
+  const [makkahHotel, setMakkahHotel] = useState<keyof typeof makkahHotels | "">("");
+  const [madinaHotel, setMadinaHotel] = useState<keyof typeof madinaHotels | "">("");
+  const [category, setCategory] = useState<keyof typeof categories>("sharing");
   const [totalCost, setTotalCost] = useState(0);
+ 
 
   const makkahHotels = { "Dayar Matar": 200, "Land Premium/ Dewania": 300, "Johra/ Dairy": 400, "Lolo Eman": 400, "Saif Al Majad": 400, "Nada Al Majad/ Mathar Al Jawad": 400, "Diyafat Al Rahman": 400, "Kiswa Tower": 400 };
   const madinaHotels = { "Rehab Ul Madien": 250, "Minar Al Madina": 350, "Dar Al Taiba old Dar Akbar": 450, "Diamond Rose/ Shaza Munawara": 400, "Ansar Plus": 400, "Zahrat Al Munawarah": 400, "Arjawan Madina/ Karam Golden": 400, "Deewan Al Madina": 400 };
@@ -44,30 +45,30 @@ const UmrahBookingForm = () => {
         <input placeholder="Full Name" className="w-full p-3  mb-5 border rounded-md" />
         
         <label className="font-semibold mt-4">Select Days</label>
-        <select onChange={(e) => setDays(Number(e.target.value))} className="w-full p-3 mb-5 border rounded-md">
+        <select onChange={(e) => setDays(Number(e.target.value) as 7 | 15 | 21 | 28)} className="w-full p-3 mb-5 border rounded-md">
           {[7, 15, 21, 28].map((day) => (
             <option key={day} value={day}>{`${day} Days`}</option>
           ))}
         </select>
         
         <label className="font-semibold mt-4">Makkah Hotel</label>
-        <select onChange={(e) => setMakkahHotel(e.target.value)} className="w-full p-3  mb-5 border rounded-md">
+        <select onChange={(e) => setMakkahHotel(e.target.value as keyof typeof makkahHotels)} className="w-full p-3  mb-5 border rounded-md">
           <option value="">Select a hotel</option>
           {Object.keys(makkahHotels).map((hotel) => (
-            <option key={hotel} value={hotel}>{hotel} - ${makkahHotels[hotel]}</option>
+            <option key={hotel} value={hotel}>{hotel} - ${makkahHotels[hotel as keyof typeof makkahHotels]}</option>
           ))}
         </select>
         
         <label className="font-semibold">Madina Hotel</label>
-        <select onChange={(e) => setMadinaHotel(e.target.value)} className="w-full p-3  mb-5 border rounded-md">
+        <select onChange={(e) => setMadinaHotel(e.target.value as keyof typeof madinaHotels)} className="w-full p-3  mb-5 border rounded-md">
           <option value="">Select a hotel</option>
           {Object.keys(madinaHotels).map((hotel) => (
-            <option key={hotel} value={hotel}>{hotel} - ${madinaHotels[hotel]}</option>
+            <option key={hotel} value={hotel}>{hotel} - ${madinaHotels[hotel as keyof typeof madinaHotels]}</option>
           ))}
         </select>
         
         <label className="font-semibold">Room Category</label>
-        <select onChange={(e) => setCategory(e.target.value)} className="w-full p-3  mb-5 border rounded-md">
+        <select onChange={(e) => setCategory(e.target.value as keyof typeof categories)} className="w-full p-3  mb-5 border rounded-md">
           {Object.keys(categories).map((cat) => (
             <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
           ))}
