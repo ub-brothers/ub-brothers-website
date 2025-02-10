@@ -16,7 +16,7 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: white;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -24,4 +24,23 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+
+.country{
+  font-family: Lobster;
+}
+
+/* styles/globals.css */
+.whatsapp-button {
+  position: fixed; /* Fixed position ensures it floats on the screen */
+  bottom: 20px; /* 20px from the bottom */
+  left: 20px; /* 20px from the left */
+  z-index: 1000; /* High z-index to ensure it appears on top of other content */
+  cursor: pointer; /* Change cursor to pointer when hovering */
+}
+
+.whatsapp-button img {
+  width: 50px;  /* Size of the WhatsApp icon */
+  height: 50px;
 }
