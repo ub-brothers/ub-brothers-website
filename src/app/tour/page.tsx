@@ -21,7 +21,7 @@ const TourPackage = ()=>{
 
     return(
         <div>
-        <h1 className="text-center my-4 text-3xl font-serif">
+        <h1 className="text-left xl:mx-10 sm:mx-4 mx-2 my-4 text-3xl font-serif">
         <u>Tour Packages:</u>
       </h1>
         <div className="flex grid grid-cols-2 mb-8">

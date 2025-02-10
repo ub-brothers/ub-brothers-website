@@ -1,14 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion'; // Import Framer Motion
-import ContactForm from "@/app/contactForm/page";
+
 import Link from 'next/link';
 import { Destination  } from "@/app/types/destinations";
 import { sanityFetch } from "@/sanity/lib/client";
 import {  detailCountryEVisa,  allDestinations } from "@/sanity/lib/queries";
 
 import ContactInfo from '@/app/contactDiv/page';
-import PassportForm from '@/app/eVisaForm/page';
+
 
 export default async function DetailPage({params}: {params:{id:string}}) {
   const countries: Destination = await sanityFetch({ query: detailCountryEVisa, params: { id: params.id } });

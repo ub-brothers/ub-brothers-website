@@ -5,7 +5,7 @@ import { Destination } from "@/app/types/destinations";
 import { sanityFetch } from "@/sanity/lib/client";
 import { detailCountry, allDestinations } from "@/sanity/lib/queries";
 import Link from 'next/link';
-import ContactForm from '@/app/contactForm/page';
+
 import ContactInfo from '@/app/contactDiv/page';
 
 export default async function DetailPage({params}: {params:{id:string}}) {
