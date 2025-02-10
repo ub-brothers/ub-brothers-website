@@ -5,7 +5,7 @@ import path from "path";
 
 
 
-export const POST = async (req) => {
+export const POST = async (req:Request) => {
   try {
     const formData = await req.formData();
     const fields = {};

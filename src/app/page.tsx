@@ -24,7 +24,7 @@ export default function Home() {
         <h1 className="font-bold ml-6 text-xl md:text-3xl font-serif mt-4">Our Top Destinations</h1>
          <Featured/>
       </div>
-<UmrahBookingForm/>
+{/* <UmrahBookingForm/> */}
 
       {/* <div
       className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center min-h-screen py-20"
@@ -50,6 +50,15 @@ export default function Home() {
      
 
 
+  <div className="my-6 bg-gray-200 text-center">
+    <h1>.</h1>
+    <h1 className="font-serif text-2xl text-center mt-6"><u>Explore some of our</u></h1>
+
+  <TourPackage/>
+ 
+  </div>
+
+  
       <WhyUs/>
   
   <div className="my-8">
@@ -59,18 +68,11 @@ export default function Home() {
  
   </div>
 
-  <div>
+  {/* <div>
     <VisaApplication/>
-  </div>
+  </div> */}
 
 
-  <div className="my-6 bg-gray-200 text-center">
-    <h1>.</h1>
-    <h1 className="font-serif text-2xl text-center mt-6"><u>Explore some of our</u></h1>
-
-  <TourPackage/>
- 
-  </div>
 
   <div>
     <ClientReviews/>
