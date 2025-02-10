@@ -12,9 +12,12 @@ import path from "path";
 export const POST = async (req:Request) => {
   try {
     const formData = await req.formData();
-    const fields = {};
+    const fields: { [key: string]: string }  = {};
     const attachments = [];
-    console.log([...formData.entries()]);
+    for (const entry of formData.entries()) {
+      console.log(entry);
+    }
+    
     // Extract Text Fields & Files
     for (let [key, value] of formData.entries()) {
       if (value instanceof Blob) {
@@ -29,7 +32,7 @@ export const POST = async (req:Request) => {
         });
       } else {
         // Handle Text Fields
-        fields[key] = value;
+        fields[key] = value as string;
       }
     }
 
