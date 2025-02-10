@@ -32,11 +32,11 @@ const Header = () => {
 
         {/* Right Side: Action Buttons */}
         <div className="hidden lg:flex space-x-4">
-          <Link href="/visaApplication" className="bg-orange-500 text-white border-2 border-white font-serif shadow-inner py-2 px-4 rounded-3xl hover:bg-blue-400 hover:text-black shadow-2xl">
-            <i>Apply Now</i>
+          <Link href="/visaApplication" className="bg-orange-500 text-white border-2 border-white font-sans shadow-inner py-2 px-4 rounded-3xl hover:bg-blue-400 hover:text-black shadow-2xl">
+            Apply Now
           </Link>
-          <Link href="/destinations" className="border-2 bg-orange-500 border-white text-white py-2 px-4 rounded-3xl font-serif hover:bg-blue-400 hover:text-black">
-            <i>Explore More</i>
+          <Link href="/destinations" className="border-2 bg-orange-500 border-white text-white py-2 px-4 rounded-3xl font-sans hover:bg-blue-400 hover:text-black">
+            Explore More
           </Link>
         </div>
 

@@ -11,7 +11,7 @@ import WhyUs from "./whyUs/page";
 import TourPackage from "./tour/page";
 import ContactInfo from "./contactDiv/page";
 import VisaApplication from "./visaApplication/page";
-import FlightSearchForm from "./flightSearch/page";
+
 import UmrahBookingForm from "./umrahForm/page";
 
 export default function Home() {
@@ -71,8 +71,6 @@ export default function Home() {
   <TourPackage/>
  
   </div>
-  <div className="mb-4">
-<FlightSearchForm/></div>
 
   <div>
     <ClientReviews/>
