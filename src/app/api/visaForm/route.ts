@@ -3,11 +3,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-export const config = {
-  api: {
-    bodyParser: false, // Required for formData handling
-  },
-};
+
 
 export const POST = async (req) => {
   try {
