@@ -24,12 +24,12 @@ const UmrahList =()=>{
         <div className="flex grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-8">
       
             {destination.map ((destination)=>(
-                <div key={destination._id} className="sm:w-[290px] w-[150px] border-2  border-gray-400  rounded-xl bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black text-center my-3">
+                <div key={destination._id} className="sm:w-[290px] w-[150px] border-2  border-gray-300  rounded-xl bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black text-center my-3">
                  <Link href={`/umrah/${destination._id}`}>
                     <div className="relative group">
   <img src={destination.imageUrl2} alt={destination.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
   <div className="absolute inset-0 bg-white  bg-opacity-50 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
-    <h3 className="sm:text-xl text-md font-bold font-serif text-black">{destination.countryName}</h3>
+    <h3 className="sm:text-xl text-sm font-bold font-serif text-black">{destination.countryName}</h3>
   </div>
 </div> 
 <h3 className=" sm:text-md text-sm text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black"><IoLocationOutline className="mt-1" />{destination.countryName}</h3>

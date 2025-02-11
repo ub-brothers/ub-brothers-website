@@ -15,7 +15,8 @@ export default function Home() {
     <div>
  
       <Hero/>
-      <div className="lg:mt-24 mt-10 bg-gray-100">
+
+      <div className="lg:mt-24 sm:mt-10 mt-5 bg-gray-100">
         <h2 className="text-gray-100">.</h2>
         <h1 className="font-bold ml-6 text-xl md:text-3xl font-serif mt-4">Our Top Destinations</h1>
          <Featured/>
@@ -46,15 +47,15 @@ export default function Home() {
      
 
 
-  <div className="my-6 bg-gray-200 text-center">
+  <div className="my- bg-gray-200 text-center">
     <h1>.</h1>
-    <h1 className="font-serif text-2xl text-center mt-6"><u>Explore some of our</u></h1>
+   
 
   <TourPackage/>
  
   </div>
 
-  
+  <WhatAreWe/>
       <WhyUs/>
   
   <div className="my-8">
@@ -65,7 +66,7 @@ export default function Home() {
   </div>
 
 
-<WhatAreWe/>
+
 
   <div>
     <ClientReviews/>

@@ -83,6 +83,7 @@ const UmrahBookingForm = () => {
         {visaStatus === "no" && (
           <div className=" bg-gray-100 p-4 rounded-md">
             <h3 className="font-bold">Fill out the form and apply for Visa!</h3>
+            <p className="mb-4">The Visa cost: Rs. 41,000</p>
             <label className="font-semibold">Your Name</label>
             <input placeholder="Your Name" className="w-full p-3  mb-5 border rounded-md" />
             <label className="font-semibold">Your Number</label>

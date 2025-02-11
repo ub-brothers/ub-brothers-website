@@ -59,7 +59,7 @@ const AboutUs = () => {
       >
         <Image src="/image/ceo.jpeg" width={300} height={300} alt="CEO" className="rounded-full shadow-lg mb-4" />
         <p className="text-lg text-gray-700 max-w-2xl">
-         Mr Shehryar Mughal, our CEO, is a visionary leader dedicated to driving UB Brothers towards excellence. With years of experience in visa consultancy and travel management, he ensures top-tier services and customer satisfaction.
+         Mr. Shaharyaar Mughal, our CEO, is a visionary leader dedicated to driving UB Brothers towards excellence. With years of experience in visa consultancy and travel management, he ensures top-tier services and customer satisfaction.
         </p>
       </motion.div>
       

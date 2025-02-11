@@ -32,8 +32,8 @@ export default function DestinationLayout( {children,
         </Link>
     
         <div className="sm:text-right text-center m-4 sm:text-md text-sm">
-        <h1  className="font-bold">Mirza Ali:</h1>
-        <p>+923 264214241</p></div>
+        <h1  className="font-bold">Shaharyaar Mughal:</h1>
+        <p>+92 300 9480157</p></div>
       </div>
         {children}
         </>

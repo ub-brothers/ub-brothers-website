@@ -4,7 +4,7 @@ import { TourType } from "../types/destinations"
 import {client} from "@/sanity/lib/client"
 import { tourPackage } from "@/sanity/lib/queries"
 import Link from "next/link"
-import { IoLocationOutline } from "react-icons/io5";
+
 
 
 const TourPackage = ()=>{
@@ -21,13 +21,13 @@ const TourPackage = ()=>{
 
     return(
         <div>
-        <h1 className="text-left xl:mx-10 sm:mx-4 mx-2 my-4 text-3xl font-serif">
+        <h1 className="text-left xl:mx-10 sm:mx-4 mx-2 my-4 text-lg sm:text-3xl font-serif">
         <u>Tour Packages:</u>
       </h1>
         <div className="flex grid grid-cols-2 mb-8">
             {tour.map ((tour)=>(
              
-                <div key={tour._id} className="sm:w-[290px]  w-[150px] border-2  border-gray-400  rounded-xl bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
+                <div key={tour._id} className="sm:w-[290px]  w-[150px] rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
                     <Link href={`/tour/${tour._id}`} >
                     <div className="relative group text-center">
   <img src={tour.imageUrl4} alt={tour.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />

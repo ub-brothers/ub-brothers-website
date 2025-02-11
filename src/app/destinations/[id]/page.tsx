@@ -57,8 +57,8 @@ export default async function DetailPage({params}: {params:{id:string}}) {
           <h1 className="font-bold text-md sm:text-xl">{countries.requirements}</h1>
         
           <p>Original Passport (Valid for at least 6 months).</p>
-          <p>Scan Passport 1st and 2nd page.</p>
-          <p>ID Copy (CNIC) Front and back.</p>
+          <p>Scan Copy of Passport.</p>
+          <p>ID Copy (CNIC).</p>
           <p>Recent Photographs (White background).</p>
           <p>Last six month Bank Statement.</p>
           <p>Job Letter/ NTN copy.</p>

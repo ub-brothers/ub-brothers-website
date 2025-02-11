@@ -26,7 +26,7 @@ export default function ContactUs() {
         {/* Background Image Wrapper */}
         <div
           className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center py-20"
-          style={{ backgroundImage: "url('/image/lux3.jpg')" }}
+          style={{ backgroundImage: "url('/image/luxx.jpg')" }}
         >
           {/* Form */}
           <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg max-w-lg w-full sm:mx-auto mx-4 relative z-10">

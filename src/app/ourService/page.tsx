@@ -17,7 +17,7 @@ const ServicesSection = () => {
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <motion.div
-            className="service-card bg-white rounded-lg shadow-lg p-6"
+            className="service-card bg-white rounded-lg mx-2 shadow-lg p-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 1 }}
@@ -34,7 +34,7 @@ const ServicesSection = () => {
           </motion.div>
 
           <motion.div
-            className="service-card bg-white rounded-lg shadow-lg p-6"
+            className="service-card bg-white rounded-lg mx-2 shadow-lg p-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 1 }}
@@ -51,7 +51,7 @@ const ServicesSection = () => {
           </motion.div>
 
           <motion.div
-            className="service-card bg-white rounded-lg shadow-lg p-6"
+            className="service-card bg-white rounded-lg mx-2 shadow-lg p-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}

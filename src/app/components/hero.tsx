@@ -10,7 +10,7 @@ export default function Hero(){
   loop
   muted
   playsInline
-  className="inset-0 w-full  object-cover my-2  sm:my-2 "
+  className="inset-0 w-full  object-cover  "
 >
   <source src="/image/final.mp4" type="video/mp4" />
   Your browser does not support the video tag.

@@ -4,7 +4,7 @@ import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 
 export default function ContactInfo() {
   return (
-    <div className="flex flex-col md:flex-row gap-6 p-6  min-h-screen items-center justify-center">
+    <div className="flex flex-col md:flex-row gap-6 p-6  items-center justify-center">
       {/* Phone & Contact Numbers */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }} 

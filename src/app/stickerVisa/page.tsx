@@ -22,18 +22,18 @@ const StickerVisa =()=>{
   return(
     
     <div>
-        <h1 className="text-left xl:mx-10 sm:mx-4 mx-2 my-4 text-3xl font-serif">
+        <h1 className="text-left xl:mx-10 sm:mx-4 mx-2 my-4 text-lg sm:text-3xl font-serif">
         <u> Sticker Visa:</u>
       </h1>
         <div className="flex grid  lg:grid-cols-3 grid-cols-2 xl:grid-cols-4 mb-8 ">
             {destination.map ((destination)=>(
              
-                <div key={destination._id} className="sm:w-[290px] w-[150px] border-2  border-gray-400  rounded-xl bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black text-center my-3">
+                <div key={destination._id} className="sm:w-[290px] w-[150px] border-2  border-gray-300  rounded-xl bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black text-center my-3">
                     <Link href={`/stickerVisa/${destination._id}`}>
                     <div className="relative group">
   <img src={destination.imageUrl} alt={destination.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
   <div className="absolute inset-0 bg-white  bg-opacity-50 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
-    <h3 className="sm:text-xl text-md font-bold font-serif text-black">{destination.countryName}</h3>
+    <h3 className="sm:text-xl text-sm font-bold font-serif text-black">{destination.countryName}</h3>
   </div>
 </div> 
 
@@ -42,11 +42,7 @@ const StickerVisa =()=>{
 
                  
                     <button className="bg-orange-500 rounded-xl w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif">View Details</button></Link>
-                    {/* <h1 className="country text-center font-bold text-xl ">{destination.countryName}</h1>
-                   
                   
-                    <h2 className="text-center fonr-sans ">{destination.availability}!</h2>
-                     */}
                 </div>
             ))}
         </div>
