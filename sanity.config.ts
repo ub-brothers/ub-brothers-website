@@ -15,8 +15,9 @@ import {structure} from './src/sanity/structure'
 
 export default defineConfig({
   basePath: '/studio',
-  projectId,
-  dataset,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "fehzg1rj",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  apiVersion: "v2023-01-01",
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
   plugins: [
