@@ -9,6 +9,8 @@ import WhyUs from "./whyUs/page";
 import TourPackage from "./tour/page";
 import ContactInfo from "./contactDiv/page";
 import WhatAreWe from "./whatAreWe/page";
+import UmrahBookingForm from "./umrahForm/page";
+import UmrahBookingForm2 from "./umrahForm2/page";
 
 export default function Home() {
   return (
@@ -64,7 +66,7 @@ export default function Home() {
   
  
   </div>
-
+{/* <UmrahBookingForm2/> */}
 
 
 

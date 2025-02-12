@@ -17,6 +17,7 @@ export default function VisaApplication() {
     visaType: "",
     nationality: "",
     firstName: "",
+    countryName:"",
     surname: "",
     fatherName: "",
     gender: "",
@@ -47,6 +48,7 @@ export default function VisaApplication() {
     formDataToSend.append("visaType", formData.visaType);
     formDataToSend.append("nationality", formData.nationality);
     formDataToSend.append("firstName", formData.firstName);
+    formDataToSend.append("countryName", formData.countryName);
     formDataToSend.append("surname", formData.surname);
     formDataToSend.append("fatherName", formData.fatherName);
     formDataToSend.append("gender", formData.gender);
@@ -314,10 +316,7 @@ export default function VisaApplication() {
           <option>Select Visa Type</option>
           <option>Tourist</option>
           <option>Business</option>
-          <option>Student</option>
-          <option>Work</option>
-          <option>Transit</option>
-          <option>Medical</option>
+          
         </select>
         <p>Nationality</p>
         <select className="w-full p-2 border rounded mb-2" name="nationality" value={formData.nationality} onChange={handleChange} >
@@ -331,6 +330,28 @@ export default function VisaApplication() {
         <p>Place of Issue</p>
         <select className="w-full p-2 border rounded mb-2" name="placeOfIssue" value={formData.placeOfIssue} onChange={handleChange} >
           {pakistanCitiesEmbassy.map((embassy, index)=>( <option key={index} value={embassy}>{embassy}</option>))}
+        </select>
+        <p>Country you want visa for</p>
+        <select  name="countryName" value={formData.countryName} onChange={handleChange} className="w-full p-2 border rounded mb-2">
+          <option>Azerbaijan</option>
+          <option>Bahrain</option>
+          <option>Cambodia</option>
+          <option>Cambodia (for business)</option>
+          <option>Dubai (30  days)</option>
+          <option>Dubai (60 days)</option>
+          <option>Ethiopia</option>
+          <option>East Africa</option>
+          <option>Indonesia</option>
+          <option>Malaysia</option>
+          <option>Oman</option>
+          <option>Sri Lanka</option>
+          <option>Sri Lanka (48 hrs)</option>
+          <option>Singapore</option>
+            <option>Thailand</option>
+          <option>Tanzania</option>
+          <option>Tajikistan</option>
+          <option>Vietnam</option>
+          <option>Zambia</option>
         </select>
       </section>
 

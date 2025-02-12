@@ -32,9 +32,9 @@ export async function POST(req: NextRequest) {
 
     await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ success: true, message: "Email sent successfully!" }, { status: 200 });
+    return NextResponse.json({ success: true, message: "Submitted successfully!" }, { status: 200 });
   } catch (error) {
     console.error("Error sending email:", error);
-    return NextResponse.json({ success: false, message: "Failed to send email." }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Failed to submit." }, { status: 500 });
   }
 }

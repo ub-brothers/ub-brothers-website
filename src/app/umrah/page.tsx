@@ -21,6 +21,7 @@ const UmrahList =()=>{
     <div>
    
       <div>
+      <h1 className="text-left xl:mx-10 sm:mx-4 mx-2 my-4 text-lg sm:text-3xl font-serif"><u>Umrah Packages:</u></h1>
         <div className="flex grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-8">
       
             {destination.map ((destination)=>(
