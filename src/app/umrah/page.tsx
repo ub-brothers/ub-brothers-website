@@ -1,52 +1,82 @@
-"use client"
-import {client} from "@/sanity/lib/client"
-import { useEffect, useState } from "react"
-import {  UmrahType } from "../types/destinations"
-import {  umrah } from "@/sanity/lib/queries"
-import Link from "next/link"
-import { IoLocationOutline } from "react-icons/io5";
+'use client';
 
-const UmrahList =()=>{
-  const [destination, setDestination] = useState<UmrahType[]>([])
-  
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import Hotels from '../hotelUi/page';
+// import airplane from '@/public/airplane.png'; // Add your airplane PNG in public folder
+// import image1 from '@/public/image1.jpg'; // Replace with your actual image
+// import image2 from '@/public/image2.jpg'; // Replace with your actual image
 
-  useEffect(()=>{
-      async function fetchedDestination(){
-          const fetchedDestination: UmrahType[] = await client.fetch(umrah)
-          setDestination(fetchedDestination)
-      }
-      fetchedDestination()
-  },[])
+export default function UmrahPackage() {
   return (
-    <div>
-   
+  <div>
+    <div className="flex flex-col items-center text-center px-4 py-12 space-y-6 max-w-3xl mx-auto">
+      {/* Main Heading with Animated Airplane */}
+      <div className="relative">
+        <motion.h1 
+          className="text-3xl sm:text-5xl font-serif mt-4 text-blue-800 font-bold"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+         Exclusive Umrah Package
+        </motion.h1>
+        <motion.div 
+          className="absolute -top-10 left-1/2 -translate-x-1/2 w-12 mb-4 h-12"
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1.5 }}
+        >
+          <Image src="/image/aerop.png" alt="Airplane" width={200} height={200} />
+        </motion.div>
+      </div>
+
+      {/* Description */}
+      <p className="text-lg text-gray-600">
+        Experience a hassle-free and spiritually fulfilling Umrah journey with our exclusive packages, 
+        tailored to provide comfort and convenience at every step.
+      </p>
+
+      {/* Animated Images */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <motion.div 
+          className="rounded-lg overflow-hidden shadow-lg"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Image src="/image/umrah2.jpg" alt="Umrah Image 1" width={500} height={300} className="w-full " />
+        </motion.div>
+        <motion.div 
+          className="rounded-lg overflow-hidden shadow-lg"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Image src="/image/makkah.jpg" alt="Umrah Image 2" width={500} height={300} className="w-full h-auto" />
+        </motion.div>
+      </div>
+
+      {/* Additional Info */}
+      <div className="text-gray-700 text-lg space-y-2">
+   <h1>Experience a comfortable Umrah journey with our premium package! You can visit holy sites with guided Ziyarat services, ensuring a spiritually enriching experience. We offer complete flexibility—you can select the number of days and hotels based on your preference, and we will arrange everything accordingly. Whether you prefer a budget-friendly stay or a luxury experience, we customize the package to fit your needs. Let us take care of all the details while you have a peaceful and memorable Umrah. Book your personalized package today and embark on a stress-free spiritual journey! </h1>
+      </div>
+
+      {/* Book Now Button */}
       <div>
-      <h1 className="text-left xl:mx-10 sm:mx-4 mx-2 my-4 text-lg sm:text-3xl font-serif"><u>Umrah Packages:</u></h1>
-        <div className="flex grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-8">
-      
-            {destination.map ((destination)=>(
-                <div key={destination._id} className="sm:w-[290px] w-[150px] border-2  border-gray-300  rounded-xl bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black text-center my-3">
-                 <Link href={`/umrah/${destination._id}`}>
-                    <div className="relative group">
-  <img src={destination.imageUrl2} alt={destination.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
-  <div className="absolute inset-0 bg-white  bg-opacity-50 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
-    <h3 className="sm:text-xl text-sm font-bold font-serif text-black">{destination.countryName}</h3>
-  </div>
-</div> 
-<h3 className=" sm:text-md text-sm text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black"><IoLocationOutline className="mt-1" />{destination.countryName}</h3>
-                    {/* <h2 className="text-left text-sm ml-6 sm:text-md mt-1">Rs. {destination.prize}</h2>
-                    <p className="text-left text-sm ml-6 sm:text-md mt-1">{destination.shortDescription}</p> */}
-              
-                    <button className="bg-orange-500 rounded-xl sm:w-[130px] w-[100px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif">View Details</button>
-                    </Link>
-                
-                </div>
-            ))}
-        </div>
+      <h3 className="text-xl font-semibold">Book Your Stay Now!</h3>
+      <p className="text-gray-600 mt-2">Contact us to customize your package as per your needs.</p></div>
+      <Link href="/umrahForm2">
+      <motion.button 
+        className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-orange-500"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        Book Now
+      </motion.button></Link>
+
+     
     </div>
-  
+     <Hotels/>
     </div>
   );
 }
-export default UmrahList;
-  

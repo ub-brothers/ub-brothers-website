@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import {client} from "@/sanity/lib/client"
+import Hotels from "../hotelUi/page";
 
 const UmrahBookingForm2 = () => {
   const [visaStatus, setVisaStatus] = useState("yes");
@@ -10,13 +11,13 @@ const UmrahBookingForm2 = () => {
   const [categories, setCategories] = useState<{ categoryName: string; price: number }[]>([]);
   const [selectedDays, setSelectedDays] = useState<number>(7);
 
-  const [availableMakkahCategories, setAvailableMakkahCategories] = useState<string[]>([]);
-  const [availableMadinaCategories, setAvailableMadinaCategories] = useState<string[]>([]);
+  const [availableMakkahCategories, setAvailableMakkahCategories] = useState< { categoryName: string; price: number }[]>([]);
+  const [availableMadinaCategories, setAvailableMadinaCategories] = useState< { categoryName: string; price: number }[]>([]);
 
   type Hotel = {
     hotelName: string;
     price: number;
-    applicableCategories: string[];
+    applicableCategories: { categoryName: string; price: number }[];
   };
   const [makkahHotels, setMakkahHotels] = useState<Hotel[]>([]);
   const [madinaHotels, setMadinaHotels] = useState<Hotel[]>([]);
@@ -27,24 +28,32 @@ const UmrahBookingForm2 = () => {
 
 
   // Makkah hotel selection logic
-  const handleMakkahHotelChange = (hotelName: any) => {
+  const handleMakkahHotelChange = (hotelName: string) => {
     const selectedHotel = makkahHotels.find((hotel) => hotel.hotelName === hotelName);
     setSelectedMakkahHotel(hotelName);
+  
+    // Store full objects instead of just category names
     setAvailableMakkahCategories(selectedHotel ? selectedHotel.applicableCategories : []);
   };
-
+  
+  
+  
   // Madina hotel selection logic
-  const handleMadinaHotelChange = (hotelName : any) => {
+  const handleMadinaHotelChange = (hotelName: string) => {
     const selectedHotel = madinaHotels.find((hotel) => hotel.hotelName === hotelName);
     setSelectedMadinaHotel(hotelName);
+  
+    // Store full objects instead of just category names
     setAvailableMadinaCategories(selectedHotel ? selectedHotel.applicableCategories : []);
   };
+  
+  
 
   // 🔹 Fetch Data from Sanity on Page Load
   useEffect(() => {
     const fetchData = async () => {
-      const makkahData = await client.fetch<{ hotelName: string; price: number,  applicableCategories: string[];}[]>(`*[_type == "makkahHotel"]{hotelName, price, applicableCategories[] }`);
-      const madinaData = await client.fetch<{ hotelName: string; price: number , applicableCategories: string[];}[]>(`*[_type == "madinaHotel"]{hotelName, price, applicableCategories[] }`);
+      const makkahData = await client.fetch<{ hotelName: string; price: number, applicableCategories: { categoryName: string; price: number }[] }[]>(`*[_type == "makkahHotel"]{hotelName, price, applicableCategories[]{ categoryName, price } }`);
+      const madinaData = await client.fetch<{ hotelName: string; price: number , applicableCategories: { categoryName: string; price: number }[] }[]>(`*[_type == "madinaHotel"]{hotelName, price, applicableCategories[]{ categoryName, price } }`);
 
 
       const daysData = await client.fetch<{ days: number; price: number }[]>(`*[_type == "umrahDays"]{days, price}`);
@@ -63,15 +72,37 @@ const UmrahBookingForm2 = () => {
 
   // 🔹 Calculate Cost Function
   const calculateCost = () => {
-    const selectedMakkahHotelPrice = makkahHotels.find((h) => h.hotelName === selectedMakkahHotel)?.price || 0;
-    const selectedMadinaHotelPrice = madinaHotels.find((h) => h.hotelName === selectedMadinaHotel)?.price || 0;
+    const selectedMakkahHotelObj = makkahHotels.find((h) => h.hotelName === selectedMakkahHotel);
+    const selectedMadinaHotelObj = madinaHotels.find((h) => h.hotelName === selectedMadinaHotel);
+  
+    console.log("Makkah Hotel Data:", selectedMakkahHotelObj);
+    console.log("Madina Hotel Data:", selectedMadinaHotelObj);
+  
+    // Makkah category price extract
+    const selectedMakkahCategoryObj = selectedMakkahHotelObj?.applicableCategories.find(
+      (c) => c.categoryName === selectedCategory
+    );
+    const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? selectedMakkahCategoryObj.price : 0;
+  
+    // Madina category price extract
+    const selectedMadinaCategoryObj = selectedMadinaHotelObj?.applicableCategories.find(
+      (c) => c.categoryName === selectedCategory
+    );
+    const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price : 0;
+  
+    // Days price extract
     const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
-    const selectedCategoryPrice = categories.find((c) => c.categoryName === selectedCategory)?.price || 0;
-
-    const total = selectedDaysPrice + selectedMakkahHotelPrice + selectedCategoryPrice;
+  
+    // Total calculation
+    const total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
     setTotalCost(total);
+  
+    console.log("Selected Makkah Category Price:", selectedMakkahCategoryPrice);
+    console.log("Selected Madina Category Price:", selectedMadinaCategoryPrice);
+    console.log("Total Cost:", total);
   };
-
+  
+  
   return (
     <div>
          <div className="relative w-full mb-6 h-[380px]">
@@ -82,8 +113,8 @@ const UmrahBookingForm2 = () => {
     </h2>
   </div>
   </div>
-    <div className="max-w-lg mx-auto p-8 bg-white shadow-xl rounded-2xl">
-      <h2 className="text-2xl font-bold mb-6 text-center">Umrah Package</h2>
+    <div className="mx-  p-8 bg-gray-100 shadow-xl rounded-2xl">
+      <h2 className="text-2xl font-bold mb-6 text-center font-serif">Umrah Package</h2>
       <p className="font-semibold">Full Name:</p>
       <input type="text" name="name" placeholder="Your name" className="w-full p-3 mb-5 border rounded-md" required></input>
       <p className="font-semibold">Phone Number:</p>
@@ -92,7 +123,7 @@ const UmrahBookingForm2 = () => {
       <label className="font-semibold">Select Days</label>
       <select onChange={(e) => setSelectedDays(Number(e.target.value))} className="w-full p-3 mb-5 border rounded-md">
         {daysOptions.map((day) => (
-          <option key={day.days} value={day.days}>{`${day.days} Days - $${day.price}`}</option>
+          <option key={day.days} value={day.days}>{`${day.days} Days - ${day.price} PKR/-`}</option>
         ))}
       </select>
       
@@ -102,20 +133,28 @@ const UmrahBookingForm2 = () => {
         <option value="">Select a Makkah hotel</option>
         {makkahHotels.map((hotel) => (
           <option key={hotel.hotelName} value={hotel.hotelName}>
-            {hotel.hotelName} - ${hotel.price}
+            {hotel.hotelName}
           </option>
         ))}
       </select>
 
  {/* Room Category for Makkah */}
  <label className="font-semibold">Makkah Room Category</label>
-      <select disabled={availableMakkahCategories.length === 0} className="w-full p-3 mb-5 border rounded-md">
-        {availableMakkahCategories.length > 0 ? (
-          availableMakkahCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)
-        ) : (
-          <option value="">Not applicable</option>
-        )}
-      </select>
+ <select 
+  disabled={availableMakkahCategories.length === 0} 
+  onChange={(e) => setSelectedCategory(e.target.value)}
+  className="w-full p-3 mb-5 border rounded-md"
+>
+{availableMakkahCategories.length > 0 ? (
+    availableMakkahCategories.map((catObj) => (
+      <option key={catObj.categoryName} value={catObj.categoryName}>
+        {catObj.categoryName} - {catObj.price} PKR/-
+      </option>
+    ))
+  ) : (
+    <option value="">Not applicable</option>
+  )}
+</select>
 
 
       {/* Madina Hotel Dropdown */}
@@ -124,7 +163,7 @@ const UmrahBookingForm2 = () => {
         <option value="">Select a Madina hotel</option>
         {madinaHotels.map((hotel) => (
           <option key={hotel.hotelName} value={hotel.hotelName}>
-            {hotel.hotelName} - ${hotel.price}
+            {hotel.hotelName}
           </option>
         ))}
       </select>
@@ -132,23 +171,23 @@ const UmrahBookingForm2 = () => {
 
          {/* Room Category for Madina */}
          <label className="font-semibold">Madina Room Category</label>
-      <select disabled={availableMadinaCategories.length === 0} className="w-full p-3 mb-5 border rounded-md">
-        {availableMadinaCategories.length > 0 ? (
-          availableMadinaCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)
-        ) : (
-          <option value="">Not applicable</option>
-        )}
-      </select>
+         <select 
+  disabled={availableMadinaCategories.length === 0} 
+  onChange={(e) => setSelectedCategory(e.target.value)}
+  className="w-full p-3 mb-5 border rounded-md"
+>
+{availableMadinaCategories.length > 0 ? (
+    availableMadinaCategories.map((catObj) => (
+      <option key={catObj.categoryName} value={catObj.categoryName}>
+        {catObj.categoryName} - {catObj.price} PKR/-
+      </option>
+    ))
+  ) : (
+    <option value="">Not applicable</option>
+  )}
+</select>
+
   
-
-      {/* <label className="font-semibold">Room Category</label>
-      <select onChange={(e) => setSelectedCategory(e.target.value)} className="w-full p-3 mb-5 border rounded-md">
-        <option value="">Select a category</option>
-        {categories.map((cat) => (
-          <option key={cat.categoryName} value={cat.categoryName}>{cat.categoryName} - ${cat.price}</option>
-        ))}
-      </select> */}
-
       
       <label className="font-semibold">Do you have a visa?</label>
         <select onChange={(e) => setVisaStatus(e.target.value)} className="w-full p-3  mb-5 border rounded-md">
@@ -180,11 +219,13 @@ const UmrahBookingForm2 = () => {
 
       {totalCost > 0 && (
         <div className="mt-4 p-4 text-center bg-gray-200 rounded-md">
-          <p className="font-bold text-lg">Total Cost: ${totalCost}</p>
+          <p className="font-bold text-lg">Total Cost: {totalCost} PKR/-</p>
         </div>
       )}
       <button className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
-    </div></div>
+    </div>
+    <Hotels/>
+    </div>
   );
 };
 

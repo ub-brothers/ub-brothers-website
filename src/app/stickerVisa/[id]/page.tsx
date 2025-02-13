@@ -1,22 +1,30 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion'; // Import Framer Motion
+import { motion } from 'framer-motion'; 
 import { Destination } from "@/app/types/destinations";
 import { sanityFetch } from "@/sanity/lib/client";
 import { detailCountry, allDestinations } from "@/sanity/lib/queries";
 import Link from 'next/link';
-
+import { useEffect, useState } from "react";
 import ContactInfo from '@/app/contactDiv/page';
 
-export default async function DetailPage({params}: {params:{id:string}}) {
-  const countries: Destination = await sanityFetch({ query: detailCountry, params: { id: params.id } });
+export default function DetailPage({ params }: { params: { id: string } }) {
+  const [countries, setCountries] = useState<Destination | null>(null);
+  const [randomCountries, setRandomCountries] = useState<Destination[]>([]);
 
-  // Fetch all destinations but exclude the current one
-   const allCountries: Destination[] = await sanityFetch({ query: allDestinations },);
-   const filteredCountries = allCountries.filter((country) => country._id !== params.id);
-  
-   // Select 3 random countries
-   const randomCountries = filteredCountries.sort(() => 0.5 - Math.random()).slice(0, 4);
+  useEffect(() => {
+    async function fetchData() {
+      const countryData: Destination = await sanityFetch({ query: detailCountry, params: { id: params.id } });
+      setCountries(countryData);
+
+      const allCountries: Destination[] = await sanityFetch({ query: allDestinations });
+      const filteredCountries = allCountries.filter((country) => country._id !== params.id);
+      setRandomCountries(filteredCountries.sort(() => 0.5 - Math.random()).slice(0, 4));
+    }
+    fetchData();
+  }, [params.id]);
+
+  if (!countries) return <p>Loading...</p>;
 
   return (
     <div>

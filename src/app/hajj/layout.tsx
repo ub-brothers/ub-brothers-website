@@ -11,7 +11,15 @@ export default function DestinationLayout( {children,
     return(
         <>
         <div className="my-4 text-center ">
-          
+           <Link href="/umrah" className="mx-2">
+          <button
+            className={`${
+              pathname.startsWith ("/umrah") ? "bg-blue-500" : "bg-orange-500"
+            } w-[140px] rounded-2xl h-6 text-white font-bold font-sans hover:bg-blue-700 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg`}
+          >
+            Umrah
+          </button>
+        </Link>
         <Link href="/hajj">
           <button
             className={`${
@@ -21,15 +29,7 @@ export default function DestinationLayout( {children,
             Hajj
           </button>
         </Link>
-        <Link href="/umrah" className="mx-2">
-          <button
-            className={`${
-              pathname.startsWith ("/umrah") ? "bg-blue-500" : "bg-orange-500"
-            } w-[140px] rounded-2xl h-6 text-white font-bold font-sans hover:bg-blue-700 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg`}
-          >
-            Umrah
-          </button>
-        </Link>
+       
     
         <div className="sm:text-right text-center m-4 sm:text-md text-sm">
         <h1  className="font-bold">Shaharyaar Mughal:</h1>

@@ -11,20 +11,22 @@ import ContactInfo from "./contactDiv/page";
 import WhatAreWe from "./whatAreWe/page";
 import UmrahBookingForm from "./umrahForm/page";
 import UmrahBookingForm2 from "./umrahForm2/page";
+import UmrahPackage from "./umrah/page";
 
 export default function Home() {
   return (
     <div>
  
       <Hero/>
-
+      
       <div className="lg:mt-24 sm:mt-10 mt-5 bg-gray-100">
         <h2 className="text-gray-100">.</h2>
         <h1 className="font-bold ml-6 text-xl md:text-3xl font-serif mt-4">Our Top Destinations</h1>
          <Featured/>
       </div>
 
-
+<div className="my-10">
+<UmrahPackage/></div>
       {/* <div
       className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center min-h-screen py-20"
       style={{ backgroundImage: "url('/image/luxury.jpg')" }}
