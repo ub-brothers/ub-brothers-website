@@ -1,4 +1,4 @@
-// Country Schema for Sanity (or your CMS)
+
 export default {
     name: 'destinations',
     title: 'eVisa',
@@ -32,6 +32,48 @@ export default {
       {
         name: 'requirement1',
         title: 'Requirement 1',
+        type: 'text',
+          
+      },
+      {
+        name: 'requirement2',
+        title: 'Requirement 2',
+        type: 'text',
+          
+      },
+      {
+        name: 'requirement3',
+        title: 'Requirement 3',
+        type: 'text',
+          
+      },
+      {
+        name: 'requirement4',
+        title: 'Requirement 4',
+        type: 'text',
+          
+      },
+      {
+        name: 'requirement5',
+        title: 'Requirement 5',
+        type: 'text',
+          
+      },
+      {
+        name: 'requirement6',
+        title: 'Requirement 6',
+        type: 'text',
+          
+      },
+      {
+        name: 'requirement7',
+        title: 'Requirement 7',
+        type: 'text',
+          
+      },
+      {
+        name: 'requirement8',
+        title: 'Requirement 8',
         type: 'text',
           
       },

@@ -63,12 +63,6 @@ export default function DetailPage({ params }: { params: { id: string } }) {
         
 
           <h1 className="font-bold text-md sm:text-xl">{countries.requirements}</h1>
-          <p className='sm:text-lg text-sm'>Original Passport (Valid for at least 6 months)</p>
-          <p>ID Copy (CNIC)</p>
-          <p>Recent Photographs (White background)</p>
-          <p>Bank Statement (Last 6 months)</p>
-          <p>NTN Copy</p>
-          <p>Processing Time – Approximately 2 weeks</p>
           <p>{countries.requirement1}</p>
           <p>{countries.requirement2}</p>
           <p>{countries.requirement3}</p>
@@ -85,8 +79,14 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           <p>{countries.requirement14}</p>
           <p>{countries.requirement15}</p>
           <p>{countries.requirement16}</p>
-          <p>{countries.requirement17}</p>
+          <p>{countries.supportiveDoc}</p>
           
+          <p>{countries.requirement17}</p>
+          <p>{countries.requirement18}</p>
+          <p>{countries.requirement19}</p>
+          <p>{countries.requirement20}</p>
+          <p>{countries.requirement21}</p>
+        
           <p className="my-2"><b>Note: </b>This is a sticker visa, and you will need to visit the office in person to submit the required documents.</p>
           </div>
        

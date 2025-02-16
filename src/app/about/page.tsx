@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import WhyUs from "../whyUs/page";
 import ClientReviews from "../clientReview/page";
+import WhatAreWe from "../whatAreWe/page";
 
 const AboutUs = () => {
   return (
@@ -25,7 +26,7 @@ const AboutUs = () => {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Image src="/image/logo.jpeg" width={500} height={300} alt="UB Brothers" className="rounded-lg shadow-lg" />
+          <Image src="/image/logo.jpeg" width={500} height={300} alt="UB Brothers" className="rounded-3xl shadow-lg" />
         </motion.div>
         <motion.div 
           className="w-full md:w-1/2"
@@ -113,13 +114,11 @@ const AboutUs = () => {
           <p className="text-gray-700">Admin</p>
           <p className="text-gray-600">+92 317 4141149</p>
         </div>
-        {/* <div className="p-4 bg-orange-100 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold">Usman Raza</h3>
-          <p className="text-gray-700">Visa Processing Expert</p>
-          <p className="text-gray-600">+92 300 5678901</p>
-        </div> */}
+   
       </div>
-
+      <div className="my-5">
+      <WhatAreWe/>
+</div>
       <div>
         <WhyUs/>
       </div>

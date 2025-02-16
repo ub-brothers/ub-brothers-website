@@ -78,6 +78,3 @@ export default Header;
 
 
 
-{/* <Link href="/" className="text-white hover:text-gray-300 bg-orange-700 font-serif rounded-xl w-[70px] text-center">
-          Home
-        </Link> */}

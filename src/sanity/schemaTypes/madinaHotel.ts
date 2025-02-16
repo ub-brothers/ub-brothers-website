@@ -1,7 +1,7 @@
 export default {
   name: "madinaHotel",
   type: "document",
-  title: "Madina Hotels",
+  title: "Umrah Madina Hotels",
   fields: [
     {
       name: "hotelName",

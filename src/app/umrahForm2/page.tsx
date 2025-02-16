@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import {client} from "@/sanity/lib/client"
 import Hotels from "../hotelUi/page";
+import PaymentDetails from "../payment/page";
+import ContactInfo from "../contactDiv/page";
 
 const UmrahBookingForm2 = () => {
   const [visaStatus, setVisaStatus] = useState("yes");
@@ -25,7 +27,7 @@ const UmrahBookingForm2 = () => {
   const [selectedMadinaHotel, setSelectedMadinaHotel] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [totalCost, setTotalCost] = useState<number>(0);
-
+  const [formData, setFormData] = useState({ name: "", phone: "" });
 
   // Makkah hotel selection logic
   const handleMakkahHotelChange = (hotelName: string) => {
@@ -74,34 +76,74 @@ const UmrahBookingForm2 = () => {
   const calculateCost = () => {
     const selectedMakkahHotelObj = makkahHotels.find((h) => h.hotelName === selectedMakkahHotel);
     const selectedMadinaHotelObj = madinaHotels.find((h) => h.hotelName === selectedMadinaHotel);
-  
+
     console.log("Makkah Hotel Data:", selectedMakkahHotelObj);
     console.log("Madina Hotel Data:", selectedMadinaHotelObj);
-  
-    // Makkah category price extract
+
+    // Makkah category price extract & multiply by days
     const selectedMakkahCategoryObj = selectedMakkahHotelObj?.applicableCategories.find(
-      (c) => c.categoryName === selectedCategory
+        (c) => c.categoryName === selectedCategory
     );
-    const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? selectedMakkahCategoryObj.price : 0;
-  
-    // Madina category price extract
+    const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? selectedMakkahCategoryObj.price * selectedDays : 0;
+
+    // Madina category price extract & multiply by days
     const selectedMadinaCategoryObj = selectedMadinaHotelObj?.applicableCategories.find(
-      (c) => c.categoryName === selectedCategory
+        (c) => c.categoryName === selectedCategory
     );
-    const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price : 0;
-  
+    const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price * selectedDays : 0;
+
     // Days price extract
     const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
-  
+
     // Total calculation
     const total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
     setTotalCost(total);
-  
+
     console.log("Selected Makkah Category Price:", selectedMakkahCategoryPrice);
     console.log("Selected Madina Category Price:", selectedMadinaCategoryPrice);
     console.log("Total Cost:", total);
-  };
-  
+};
+
+
+const [personalPhoto, setPersonalPhoto] = useState<File | null>(null);
+const [passportScan, setPassportScan] = useState<File | null>(null);
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const formDataToSend = new FormData();
+  formDataToSend.append("name", formData.name);
+  formDataToSend.append("phone", formData.phone);
+  formDataToSend.append("days", selectedDays.toString());
+  formDataToSend.append("makkahHotel", selectedMakkahHotel);
+  formDataToSend.append("makkahCategory", selectedCategory);
+  formDataToSend.append("madinaHotel", selectedMadinaHotel);
+  formDataToSend.append("madinaCategory", selectedCategory);
+  formDataToSend.append("visaStatus", visaStatus);
+  formDataToSend.append("totalCost", totalCost.toString());
+
+  // ✅ **Corrected image handling**
+  if (personalPhoto) {
+    formDataToSend.append("personalPhoto", personalPhoto);
+  }
+  if (passportScan) {
+    formDataToSend.append("passportScan", passportScan);
+  }
+
+  const response = await fetch("/api/umrahForm", {
+    method: "POST",
+    body: formDataToSend, // ✅ Sending FormData correctly
+  });
+
+  if (response.ok) {
+    alert("Booking Submitted Successfully!");
+  } else {
+    alert("Failed to Submit Booking");
+  }
+};
+
+
+
   
   return (
     <div>
@@ -113,12 +155,12 @@ const UmrahBookingForm2 = () => {
     </h2>
   </div>
   </div>
-    <div className="mx-  p-8 bg-gray-100 shadow-xl rounded-2xl">
+    <form onSubmit={handleSubmit} className="mx-  p-8 bg-gray-100 shadow-xl rounded-2xl">
       <h2 className="text-2xl font-bold mb-6 text-center font-serif">Umrah Package</h2>
       <p className="font-semibold">Full Name:</p>
-      <input type="text" name="name" placeholder="Your name" className="w-full p-3 mb-5 border rounded-md" required></input>
+      <input type="text" name="name" placeholder="Your name"  onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required></input>
       <p className="font-semibold">Phone Number:</p>
-      <input type="text" name="phone" placeholder="Your phone number" className="w-full p-3 mb-5 border rounded-md" required ></input>
+      <input type="text" name="phone" placeholder="Your phone number" onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required ></input>
 
       <label className="font-semibold">Select Days</label>
       <select onChange={(e) => setSelectedDays(Number(e.target.value))} className="w-full p-3 mb-5 border rounded-md">
@@ -198,22 +240,19 @@ const UmrahBookingForm2 = () => {
         {visaStatus === "no" && (
           <div className=" bg-gray-100 p-4 rounded-md">
             <h3 className="font-bold">Fill out the form and apply for Visa!</h3>
-            <p className="mb-4">The Visa cost: Rs. 41,000</p>
-            <label className="font-semibold">Your Name</label>
-            <input placeholder="Your Name" className="w-full p-3  mb-5 border rounded-md" />
-            <label className="font-semibold">Your Number</label>
-            <input placeholder="Your Number" type="tel" className="w-full p-3  mb-5 border rounded-md" />
+           
             <label className="font-semibold">Personal Photo (White BG)</label>
-            <input type="file" accept="image/*" className="w-full p-3 border mb-5 rounded-md" />
+            <input type="file" accept="image/*"  onChange={(e) => setPersonalPhoto(e.target.files?.[0] || null)} className="w-full p-3 border mb-5 rounded-md" />
             <label className="font-semibold">Passport Scan Copy</label>
-            <input type="file" accept="image/*" className="w-full p-3 mb-5 border rounded-md" />
+            <input type="file" accept="image/*"  onChange={(e) => setPassportScan(e.target.files?.[0] || null)} className="w-full p-3 mb-5 border rounded-md" />
             <label className="font-semibold">Nationality</label>
             <input placeholder="Nationality" className="w-full p-3 mb-5 border rounded-md" />
+             <p className="mt-4">Note: The Visa charges apply separately. Visa charges not included in total cost below.</p>
           </div>
         )}
         
 
-      <button onClick={calculateCost} className="w-full bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">
+      <button type="button" onClick={calculateCost} className="w-full bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">
         Calculate Cost
       </button>
 
@@ -223,8 +262,10 @@ const UmrahBookingForm2 = () => {
         </div>
       )}
       <button className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
-    </div>
+    </form>
     <Hotels/>
+    <PaymentDetails/>
+    <ContactInfo/>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaFacebook, FaInstagram, FaWhatsapp, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -16,32 +16,22 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Column 2: Quick Links */}
-        {/* <div className="md:ml-10">
-          <h3 className="text-xl font-semibold text-orange-500 mb-3">Quick Links</h3>
-          <ul className="space-y-2">
-            <li><Link href="/" className="hover:text-orange-500 transition">Home</Link></li>
-            <li><Link href="/destinations" className="hover:text-orange-500 transition">Destinations</Link></li>
-            <li><Link href="/packages" className="hover:text-orange-500 transition">Packages</Link></li>
-            <li><Link href="/about" className="hover:text-orange-500 transition">About Us</Link></li>
-            <li><Link href="/contact" className="hover:text-orange-500 transition">Contact</Link></li>
-          </ul>
-        </div> */}
-
         {/* Column 3: Contact & Social Links */}
         <div>
           <h3 className="text-xl font-semibold text-orange-500 mb-3">Contact Us</h3>
-          <p className="text-sm text-gray-200">📍 7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore Pakistan.</p>
-          <p className="text-sm text-gray-200">📞 +92 300 9480157</p>
+           <p className="text-sm text-gray-200">📞 +92 300 9480157</p>
           <p className="text-sm text-gray-200">📞 +92 326 421 4241</p>
+          <p className="text-sm text-gray-200">📍 7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore Pakistan.</p>
+          <p className="text-sm text-gray-200">📍 H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore Pakistan.</p>
+          <p className="text-sm text-gray-200">✉ ubbrotherspk@gmail.com</p>
+          <p className="text-sm text-gray-200">✉ ubbrothersconsultant@gmail.com</p>
           <p className="text-sm text-gray-200">✉ ubbrothersticketing@gmail.com</p>
           
           {/* Social Icons */}
           <div className="flex space-x-4 mt-4">
             <Link href="#" className="text-white hover:text-orange-500 text-2xl"><FaFacebook /></Link>
             <Link href="https://www.instagram.com/_ub_travel?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-white hover:text-orange-500 text-2xl"><FaInstagram /></Link>
-            {/* <Link href="#" className="text-white hover:text-orange-500 text-2xl"><FaWhatsapp /></Link>
-            <Link href="#" className="text-white hover:text-orange-500 text-2xl"><FaLinkedin /></Link> */}
+            
           </div>
         </div>
       </div>

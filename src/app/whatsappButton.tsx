@@ -3,13 +3,13 @@
 import React from 'react';
 
 interface WhatsAppButtonProps {
-  phoneNumber: string; // TypeScript mein type declare kiya gaya
+  phoneNumber: string; 
 }
 
 const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({ phoneNumber }) => {
   const handleClick = () => {
     const url = `https://wa.me/${phoneNumber}`;
-    window.open(url, '_blank'); // Open the WhatsApp chat in a new tab
+    window.open(url, '_blank'); 
   };
 
   return (

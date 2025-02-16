@@ -104,62 +104,7 @@ export default function VisaApplication() {
     setPhoto(e.target.files[0]); // Sirf ek file store karega
   };
 
-  const pakistanCitiesEmbassy = [
-    // Karachi
-    "Consulate General of Pakistan, Karachi",
-    "Consulate General of China, Karachi",
-    "Consulate General of Turkey, Karachi",
-    "Consulate General of Iran, Karachi",
-    "Consulate General of United Arab Emirates, Karachi",
-    "Consulate General of Saudi Arabia, Karachi",
   
-    // Lahore
-    "Consulate General of Pakistan, Lahore",
-    "Consulate General of China, Lahore",
-    "Consulate General of Turkey, Lahore",
-    "Consulate General of Iran, Lahore",
-    "Consulate General of United Arab Emirates, Lahore",
-    "Consulate General of Saudi Arabia, Lahore",
-  
-    // Islamabad
-    "High Commission of Pakistan, Islamabad",
-    "High Commission of India, Islamabad",
-    "Embassy of China, Islamabad",
-    "Embassy of United States, Islamabad",
-    "Embassy of United Kingdom, Islamabad",
-    "Embassy of Canada, Islamabad",
-  
-    // Quetta
-    "Consulate of Pakistan, Quetta",
-    "Consulate General of Iran, Quetta",
-    "Consulate General of Afghanistan, Quetta",
-  
-    // Peshawar
-    "Consulate of Pakistan, Peshawar",
-    "Consulate General of Afghanistan, Peshawar",
-    "Consulate General of Iran, Peshawar",
-  
-    // Faisalabad
-    "Consulate General of Pakistan, Faisalabad",
-    "Consulate General of China, Faisalabad",
-  
-    // Multan
-    "Consulate General of Pakistan, Multan",
-    "Consulate General of Iran, Multan",
-  
-    // Sialkot
-    "Consulate General of Pakistan, Sialkot",
-    "Consulate General of China, Sialkot",
-  
-    // Hyderabad
-    "Consulate of Pakistan, Hyderabad",
-    "Consulate General of Iran, Hyderabad",
-  
-    // Sukkur
-    "Consulate of Pakistan, Sukkur",
-    "Consulate General of Iran, Sukkur",
-  ];
-
   const countries = [
     'Afghanistan',
     'Armenia',
@@ -263,8 +208,8 @@ export default function VisaApplication() {
         const avgBrightness = totalBrightness / pixelCount;
         const whitePercentage = (whitePixelCount / pixelCount) * 100;
   
-        const isImageClear = avgBrightness > 40;
-        const isWhiteBg = whitePercentage > 20;
+        const isImageClear = avgBrightness > 80;
+        const isWhiteBg = whitePercentage > 50;
   
         if (checkWhiteBg) {
           setValidState(isImageClear && isWhiteBg);
@@ -305,7 +250,7 @@ export default function VisaApplication() {
   </div>
 
 
-    <div className="max-w-6xl mx-auto p-6 bg-white shadow-md  space-y-6">
+    <div className="max-w-6xl mx-auto p-6 bg-gray-100 shadow-md  space-y-6">
       <form onSubmit={handleSubmit}>
       <h2 className="text-3xl font-bold text-center mb-6">Visa Application</h2>
       
@@ -327,32 +272,11 @@ export default function VisaApplication() {
         <select className="w-full p-2 border rounded mb-2" name="passportType" value={formData.passportType} onChange={handleChange} >
         {passType.map(( type, index)=>(<option key={index} value={type}>{type}</option>))}
         </select>
-        <p>Place of Issue</p>
-        <select className="w-full p-2 border rounded mb-2" name="placeOfIssue" value={formData.placeOfIssue} onChange={handleChange} >
-          {pakistanCitiesEmbassy.map((embassy, index)=>( <option key={index} value={embassy}>{embassy}</option>))}
-        </select>
+       
         <p>Country you want visa for</p>
-        <select  name="countryName" value={formData.countryName} onChange={handleChange} className="w-full p-2 border rounded mb-2">
-          <option>Azerbaijan</option>
-          <option>Bahrain</option>
-          <option>Cambodia</option>
-          <option>Cambodia (for business)</option>
-          <option>Dubai (30  days)</option>
-          <option>Dubai (60 days)</option>
-          <option>Ethiopia</option>
-          <option>East Africa</option>
-          <option>Indonesia</option>
-          <option>Malaysia</option>
-          <option>Oman</option>
-          <option>Sri Lanka</option>
-          <option>Sri Lanka (48 hrs)</option>
-          <option>Singapore</option>
-            <option>Thailand</option>
-          <option>Tanzania</option>
-          <option>Tajikistan</option>
-          <option>Vietnam</option>
-          <option>Zambia</option>
-        </select>
+        <input placeholder="Enter Country name" name="countryName" type="text" value={formData.countryName} onChange={handleChange} className="w-full p-2 border rounded mb-2">
+         
+        </input>
       </section>
 
       <section>
@@ -448,8 +372,9 @@ export default function VisaApplication() {
         </button>
       </div>
       </form>
-      <ContactInfo/>
       <PaymentDetails/>
+      <ContactInfo/>
+      
     </div></div>
   );
 }

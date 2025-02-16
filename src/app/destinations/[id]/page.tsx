@@ -78,15 +78,14 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           </h2>
 
           <h1 className="font-bold text-md sm:text-xl">{countries.requirements}</h1>
-
-          <p>Original Passport (Valid for at least 6 months).</p>
-          <p>Scan Copy of Passport.</p>
-          <p>ID Copy (CNIC).</p>
-          <p>Recent Photographs (White background).</p>
-          <p>Last six month Bank Statement.</p>
-          <p>Job Letter/ NTN copy.</p>
-          <p>Processing Time – Approximately 2 weeks.</p>
           <p>{countries.requirement1}</p>
+          <p>{countries.requirement2}</p>
+          <p>{countries.requirement3}</p>
+          <p>{countries.requirement4}</p>
+          <p>{countries.requirement5}</p>
+          <p>{countries.requirement6}</p>
+          <p>{countries.requirement7}</p>
+          <p>{countries.requirement8}</p>
         </div>
       </div>
 

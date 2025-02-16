@@ -58,7 +58,7 @@ const WhatAreWe = () => {
           </div>
           
           <motion.a 
-            href="#explore" 
+            href="/destinations" 
             className="inline-block mt-8 px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition"
             whileHover={{ scale: 1.1 }}
           >

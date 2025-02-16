@@ -55,19 +55,7 @@ export default function Hotels() {
         hotels={hotels.madina}
         description="Stay in our Madina hotels close to Masjid-e-Nabwi with top-class hospitality. Enjoy complimentary breakfast, easy transport access, and a spiritually calming atmosphere."
       />
-      {/* <motion.div className="text-center mt-10 px-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2 }}>
-        <h3 className="text-xl font-semibold">Book Your Stay Now!</h3>
-       
-        <p className="text-gray-600 mt-2">Contact us to customize your package as per your needs.</p>
-        <Link href=".umrahForm2">
-        <motion.button
-          className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700"
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
-        >
-          Inquire Now
-        </motion.button></Link>
-      </motion.div> */}
+    
     </div>
   );
 }

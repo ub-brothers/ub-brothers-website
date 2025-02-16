@@ -9,9 +9,7 @@ import WhyUs from "./whyUs/page";
 import TourPackage from "./tour/page";
 import ContactInfo from "./contactDiv/page";
 import WhatAreWe from "./whatAreWe/page";
-import UmrahBookingForm from "./umrahForm/page";
-import UmrahBookingForm2 from "./umrahForm2/page";
-import UmrahPackage from "./umrah/page";
+import UmrahPage from "./umrahPage/page";
 
 export default function Home() {
   return (
@@ -26,31 +24,8 @@ export default function Home() {
       </div>
 
 <div className="my-10">
-<UmrahPackage/></div>
-      {/* <div
-      className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center min-h-screen py-20"
-      style={{ backgroundImage: "url('/image/luxury.jpg')" }}
-    >
-     
-      <motion.div
-        className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg max-w-lg w-full sm:mx-auto mx-4 relative z-10"
-        initial={{ opacity: 0, y: 50 }} // Start position
-        animate={{ opacity: 1, y: 0 }} // Animation when component mounts
-        transition={{ duration: 0.8, ease: "easeOut" }} // Smooth transition
-      >
-        <h2 className="text-xl font-bold text-center text-gray-800">
-        "Your Trip, Your Way! Let’s Customize It."
-
-    </h2>
-    <p className="text-center text-gray-600 my-2">
-    📍 Fill out the form & we’ll handle everything for you!
-    </p>
-        <TravelPackageForm />
-      </motion.div>
-    </div> */}
-     
-
-
+<UmrahPage/>  </div>
+ 
   <div className="my- bg-gray-200 text-center">
     <h1>.</h1>
    
@@ -68,7 +43,7 @@ export default function Home() {
   
  
   </div>
-{/* <UmrahBookingForm2/> */}
+
 
 
 

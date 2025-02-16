@@ -14,28 +14,7 @@ const ContactForm = () => {
     message: '',
   });
 
-  // const visaPrices: Record<string, string> = {
-  //     Malaysia : '$150',
-  //   Thailand: '$120',
-  //   Indonesia: '$130',
-  //   Cambodia: '$140',
-  //   Veitnam: '',
-  //   Singapore: '',
-  //   Turkey:"",
-  //   Dubai: '',
-  //   EastAfrica: '',
-  //   Oman: '',
-  //   Kazakhstan: '',
-  //   Tajikistan: '',
-  //   Uzbekistan: '',
-  //   Azerbaijan: '',
-  //   Tanzania : '',
-  //   Ethopia : '',
-  //   Zambia : '',
-  //   SriLanka : '',
-  //   Nepal : '',
-  //   Pakistan: '',
-  // };
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
