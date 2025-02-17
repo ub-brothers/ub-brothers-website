@@ -7,10 +7,6 @@ const ContactForm = () => {
     name: '',
     email: '',
     phone: '',
-    whatsapp: '',
-    visaType: 'e-visa',
-    country: '',
-   
     message: '',
   });
 
@@ -41,10 +37,6 @@ const ContactForm = () => {
       name: '',
       email: '',
       phone: '',
-      whatsapp: '',
-      visaType: 'e-visa',
-      country: '',
-      
       message: '',
     });
   } else {
@@ -67,19 +59,9 @@ const ContactForm = () => {
         <label className="block font-medium">Phone Number</label>
         <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone Number" className="w-full p-2 border rounded" required />
         
-        <label className="block font-medium">Select:</label>
-        <select name="visaType" value={formData.visaType} onChange={handleChange} className="w-full p-2 border rounded" required>
-       
-          <option value="sticker-visa">Sticker Visa</option>
-          <option value="tour-package">Tour Package</option>
-        </select>
+
         
-        <label className="block font-medium">Enter the Country You Want a Visa For</label>
-        <input name="country" placeholder='Enter country name' value={formData.country} onChange={handleChange} className="w-full p-2 border rounded" required>
-        </input>
-      
-        
-        <label className="block font-medium">Your Message</label>
+        <label className="block font-medium">Your Message/ Request</label>
         <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Your Message" className="w-full h-[150px] p-2 border rounded" required />
         
         <button type="submit" className="w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-600">Submit</button>
