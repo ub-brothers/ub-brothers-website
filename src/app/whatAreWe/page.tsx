@@ -14,7 +14,7 @@ const WhatAreWe = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="sm:text-5xl text-xl font-bold text-blue-600">What Are We?</h2>
+          <h2 className="sm:text-5xl text-2xl font-bold text-blue-600">What Are We?</h2>
           <p className="mt-6 text-gray-700 text-lg leading-relaxed">
             We are dedicated to providing the best travel experiences with customized packages,
             exclusive destinations, and top-tier customer service. Explore the world with us!

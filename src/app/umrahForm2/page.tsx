@@ -263,7 +263,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       )}
       <button className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
     </form>
-    <h1 className="text-center font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
+    <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
     <Hotels/>
     <PaymentDetails/>
     <ContactInfo/>

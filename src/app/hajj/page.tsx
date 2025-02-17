@@ -80,8 +80,8 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     {[
       { category: "Sharing", price: "1450000 PKR" },
-      { category: "Double Bed", price: "$80 per night" },
-      { category: "Triple Bed", price: "$100 per night" },
+      { category: "Double Bed", price: "1500000 PKR" },
+      { category: "Triple Bed", price: "1575000 PKR" },
     ].map((item, index) => (
       <motion.div
         key={index}
@@ -138,10 +138,32 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
       </p>
       
       <h3 className="text-2xl font-semibold text-gray-900 text-center mb-6">We'd love to hear from you!</h3>
-      <p className="text-lg text-center text-gray-700 max-w-2xl mb-12">
-        Experience an unforgettable and comfortable journey with our premium Hajj package. Our dedicated team is here to assist you at every step, ensuring a seamless and spiritually fulfilling experience.
-      </p>
-    
+     
+    </div>
+    <div className="w-full p-8">
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      
+      {/* Image with animation */}
+      <motion.div 
+        className="flex justify-center mb-6"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        whileHover={{ scale: 1.05 }}
+        viewport={{ once: false }} 
+      >
+        <img
+          src="/image/ceo.jpeg"
+          alt="Visa Applicant"
+          className="w-[200px] h-[200px] rounded-full object-cover"
+        />
+      </motion.div>
+
+      {/* Name and Numbers */}
+      <div className="text-center">
+        <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
+        <p className="text-sm text-gray-500 mt-2">+92 300 9480157</p>
+      </div>
     </div>
     <ContactInfo/>
     <PaymentDetails/>

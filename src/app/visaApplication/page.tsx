@@ -268,7 +268,7 @@ export default function VisaApplication() {
     
       
     </div>
-    <h1 className="text-center font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
+    <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
       <div className="my-4">
       <PaymentDetails/></div>
       <ContactInfo/>
