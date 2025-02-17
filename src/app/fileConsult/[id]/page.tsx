@@ -94,7 +94,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
 
       </div> 
 
-      <Link href="/contact">
+      <Link href="/fileConsultancyForm">
       <motion.button
           className="mt-2 px-6 ml-2 py-3 bg-blue-500 text-white font-semibold rounded-lg"
           initial={{ scale: 0.8 }}

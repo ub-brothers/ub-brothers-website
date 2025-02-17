@@ -17,7 +17,7 @@ export default function Home() {
  
       <Hero/>
       
-      <div className="lg:mt-24 sm:mt-10 mt-5 bg-gray-100">
+      <div className="mt-5 bg-gray-100">
         <h2 className="text-gray-100">.</h2>
         <h1 className="font-bold ml-6 text-xl md:text-3xl font-serif mt-4">Our Top Destinations</h1>
          <Featured/>

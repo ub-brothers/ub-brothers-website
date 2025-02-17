@@ -47,8 +47,8 @@ export default function HajjPackage() {
         transition={{ delay: 0.4, duration: 0.6 }}
         viewport={{ once: true }}
       >
-        <Image src="/image/mk.jpg" alt="Makkah" width={400} height={300} className="rounded-lg shadow-lg" />
-        <Image src="/image/madina.jpg" alt="Madina" width={400} height={300} className="rounded-lg shadow-lg" />
+        <Image src="/image/masjid.jpg" alt="Makkah" width={400} height={300} className="rounded-lg shadow-lg" />
+        <Image src="/image/makkahh.jpg" alt="Madina" width={400} height={300} className="rounded-lg shadow-lg" />
       </motion.div>
 
       <motion.p 
@@ -65,7 +65,7 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
       </motion.p>
       <Link href="/hajjForm">
       <motion.button 
-        className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition shadow-lg"
+        className="bg-blue-600 text-white px-6 py-3 mt-5 rounded-lg text-lg font-semibold hover:bg-blue-700 transition shadow-lg"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         whileInView={{ opacity: 1 }}
@@ -73,7 +73,7 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
         Book Now
       </motion.button></Link>
 
-      <div className="p-6 bg-gray-100 mt-10 flex flex-col items-center">
+      <div className="p-6  mt-10 flex flex-col items-center">
       <h2 className="text-lg font-semibold mb-4">Prices vary depending on the number of days you choose</h2>
       <div className="flex gap-6">
         {[
@@ -117,6 +117,8 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
         ))}
       </div>
       </div>
+
+      <h1 className="my-4 font-bold text-xl sm:text-2xl font-serif"><i>Stay in Comfortable and Quality Hotels!</i></h1>
       <motion.div 
         className="flex flex-col md:flex-row items-center gap-6 my-12"
         initial={{ opacity: 0, scale: 0.8 }}

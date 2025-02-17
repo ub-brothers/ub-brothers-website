@@ -44,7 +44,7 @@ const HotelSection = ({ title , hotels, description }: any) => {
 export default function Hotels() {
   return (
     <div className="py-12">
-      <h1 className="text-lg sm:mx-10 mx-4  text-center">We offer top-quality hotels with comfortable accommodations to ensure a relaxing stay. Our carefully selected hotels provide excellent amenities, exceptional service, and a welcoming atmosphere. Whether you're traveling for business or leisure, you can enjoy luxury and convenience at affordable rates. Book with us for a hassle-free experience and a memorable stay!</h1>
+   
       <HotelSection
         title="Makkah Hotels"
         hotels={hotels.makkah}

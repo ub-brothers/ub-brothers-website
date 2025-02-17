@@ -1,5 +1,7 @@
+"use client"
 import Link from "next/link";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaPhoneAlt, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
@@ -7,32 +9,59 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Column 1: Logo & About */}
         <div>
-            <div className="flex">
-          <img src="/image/logo.jpeg" alt="Logo" className="w-16 h-16 mb-3 rounded-3xl" />
-          <h1 className="font-serif text-2xl font-bold m-4">UB Brothers</h1>
+          <div className="flex items-center space-x-4">
+            <motion.img
+              src="/image/logo.jpeg"
+              alt="Logo"
+              className="w-16 h-16 mb-3 rounded-3xl"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            />
+            <h1 className="font-serif text-2xl font-bold text-white">UB Brothers</h1>
           </div>
-          <p className="text-sm text-gray-200">
+          <p className="text-sm text-gray-200 mt-2">
             Explore the world with us. We offer the best travel packages and experiences tailored just for you.
           </p>
+          <div className="flex space-x-4 mt-4">
+            <Link href="#" className="text-white hover:text-orange-500 text-2xl">
+              <FaFacebook />
+            </Link>
+            <Link
+              href="https://www.instagram.com/_ub_travel?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              className="text-white hover:text-orange-500 text-2xl"
+            >
+              <FaInstagram />
+            </Link>
+          </div>
         </div>
 
-        {/* Column 3: Contact & Social Links */}
+        {/* Column 2: Contact & Social Links */}
         <div>
           <h3 className="text-xl font-semibold text-orange-500 mb-3">Contact Us</h3>
-           <p className="text-sm text-gray-200">📞 +92 300 9480157</p>
-          <p className="text-sm text-gray-200">📞 +92 326 421 4241</p>
-          <p className="text-sm text-gray-200">📍 7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore Pakistan.</p>
-          <p className="text-sm text-gray-200">📍 H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore Pakistan.</p>
-          <p className="text-sm text-gray-200">✉ ubbrotherspk@gmail.com</p>
-          <p className="text-sm text-gray-200">✉ ubbrothersconsultant@gmail.com</p>
-          <p className="text-sm text-gray-200">✉ ubbrothersticketing@gmail.com</p>
+          <p className="text-sm text-gray-200 flex items-center">
+            <FaPhoneAlt className="mr-2" /> +92 300 9480157
+          </p>
+          <p className="text-sm text-gray-200 flex items-center">
+            <FaPhoneAlt className="mr-2" /> +92 326 421 4241
+          </p>
+          <p className="text-sm text-gray-200 flex items-center">
+            <FaMapMarkerAlt className="mr-2" /> 7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore, Pakistan.
+          </p>
+          <p className="text-sm text-gray-200 flex items-center">
+            <FaMapMarkerAlt className="mr-2" /> H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore, Pakistan.
+          </p>
+          <p className="text-sm text-gray-200 flex items-center">
+            <FaEnvelope className="mr-2" /> ubbrotherspk@gmail.com
+          </p>
+          <p className="text-sm text-gray-200 flex items-center">
+            <FaEnvelope className="mr-2" /> ubbrothersconsultant@gmail.com
+          </p>
+          <p className="text-sm text-gray-200 flex items-center">
+            <FaEnvelope className="mr-2" /> ubbrothersticketing@gmail.com
+          </p>
           
-          {/* Social Icons */}
-          <div className="flex space-x-4 mt-4">
-            <Link href="#" className="text-white hover:text-orange-500 text-2xl"><FaFacebook /></Link>
-            <Link href="https://www.instagram.com/_ub_travel?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-white hover:text-orange-500 text-2xl"><FaInstagram /></Link>
-            
-          </div>
+        
         </div>
       </div>
 

@@ -14,6 +14,8 @@ export default function UmrahPackage() {
 
   
      <Hotels/>
+
+  
     </div>
   );
 }

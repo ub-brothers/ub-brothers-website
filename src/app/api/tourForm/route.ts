@@ -3,29 +3,26 @@ import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, phone, whatsapp, visaType, country,  message } = await req.json();
+    const { fullName, phone, email, country, message } = await req.json();
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "emailforclient88@gmail.com",
-        pass: "mwba rpmh ldur gmyg", // Use Google App Password instead of real password
+        user: process.env.EMAIL_USER, // Replace with your email
+        pass:  process.env.EMAIL_PASS, // Use Google App Password
       },
     });
 
     const mailOptions = {
-      from: email,
-      to: "samiaurooj386@gmail.com", // Jahan aapko email receive karni hai
-      subject: `Contact Inquery - ${new Date().toLocaleString()}`,
+      from: process.env.EMAIL_USER,
+      to: "samiaurooj386@gmail.com", // Replace with receiver's email
+      subject: `New Tour Package Submission - ${new Date().toLocaleString()}`,
       html: `
-        <h2>Visa Inquiry Details</h2>
-        <p><strong>Name:</strong> ${name}</p>
+        <h2>Tour Package Details</h2>
+        <p><strong>Full Name:</strong> ${fullName}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>WhatsApp:</strong> ${whatsapp}</p>
-        <p><strong>Visa Type:</strong> ${visaType}</p>
-        <p><strong>Country:</strong> ${country}</p>
-       
+        <p><strong>Country Want Package for:</strong> ${country}</p>
         <p><strong>Message:</strong> ${message}</p>
       `,
     };

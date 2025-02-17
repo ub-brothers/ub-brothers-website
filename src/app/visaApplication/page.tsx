@@ -172,7 +172,7 @@ export default function VisaApplication() {
   <img src="/image/travel3.jpg" className="w-full h-full object-cover" alt="Travel Image" />
   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
     <h2 className="text-white text-2xl md:text-4xl font-bold text-center">
-    Secure & Smooth Visa Processing Starts Here
+    Secure & Smooth Visa Processing Starts Here!
     </h2>
   </div>
   </div>
@@ -268,6 +268,7 @@ export default function VisaApplication() {
     
       
     </div>
+    <h1 className="text-center font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
       <div className="my-4">
       <PaymentDetails/></div>
       <ContactInfo/>

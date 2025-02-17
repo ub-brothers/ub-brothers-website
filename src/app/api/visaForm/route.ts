@@ -44,7 +44,7 @@ export const POST = async (req:Request) => {
     const mailOptions = {
       from: "emailforclient88@gmail.com",
       to: "samiaurooj386@gmail.com",
-      subject: "New Visa Application Submission",
+      subject: `New E-Visa Application Submission - ${new Date().toLocaleString()}`,
       html: `
         <h2>Visa Application Details</h2>
         <p><strong>Visa Type:</strong> ${fields.visaType}</p>
