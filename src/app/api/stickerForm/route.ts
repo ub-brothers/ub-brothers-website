@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "samiaurooj386@gmail.com", // Replace with receiver's email
+      to: "ubbrothersconsultant@gmail.com", // Replace with receiver's email
       subject: `New Sticker Visa Application - ${new Date().toLocaleString()}`,
       html: `
         <h2>Sticker Visa Application Details</h2>

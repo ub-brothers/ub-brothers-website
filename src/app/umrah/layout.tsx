@@ -32,8 +32,8 @@ export default function DestinationLayout( {children,
        
     
         <div className="sm:text-right text-center m-4 sm:text-md text-sm">
-        <h1  className="font-bold">Shaharyaar Mughal:</h1>
-        <p>+92 300 9480157</p></div>
+        <h1  className="font-bold">Narmeen Mughal:</h1>
+        <p>+92 303 4225181</p></div>
       </div>
         {children}
 
@@ -45,7 +45,7 @@ export default function DestinationLayout( {children,
 
       {/* Name and Numbers */}
       <div className="text-center">
-        <p className="sm:text-2xl text-lg font-semibold font-serif">Miss Narmeen</p>
+        <p className="sm:text-2xl text-lg font-semibold font-serif">Narmeen Mughal</p>
         <p className="text-sm text-gray-500 mt-2">+92 303 4225181</p>
       </div>
     </div>

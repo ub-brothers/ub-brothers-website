@@ -34,7 +34,7 @@ const AboutUs = () => {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="font-bold text-xl font-serif">Your Trusted Partner for Visa & Travel Solutions ✈️</h1>
+          <h1 className="font-bold text-xl font-serif">Your Trusted Partner for Visa & Travel Solutions</h1>
           <p className="text-lg text-gray-700 leading-relaxed">
           At UB Brothers, we specialize in providing hassle-free visa processing and travel consultancy services. Whether you need a visa for work, study, tourism, or business, our expert team is here to guide you every step of the way.
             UB Brothers is a trusted travel agency specializing in visa processing and customized tour packages. Our dedicated team ensures a smooth and hassle-free experience for all your travel needs, offering expert guidance and top-notch customer service.
@@ -105,7 +105,7 @@ const AboutUs = () => {
           <p className="text-gray-600">+92 320 1426764</p>
         </div>
         <div className="p-4 bg-orange-100 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold">Qqari Ghulam Hussain Naqshbandi</h3>
+          <h3 className="text-xl font-semibold">Qari Ghulam Hussain Naqshbandi</h3>
           <p className="text-gray-700">Sales Executive</p>
           <p className="text-gray-600">+92 300 4429737</p>
         </div>

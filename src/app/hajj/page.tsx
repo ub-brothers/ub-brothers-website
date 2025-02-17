@@ -73,27 +73,29 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
         Book Now
       </motion.button></Link>
 
-      <div className="p-6  mt-10 flex flex-col items-center">
-      <h2 className="text-lg font-semibold mb-4">Prices vary depending on the number of days you choose</h2>
-      <div className="flex gap-6">
-        {[
-          { category: "Sharing", price: "1450000 PKR" },
-          { category: "Double Bed", price: "$80 per night" },
-          { category: "Triple Bed", price: "$100 per night" },
-        ].map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-            className="bg-blue-500 text-white p-4 rounded-lg shadow-lg w-48 text-center"
-          >
-            <h3 className="text-xl font-bold mb-2">{item.category}</h3>
-            <p className="text-lg">{item.price}</p>
-          </motion.div>
-        ))}
-      </div>
-    </div>
+      <div className="p-6 mt-10 flex flex-col items-center">
+  <h2 className="text-lg font-semibold mb-4 text-center">
+    Prices vary depending on the number of days you choose
+  </h2>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    {[
+      { category: "Sharing", price: "1450000 PKR" },
+      { category: "Double Bed", price: "$80 per night" },
+      { category: "Triple Bed", price: "$100 per night" },
+    ].map((item, index) => (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.2 }}
+        className="bg-blue-500 text-white p-4 rounded-lg shadow-lg w-full text-center"
+      >
+        <h3 className="text-xl font-bold mb-2">{item.category}</h3>
+        <p className="text-lg">{item.price}</p>
+      </motion.div>
+    ))}
+  </div>
+</div>
 
       <div className="min-h-screen flex flex-col items-center justify-center p-6">
         <div className='my-14'>

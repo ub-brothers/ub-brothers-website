@@ -9,13 +9,13 @@ export async function POST(req: NextRequest) {
       service: "gmail",
       auth: {
         user: "emailforclient88@gmail.com",
-        pass: "mwba rpmh ldur gmyg", // Use Google App Password instead of real password
+        pass: "mwba rpmh ldur gmyg", 
       },
     });
 
     const mailOptions = {
       from: email,
-      to: "samiaurooj386@gmail.com", // Jahan aapko email receive karni hai
+      to: "ubbrothersconsultant@gmail.com", 
       subject: `Contact Inquery - ${new Date().toLocaleString()}`,
       html: `
         <h2>Visa Inquiry Details</h2>

@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "samiaurooj386@gmail.com", // Change this to your recipient email
+      to: "ubbrotherspk@gmail.com", // Change this to your recipient email
       subject: `New Hajj Booking Request - ${new Date().toLocaleString()}`,
       html: `
         <h2>New Hajj Booking Details</h2>
