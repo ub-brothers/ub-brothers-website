@@ -185,4 +185,50 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
    }`)
   
 
-  
+   export const fileAndConsultancy = defineQuery(`*[_type == "fileConsultancy"]{
+    _id,
+    countryName,
+    prize,
+    requirements,
+    requirement1,
+    "imageUrl": image.asset->url,
+    "imageUrl2": image2.asset->url,
+    "imageUrl3": image3.asset->url,
+    shortDescription
+  }`)
+
+  export const fileAndConsultancyDetail = defineQuery(`*[_type == "fileConsultancy"  && _id == $id][0]{
+    _id,
+   countryName,
+   requirements,
+ requirement1,
+ requirement2,
+ requirement3,
+ requirement4,
+ requirement5,
+ requirement6,
+ requirement7,
+ requirement8,
+ requirement9,
+ requirement10,
+ requirement11,
+ requirement12,
+ requirement13,
+ requirement14,
+ requirement15,
+ supportiveDoc,
+ requirement16,
+ requirement17,
+ requirement18,
+ requirement19,
+ requirement20,
+ requirement21,
+  requirement22,
+   requirement23,
+    requirement24,
+   "imageUrl": image.asset->url,
+    "imageUrl2": image2.asset->url,
+     "imageUrl3": image3.asset->url,
+   prize,
+   shortDescription
+ }`)

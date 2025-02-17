@@ -18,25 +18,16 @@ export default function VisaApplication() {
     nationality: "",
     firstName: "",
     countryName:"",
-    surname: "",
+   
     fatherName: "",
     gender: "",
-    formerNationality: "",
-    placeOfIssue: "",
-    placeOfBirth: "",
-    dateOfBirth: "",
-    maritalStatus: "",
-    occupation: "",
+  
     phone: "",
     email: "",
-    zipCode: "",
+
     residenceAddress: "",
     passportNumber: "",
-    passportType: "",
-    dateOfIssue: "",
-    dateOfExpiration: "",
-    durationOfStay: "",
-    entryType: "",
+   
     approximateArrivalDate: "",
     approximateDepartureDate: "",
   });
@@ -49,25 +40,16 @@ export default function VisaApplication() {
     formDataToSend.append("nationality", formData.nationality);
     formDataToSend.append("firstName", formData.firstName);
     formDataToSend.append("countryName", formData.countryName);
-    formDataToSend.append("surname", formData.surname);
+    
     formDataToSend.append("fatherName", formData.fatherName);
     formDataToSend.append("gender", formData.gender);
-    formDataToSend.append("formerNationality", formData.formerNationality);
-    formDataToSend.append("placeOfBirth", formData.placeOfIssue);
-    formDataToSend.append("placeOfBirth", formData.placeOfBirth);
-    formDataToSend.append("dateOfBirth", formData.dateOfBirth);
-    formDataToSend.append("maritalStatus", formData.maritalStatus);
-    formDataToSend.append("occupation", formData.occupation);
+ 
     formDataToSend.append("phone", formData.phone);
     formDataToSend.append("email", formData.email);
-    formDataToSend.append("zipCode", formData.zipCode);
+
     formDataToSend.append("residenceAddress", formData.residenceAddress);
     formDataToSend.append("passportNumber", formData.passportNumber);
-    formDataToSend.append("passportType", formData.passportType);
-    formDataToSend.append("dateOfIssue", formData.dateOfIssue);
-    formDataToSend.append("dateOfExpiration", formData.dateOfExpiration);
-    formDataToSend.append("durationOfStay", formData.durationOfStay);
-    formDataToSend.append("entryType", formData.entryType);
+ 
     formDataToSend.append("approximateArrivalDate", formData.approximateArrivalDate);
     formDataToSend.append("approximateDepartureDate", formData.approximateDepartureDate);
 
@@ -105,63 +87,9 @@ export default function VisaApplication() {
   };
 
   
-  const countries = [
-    'Afghanistan',
-    'Armenia',
-    'Azerbaijan',
-    'Bahrain',
-    'Bangladesh',
-    'Bhutan',
-    'Brunei',
-    'Cambodia',
-    'China',
-    'Cyprus',
-    'East Timor',
-    'Georgia',
-    'India',
-    'Indonesia',
-    'Iran',
-    'Iraq',
-    'Israel',
-    'Japan',
-    'Jordan',
-    'Kazakhstan',
-    'North Korea',
-    'South Korea',
-    'Kuwait',
-    'Kyrgyzstan',
-    'Laos',
-    'Lebanon',
-    'Malaysia',
-    'Maldives',
-    'Mongolia',
-    'Myanmar',
-    'Nepal',
-    'Oman',
-    'Pakistan',
-    'Palestine',
-    'Philippines',
-    'Qatar',
-    'Russia',
-    'Saudi Arabia',
-    'Singapore',
-    'Sri Lanka',
-    'Syria',
-    'Taiwan',
-    'Tajikistan',
-    'Thailand',
-    'Turkey',
-    'Turkmenistan',
-    'United Arab Emirates',
-    'Uzbekistan',
-    'Vietnam',
-    'Yemen',
-  ];
 
-  const passType = ["Ordinary Passport", 
-   "Diplomatic Passport",
-   "Official Passport" ,
-   "Emergency Passport" ];
+
+ 
 
   const checkImageQuality = (file: File, checkWhiteBg: boolean, setValidState: any , setImage: (image: string)=> void) => {
     const reader = new FileReader();
@@ -261,19 +189,14 @@ export default function VisaApplication() {
           <option>Select Visa Type</option>
           <option>Tourist</option>
           <option>Business</option>
-          
         </select>
-        <p>Nationality</p>
-        <select className="w-full p-2 border rounded mb-2" name="nationality" value={formData.nationality} onChange={handleChange} >
-          {countries.map((country,index)=>(<option key={index} value={country}>{country}</option>))}
-          
-        </select>
-        <p>Type of Passport</p>
-        <select className="w-full p-2 border rounded mb-2" name="passportType" value={formData.passportType} onChange={handleChange} >
-        {passType.map(( type, index)=>(<option key={index} value={type}>{type}</option>))}
-        </select>
+
+        <p>Nationality:</p>
+        <input className="w-full p-2 border rounded mb-2" placeholder="Your nationality" type="text" name="nationality" value={formData.nationality} onChange={handleChange} >
+        </input>
+
        
-        <p>Country you want visa for</p>
+        <p>Country you want visa for:</p>
         <input placeholder="Enter Country name" name="countryName" type="text" value={formData.countryName} onChange={handleChange} className="w-full p-2 border rounded mb-2">
          
         </input>
@@ -281,10 +204,9 @@ export default function VisaApplication() {
 
       <section>
         <h3 className="text-xl font-semibold text-blue-800 mb-2 mt-10"><u>Personal Information</u></h3>
-        <p>First Name</p>
-        <input type="text" placeholder="Enter First Name" name="firstName" value={formData.firstName} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
-        <p>Surname</p>
-        <input type="text" placeholder="Enter Surname" name="surname" value={formData.surname} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
+        <p>Full Name</p>
+        <input type="text" placeholder="Enter Full Name" name="firstName" value={formData.firstName} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
+      
         <p>Father’s Name</p>
         <input type="text" placeholder="Enter Father’s Name" name="fatherName" value={formData.fatherName} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
         <p>Gender</p>
@@ -294,20 +216,7 @@ export default function VisaApplication() {
           <option>Female</option>
           <option>Other</option>
         </select>
-        <p>Former Nationality</p>
-        <input type="text" placeholder="Enter Former Nationality" name="formerNationality" value={formData.formerNationality} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
-        <p>Place of Birth</p>
-        <input type="text" placeholder="Enter Place of Birth" name="placeOfBirth" value={formData.placeOfBirth} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
-        <p>Date of Birth</p>
-        <input type="date" className="w-full p-2 border rounded mb-2" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} />
-        <p>Marital Status</p>
-        <select className="w-full p-2 border rounded mb-2" name="maritalStatus" value={formData.maritalStatus} onChange={handleChange}>
-          <option>Select Status</option>
-          <option>Single</option>
-          <option>Married</option>
-        </select>
-        <p>Occupation</p>
-        <input type="text" placeholder="Enter Occupation" name="occupation" value={formData.occupation} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
+    
         <section>
         <h3 className="text-lg mb-2">Personal Photo (White Background & Clear)</h3>
         <input type="file" name="photo" onChange={(e) => handleFileUpload(e,"photo",  setPhotoValid, true)}  className="w-full p-2 border rounded mb-2" />
@@ -323,8 +232,6 @@ export default function VisaApplication() {
         <input type="text" placeholder="Enter Phone Number" name="phone" value={formData.phone}  onChange={handleChange} className="w-full p-2 border rounded mb-2" />
         <p>Email</p>
         <input type="text" placeholder="Enter Email" name="email" value={formData.email}  onChange={handleChange} className="w-full p-2 border rounded mb-2" />
-        <p>Zip Code</p>
-        <input type="text" placeholder="Enter Zip Code" name="zipCode" value={formData.zipCode} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
         <p>Residence Address</p>
         <input type="text" placeholder="Enter Address" name="residenceAddress" value={formData.residenceAddress}  onChange={handleChange} className="w-full p-2 border rounded mb-2" />
       </section>
@@ -333,28 +240,14 @@ export default function VisaApplication() {
         <h3 className="text-xl font-semibold text-blue-800 mb-2 mt-10"><u>Passport Information</u></h3>
         <p>Passport Number</p>
         <input type="text" placeholder="Enter Passport Number" name="passportNumber" value={formData.passportNumber} onChange={handleChange} className="w-full p-2 border rounded mb-2" />
-        <p>Type of Passport</p>
-        <select className="w-full p-2 border rounded mb-2" value={formData.passportType}  onChange={handleChange}>
-          {passType.map(( type , index)=>(<option key={index} value={type}>{type}</option>))}
-          
-        </select>
-        <p>Date of Issue</p>
-        <input type="date" className="w-full p-2 border rounded mb-2" name="dateOfIssue" value={formData.dateOfIssue} onChange={handleChange}/>
-        <p>Date of Expiration</p>
-        <input type="date" className="w-full p-2 border rounded mb-2" name="dateOfExpiration" value={formData.dateOfExpiration} onChange={handleChange}/>
+       
+       
         <section>
         <h3 className="text-lg mb-2">Passport Photo (Clear Image)</h3>
         <input type="file"  name="passportPhoto" onChange={(e) => handleFileUpload(e, "passportPhoto", setPassportValid)} className="w-full p-2 border rounded mb-2" />
         {passportPhoto && <img src={passportPhoto} alt="Passport" className="h-24 mt-2" />} 
         {passportValid !== null && (passportValid ? "✅" : "❌ Photo is not clear")}
       </section>
-        <p>Duration of Stay</p>
-        <input type="text" placeholder="Enter Duration" name="durationOfStay" value={formData.durationOfStay}  onChange={handleChange} className="w-full p-2 border rounded mb-2" />
-        <p>Type of Entry</p>
-        <select className="w-full p-2 border rounded mb-2" name="entryType" value={formData.entryType}  onChange={handleChange}>
-          <option>Once</option>
-          <option>Double</option>
-        </select>
         <p>Approximate Arrival Date</p>
         <input type="date" className="w-full p-2 border rounded mb-2" name="approximateArrivalDate" value={formData.approximateArrivalDate} onChange={handleChange}/>
         <p>Approximate Departure Date</p>
@@ -372,9 +265,12 @@ export default function VisaApplication() {
         </button>
       </div>
       </form>
-      <PaymentDetails/>
-      <ContactInfo/>
+    
       
-    </div></div>
+    </div>
+      <div className="my-4">
+      <PaymentDetails/></div>
+      <ContactInfo/>
+    </div>
   );
 }

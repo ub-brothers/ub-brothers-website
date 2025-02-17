@@ -11,13 +11,15 @@ export const hajjDays = {
     },
     {
       name: 'makkahHotel',
-      type: 'string',
-      title: 'Makkah Hotel',
+      type: 'array',
+      title: 'Makkah Hotels',
+      of: [{ type: 'string' }], // Allows multiple hotel names
     },
     {
       name: 'madinaHotel',
-      type: 'string',
-      title: 'Madina Hotel',
+      type: 'array',
+      title: 'Madina Hotels',
+      of: [{ type: 'string' }], // Allows multiple hotel names
     },
     {
       name: 'roomCategories',

@@ -35,11 +35,12 @@ export default function ContactInfo() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center gap-2">
           <FaMapMarkerAlt /> Office Locations
         </h2>
-        <p className="text-gray-600 text-lg flex items-center justify-center gap-2">
-          <FaMapMarkerAlt />  7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore Pakistan.
+        <p className="text-gray-600 text-lg flex items-center justify-center mb-2">
+      7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore Pakistan.
         </p>
-        <p className="text-gray-600 text-lg flex items-center justify-center gap-2">
-          <FaMapMarkerAlt />  H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore Pakistan.
+        <hr/>
+        <p className="text-gray-600 text-lg flex items-center justify-center mt-2">
+       H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore Pakistan.
         </p>
       </motion.div>
 

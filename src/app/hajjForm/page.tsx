@@ -13,8 +13,8 @@ interface RoomCategory {
 
 interface HajjDay {
   days: string;
-  makkahHotel: string;
-  madinaHotel: string;
+  makkahHotel: string[];
+  madinaHotel: string[];
   roomCategories: RoomCategory[];
 }
 
@@ -104,14 +104,25 @@ export default function HajjForm() {
 
       
       <label className="block mb-2 font-semibold">Makkah Hotel:</label>
-      <select className="w-full p-2 border rounded mb-4">
-        {selectedDay && <option value={selectedDay.makkahHotel}>{selectedDay.makkahHotel}</option>}
-      </select>
+<select className="w-full p-2 border rounded mb-4">
+  <option value="">Select Hotel</option>
+  {selectedDay?.makkahHotel?.map((hotel, index) => (
+    <option key={index} value={hotel}>
+      {hotel}
+    </option>
+  ))}
+</select>
+  
+<label className="block mb-2 font-semibold">Madina Hotel:</label>
+<select className="w-full p-2 border rounded mb-4">
+  <option value="">Select Hotel</option>
+  {selectedDay?.madinaHotel?.map((hotel, index) => (
+    <option key={index} value={hotel}>
+      {hotel}
+    </option>
+  ))}
+</select>
 
-      <label className="block mb-2 font-semibold">Madina Hotel:</label>
-      <select className="w-full p-2 border rounded mb-4">
-        {selectedDay && <option value={selectedDay.madinaHotel}>{selectedDay.madinaHotel}</option>}
-      </select>
 
       <label className="block mb-2 font-semibold">Select Room Category:</label>
       <select

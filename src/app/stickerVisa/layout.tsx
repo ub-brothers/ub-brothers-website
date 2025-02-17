@@ -29,7 +29,16 @@ export default function DestinationLayout( {children,
             Sticker Visa
           </button>
         </Link>
-        <Link href="/tour">
+        <Link href="/fileConsult">
+          <button
+            className={`${
+              pathname.startsWith ("/fileConsult") ? "bg-blue-500" : "bg-orange-500"
+            } w-[170px] sm:mt-0 mt-2 rounded-2xl h-6 text-white font-bold font-sans hover:bg-blue-700 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg`}
+          >
+            File & Consultancy
+          </button>
+        </Link>
+        <Link href="/tour" className="mx-2">
           <button
             className={`${
               pathname.startsWith ("/tour") ? "bg-blue-500" : "bg-orange-500"

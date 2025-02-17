@@ -21,7 +21,7 @@ export default function HajjPackage() {
   return (
     <div className="min-h-screen  flex flex-col items-center p-6">
       <motion.h1 
-        className="text-4xl font-bold text-center font-serif text-blue-800 mb-4"
+        className="text-4xl font-bold text-center font-serif text-blue-800 mb-1 sm:mb-4"
         initial={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.6 }}
         whileInView={{ opacity: 1 }}
@@ -58,8 +58,6 @@ export default function HajjPackage() {
         transition={{ delay: 0.6, duration: 0.6 }}
         whileInView={{ opacity: 1 }}
       >
-       Experience the spiritual journey of a lifetime with our Exclusive Hajj Package.
-Enjoy a seamless and well-organized pilgrimage with top-tier services and accommodations.
 Customize your travel duration according to your convenience and spiritual needs.
 Our package offers premium hotels, delicious meals, and comfortable transportation.
 All this comes at reasonable prices, ensuring an affordable yet luxurious experience.
@@ -74,6 +72,28 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
       >
         Book Now
       </motion.button></Link>
+
+      <div className="p-6 bg-gray-100 mt-10 flex flex-col items-center">
+      <h2 className="text-lg font-semibold mb-4">Prices vary depending on the number of days you choose</h2>
+      <div className="flex gap-6">
+        {[
+          { category: "Sharing", price: "1450000 PKR" },
+          { category: "Double Bed", price: "$80 per night" },
+          { category: "Triple Bed", price: "$100 per night" },
+        ].map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+            className="bg-blue-500 text-white p-4 rounded-lg shadow-lg w-48 text-center"
+          >
+            <h3 className="text-xl font-bold mb-2">{item.category}</h3>
+            <p className="text-lg">{item.price}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
 
       <div className="min-h-screen flex flex-col items-center justify-center p-6">
         <div className='my-14'>
