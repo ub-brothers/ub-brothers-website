@@ -247,7 +247,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <input type="file" accept="image/*"  onChange={(e) => setPassportScan(e.target.files?.[0] || null)} className="w-full p-3 mb-5 border rounded-md" />
             <label className="font-semibold">Nationality</label>
             <input placeholder="Nationality" className="w-full p-3 mb-5 border rounded-md" />
-             <p className="mt-4">Note: The Visa charges apply separately. Visa charges not included in total cost below.</p>
+             <p className="mt-4">Note: Visa charges apply separately and are not included in the total cost below.</p>
           </div>
         )}
         

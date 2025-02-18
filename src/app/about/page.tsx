@@ -4,13 +4,14 @@ import Image from "next/image";
 import WhyUs from "../whyUs/page";
 import ClientReviews from "../clientReview/page";
 import WhatAreWe from "../whatAreWe/page";
+import ServicesSection from "../ourService/page";
 
 const AboutUs = () => {
   return (
     <div className="container mx-auto px-4 py-12">
       {/* About Us Heading */}
       <motion.h1
-        className="sm:text-4xl text-2xl font-bold text-blue-800 font-serif text-center mb-10"
+        className="sm:text-4xl text-3xl font-bold text-blue-800 font-serif text-center mb-10"
         initial={{ opacity: 0, y: -50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -21,12 +22,12 @@ const AboutUs = () => {
       {/* About UB Brothers Section */}
       <div className="flex flex-col md:flex-row items-center gap-8 mb-16">
         <motion.div 
-          className="w-full md:w-1/2"
+          className="w-full md:w-1/2 flex justify-center"
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Image src="/image/logo.jpeg" width={500} height={300} alt="UB Brothers" className="rounded-3xl shadow-lg" />
+          <Image src="/image/logo.jpeg" width={500} height={300} alt="UB Brothers" className="w-full max-w-xs md:max-w-md rounded-3xl shadow-lg" />
         </motion.div>
         <motion.div 
           className="w-full md:w-1/2"
@@ -122,6 +123,7 @@ const AboutUs = () => {
       <div>
         <WhyUs/>
       </div>
+      <ServicesSection/>
       <div>
         <ClientReviews/>
       </div>

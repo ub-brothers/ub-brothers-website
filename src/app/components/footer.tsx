@@ -47,10 +47,10 @@ const Footer = () => {
           </p>
           <h1 className="font-bold mt-2">Office locations:</h1>
           <p className="text-sm text-gray-200 flex items-center">
-              7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore, Pakistan.
+           7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore, Pakistan.
           </p>
-          <p className="text-sm text-gray-200 flex items-center">
-            H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore, Pakistan.
+          <p className="text-sm text-gray-200 my-1 flex items-center">
+           H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore, Pakistan.
           </p>
           <p className="text-sm text-gray-200 flex items-center">
             <FaEnvelope className="mr-2" /> ubbrotherspk@gmail.com

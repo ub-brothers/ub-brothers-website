@@ -37,9 +37,7 @@ export default function ContactUs() {
         <ContactInfo/>
   
   
-        <div className="my-4">
-          <ServicesSection />
-        </div>
+       
         <div className="mb-4">
           <PaymentDetails />
         </div>
