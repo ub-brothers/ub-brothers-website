@@ -165,7 +165,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       <label className="font-semibold">Select Days</label>
       <select onChange={(e) => setSelectedDays(Number(e.target.value))} className="w-full p-3 mb-5 border rounded-md">
         {daysOptions.map((day) => (
-          <option key={day.days} value={day.days}>{`${day.days} Days - ${day.price} PKR/-`}</option>
+          <option key={day.days} value={day.days}>{`${day.days} Days`}</option>
         ))}
       </select>
       
@@ -190,7 +190,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 {availableMakkahCategories.length > 0 ? (
     availableMakkahCategories.map((catObj) => (
       <option key={catObj.categoryName} value={catObj.categoryName}>
-        {catObj.categoryName} - {catObj.price} PKR/-
+        {catObj.categoryName} - {catObj.price} PKR/- (per night).
       </option>
     ))
   ) : (
@@ -221,7 +221,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 {availableMadinaCategories.length > 0 ? (
     availableMadinaCategories.map((catObj) => (
       <option key={catObj.categoryName} value={catObj.categoryName}>
-        {catObj.categoryName} - {catObj.price} PKR/-
+        {catObj.categoryName} - {catObj.price} PKR/- (per night).
       </option>
     ))
   ) : (
