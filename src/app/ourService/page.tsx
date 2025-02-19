@@ -61,9 +61,9 @@ const ServicesSection = () => {
             <p className="text-gray-700 mb-4">
               Our expert consultants are available to guide you through the process of selecting the best travel and visa options for your needs.
             </p>
-            <Link href="/contact">
+            <Link href="/fileConsult">
             <button className="bg-orange-400 text-white py-2 px-6 rounded-full hover:bg-orange-500 transition duration-300">
-              Contact
+              Get Consultancy
             </button></Link>
           </motion.div>
         </div>

@@ -47,32 +47,7 @@ const TourPackage = ()=>{
             ))}
         </div>
 
-        <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
-      
-      {/* Image with animation */}
-      <motion.div 
-        className="flex justify-center mb-6"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        whileHover={{ scale: 1.05 }}
-        viewport={{ once: false }} // Trigger animation only once when in view
-      >
-        <img
-          src="/image/ali.jpeg"
-          alt="Visa Applicant"
-          className="w-[200px] h-[200px] rounded-full object-cover"
-        />
-      </motion.div>
-
-      {/* Name and Numbers */}
-      <div className="text-center">
-        <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
-        <p className="text-sm text-gray-500 mt-2">+923 264 214241</p>
-        <p className="text-sm text-gray-500">+923 174 141149</p>
-      </div>
-    </div>
+       
     </div>
      
     )

@@ -165,7 +165,7 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
         <p className="text-sm text-gray-500 mt-2">+92 300 9480157</p>
       </div>
     </div>
-    <ContactInfo/>
+    
     <PaymentDetails/>
     </div>
   );
