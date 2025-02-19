@@ -6,7 +6,7 @@ import { sanityFetch } from "@/sanity/lib/client";
 import { detailCountry, allDestinations } from "@/sanity/lib/queries";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import ContactInfo from '@/app/contactDiv/page';
+
 
 export default function DetailPage({ params }: { params: { id: string } }) {
   const [countries, setCountries] = useState<Destination | null>(null);
@@ -108,7 +108,33 @@ export default function DetailPage({ params }: { params: { id: string } }) {
         </motion.button>
         </Link>
 
-        <ContactInfo/>
+        <div className="w-full p-8">
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      
+      {/* Image with animation */}
+      <motion.div 
+        className="flex justify-center mb-6"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        whileHover={{ scale: 1.05 }}
+        viewport={{ once: false }} // Trigger animation only once when in view
+      >
+        <img
+          src="/image/ali.jpeg"
+          alt="Visa Applicant"
+          className="w-[200px] h-[200px] rounded-full object-cover"
+        />
+      </motion.div>
+
+      {/* Name and Numbers */}
+      <div className="text-center">
+        <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
+        <p className="text-sm text-gray-500 mt-2">+923 264 214241</p>
+        <p className="text-sm text-gray-500">+923 174 141149</p>
+      </div>
+    </div>
+
     
 
 
@@ -120,7 +146,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-6 mx-auto max-w-6xl">
           {randomCountries.map((country) => (
             <div key={country._id} className="sm:w-[290px] w-[150px] border-solid border-black rounded-xl bg-blue-200 xl:mx-10 mx-auto sm:mx-4 hover:shadow-md hover:shadow-black text-center my-3">
-              <Link href={`/destinations/${country._id}`}>
+              <Link href={`/stickerVisa/${country._id}`}>
               <div className="relative group">
   <img src={country.imageUrl} alt={country.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
   <div className="absolute inset-0 bg-white  bg-opacity-50 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
