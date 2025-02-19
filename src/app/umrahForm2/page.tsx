@@ -12,7 +12,7 @@ const UmrahBookingForm2 = () => {
   const [daysOptions, setDaysOptions] = useState<{ days: number; price: number }[]>([]);
   const [categories, setCategories] = useState<{ categoryName: string; price: number }[]>([]);
   const [selectedDays, setSelectedDays] = useState<number>(7);
-
+  const [proceedClicked, setProceedClicked] = useState(false);
   const [availableMakkahCategories, setAvailableMakkahCategories] = useState< { categoryName: string; price: number }[]>([]);
   const [availableMadinaCategories, setAvailableMadinaCategories] = useState< { categoryName: string; price: number }[]>([]);
 
@@ -27,7 +27,7 @@ const UmrahBookingForm2 = () => {
   const [selectedMadinaHotel, setSelectedMadinaHotel] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [totalCost, setTotalCost] = useState<number>(0);
-  const [formData, setFormData] = useState({ name: "", phone: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", nationality: "" });
 
   // Makkah hotel selection logic
   const handleMakkahHotelChange = (hotelName: string) => {
@@ -96,7 +96,12 @@ const UmrahBookingForm2 = () => {
     const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
 
     // Total calculation
-    const total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
+    let total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
+
+    if (visaStatus === "no" && proceedClicked) {
+      total += 41000;
+    }
+
     setTotalCost(total);
 
     console.log("Selected Makkah Category Price:", selectedMakkahCategoryPrice);
@@ -120,6 +125,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   formDataToSend.append("madinaHotel", selectedMadinaHotel);
   formDataToSend.append("madinaCategory", selectedCategory);
   formDataToSend.append("visaStatus", visaStatus);
+  formDataToSend.append("nationality", formData.nationality);
   formDataToSend.append("totalCost", totalCost.toString());
 
   // ✅ **Corrected image handling**
@@ -240,14 +246,20 @@ const handleSubmit = async (e: React.FormEvent) => {
         {visaStatus === "no" && (
           <div className=" bg-gray-100 p-4 rounded-md">
             <h3 className="font-bold">Fill out the form and apply for Visa!</h3>
-           
+            <h3 className="font-bold mb-2">Charges: Rs. 41000</h3>
             <label className="font-semibold">Personal Photo (White BG)</label>
             <input type="file" accept="image/*"  onChange={(e) => setPersonalPhoto(e.target.files?.[0] || null)} className="w-full p-3 border mb-5 rounded-md" />
             <label className="font-semibold">Passport Scan Copy</label>
             <input type="file" accept="image/*"  onChange={(e) => setPassportScan(e.target.files?.[0] || null)} className="w-full p-3 mb-5 border rounded-md" />
             <label className="font-semibold">Nationality</label>
-            <input placeholder="Nationality" className="w-full p-3 mb-5 border rounded-md" />
-             <p className="mt-4">Note: Visa charges apply separately and are not included in the total cost below.</p>
+            <input placeholder="Nationality" name="nationality"  onChange={(e) => setFormData({ ...formData, nationality: e.target.value })} className="w-full p-3 mb-5 border rounded-md" />
+            <button
+  type="button"
+  onClick={() => setProceedClicked(true)}
+  className="mt-2 bg-blue-800 hover:bg-orange-500 text-white p-3 rounded-md font-semibold"
+>
+ Confirm & Proceed
+</button>
           </div>
         )}
         
