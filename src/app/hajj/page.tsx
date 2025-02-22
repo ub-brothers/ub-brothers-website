@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { FaPlane, FaHotel, FaUtensils, FaBus, FaMosque } from 'react-icons/fa';
 import Link from 'next/link';
 import PaymentDetails from '../payment/page';
-import ContactInfo from '../contactDiv/page';
+
 
 
 const features = [

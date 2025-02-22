@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "samiaurooj386@gmail.com", // Change to the email where you want to receive details
+      to: "ubbrothersticketing@gmail.com", // Change to the email where you want to receive details
       subject: `New Umrah Booking request - ${new Date().toLocaleString()}`,
       text: `
         Name: ${name}

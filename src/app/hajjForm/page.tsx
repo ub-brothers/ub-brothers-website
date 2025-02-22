@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import {client} from "@/sanity/lib/client"
 import PaymentDetails from '../payment/page';
 import ContactInfo from '../contactDiv/page';
+import { motion } from 'framer-motion';
 
 
 interface RoomCategory {
@@ -150,6 +151,31 @@ export default function HajjForm() {
       <button onClick={handleSubmit} className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
     </div>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
+    <div className="w-full p-8">
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      
+      {/* Image with animation */}
+      <motion.div 
+        className="flex justify-center mb-6"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        whileHover={{ scale: 1.05 }}
+        viewport={{ once: false }} 
+      >
+        <img
+          src="/image/ceo.jpeg"
+          alt="Visa Applicant"
+          className="w-[200px] h-[200px] rounded-full object-cover"
+        />
+      </motion.div>
+
+      {/* Name and Numbers */}
+      <div className="text-center">
+        <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
+        <p className="text-sm text-gray-500 mt-2">+92 300 9480157</p>
+      </div>
+    </div>
     <PaymentDetails/>
     <ContactInfo/>
     </div>

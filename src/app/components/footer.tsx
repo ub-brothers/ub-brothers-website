@@ -28,7 +28,7 @@ const Footer = () => {
               <FaFacebook />
             </Link>
             <Link
-              href="https://www.instagram.com/_ub_travel?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              href="https://www.instagram.com/ubbrotherstraveltours/"
               className="text-white hover:text-orange-500 text-2xl"
             >
               <FaInstagram />

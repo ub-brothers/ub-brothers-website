@@ -5,6 +5,7 @@ import ServicesSection from "../ourService/page";
 import { motion } from "framer-motion";
 import PaymentDetails from "../payment/page";
 import ContactInfo from "../contactDiv/page";
+import SocialBox from "../socialMedia/page";
 
 
 export default function ContactUs() {
@@ -31,9 +32,12 @@ export default function ContactUs() {
           {/* Form */}
           <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg max-w-lg w-full sm:mx-auto mx-4 relative z-10">
             <ContactForm />
+           
           </div>
+           
         </div>
-
+        <div className="my-5">
+<SocialBox/></div>
         <ContactInfo/>
   
   
