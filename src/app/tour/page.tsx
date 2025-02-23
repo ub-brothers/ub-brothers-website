@@ -35,7 +35,7 @@ const TourPackage = ()=>{
     <h3 className="text-sm font-bold font-serif text-black">{tour.countryName}</h3>
   </div>
 </div> 
-{/* <h1 className="text-black text-sm text-left ml-6">{tour.shortDescription}</h1> */}
+
 
                   <h3 className=" sm:text-md text-sm text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
                                       <h2 className="text-left text-sm ml-4 sm:text-md mt-1">Rs. {tour.prize}</h2>

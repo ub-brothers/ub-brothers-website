@@ -8,7 +8,7 @@ const WhyUs = () => {
   return (
     <section className="bg-gray-100 py-16 px-6 md:px-12 my-10">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
-        {/* Left Side - Image */}
+        
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -25,7 +25,6 @@ const WhyUs = () => {
           />
         </motion.div>
 
-        {/* Right Side - Content */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}

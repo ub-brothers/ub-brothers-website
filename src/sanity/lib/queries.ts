@@ -232,3 +232,20 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
    prize,
    shortDescription
  }`)
+
+
+
+ export const iranZiyarat = defineQuery(`*[_type == "iranIraq"]{
+  _id,
+  countryName,
+  prize,
+  shortDescription,
+  tourIncludeHeading,
+  tourInclude1,
+  tourInclude2,
+  tourInclude3,
+  tourInclude4,
+ 
+  "imageUrl": image.asset->url,
+   "imageUrl2": image2.asset->url
+  }`)

@@ -33,7 +33,7 @@ export default function StickerVisaForm() {
       
       if (result.success) {
         alert('Your application has been submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '', message: '' }); // Clear form
+        setFormData({ fullName: '', phone: '', email: '', country: '', message: '' }); 
       } else {
         alert('Failed to submit. Please try again.');
       }
@@ -127,16 +127,15 @@ export default function StickerVisaForm() {
     </div>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
     <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
       
-      {/* Image with animation */}
       <motion.div 
         className="flex justify-center mb-6"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         whileHover={{ scale: 1.05 }}
-        viewport={{ once: false }} // Trigger animation only once when in view
+        viewport={{ once: false }} 
       >
         <img
           src="/image/ali.jpeg"
@@ -145,11 +144,12 @@ export default function StickerVisaForm() {
         />
       </motion.div>
 
-      {/* Name and Numbers */}
+      
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
         <p className="text-sm text-gray-500 mt-2">+923 264 214241</p>
         <p className="text-sm text-gray-500">+923 174 141149</p>
+        <p className="text-sm text-gray-500">&#9993;  ubbrothersconsultant@gmail.com</p>
       </div>
     </div>
    

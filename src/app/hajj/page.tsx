@@ -141,9 +141,9 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
      
     </div>
     <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
       
-      {/* Image with animation */}
+     
       <motion.div 
         className="flex justify-center mb-6"
         initial={{ opacity: 0, y: 50 }}
@@ -159,10 +159,11 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
         />
       </motion.div>
 
-      {/* Name and Numbers */}
+      
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
         <p className="text-sm text-gray-500 mt-2">+92 300 9480157</p>
+        <p className="text-sm text-gray-500">&#9993;  ubbrotherspk@gmail.com</p>
       </div>
     </div>
     

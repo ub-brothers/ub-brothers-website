@@ -121,3 +121,20 @@ export interface FileCons {
     shortDescription: string,
 }
 
+
+
+export interface IranType {
+    _id: string,
+    countryName: string,
+    prize: number,
+    shortDescription: string,
+   
+    tourIncludeHeading: string,
+    tourInclude1: string,
+    tourInclude2: string,
+    tourInclude3: string,
+    tourInclude4: string,
+    imageUrl :string,
+    imageUrl2: string
+    
+}

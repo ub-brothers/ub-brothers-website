@@ -49,9 +49,7 @@ const UmrahBookingForm2 = () => {
     setAvailableMadinaCategories(selectedHotel ? selectedHotel.applicableCategories : []);
   };
   
-  
 
-  // 🔹 Fetch Data from Sanity on Page Load
   useEffect(() => {
     const fetchData = async () => {
       const makkahData = await client.fetch<{ hotelName: string; price: number, applicableCategories: { categoryName: string; price: number }[] }[]>(`*[_type == "makkahHotel"]{hotelName, price, applicableCategories[]{ categoryName, price } }`);
@@ -72,7 +70,6 @@ const UmrahBookingForm2 = () => {
     fetchData();
   }, []);
 
-  // 🔹 Calculate Cost Function
   const calculateCost = () => {
     const selectedMakkahHotelObj = makkahHotels.find((h) => h.hotelName === selectedMakkahHotel);
     const selectedMadinaHotelObj = madinaHotels.find((h) => h.hotelName === selectedMadinaHotel);
@@ -80,22 +77,21 @@ const UmrahBookingForm2 = () => {
     console.log("Makkah Hotel Data:", selectedMakkahHotelObj);
     console.log("Madina Hotel Data:", selectedMadinaHotelObj);
 
-    // Makkah category price extract & multiply by days
     const selectedMakkahCategoryObj = selectedMakkahHotelObj?.applicableCategories.find(
         (c) => c.categoryName === selectedCategory
     );
     const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? selectedMakkahCategoryObj.price * selectedDays : 0;
 
-    // Madina category price extract & multiply by days
+    
     const selectedMadinaCategoryObj = selectedMadinaHotelObj?.applicableCategories.find(
         (c) => c.categoryName === selectedCategory
     );
     const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price * selectedDays : 0;
 
-    // Days price extract
+    
     const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
 
-    // Total calculation
+   
     let total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
 
     if (visaStatus === "no" && proceedClicked) {
@@ -128,7 +124,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   formDataToSend.append("nationality", formData.nationality);
   formDataToSend.append("totalCost", totalCost.toString());
 
-  // ✅ **Corrected image handling**
+ 
   if (personalPhoto) {
     formDataToSend.append("personalPhoto", personalPhoto);
   }
@@ -138,7 +134,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   const response = await fetch("/api/umrahForm", {
     method: "POST",
-    body: formDataToSend, // ✅ Sending FormData correctly
+    body: formDataToSend, 
   });
 
   if (response.ok) {
@@ -175,7 +171,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         ))}
       </select>
       
-{/* Makkah Hotel Dropdown */}
+
 <label className="font-semibold">Makkah Hotel</label>
       <select onChange={(e) => handleMakkahHotelChange(e.target.value)} className="w-full p-3 mb-5 border rounded-md">
         <option value="">Select a Makkah hotel</option>
@@ -186,7 +182,6 @@ const handleSubmit = async (e: React.FormEvent) => {
         ))}
       </select>
 
- {/* Room Category for Makkah */}
  <label className="font-semibold">Makkah Room Category</label>
  <select 
   disabled={availableMakkahCategories.length === 0} 
@@ -205,7 +200,6 @@ const handleSubmit = async (e: React.FormEvent) => {
 </select>
 
 
-      {/* Madina Hotel Dropdown */}
       <label className="font-semibold">Madina Hotel</label>
       <select onChange={(e) => handleMadinaHotelChange(e.target.value)} className="w-full p-3 mb-5 border rounded-md">
         <option value="">Select a Madina hotel</option>
@@ -217,7 +211,6 @@ const handleSubmit = async (e: React.FormEvent) => {
       </select>
 
 
-         {/* Room Category for Madina */}
          <label className="font-semibold">Madina Room Category</label>
          <select 
   disabled={availableMadinaCategories.length === 0} 
@@ -278,14 +271,14 @@ const handleSubmit = async (e: React.FormEvent) => {
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
     
     <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
       
   
 
-      {/* Name and Numbers */}
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Narmeen Mughal</p>
         <p className="text-sm text-gray-500 mt-2">+92 303 4225181</p>
+        <p className="text-sm text-gray-500">&#9993;  ubbrothersticketing@gmail.com</p>
       </div>
     </div>
     <Hotels/>

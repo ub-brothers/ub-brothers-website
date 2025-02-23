@@ -13,25 +13,25 @@ export const POST = async (req:Request) => {
       console.log(entry);
     }
     
-    // Extract Text Fields & Files
+   
     for (let [key, value] of formData.entries()) {
       if (value instanceof Blob) {
-        // Handle File Uploads
+      
         const buffer = Buffer.from(await value.arrayBuffer());
         const filePath = path.join("/tmp", value.name);
         fs.writeFileSync(filePath, buffer);
 
         attachments.push({
           filename: value.name,
-          content: buffer, // ✅ Using content instead of path
+          content: buffer, 
         });
       } else {
-        // Handle Text Fields
+        
         fields[key] = value as string;
       }
     }
 
-    // Nodemailer Transporter Setup
+    
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
@@ -40,7 +40,7 @@ export const POST = async (req:Request) => {
       },
     });
 
-    // Email Content in HTML
+   
     const mailOptions = {
       from: "emailforclient88@gmail.com",
       to: "ubbrothersconsultant@gmail.com",
@@ -68,7 +68,7 @@ export const POST = async (req:Request) => {
         <p><strong>Arrival Date:</strong> ${fields.approximateArrivalDate}</p>
         <p><strong>Departure Date:</strong> ${fields.approximateDepartureDate}</p>
       `,
-      attachments, // ✅ Images are properly attached
+      attachments,
     };
 
     // Send Email

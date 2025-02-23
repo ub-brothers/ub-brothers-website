@@ -15,7 +15,7 @@ export default function DestinationLayout( {children,
           <button
             className={`${
               pathname.startsWith ("/umrah") ? "bg-blue-500" : "bg-orange-500"
-            } w-[140px] rounded-2xl h-6 text-white font-bold font-sans hover:bg-blue-700 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg`}
+            } w-[120px] rounded-2xl h-6 text-white font-bold font-sans hover:bg-blue-700 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg`}
           >
             Umrah
           </button>
@@ -29,6 +29,16 @@ export default function DestinationLayout( {children,
             Hajj
           </button>
         </Link>
+        
+        <Link href="/iranIraq" className="mx-2">
+          <button
+            className={`${
+              pathname.startsWith ("/iranIraq") ? "bg-blue-500" : "bg-orange-500"
+            } w-[160px] rounded-2xl sm:mt-0 mt-2 h-6 text-white font-bold font-sans hover:bg-blue-700 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg`}
+          >
+            Iran Iraq Ziyarat
+          </button>
+        </Link>
        
     
         <div className="sm:text-right text-center m-4 sm:text-md text-sm">
@@ -39,14 +49,15 @@ export default function DestinationLayout( {children,
 
 
         <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
       
   
 
-      {/* Name and Numbers */}
+    
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Narmeen Mughal</p>
         <p className="text-sm text-gray-500 mt-2">+92 303 4225181</p>
+        <p className="text-sm text-gray-500">&#9993;  ubbrothersticketing@gmail.com</p>
       </div>
     </div>
         </>

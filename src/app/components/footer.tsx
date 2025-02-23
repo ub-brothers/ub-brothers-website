@@ -1,13 +1,13 @@
 "use client"
 import Link from "next/link";
-import { FaFacebook, FaInstagram, FaPhoneAlt, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaPhoneAlt,  FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
     <footer className="bg-blue-600 text-white py-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Column 1: Logo & About */}
+        
         <div>
           <div className="flex items-center space-x-4">
             <motion.img
@@ -36,7 +36,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Column 2: Contact & Social Links */}
+       
         <div>
           <h3 className="text-xl font-semibold text-orange-500 mb-3">Contact Us</h3>
           <p className="text-sm text-gray-200 flex items-center">
@@ -61,7 +61,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Section */}
+      
       <div className="border-t border-gray-400 text-center mt-6 pt-4 text-sm text-gray-200">
         © {new Date().getFullYear()} UB Brothers. All Rights Reserved.
       </div>

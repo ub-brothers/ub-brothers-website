@@ -24,12 +24,12 @@ export default function ContactUs() {
           We'd love to hear from you, and respond as soon as possible!
         </h1>
   
-        {/* Background Image Wrapper */}
+        
         <div
           className="relative bg-cover bg-center bg-no-repeat flex items-center justify-center py-20"
           style={{ backgroundImage: "url('/image/luxx.jpg')" }}
         >
-          {/* Form */}
+          
           <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg max-w-lg w-full sm:mx-auto mx-4 relative z-10">
             <ContactForm />
            

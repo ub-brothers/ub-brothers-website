@@ -34,7 +34,7 @@ export default function HajjForm() {
     client.fetch("*[_type == 'hajjDays']").then((data: HajjDay[]) => {
       setAvailableDays(data);
       if (data.length > 0) {
-        setSelectedDay(data[0]); // Default to first entry
+        setSelectedDay(data[0]); 
       }
     });
   }, []);
@@ -152,9 +152,9 @@ export default function HajjForm() {
     </div>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
     <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
       
-      {/* Image with animation */}
+     
       <motion.div 
         className="flex justify-center mb-6"
         initial={{ opacity: 0, y: 50 }}
@@ -170,10 +170,11 @@ export default function HajjForm() {
         />
       </motion.div>
 
-      {/* Name and Numbers */}
+   
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
         <p className="text-sm text-gray-500 mt-2">+92 300 9480157</p>
+        <p className="text-sm text-gray-500">&#9993;  ubbrotherspk@gmail.com</p>
       </div>
     </div>
     <PaymentDetails/>

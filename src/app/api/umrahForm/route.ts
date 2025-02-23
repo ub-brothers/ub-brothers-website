@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     const nationality = formData.get("nationality");
     const totalCost = formData.get("totalCost");
     
-    // Handle file attachments (if any)
+    
     const personalPhoto = formData.get("personalPhoto");
     const passportScan = formData.get("passportScan");
     
@@ -33,19 +33,19 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Nodemailer setup
+    
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER, // Your email address
-        pass: process.env.EMAIL_PASS, // Your email app password
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS,
       },
     });
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ubbrothersticketing@gmail.com", // Change to the email where you want to receive details
-      subject: `New Umrah Booking request - ${new Date().toLocaleString()}`,
+      to: "ubbrothersticketing@gmail.com",
+      subject: `New Umrah Booking Submission - ${new Date().toLocaleString()}`,
       text: `
         Name: ${name}
         Phone: ${phone}

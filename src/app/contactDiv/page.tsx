@@ -5,11 +5,6 @@ import { FaPhoneAlt, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
 export default function ContactInfo() {
   return (
     <div className="flex flex-col md:flex-row gap-6 p-6 items-center justify-center flex-wrap">
-  
-
-  
-
-    {/* Phone & Contact Numbers */}
     <motion.div 
         initial={{ opacity: 0, y: -20 }} 
         whileInView={{ opacity: 1, y: 0 }}
@@ -28,8 +23,6 @@ export default function ContactInfo() {
         </p>
       </motion.div>
 
-
-      {/* Email Addresses */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }} 
         whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +45,6 @@ export default function ContactInfo() {
       </motion.div>
 
 
-    {/* Office Locations */}
     <motion.div 
         initial={{ opacity: 0, y: 20 }} 
         whileInView={{ opacity: 1, y: 0 }}

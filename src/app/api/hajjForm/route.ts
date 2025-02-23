@@ -12,15 +12,15 @@ export async function POST(req: Request) {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER, // Set in .env file
-        pass: process.env.EMAIL_PASS, // Set in .env file
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS, 
       },
     });
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ubbrotherspk@gmail.com", // Change this to your recipient email
-      subject: `New Hajj Booking Request - ${new Date().toLocaleString()}`,
+      to: "ubbrotherspk@gmail.com", 
+      subject: `New Hajj Booking Submission - ${new Date().toLocaleString()}`,
       html: `
         <h2>New Hajj Booking Details</h2>
         <p><strong>Name:</strong> ${name}</p>

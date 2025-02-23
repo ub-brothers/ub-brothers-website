@@ -9,7 +9,7 @@ import ServicesSection from "../ourService/page";
 const AboutUs = () => {
   return (
     <div className="container mx-auto px-4 py-12">
-      {/* About Us Heading */}
+      
       <motion.h1
         className="sm:text-4xl text-3xl font-bold text-blue-800 font-serif text-center mb-10"
         initial={{ opacity: 0, y: -50 }}
@@ -19,7 +19,7 @@ const AboutUs = () => {
         About Us
       </motion.h1>
       
-      {/* About UB Brothers Section */}
+      
       <div className="flex flex-col md:flex-row items-center gap-8 mb-16">
         <motion.div 
           className="w-full md:w-1/2 flex justify-center"
@@ -43,7 +43,7 @@ const AboutUs = () => {
         </motion.div>
       </div>
       
-      {/* CEO Section */}
+     
       <motion.h2
         className="text-3xl font-semibold text-center mb-10"
         initial={{ opacity: 0, y: -30 }}
@@ -65,7 +65,7 @@ const AboutUs = () => {
         </p>
       </motion.div>
       
-      {/* Our Staff Section */}
+      
       <motion.h2
         className="text-3xl font-semibold text-center my-10"
         initial={{ opacity: 0, y: -30 }}
@@ -93,7 +93,7 @@ const AboutUs = () => {
         Our experienced staff specializes in visa processing, documentation, and tour planning. With their in-depth knowledge and dedication, we guarantee a seamless and stress-free experience for all our clients.
       </motion.p>
 
-      {/* Staff Members */}
+   
       <div className="grid grid-cols-1 md:grid-cols-2  gap-6 mt-10 text-center">
         <div className="p-4 bg-orange-100 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold">Mirza Ali</h3>

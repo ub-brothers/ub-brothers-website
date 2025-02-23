@@ -30,7 +30,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
     <div>
       <div key={countries._id} className="mt-10">
         <div className="text-center flex w-[100%]">
-          {/* Adding Framer Motion to images */}
+      
           <motion.img
             src={countries.imageUrl2}
             className="h-[300px] w-[370px] mx-auto hidden xl:block"
@@ -109,16 +109,16 @@ export default function DetailPage({ params }: { params: { id: string } }) {
         </Link>
 
         <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-800">You Can Directly Contact:</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
       
-      {/* Image with animation */}
+  
       <motion.div 
         className="flex justify-center mb-6"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         whileHover={{ scale: 1.05 }}
-        viewport={{ once: false }} // Trigger animation only once when in view
+        viewport={{ once: false }} 
       >
         <img
           src="/image/ali.jpeg"
@@ -127,11 +127,12 @@ export default function DetailPage({ params }: { params: { id: string } }) {
         />
       </motion.div>
 
-      {/* Name and Numbers */}
+     
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
         <p className="text-sm text-gray-500 mt-2">+923 264 214241</p>
         <p className="text-sm text-gray-500">+923 174 141149</p>
+        <p className="text-sm text-gray-500">&#9993;  ubbrothersconsultant@gmail.com</p>
       </div>
     </div>
 

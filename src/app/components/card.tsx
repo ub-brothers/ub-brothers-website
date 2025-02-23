@@ -3,7 +3,7 @@ import {client} from "@/sanity/lib/client"
 import { useEffect, useState } from "react"
 import { Destination } from "../types/destinations"
 import { allDestinations } from "@/sanity/lib/queries"
-import Link from "next/link"
+
 
 
 const Card =()=>{
@@ -33,7 +33,7 @@ const Card =()=>{
     <h3 className="sm:text-xl text-md font-bold font-serif text-black">{destination.countryName}</h3>
   </div>
 </div> 
-{/* <h3 className="mx-4 text-center font-sans font-italic mt-2">{destination.shortDescription}</h3> */}
+
                     <h2 className="text-center text-sm sm:text-lg mt-2"><b>{destination.prize}</b> PKR/-</h2>
               
                     <button className="bg-orange-500 rounded-xl sm:w-[130px] w-[100px] text-white text-sm sm:text-md mb-4 mt-1 hover:bg-blue-500 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif">View Details</button>

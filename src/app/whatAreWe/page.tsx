@@ -7,7 +7,7 @@ const WhatAreWe = () => {
   return (
     <section className="bg-blue-50 py-16 px-6 md:px-20">
       <div className="container mx-auto flex flex-col md:flex-row items-center gap-12">
-        {/* Left Side - Content */}
+       
         <motion.div 
           className="w-full md:w-1/2 text-left"
           initial={{ opacity: 0, x: -50 }}
@@ -66,7 +66,7 @@ const WhatAreWe = () => {
           </motion.a>
         </motion.div>
 
-        {/* Right Side - Image */}
+        
         <motion.div 
           className="w-full md:w-1/2"
           initial={{ opacity: 0, x: 50 }}

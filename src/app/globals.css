@@ -31,16 +31,16 @@ body {
   font-family: Lobster;
 }
 
-/* styles/globals.css */
+
 .whatsapp-button {
-  position: fixed; /* Fixed position ensures it floats on the screen */
-  bottom: 20px; /* 20px from the bottom */
-  left: 20px; /* 20px from the left */
-  z-index: 1000; /* High z-index to ensure it appears on top of other content */
-  cursor: pointer; /* Change cursor to pointer when hovering */
+  position: fixed; 
+  bottom: 20px; 
+  left: 20px; 
+  z-index: 1000; 
+  cursor: pointer;
 }
 
 .whatsapp-button img {
-  width: 50px;  /* Size of the WhatsApp icon */
+  width: 50px;  
   height: 50px;
 }

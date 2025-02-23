@@ -19,7 +19,7 @@ const Featured = () => {
     fetchedDestination()
   }, [])
 
-  // Function to handle scroll action
+
   const handleScroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({
@@ -31,7 +31,7 @@ const Featured = () => {
 
   return (
     <div className="relative">
-      {/* Left Arrow */}
+      
       <button
         className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10"
         onClick={() => handleScroll("left")}
@@ -65,7 +65,7 @@ const Featured = () => {
         ))}
       </div>
 
-      {/* Right Arrow */}
+    
       <button
         className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md z-10"
         onClick={() => handleScroll("right")}
