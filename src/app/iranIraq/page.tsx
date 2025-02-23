@@ -79,9 +79,9 @@ const IranIraq = ()=>{
                     <Link href={{
       pathname: "/iranForm",
       query: {
-        countryName: tour.countryName,
-        shortDescription: tour.shortDescription,
-        prize: tour.prize,
+      countryName: tour.countryName,
+      shortDescription: tour.shortDescription,
+      prize: tour.prize,
       },
     }} >
                     <div className="relative group text-center">
