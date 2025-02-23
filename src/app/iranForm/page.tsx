@@ -1,5 +1,6 @@
 "use client";
 import { motion } from 'framer-motion'; 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
