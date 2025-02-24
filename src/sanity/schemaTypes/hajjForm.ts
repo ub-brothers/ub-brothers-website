@@ -2,7 +2,7 @@
 export const hajjDays = {
   name: 'hajjDays',
   type: 'document',
-  title: 'Hajj Days',
+  title: 'Hajj Days Form',
   fields: [
     {
       name: 'days',

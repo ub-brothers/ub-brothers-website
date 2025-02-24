@@ -128,7 +128,9 @@ export interface IranType {
     countryName: string,
     prize: number,
     shortDescription: string,
-   
+   prize1: string,
+   prize2: string,
+   prize3:string,
     tourIncludeHeading: string,
     tourInclude1: string,
     tourInclude2: string,

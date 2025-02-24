@@ -6,7 +6,7 @@ import { FaFacebook, FaInstagram } from "react-icons/fa";
 export default function SocialBox() {
   return (
     <motion.div
-      className="bg-blue-500 text-white p-6 rounded-2xl shadow-lg w-full max-w-sm mx-auto text-center transition-all duration-300 hover:shadow-2xl hover:scale-105"
+      className="bg-blue-500 text-white p-6 mx-4 rounded-2xl shadow-lg w-full max-w-sm mx-auto text-center transition-all duration-300 hover:shadow-2xl hover:scale-105"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -16,7 +16,7 @@ export default function SocialBox() {
         <Link href="https://www.instagram.com/ubbrotherstraveltours/" className="text-white text-3xl transition-all duration-300 hover:text-gray-300 hover:scale-110">
           <FaInstagram />
         </Link>
-        <Link href="#" className="text-white text-3xl transition-all duration-300 hover:text-gray-300 hover:scale-110">
+        <Link href="https://www.facebook.com/profile.php?id=61573095707819" className="text-white text-3xl transition-all duration-300 hover:text-gray-300 hover:scale-110">
           <FaFacebook />
         </Link>
       </div>

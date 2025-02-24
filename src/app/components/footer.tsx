@@ -24,7 +24,7 @@ const Footer = () => {
             Explore the world with us. We offer the best travel packages and experiences tailored just for you.
           </p>
           <div className="flex space-x-4 mt-4">
-            <Link href="#" className="text-white hover:text-orange-500 text-2xl">
+            <Link href="https://www.facebook.com/profile.php?id=61573095707819" className="text-white hover:text-orange-500 text-2xl">
               <FaFacebook />
             </Link>
             <Link

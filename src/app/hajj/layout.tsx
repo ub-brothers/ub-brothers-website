@@ -44,7 +44,6 @@ export default function DestinationLayout( {children,
         <div className="sm:text-right text-center m-4 sm:text-md text-sm">
         <h1  className="font-bold">Mirza Shaharyaar Mughal:</h1>
         <p>+92 300 9480157</p>
-        <p className="text-sm text-gray-500">&#9993;  ubbrotherspk@gmail.com</p>
         </div>
       </div>
         {children}

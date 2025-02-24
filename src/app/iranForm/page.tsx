@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import PaymentDetails from '../payment/page';
 
 function BookFormContent() {
   const searchParams = useSearchParams();
@@ -128,7 +129,7 @@ export default function BookForm() {
            H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore Pakistan.
             </p>
           </motion.div> 
-
+<PaymentDetails/>
     </div>
   );
 }

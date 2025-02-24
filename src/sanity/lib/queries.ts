@@ -249,3 +249,15 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
   "imageUrl": image.asset->url,
    "imageUrl2": image2.asset->url
   }`)
+
+
+  export const hajjPack = defineQuery(`*[_type == "hajjPackage"]{
+    _id,
+    countryName,
+    prize1,
+     prize2,
+      prize3,
+    shortDescription,
+    "imageUrl": image.asset->url,
+     "imageUrl2": image2.asset->url
+    }`)

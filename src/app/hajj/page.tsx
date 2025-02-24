@@ -1,16 +1,19 @@
 'use client';
-
+import { useEffect, useState } from "react"
+import { IranType} from "../types/destinations"
+import {client} from "@/sanity/lib/client"
 import Image from 'next/image';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { motion } from 'framer-motion';
 import { FaPlane, FaHotel, FaUtensils, FaBus, FaMosque } from 'react-icons/fa';
 import Link from 'next/link';
 import PaymentDetails from '../payment/page';
+import { hajjPack } from '@/sanity/lib/queries';
 
 
 
 const features = [
-  { icon: <FaPlane size={50} className="text-blue-600" />, title: 'Flight' },
+  { icon: <FaPlane size={50} className="text-blue-600" />, title: 'Ticket' },
   { icon: <FaHotel size={40} className="text-blue-600" />, title: 'Hotel' },
   { icon: <FaUtensils size={40} className="text-blue-600" />, title: 'Food' },
   { icon: <FaBus size={40} className="text-blue-600" />, title: 'Transport' },
@@ -19,40 +22,82 @@ const features = [
 
 
 export default function HajjPackage() {
+
+  const [ tour, setTour ] = useState<IranType[]>([])
+
+    useEffect(()=>{
+        async function fetchedTour(){
+            const fetchTour: IranType[] = await client.fetch(hajjPack)
+            setTour(fetchTour)
+        }
+        fetchedTour();
+    }, [])
+
+
+  
   return (
     <div className="min-h-screen  flex flex-col items-center p-6">
       <motion.h1 
-        className="text-4xl font-bold text-center font-serif text-blue-800 mb-1 sm:mb-4"
+        className="text-4xl font-bold text-center font-serif text-blue-800 mb-1 "
         initial={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.6 }}
         whileInView={{ opacity: 1 }}
         
       >
-        Exclusive Hajj Package
+        Hajj 2025
       </motion.h1>
-      
-      <motion.p 
+
+<motion.p 
         className="text-lg text-center text-gray-700 max-w-2xl mb-6"
         initial={{ opacity: 0, y: 10 }}
       
         transition={{ delay: 0.2, duration: 0.6 }}
         whileInView={{ opacity: 1 }}
       >
-        Experience the spiritual journey of Hajj with our exclusive packages. We ensure a seamless and comfortable pilgrimage with top-notch accommodations and services. Choose your preferred duration and enjoy a blessed journey.
+        Experience the spiritual journey of Hajj with our exclusive packages. We offer exclusive Hajj packages with flexible durations and pricing based on double, triple, and sharing accommodations. Enjoy a comfortable stay, premium services, and hassle-free arrangements at the best rates. Book now for a spiritually fulfilling journey!
       </motion.p>
-      
-      <motion.div 
-        className="flex flex-col md:flex-row gap-4 mb-6"
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <Image src="/image/masjid.jpg" alt="Makkah" width={400} height={300} className="rounded-lg shadow-lg" />
-        <Image src="/image/makkahh.jpg" alt="Madina" width={400} height={300} className="rounded-lg shadow-lg" />
-      </motion.div>
 
-      <motion.p 
+      
+<h1 className="text-3xl font-bold mt-8 mb-2 mx-4 font-sans">Below are our Hajj Packages, Book your spot Now!</h1>
+
+      
+
+<div className="flex grid lg:grid-cols-3 grid-cols-2 mb-8">
+            {tour.map ((tour)=>(
+             
+<div key={tour._id} className="sm:w-[290px]  w-[150px] rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
+<Link href={{
+  pathname: "/hajjForm",
+  query: {
+    countryName: tour.countryName,
+    shortDescription: tour.shortDescription,
+    prize1: tour.prize1,
+    prize2: tour.prize2,
+    prize3: tour.prize3
+  },
+}} >
+<div className="relative group text-center">
+<img src={tour.imageUrl2} alt={tour.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
+ 
+</div> 
+
+<h3 className=" sm:text-xl text-md text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
+<h3 className=" sm:text-lg text-sm text-left flex ml-4 gap-1  sm:gap-2 text-lg text-gray-600">{tour.shortDescription}</h3>
+<h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Sharing: <b>{tour.prize1}</b> PKR/-</h2>
+<h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Triple: <b>{tour.prize2}</b> PKR/-</h2>
+<h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Double: <b>{tour.prize3}</b> PKR/-</h2>
+<div className="text-center">
+<button className="bg-orange-500 rounded-xl h-8 w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500  hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif text-center">Book Now</button> </div>
+</Link>
+                   
+                </div>
+            ))}
+        </div>
+
+
+
+
+      {/* <motion.p 
         className="text-lg text-center text-gray-700 max-w-2xl mb-4"
         initial={{ opacity: 0, y: 10 }}
        
@@ -73,34 +118,20 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
       >
         Book Now
       </motion.button></Link>
-
-      <div className="p-6 mt-10 flex flex-col items-center">
-  <h2 className="text-lg font-semibold mb-4 text-center">
-    Prices vary depending on the number of days you choose
-  </h2>
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    {[
-      { category: "Sharing", price: "1450000 PKR" },
-      { category: "Double Bed", price: "1500000 PKR" },
-      { category: "Triple Bed", price: "1575000 PKR" },
-    ].map((item, index) => (
-      <motion.div
-        key={index}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.2 }}
-        className="bg-blue-500 text-white p-4 rounded-lg shadow-lg w-full text-center"
+<motion.div 
+        className="flex flex-col md:flex-row gap-4 mb-6"
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
+        viewport={{ once: true }}
       >
-        <h3 className="text-xl font-bold mb-2">{item.category}</h3>
-        <p className="text-lg">{item.price}</p>
-      </motion.div>
-    ))}
-  </div>
-</div>
-
+        <Image src="/image/masjid.jpg" alt="Makkah" width={300} height={200} className="rounded-lg shadow-lg" />
+        <Image src="/image/makkahh.jpg" alt="Madina" width={300} height={200} className="rounded-lg shadow-lg" />
+      </motion.div> */}
+      
       <div className="min-h-screen flex flex-col items-center justify-center p-6">
         <div className='my-14'>
-      <h2 className="text-3xl font-bold text-center text-gray-900 mb-6">Hajj Package Features</h2>
+      <h2 className="text-3xl font-bold font-sans text-center text-gray-900 mb-6">Hajj Package Includes</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
         {features.map((feature, index) => (
@@ -121,7 +152,7 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
       </div>
       </div>
 
-      <h1 className="my-4 font-bold text-xl sm:text-2xl font-serif"><i>Stay in Comfortable and Quality Hotels!</i></h1>
+      <h1 className="my-4 font-bold text-xl sm:text-2xl font-sans">Stay in Comfortable and Quality Makkah and Madina Hotels!</h1>
       <motion.div 
         className="flex flex-col md:flex-row items-center gap-6 my-12"
         initial={{ opacity: 0, scale: 0.8 }}
@@ -134,37 +165,28 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
         <Image src="/image/hotel2.jpg" alt="Hotel" width={500} height={350} className="rounded-lg shadow-lg" />
       </motion.div>
       
-      <p className="text-lg text-center text-gray-700 max-w-2xl mb-12">
-        Our hotels are selected to provide the highest level of comfort and convenience. Enjoy luxurious stays with modern amenities, exceptional service, and easy access to holy sites, ensuring a truly peaceful and hassle-free experience.
+      <p className="text-lg text-center text-gray-700 max-w-2xl mb-6">
+        Our 4/5 star hotels are selected to provide the highest level of comfort and convenience. Enjoy luxurious stays with modern amenities, exceptional service, and easy access to holy sites, ensuring a truly peaceful and hassle-free experience.
       </p>
       
       <h3 className="text-2xl font-semibold text-gray-900 text-center mb-6">We'd love to hear from you!</h3>
      
     </div>
-    <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
+    <div className="w-full p-8 bg-gray-100">
+      <h2 className="text-3xl font-bold font-sans  mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
       
-     
-      <motion.div 
-        className="flex justify-center mb-6"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        whileHover={{ scale: 1.05 }}
-        viewport={{ once: false }} 
-      >
-        <img
-          src="/image/ceo.jpeg"
-          alt="Visa Applicant"
-          className="w-[200px] h-[200px] rounded-full object-cover"
-        />
-      </motion.div>
+  
 
       
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
         <p className="text-sm text-gray-500 mt-2">+92 300 9480157</p>
         <p className="text-sm text-gray-500">&#9993;  ubbrotherspk@gmail.com</p>
+      </div>
+      <div className="text-center mt-4">
+        <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
+        <p className="text-sm text-gray-500 mt-2">+92 326 4214241</p>
+        <p className="text-sm text-gray-500">&#9993;  ubbrothersconsultant@gmail.com</p>
       </div>
     </div>
     <motion.div 
