@@ -28,8 +28,8 @@ const UmrahBookingForm2 = () => {
   const [selectedMadinaHotel, setSelectedMadinaHotel] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [totalCost, setTotalCost] = useState<number>(0);
-  const [formData, setFormData] = useState({ name: "", phone: "", nationality: "" });
-
+  const [formData, setFormData] = useState({ name: "", phone: "", nationality: "", makkahDay: "", madinaDay: "" });
+    
   // Makkah hotel selection logic
   const handleMakkahHotelChange = (hotelName: string) => {
     const selectedHotel = makkahHotels.find((hotel) => hotel.hotelName === hotelName);
@@ -89,10 +89,8 @@ const UmrahBookingForm2 = () => {
     );
     const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price * selectedDays : 0;
 
-    
     const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
 
-   
     let total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
 
     if (visaStatus === "no" && proceedClicked) {
@@ -118,14 +116,15 @@ const handleSubmit = async (e: React.FormEvent) => {
   formDataToSend.append("phone", formData.phone);
   formDataToSend.append("days", selectedDays.toString());
   formDataToSend.append("makkahHotel", selectedMakkahHotel);
+  formDataToSend.append("makkahDay", formData.makkahDay);
   formDataToSend.append("makkahCategory", selectedCategory);
   formDataToSend.append("madinaHotel", selectedMadinaHotel);
+  formDataToSend.append("madinaDay", formData.madinaDay);
   formDataToSend.append("madinaCategory", selectedCategory);
   formDataToSend.append("visaStatus", visaStatus);
   formDataToSend.append("nationality", formData.nationality);
   formDataToSend.append("totalCost", totalCost.toString());
 
- 
   if (personalPhoto) {
     formDataToSend.append("personalPhoto", personalPhoto);
   }
@@ -147,7 +146,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
 
 
-  
+
   return (
     <div>
          <div className="relative w-full mb-6 h-[380px]">
@@ -182,17 +181,19 @@ const handleSubmit = async (e: React.FormEvent) => {
           </option>
         ))}
       </select>
-
+      <p className="font-semibold">How many days will you stay:</p>
+      <input type="number" name="makkahDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, makkahDay: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required></input>
+      
  <label className="font-semibold">Makkah Room Category</label>
  <select 
   disabled={availableMakkahCategories.length === 0} 
-  onChange={(e) => setSelectedCategory(e.target.value)}
-  className="w-full p-3 mb-5 border rounded-md"
+  onChange={(e) => setSelectedCategory(e.target.value)} 
+  className="w-full p-3 mb-5 border rounded-md" 
 >
 {availableMakkahCategories.length > 0 ? (
     availableMakkahCategories.map((catObj) => (
       <option key={catObj.categoryName} value={catObj.categoryName}>
-        {catObj.categoryName} - {catObj.price} PKR/- (per night).
+        {catObj.categoryName}: {catObj.price} Sr/- (per night).
       </option>
     ))
   ) : (
@@ -201,7 +202,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 </select>
 
 
-      <label className="font-semibold">Madina Hotel</label>
+      <label className="font-semibold mt-6">Madina Hotel</label>
       <select onChange={(e) => handleMadinaHotelChange(e.target.value)} className="w-full p-3 mb-5 border rounded-md">
         <option value="">Select a Madina hotel</option>
         {madinaHotels.map((hotel) => (
@@ -210,6 +211,10 @@ const handleSubmit = async (e: React.FormEvent) => {
           </option>
         ))}
       </select>
+
+
+      <p className="font-semibold">How many days will you stay:</p>
+      <input type="number" name="madinaDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, madinaDay: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required></input>
 
 
          <label className="font-semibold">Madina Room Category</label>
@@ -221,7 +226,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 {availableMadinaCategories.length > 0 ? (
     availableMadinaCategories.map((catObj) => (
       <option key={catObj.categoryName} value={catObj.categoryName}>
-        {catObj.categoryName} - {catObj.price} PKR/- (per night).
+        {catObj.categoryName}: {catObj.price} Sr/- (per night).
       </option>
     ))
   ) : (
@@ -229,7 +234,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   )}
 </select>
 
-  
+
       
       <label className="font-semibold">Do you have a visa?</label>
         <select onChange={(e) => setVisaStatus(e.target.value)} className="w-full p-3  mb-5 border rounded-md">

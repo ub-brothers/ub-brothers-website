@@ -14,7 +14,7 @@ export default {
         name: "price",
         title: "Package Price",
         type: "number",
-        validation: (Rule: any) => Rule.required().min(500),
+        validation: (Rule: any) => Rule.required().min(10),
       },
     ],
   };

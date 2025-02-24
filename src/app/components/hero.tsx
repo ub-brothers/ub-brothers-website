@@ -1,22 +1,81 @@
+"use client";
+import { useState } from "react";
+
+const slides = [
+  { type: "video", src: "/image/hajjv.mp4" }, 
+  { type: "video", src: "/image/madinav.mp4" }, // Dusri slide - image
+  { type: "image", src: "/image/karba.jpg", text: "Iran / Iraq Ziyarat" }, // Teesri slide - image
+  { type: "image", src: "/image/turkk.jpg", text:"Turkey Tour" }, // Chauthi slide - image
+];
+
+export default function HeroSlider() {
+  const [current, setCurrent] = useState(0);
+
+  const nextSlide = () => {
+    setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  return (
+    <div className="relative w-full h-screen overflow-hidden">
 
 
-export default function Hero(){
-    return(
-      
-        <div className="relative">
-        
-          <video
-  autoPlay
-  loop
-  muted
-  playsInline
-  className="inset-0 w-full h-[40vh] sm:h-[90vh] md:h-screen object-cover  "
->
-  <source src="/image/final.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+<div className="absolute top-10 left-1/2 transform -translate-x-1/2 text-white text-3xl md:text-5xl font-bold px-6 py-3 font-serif z-10 drop-shadow-lg">
+  Welcome to Ub Brothers!
+</div>
 
 
-        </div>
-    )
+
+      {/* Slides */}
+      <div className="w-full h-full flex transition-transform duration-500 ease-in-out">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute w-full h-full transition-opacity ${
+              index === current ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {slide.type === "video" ? (
+              <video
+                src={slide.src}
+                autoPlay
+                loop
+                muted
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src={slide.src}
+                alt={`Slide ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+            )}
+            {/* Slide-Specific Text */}
+            {index === current && slide.text && (
+              <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white text-xl md:text-3xl font-bold bg-black/60 px-4 py-2 rounded-md">
+                {slide.text}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full"
+      >
+        ❮
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full"
+      >
+        ❯
+      </button>
+    </div>
+  );
 }

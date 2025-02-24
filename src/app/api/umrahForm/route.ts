@@ -8,8 +8,10 @@ export async function POST(req: NextRequest) {
     const phone = formData.get("phone");
     const days = formData.get("days");
     const makkahHotel = formData.get("makkahHotel");
+    const makkahDay = formData.get("makkahDay");
     const makkahCategory = formData.get("makkahCategory");
     const madinaHotel = formData.get("madinaHotel");
+    const madinaDay = formData.get("madinaDay");
     const madinaCategory = formData.get("madinaCategory");
     const visaStatus = formData.get("visaStatus");
     const nationality = formData.get("nationality");
@@ -46,23 +48,25 @@ export async function POST(req: NextRequest) {
       from: process.env.EMAIL_USER,
       to: "ubbrothersticketing@gmail.com",
       subject: `New Umrah Booking Submission - ${new Date().toLocaleString()}`,
-      text: `
+      html: `
         Name: ${name}
         Phone: ${phone}
         Selected Days: ${days}
         Makkah Hotel: ${makkahHotel}
+        Makkah Day: ${makkahDay}
         Makkah Room Category: ${makkahCategory}
         Madina Hotel: ${madinaHotel}
+        Madina Day: ${madinaDay}
         Madina Room Category: ${madinaCategory}
         Visa Status: ${visaStatus}
         Nationality:${nationality}
-        Total Cost: ${totalCost} PKR
+        Total Cost: ${totalCost} Sr
       `,
       attachments,
     };
 
     await transporter.sendMail(mailOptions);
-
+    
     return NextResponse.json({ success: true, message: "Email sent successfully!" });
   } catch (error) {
     console.error("Email sending error:", error);

@@ -36,7 +36,7 @@ export default function ContactUs() {
           </div>
            
         </div>
-        <div className="my-5">
+        <div className="my-5 mx-4">
 <SocialBox/></div>
         <ContactInfo/>
   

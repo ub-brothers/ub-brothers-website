@@ -58,14 +58,14 @@ export default function HajjPackage() {
       </motion.p>
 
       
-<h1 className="text-3xl font-bold mt-8 mb-2 mx-4 font-sans">Below are our Hajj Packages, Book your spot Now!</h1>
+<h1 className="text-3xl text-center font-bold mt-8 mb-6 mx-4 font-sans">Below are our Hajj Packages, Book your spot Now!</h1>
 
       
 
-<div className="flex grid lg:grid-cols-3 grid-cols-2 mb-8">
+<div className="flex grid lg:grid-cols-3 sm:grid-cols-2 mb-8">
             {tour.map ((tour)=>(
              
-<div key={tour._id} className="sm:w-[290px]  w-[150px] rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
+<div key={tour._id} className="w-[290px]  rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
 <Link href={{
   pathname: "/hajjForm",
   query: {
@@ -77,7 +77,7 @@ export default function HajjPackage() {
   },
 }} >
 <div className="relative group text-center">
-<img src={tour.imageUrl2} alt={tour.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
+<img src={tour.imageUrl2} alt={tour.countryName} className="mx-auto my-4 h-[250px] rounded-lg w-[250px] sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
  
 </div> 
 
