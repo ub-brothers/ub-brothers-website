@@ -2,10 +2,10 @@
 import { useState } from "react";
 
 const slides = [
-  { type: "video", src: "/image/hajjv.mp4" }, 
-  { type: "video", src: "/image/madinav.mp4" }, // Dusri slide - image
-  { type: "image", src: "/image/karba.jpg", text: "Iran / Iraq Ziyarat" }, // Teesri slide - image
-  { type: "image", src: "/image/turkk.jpg", text:"Turkey Tour" }, // Chauthi slide - image
+  { type: "video", src: "/image/hajj2.mp4" }, 
+  { type: "video", src: "/image/madina.mp4" },
+  { type: "video", src: "/image/ziyarat.mp4", text: "Iran / Iraq Ziyarat" }, 
+  { type: "video", src: "/image/turks.mp4", text:"Turkey Tour" }, 
 ];
 
 export default function HeroSlider() {
@@ -23,7 +23,7 @@ export default function HeroSlider() {
     <div className="relative w-full h-screen overflow-hidden">
 
 
-<div className="absolute top-10 left-1/2 transform -translate-x-1/2 text-white text-3xl md:text-5xl font-bold px-6 py-3 font-serif z-10 drop-shadow-lg">
+<div className="absolute text-center top-10 left-1/2 transform -translate-x-1/2 text-white text-3xl md:text-5xl font-bold px-6 py-3 font-serif z-10 drop-shadow-lg">
   Welcome to Ub Brothers!
 </div>
 
@@ -55,7 +55,7 @@ export default function HeroSlider() {
             )}
             {/* Slide-Specific Text */}
             {index === current && slide.text && (
-              <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white text-xl md:text-3xl font-bold bg-black/60 px-4 py-2 rounded-md">
+              <div className="absolute text-center bottom-20 left-1/2 transform -translate-x-1/2 text-white text-xl md:text-3xl font-bold bg-black/60 px-4 py-2 rounded-md">
                 {slide.text}
               </div>
             )}

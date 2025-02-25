@@ -46,21 +46,22 @@ export async function POST(req: NextRequest) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ubbrothersticketing@gmail.com",
+      to: "samiaurooj386@gmail.com",
       subject: `New Umrah Booking Submission - ${new Date().toLocaleString()}`,
       html: `
-        Name: ${name}
-        Phone: ${phone}
-        Selected Days: ${days}
-        Makkah Hotel: ${makkahHotel}
-        Makkah Day: ${makkahDay}
-        Makkah Room Category: ${makkahCategory}
-        Madina Hotel: ${madinaHotel}
-        Madina Day: ${madinaDay}
-        Madina Room Category: ${madinaCategory}
-        Visa Status: ${visaStatus}
-        Nationality:${nationality}
-        Total Cost: ${totalCost} Sr
+       <h2>Umrah Booking Application Details</h2>
+    <p> <strong>  Name:</strong>  ${name}</p>
+      <p> <strong> Phone:</strong>  ${phone}</p>
+       <p> <strong>Selected Days:</strong>  ${days}</p>
+        <p><strong>Makkah Hotel:</strong>  ${makkahHotel}</p>
+       <p><strong>Makkah Day:</strong>   ${makkahDay}</p>
+        <p><strong>Makkah Room Category:</strong>  ${makkahCategory}</p>
+        <p><strong>Madina Hotel:</strong>  ${madinaHotel}</p>
+        <p><strong>Madina Day:</strong>  ${madinaDay}</p>
+       <p> <strong>Madina Room Category:</strong>  ${madinaCategory}</p>
+       <p> <strong>Visa Status:</strong>  ${visaStatus}</p>
+       <p><strong> Nationality:</strong> ${nationality}</p>
+        <p><strong>Total Cost:</strong>  ${totalCost} Sr</p>
       `,
       attachments,
     };

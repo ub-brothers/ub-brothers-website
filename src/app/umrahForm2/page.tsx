@@ -13,7 +13,7 @@ const UmrahBookingForm2 = () => {
   const [daysOptions, setDaysOptions] = useState<{ days: number; price: number }[]>([]);
   const [categories, setCategories] = useState<{ categoryName: string; price: number }[]>([]);
   const [selectedDays, setSelectedDays] = useState<number>(7);
-  const [proceedClicked, setProceedClicked] = useState(false);
+  
   const [availableMakkahCategories, setAvailableMakkahCategories] = useState< { categoryName: string; price: number }[]>([]);
   const [availableMadinaCategories, setAvailableMadinaCategories] = useState< { categoryName: string; price: number }[]>([]);
 
@@ -28,7 +28,7 @@ const UmrahBookingForm2 = () => {
   const [selectedMadinaHotel, setSelectedMadinaHotel] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [totalCost, setTotalCost] = useState<number>(0);
-  const [formData, setFormData] = useState({ name: "", phone: "", nationality: "", makkahDay: "", madinaDay: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", nationality: "", makkahDay: 0, madinaDay: 0 });
     
   // Makkah hotel selection logic
   const handleMakkahHotelChange = (hotelName: string) => {
@@ -71,6 +71,7 @@ const UmrahBookingForm2 = () => {
     fetchData();
   }, []);
 
+  
   const calculateCost = () => {
     const selectedMakkahHotelObj = makkahHotels.find((h) => h.hotelName === selectedMakkahHotel);
     const selectedMadinaHotelObj = madinaHotels.find((h) => h.hotelName === selectedMadinaHotel);
@@ -81,27 +82,35 @@ const UmrahBookingForm2 = () => {
     const selectedMakkahCategoryObj = selectedMakkahHotelObj?.applicableCategories.find(
         (c) => c.categoryName === selectedCategory
     );
-    const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? selectedMakkahCategoryObj.price * selectedDays : 0;
+    const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? selectedMakkahCategoryObj.price * formData.makkahDay : 0;
 
-    
     const selectedMadinaCategoryObj = selectedMadinaHotelObj?.applicableCategories.find(
         (c) => c.categoryName === selectedCategory
     );
-    const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price * selectedDays : 0;
+    const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price * formData.madinaDay : 0;
 
     const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
 
     let total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
 
     if (visaStatus === "no" && proceedClicked) {
-      total += 41000;
+        total += 550;
     }
 
     setTotalCost(total);
+};
+const [proceedClicked, setProceedClicked] = useState(false);
+const [errorMessage, setErrorMessage] = useState("");
+const handleConfirmProceed = () => {
+  if (visaStatus === "no") {
+    if (!personalPhoto || !passportScan || !formData.nationality) {
+      setErrorMessage("All fields are required!");
+      return;
+    }
+  }
 
-    console.log("Selected Makkah Category Price:", selectedMakkahCategoryPrice);
-    console.log("Selected Madina Category Price:", selectedMadinaCategoryPrice);
-    console.log("Total Cost:", total);
+  setErrorMessage("");
+  setProceedClicked(true);
 };
 
 
@@ -116,10 +125,10 @@ const handleSubmit = async (e: React.FormEvent) => {
   formDataToSend.append("phone", formData.phone);
   formDataToSend.append("days", selectedDays.toString());
   formDataToSend.append("makkahHotel", selectedMakkahHotel);
-  formDataToSend.append("makkahDay", formData.makkahDay);
+  formDataToSend.append("makkahDay", String(formData.makkahDay));
   formDataToSend.append("makkahCategory", selectedCategory);
   formDataToSend.append("madinaHotel", selectedMadinaHotel);
-  formDataToSend.append("madinaDay", formData.madinaDay);
+  formDataToSend.append("madinaDay", String(formData.madinaDay));
   formDataToSend.append("madinaCategory", selectedCategory);
   formDataToSend.append("visaStatus", visaStatus);
   formDataToSend.append("nationality", formData.nationality);
@@ -159,19 +168,32 @@ const handleSubmit = async (e: React.FormEvent) => {
   </div>
     <form onSubmit={handleSubmit} className="mx-  p-8 bg-gray-100 shadow-xl rounded-2xl">
       <h2 className="text-2xl font-bold mb-6 text-center font-serif">Umrah Package</h2>
-      <p className="font-semibold">Full Name:</p>
-      <input type="text" name="name" placeholder="Your name"  onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required></input>
-      <p className="font-semibold">Phone Number:</p>
-      <input type="text" name="phone" placeholder="Your phone number" onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required ></input>
 
+
+      <div className="lg:flex fllex-cols items-center mx-auto gap-6 my-2">
+        <div>
+      <p className="font-semibold">Full Name:</p>
+      <input type="text" name="name" placeholder="Your name"  onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required></input></div>
+      <div>
+      <p className="font-semibold">Phone Number:</p>
+      <input type="text" name="phone" placeholder="Your phone number" onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required ></input></div>
+    
+     
+
+
+  <div>
       <label className="font-semibold">Select Days</label>
       <select onChange={(e) => setSelectedDays(Number(e.target.value))} className="w-full p-3 mb-5 border rounded-md">
         {daysOptions.map((day) => (
           <option key={day.days} value={day.days}>{`${day.days} Days`}</option>
         ))}
-      </select>
-      
+      </select></div>
+       </div> 
+      <hr></hr>
 
+
+<div className="lg:flex flex-cols gap-6 my-6">
+  <div>
 <label className="font-semibold">Makkah Hotel</label>
       <select onChange={(e) => handleMakkahHotelChange(e.target.value)} className="w-full p-3 mb-5 border rounded-md">
         <option value="">Select a Makkah hotel</option>
@@ -180,10 +202,9 @@ const handleSubmit = async (e: React.FormEvent) => {
             {hotel.hotelName}
           </option>
         ))}
-      </select>
-      <p className="font-semibold">How many days will you stay:</p>
-      <input type="number" name="makkahDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, makkahDay: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required></input>
-      
+      </select></div>
+
+<div>
  <label className="font-semibold">Makkah Room Category</label>
  <select 
   disabled={availableMakkahCategories.length === 0} 
@@ -199,9 +220,20 @@ const handleSubmit = async (e: React.FormEvent) => {
   ) : (
     <option value="">Not applicable</option>
   )}
-</select>
+</select></div>
 
 
+      <div>
+      <p className="font-semibold">Days of Stay:</p>
+      <input type="number" name="makkahDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, makkahDay: Number(e.target.value) })} className="w-full p-3 mb-5 border rounded-md" required></input>
+      </div>
+      
+</div>
+
+<hr></hr>
+
+<div className="lg:flex flex-cols my-6 gap-6">
+  <div>
       <label className="font-semibold mt-6">Madina Hotel</label>
       <select onChange={(e) => handleMadinaHotelChange(e.target.value)} className="w-full p-3 mb-5 border rounded-md">
         <option value="">Select a Madina hotel</option>
@@ -210,13 +242,9 @@ const handleSubmit = async (e: React.FormEvent) => {
             {hotel.hotelName}
           </option>
         ))}
-      </select>
+      </select></div>
 
-
-      <p className="font-semibold">How many days will you stay:</p>
-      <input type="number" name="madinaDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, madinaDay: e.target.value })} className="w-full p-3 mb-5 border rounded-md" required></input>
-
-
+<div>
          <label className="font-semibold">Madina Room Category</label>
          <select 
   disabled={availableMadinaCategories.length === 0} 
@@ -232,35 +260,56 @@ const handleSubmit = async (e: React.FormEvent) => {
   ) : (
     <option value="">Not applicable</option>
   )}
-</select>
+</select></div>
 
+
+<div>
+      <p className="font-semibold">Days of Stay:</p>
+      <input type="number" name="madinaDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, madinaDay: Number(e.target.value) })} className="w-full p-3 mb-5 border rounded-md" required></input>
+
+</div>
+
+</div>
 
       
-      <label className="font-semibold">Do you have a visa?</label>
-        <select onChange={(e) => setVisaStatus(e.target.value)} className="w-full p-3  mb-5 border rounded-md">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-        
-        {visaStatus === "no" && (
-          <div className=" bg-gray-100 p-4 rounded-md">
-            <h3 className="font-bold">Fill out the form and apply for Visa!</h3>
-            <h3 className="font-bold mb-2">Charges: Rs. 41000</h3>
-            <label className="font-semibold">Personal Photo (White BG)</label>
-            <input type="file" accept="image/*"  onChange={(e) => setPersonalPhoto(e.target.files?.[0] || null)} className="w-full p-3 border mb-5 rounded-md" />
-            <label className="font-semibold">Passport Scan Copy</label>
-            <input type="file" accept="image/*"  onChange={(e) => setPassportScan(e.target.files?.[0] || null)} className="w-full p-3 mb-5 border rounded-md" />
-            <label className="font-semibold">Nationality</label>
-            <input placeholder="Nationality" name="nationality"  onChange={(e) => setFormData({ ...formData, nationality: e.target.value })} className="w-full p-3 mb-5 border rounded-md" />
-            <button
-  type="button"
-  onClick={() => setProceedClicked(true)}
-  className="mt-2 bg-blue-800 hover:bg-orange-500 text-white p-3 rounded-md font-semibold"
->
- Confirm & Proceed
-</button>
-          </div>
-        )}
+<label className="font-semibold">You Have Visa?</label>
+      <select onChange={(e) => setVisaStatus(e.target.value)} className="w-full p-3 mb-5 border rounded-md">
+        <option value="">Select</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      {visaStatus === "no" && (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h3 className="font-bold">Fill out the form and apply for Visa!</h3>
+          <h3 className="font-bold mb-2">Charges: 550 SAR/-</h3>
+
+          <label className="font-semibold">Personal Photo (White BG)</label>
+          <input type="file" accept="image/*" onChange={(e) => setPersonalPhoto(e.target.files?.[0] || null)} className="w-full p-3 border mb-5 rounded-md" />
+
+          <label className="font-semibold">Passport Scan Copy</label>
+          <input type="file" accept="image/*" onChange={(e) => setPassportScan(e.target.files?.[0] || null)} className="w-full p-3 mb-5 border rounded-md" />
+
+          <label className="font-semibold">Nationality</label>
+          <input
+            placeholder="Nationality"
+            name="nationality"
+            onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
+            className="w-full p-3 mb-5 border rounded-md"
+          />
+
+          <button
+            type="button"
+            onClick={handleConfirmProceed}
+            className="mt-2 bg-blue-800 hover:bg-orange-500 text-white p-3 rounded-md font-semibold"
+          >
+            Confirm & Proceed
+          </button>
+
+          {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+          {proceedClicked && <p className="text-green-600 font-bold mt-2">Confirmed ✅</p>}
+        </div>
+      )}
         
 
       <button type="button" onClick={calculateCost} className="w-full bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">
@@ -269,7 +318,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
       {totalCost > 0 && (
         <div className="mt-4 p-4 text-center bg-gray-200 rounded-md">
-          <p className="font-bold text-lg">Total Cost: {totalCost} PKR/-</p>
+          <p className="font-bold text-lg">Total Cost: {totalCost} Sr/-</p>
         </div>
       )}
       <button className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
