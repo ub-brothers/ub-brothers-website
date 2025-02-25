@@ -214,7 +214,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 {availableMakkahCategories.length > 0 ? (
     availableMakkahCategories.map((catObj) => (
       <option key={catObj.categoryName} value={catObj.categoryName}>
-        {catObj.categoryName}: {catObj.price} Sr/- (per night).
+        {catObj.categoryName}: {catObj.price} SAR/- (per night).
       </option>
     ))
   ) : (
@@ -254,7 +254,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 {availableMadinaCategories.length > 0 ? (
     availableMadinaCategories.map((catObj) => (
       <option key={catObj.categoryName} value={catObj.categoryName}>
-        {catObj.categoryName}: {catObj.price} Sr/- (per night).
+        {catObj.categoryName}: {catObj.price} SAR/- (per night).
       </option>
     ))
   ) : (
@@ -318,7 +318,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
       {totalCost > 0 && (
         <div className="mt-4 p-4 text-center bg-gray-200 rounded-md">
-          <p className="font-bold text-lg">Total Cost: {totalCost} Sr/-</p>
+          <p className="font-bold text-lg">Total Cost: {totalCost} SAR/-</p>
         </div>
       )}
       <button className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
