@@ -23,8 +23,10 @@ const Header = () => {
           
           <nav className="hidden lg:flex space-x-6 font-serif">
             <Link href="/" className={getLinkClassName("/")}>Home</Link>
-            <Link href="/destinations" className={getLinkClassName("/destinations")}>Destinations</Link>
+           
             <Link href="/umrah" className={getLinkClassName("/umrah")}>Hajj & Umrah Packages</Link>
+            <Link href="/book-tickets" className={getLinkClassName("/book-tickets")}>Ticketing</Link>
+             <Link href="/destinations" className={getLinkClassName("/destinations")}>Destinations</Link>
             <Link href="/about" className={getLinkClassName("/about")}>About Us</Link>
             <Link href="/contact" className={getLinkClassName("/contact")}>Contact</Link>
           </nav>
@@ -61,8 +63,10 @@ const Header = () => {
 
         <nav className="flex flex-col items-center space-y-4 mt-8">
           <Link href="/" className={`w-full text-center py-2 ${getLinkClassName("/")}`} onClick={toggleMenu}>Home</Link>
-          <Link href="/destinations" className={`w-full text-center py-2 ${getLinkClassName("/destinations")}`} onClick={toggleMenu}>Destinations</Link>
+         
           <Link href="/umrah" className={`w-full text-center py-2 ${getLinkClassName("/umrah")}`} onClick={toggleMenu}>Hajj & Umrah Packages</Link>
+          <Link href="/book-tickets" className={`w-full text-center py-2 ${getLinkClassName("/book-tickets")}`} onClick={toggleMenu}>Ticketing</Link>
+           <Link href="/destinations" className={`w-full text-center py-2 ${getLinkClassName("/destinations")}`} onClick={toggleMenu}>Destinations</Link>
           <Link href="/about" className={`w-full text-center py-2 ${getLinkClassName("/about")}`} onClick={toggleMenu}>About Us</Link>
           <Link href="/contact" className={`w-full text-center py-2 ${getLinkClassName("/contact")}`} onClick={toggleMenu}>Contact</Link>
 

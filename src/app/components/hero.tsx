@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const slides = [
   { type: "video", src: "/image/hajj2.mp4" }, 
@@ -15,19 +15,17 @@ export default function HeroSlider() {
     setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
-  const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 10000); // 5 seconds interval
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []);
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-
-
-<div className="absolute text-center top-10 left-1/2 transform -translate-x-1/2 text-white text-3xl md:text-5xl font-bold px-6 py-3 font-serif z-10 drop-shadow-lg">
-  Welcome to Ub Brothers!
-</div>
-
-
+      <div className="absolute text-center top-10 left-1/2 transform -translate-x-1/2 text-white text-3xl md:text-5xl font-bold px-6 py-3 font-serif z-10 drop-shadow-[3px_3px_5px_rgba(0,0,0,0.8)]">
+        Welcome to Ub Brothers!
+      </div>
 
       {/* Slides */}
       <div className="w-full h-full flex transition-transform duration-500 ease-in-out">
@@ -64,8 +62,8 @@ export default function HeroSlider() {
       </div>
 
       {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
+      {/* <button
+        onClick={() => setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1))}
         className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full"
       >
         ❮
@@ -75,7 +73,7 @@ export default function HeroSlider() {
         className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full"
       >
         ❯
-      </button>
+      </button> */}
     </div>
   );
 }

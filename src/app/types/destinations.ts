@@ -140,3 +140,24 @@ export interface IranType {
     imageUrl2: string
     
 }
+
+export interface Flight {
+    date: string;
+    flightNumber: string;
+    originDestination: string;
+    time: string;
+    baggage: string;
+    isReturn: boolean
+  }
+
+  export interface FlightGroup {
+    id: string;
+    airline: string;
+    seats: number;
+    airlineLogo?:string,
+    flights: Flight[];  // Array of flights
+    airlineImage: string;  
+     meal: string;
+    price: string;
+    airlineName: string;
+  }  

@@ -24,7 +24,7 @@ const TourPackage = ()=>{
         <h1 className="text-left xl:mx-10 sm:mx-4 mx-2 my-4 text-lg sm:text-3xl font-serif">
         <u>Tour Packages:</u>
       </h1>
-        <div className="flex grid grid-cols-2 mb-8">
+        <div className="flex grid grid-cols-2 lg:grid-cols-3 mb-8">
             {tour.map ((tour)=>(
              
                 <div key={tour._id} className="sm:w-[290px]  w-[150px] rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">

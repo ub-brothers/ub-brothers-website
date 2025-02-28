@@ -16,15 +16,17 @@ export default function Home() {
     <div>
  
       <Hero/>
-      
+
+      <div className="my-10">
+<UmrahPage/>  </div>
+
       <div className="mt-5 bg-gray-100">
         <h2 className="text-gray-100">.</h2>
         <h1 className="font-bold ml-6 text-xl md:text-3xl font-serif mt-4">Our Top Destinations</h1>
          <Featured/>
       </div>
 
-<div className="my-10">
-<UmrahPage/>  </div>
+
  
   <div className="my- bg-gray-200 text-center">
     <h1>.</h1>
@@ -37,7 +39,7 @@ export default function Home() {
   <WhatAreWe/>
       <WhyUs/>
   
-  <div className="my-8">
+  <div className="">
     
   <ServicesSection/>
   

@@ -88,7 +88,8 @@ export default function TourDetail({ params }: { params: { id: string } }) {
           <h2 className="my-4 text-md sm:text-xl font-serif"><b>Tour Package cost:</b> {tourCountries.prize} PKR/- Per person.</h2>
 
           <h1 className="my-4 text-md sm:text-xl font-serif font-bold"><u>Requirements:</u></h1>
-          <p className="sm:text-lg text-sm">Original Passport (Valid for at least 6 months)</p>
+          <p>Original Passport</p>
+          <p>Bank statement (Valid for at least 6 months)</p>
           <p>ID Copy (CNIC)</p>
           <p>Recent Photographs (White background)</p>
           <p>Processing Time – Approximately 2 weeks</p>

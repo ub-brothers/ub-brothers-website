@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'; 
 import { Destination } from "@/app/types/destinations";
 import { sanityFetch } from "@/sanity/lib/client";
-import { detailCountry, allDestinations } from "@/sanity/lib/queries";
+import { detailCountry, allDestinations, stickerVisa } from "@/sanity/lib/queries";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -18,7 +18,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
       const countryData: Destination = await sanityFetch({ query: detailCountry, params: { id: params.id } });
       setCountries(countryData);
 
-      const allCountries: Destination[] = await sanityFetch({ query: allDestinations });
+      const allCountries: Destination[] = await sanityFetch({ query: stickerVisa });
       const filteredCountries = allCountries.filter((country) => country._id !== params.id);
       setRandomCountries(filteredCountries.sort(() => 0.5 - Math.random()).slice(0, 4));
     }
