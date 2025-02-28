@@ -18,8 +18,8 @@ const FlightTable = () => {
   }, []);
 
   return (
-    <div className="overflow-x-auto  max-h-[700px] overflow-y-auto">
-      <table className="min-w-full border-collapse border border-gray-300">
+    <div className="max-h-[700px] w-full overflow-x-auto">
+      <table className="w-max min-w-[1000px] sm:min-w-full border-collapse border border-gray-300">
         <thead className="sticky top-0 bg-gray-700 text-white">
           <tr className="bg-gray-700 text-white">
             <th className="px-4 py-2 border">Date</th>
@@ -69,7 +69,18 @@ const FlightTable = () => {
                   )}
                   {idx === 0 && (
                     <td rowSpan={flightGroup.flights.length} className="text-center bg-blue-200  py-3 border align-middle">
-                      <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-orange-600">Book Now</button>
+                      <button
+                      onClick={() => {
+                        let queryParams = `airline=${encodeURIComponent(flightGroup.airlineImage)}&airlineName=${encodeURIComponent(flightGroup.airlineName)}&meal=${encodeURIComponent(flightGroup.meal)}&price=${encodeURIComponent(flightGroup.price)}  &seats=${encodeURIComponent(flightGroup.seats)}`;
+                        
+                        flightGroup.flights.forEach((flight, idx) => {
+                          queryParams += `&date${idx}=${encodeURIComponent(flight.date)}&flightNumber${idx}=${encodeURIComponent(flight.flightNumber)}&originDestination${idx}=${encodeURIComponent(flight.originDestination)}&time${idx}=${encodeURIComponent(flight.time)}&baggage${idx}=${encodeURIComponent(flight.baggage)}&depOrReturn${idx}=${flight.isReturn ? "RET" : "DEP"}`;
+                      
+                        });
+                      
+                        router.push(`/booking-tickets?${queryParams}`);
+                      }}
+                      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-orange-600">Book Now</button>
                     </td>
                   )}
                 </tr>

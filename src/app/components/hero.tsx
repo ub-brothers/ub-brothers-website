@@ -23,7 +23,7 @@ export default function HeroSlider() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      <div className="absolute text-center top-10 left-1/2 transform -translate-x-1/2 text-white text-3xl md:text-5xl font-bold px-6 py-3 font-serif z-10 drop-shadow-[3px_3px_5px_rgba(0,0,0,0.8)]">
+      <div className="absolute text-center top-10 left-1/2 transform -translate-x-1/2 text-white text-2xl md:text-5xl font-bold px-6 py-3 font-serif z-10 drop-shadow-[3px_3px_5px_rgba(0,0,0,0.8)]">
         Welcome to Ub Brothers!
       </div>
 

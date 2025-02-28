@@ -13,7 +13,7 @@ const Header = () => {
     pathname === path ? "text-yellow-500 border-b-2 border-yellow-500" : "text-white hover:text-gray-300";
 
   return (
-    <header className="bg-blue-600 text-white py-4 px-6">
+    <header className="bg-blue-600 text-white py-4 px-6 sticky top-0 z-50 shadow-md">
       <div className="flex justify-between items-center">
        
         <div className="flex items-center space-x-8">
