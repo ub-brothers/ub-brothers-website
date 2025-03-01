@@ -89,7 +89,7 @@ export default function TourDetail({ params }: { params: { id: string } }) {
 
           <h1 className="my-4 text-md sm:text-xl font-serif font-bold"><u>Requirements:</u></h1>
           <p>Original Passport</p>
-          <p>Bank statement (Valid for at least 6 months)</p>
+          <p>Bank statement (last 6 months)</p>
           <p>ID Copy (CNIC)</p>
           <p>Recent Photographs (White background)</p>
           <p className="my-2"><b>Note: </b>You will need to visit the office in person to submit the required documents.</p>

@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import { usePathname} from "next/navigation";
+import FloatingOffer from "../offer/page";
 
 export default function DestinationLayout( {children,
 }: Readonly<{
@@ -10,6 +11,7 @@ export default function DestinationLayout( {children,
     const pathname = usePathname(); 
     return(
         <>
+        <FloatingOffer/>
         <div className="my-4 text-center ">
           
         <Link href="/destinations">

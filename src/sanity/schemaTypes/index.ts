@@ -12,8 +12,9 @@ import fileConsultancy from './fileConsultancy'
 import iran from './iran'
 import hajj from './hajj'
 import ticketing from './ticketing'
+import offer from './offer'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [destination, stickerVisa, tour,   umrahDays, makkahHotel, madinaHotel,  hajjDays  , fileConsultancy, iran, hajj, ticketing ],
+  types: [destination, stickerVisa, tour,   umrahDays, makkahHotel, madinaHotel,  hajjDays  , fileConsultancy, iran, hajj, ticketing, offer ],
 }
   

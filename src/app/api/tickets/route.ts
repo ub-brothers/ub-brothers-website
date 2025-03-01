@@ -21,8 +21,8 @@ export async function POST(req: Request) {
       to: "samiaurooj386@gmail.com",
       subject: `New Ticket Booking - ${new Date().toLocaleString()}`,
       html: `
-     <p><strong>Airline</strong>:${airlineName}</p> 
-   <p><strong>Price of Adults</strong>:${price}</p> 
+     <p><strong>Airline</strong>: ${airlineName}</p> 
+   <p><strong>Price per Person(Adult)</strong>: ${price}</p> 
 <p><strong>Total Adults</strong>: ${adults}</p>
 <p><strong>Total Infants</strong>: ${infants}</p>
 
@@ -40,7 +40,7 @@ ${flights
 ${passengers
   .map(
     (p: any, index: number) =>
-      `<p>${index + 1}. <strong>Type</strong>: ${p.type}, <strong>Name</strong>: ${p.name} ${p.surname}, <strong>Passport</strong>: ${
+      `<p>${index + 1}. <strong>Type</strong>: ${p.type}, <strong>Name</strong>: ${p.name} ${p.surname}, <strong>Passport Number</strong>: ${
         p.passportNumber
       }, <strong>Date of Birth</strong>: ${p.dob}, <strong>Passport Expiry</strong>: ${p.passportExpiry}, <strong>Nationality</strong>: ${p.nationality}</p>`
   )

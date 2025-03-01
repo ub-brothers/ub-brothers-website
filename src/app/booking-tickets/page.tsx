@@ -2,8 +2,9 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import { Suspense } from "react";
 
-const BookNow = () => {
+function TicketsContent(){
 
   const handleConfirmBooking = async () => {
     try {
@@ -25,7 +26,6 @@ const BookNow = () => {
           meal,
           price,
           adults,
-          
           infants,
           passengers: updatedPassengers,
           flights,
@@ -63,15 +63,8 @@ const BookNow = () => {
  
   const [passengers, setPassengers] = useState<{ type: string; id: number; surname: string; name: string; passportNumber: string; dob: string; passportExpiry: string; nationality: string }[]>([]);
  
- 
-  useEffect(() => {
-    const totalPassengers = adults + infants;
-    const newPassengerData = Array.from({ length: totalPassengers }, (_, index) => (
-      passengers[index] || { surname: "", name: "", passportNumber: "", dob: "", passportExpiry: "", nationality: "" }
-    ));
-    setPassengers(newPassengerData);
-  }, [adults, infants]);
-
+  const [error, setError] = useState("");
+  
 
   const handlePassengerChange = (index: number, field: string, value: string) => {
     setPassengers((prevPassengers) =>
@@ -91,6 +84,13 @@ const BookNow = () => {
 
   // Validate seats
   const isSeatAvailable = adults <= availableSeats;
+useEffect(() => {
+    const totalPassengers = adults + infants;
+    const newPassengerData = Array.from({ length: totalPassengers }, (_, index) => (
+      passengers[index] || { surname: "", name: "", passportNumber: "", dob: "", passportExpiry: "", nationality: "" }
+    ));
+    setPassengers(newPassengerData);
+  }, [adults, infants, availableSeats]);
 
 
 // Extract only numeric values from the price string
@@ -198,7 +198,18 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
               <td className="px-4 py-2 border text-sm">Adults</td>
               <td className="px-4 py-2 border text-sm">
                 <input type="number" value={adults}
-                 onChange={(e) => setAdults(Math.max(1, Number(e.target.value)))} className="w-16 border p-1" />
+                 onChange={(e) =>   {
+                  const value = Number(e.target.value);
+                  if (value <= availableSeats) {
+                    setAdults(Math.max(0, value));
+                    setError(""); // Agar value sahi hai to error hata do
+                  } else {
+                    setError(`Only ${availableSeats} seats available for adults.`); // Error show karo
+                  }
+                }} className="w-16 border p-1" />
+
+{error && <p className="text-red-500 mt-2">{error}</p>}
+
               </td>
               <td className="px-4 py-2 border text-sm">{price}</td>
               <td className="px-4 py-2 border text-sm">{totalPrice}</td>
@@ -207,21 +218,23 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
               <td className="px-4 py-2 border text-sm">Infants</td>
               <td className="px-4 py-2 border text-sm">
                 <input type="number" value={infants}
-                  onChange={(e) => setInfants(Math.max(1, Number(e.target.value)))} className="w-16 border p-1" />
+                  onChange={(e) => setInfants(Math.max(0, Number(e.target.value)))} className="w-16 border p-1" />
               </td>
               <td className="px-4 py-2 border font-semibold text-sm text-red-700">Price on call</td>
               <td className="px-4 py-2 border font-semibold text-sm text-red-700">Price on call</td>
             </tr>
           </tbody>
         </table>
-        {!isSeatAvailable && <p className="text-red-500 mt-2">Only {availableSeats} seats available</p>}
+        {adults > availableSeats && (
+  <p className="text-red-500 mt-2">Only {availableSeats} seats available for adults.</p>
+)}
       
       </div>
 
 
  {/* Dynamic Passenger Forms */}
  {(adults > 0 || infants > 0) && (
- <div className="mt-6 overflow-x-auto min-w-[1000px]">
+ <div className="mt-6 overflow-x-auto min-w-[1200px]">
  
       <table className="w-full border border-gray-300 mt-4">
         <thead>
@@ -237,7 +250,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
         </thead>
         <tbody>
           {passengers.map((passenger, index) =>{
-             const type = index < adults ? `Adult ${index + 1}` : `Infant ${index - adults + 1 + 1}`;  
+             const type = index < adults ? `Adult ${index + 1}` : `Infant ${index - adults + 1}`;  
             return (
             <tr key={index} className="border-t text-sm">
               <td className="px-4 py-2 border">{type}</td>
@@ -262,6 +275,18 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
 
     </div>
   );
+
+}
+
+const BookNow = () => {
+return(
+  <div>
+    <Suspense fallback={<p className="text-center text-gray-600">Loading...</p>}>
+          <TicketsContent/>
+        </Suspense>
+  </div>
+)
+  
 };
 
 export default BookNow;
