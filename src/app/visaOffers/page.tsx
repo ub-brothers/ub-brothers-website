@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // Define the type for the Visa Offer
 type VisaOfferType = {
@@ -35,25 +37,40 @@ export default function VisaOffer() {
 
   if (!offer) return <p className="text-center text-lg">Loading offer...</p>;
 
+  const router = useRouter();
+
+const handleApplyNow = () => {
+  const queryParams = new URLSearchParams({
+    title: offer.title,
+    originalPrice: offer.originalPrice.toString(),
+    discountedPrice: offer.discountedPrice.toString(),
+    countries: offer.countries.map(c => c.name).join(","),
+  }).toString();
+
+  router.push(`/offerForm?${queryParams}`);
+};
+
   return (
     <div className="w-full p-8 bg-gray-100 shadow-xl rounded-xl  border border-gray-200">
       {/* Offer Heading */}
-      <h1 className="text-4xl font-bold font-serif text-center text-blue-600 mb-6 uppercase">
+      <h1 className="sm:text-4xl text-2xl font-bold font-serif text-center text-blue-600 mb-6 uppercase">
        <u> {offer.title}</u>
       </h1>
       
       {/* Countries List with Images */}
       <div className="bg-gray-100 p-4 rounded-lg mb-6">
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">Included Countries</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
         {offer.countries.map((country, index) => (
-  <div key={index} className="flex flex-col items-center bg-gray-800 p-4 rounded shadow-lg">
+  <div key={index} className="flex flex-col items-center bg-gray-500 p-4 rounded shadow-lg">
     {country.imageUrl? (
       <Image 
         src={country.imageUrl} 
         alt={country.name} 
         width={150} 
         height={140} 
+        quality={100} 
+        unoptimized
         className="object-cover w-full h-44 rounded-md mb-2"
       />
     ) : (
@@ -66,21 +83,19 @@ export default function VisaOffer() {
 ))}
         </div>
       </div>
-      
-      {/* Offer Message */}
       <p className="text-lg text-gray-700 text-center mb-6 font-medium">
       Get visa for all these countries at an exclusive discounted price!
       </p>
       
-      {/* Pricing Section */}
+      
       <div className="text-center text-xl font-semibold mb-6 bg-red-100 p-4 rounded-lg">
-        <span className="line-through text-gray-500 text-2xl">PKR {offer.originalPrice}</span>
-        <span className="text-red-600 text-3xl font-bold ml-3">PKR {offer.discountedPrice}</span>
+        <span className="line-through text-gray-500 text-2xl">PKR {offer.originalPrice}</span><br></br>
+        <span className="text-red-600 text-3xl font-bold ml-3">Only PKR {offer.discountedPrice}</span>
 
        
       </div>
       <div className="text-center">
- <button className="bg-blue-500 hover:bg-orange-500 w-[250px] text-white font-bold font-sans rounded-lg h-12">Apply for offer Now!</button></div>
+ <button onClick={handleApplyNow} className="bg-blue-500 hover:bg-orange-500 w-[250px] text-white font-bold font-sans rounded-lg h-12">Apply for offer Now!</button></div>
     </div>
   );
 }

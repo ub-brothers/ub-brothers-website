@@ -235,7 +235,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
 
 
 
- export const iranZiyarat = defineQuery(`*[_type == "iranIraq"]{
+ export const iranZiyarat = defineQuery(`*[_type == "iranIraq"] | order(_createdAt asc){
   _id,
   countryName,
   prize,
@@ -251,7 +251,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
   }`)
 
 
-  export const hajjPack = defineQuery(`*[_type == "hajjPackage"]{
+  export const hajjPack = defineQuery(`*[_type == "hajjPackage"] | order(_createdAt desc){
     _id,
     countryName,
     prize1,

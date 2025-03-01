@@ -244,7 +244,7 @@ export default function VisaApplication() {
        
        
         <section>
-        <h3 className="text-lg mb-2">Passport Photo (Clear Image)</h3>
+        <h3 className="text-lg mb-2">Passport Scan Copy (Clear Image)</h3>
         <input type="file"  name="passportPhoto" onChange={(e) => handleFileUpload(e, "passportPhoto", setPassportValid)} className="w-full p-2 border rounded mb-2" />
         {passportPhoto && <img src={passportPhoto} alt="Passport" className="h-24 mt-2" />} 
         {passportValid !== null && (passportValid ? "✅" : "❌ Photo is not clear")}

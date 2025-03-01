@@ -4,6 +4,8 @@ import { usePathname} from "next/navigation";
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt } from "react-icons/fa";
 
+import FloatingOffer from "../offer/page";
+
 export default function DestinationLayout( {children,
 }: Readonly<{
   children: React.ReactNode;
@@ -12,6 +14,7 @@ export default function DestinationLayout( {children,
     const pathname = usePathname(); 
     return(
         <>
+        <FloatingOffer/>
         <div className="my-4 text-center ">
         <Link href="/destinations">
           <button
