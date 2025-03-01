@@ -12,6 +12,10 @@ const nextConfig = {
           },
         ],
       },
+      compiler: {
+        removeConsole: process.env.NODE_ENV === "production", // Removes console logs in production
+    },
+    swcMinify: true,
 };
 
 

@@ -104,10 +104,12 @@ const AboutUs = () => {
    
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 text-center">
   <div className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center">
-    <img 
+   <Image 
       src="/image/ali.jpeg" 
       alt="Mirza Ali" 
-      className="w-24 h-24 rounded-full object-cover mb-3"
+      width={96} 
+      height={96} 
+      className="rounded-full object-cover mb-3"
     />
     <h3 className="text-xl font-semibold">Mirza Ali</h3>
     <p className="text-gray-700">Ticketing Sale Officer</p>
@@ -115,10 +117,12 @@ const AboutUs = () => {
   </div>
 
   <div className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center">
-    <img 
+  <Image 
       src="/image/bilal.jpeg" 
-      alt="Bilal" 
-      className="w-24 h-24 rounded-full object-cover mb-3"
+      alt="Bilal Maqsood" 
+      width={96} 
+      height={96} 
+      className="rounded-full object-cover mb-3"
     />
     <h3 className="text-xl font-semibold">Bilal Maqsood</h3>
     <p className="text-gray-700">Sales Executive</p>

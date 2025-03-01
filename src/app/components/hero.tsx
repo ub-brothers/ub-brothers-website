@@ -1,54 +1,76 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image"; // For Next.js image optimization
 
 const slides = [
-  { type: "video", src: "/image/hajj2.mp4" }, 
+  { type: "video", src: "/image/hajj2.mp4" },
   { type: "video", src: "/image/madina.mp4" },
-  { type: "video", src: "/image/ziyarat.mp4", text: "Iran / Iraq Ziyarat" }, 
-  { type: "video", src: "/image/turks.mp4", text:"Turkey Tour" }, 
+  { type: "video", src: "/image/ziyarat.mp4", text: "Iran / Iraq Ziyarat" },
+  { type: "video", src: "/image/turks.mp4", text: "Turkey Tour" },
 ];
 
 export default function HeroSlider() {
   const [current, setCurrent] = useState(0);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]); // ✅ Fix applied
 
   const nextSlide = () => {
     setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 10000); // 5 seconds interval
-
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    const interval = setInterval(nextSlide, 10000); // 10 seconds interval
+    return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    // Pause all videos except the current one
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index === current) {
+          video.play();
+        } else {
+          video.pause();
+          video.currentTime = 0; // ✅ Fix applied
+        }
+      }
+    });
+  }, [current]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
+      {/* Heading */}
       <div className="absolute text-center top-10 left-1/2 transform -translate-x-1/2 text-white text-2xl md:text-5xl font-bold px-6 py-3 font-serif z-10 drop-shadow-[3px_3px_5px_rgba(0,0,0,0.8)]">
         Welcome to Ub Brothers!
       </div>
 
       {/* Slides */}
-      <div className="w-full h-full flex transition-transform duration-500 ease-in-out">
+      <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`absolute w-full h-full transition-opacity ${
+            className={`absolute w-full h-full transition-opacity duration-700 ease-in-out ${
               index === current ? "opacity-100" : "opacity-0"
             }`}
           >
             {slide.type === "video" ? (
               <video
+                ref={(el) => {
+                  videoRefs.current[index] = el; // ✅ Fix: No return statement
+                }}
                 src={slide.src}
-                autoPlay
-                loop
-                muted
                 className="w-full h-full object-cover"
+                muted
+                loop
+                playsInline
+                preload="auto"
               />
             ) : (
-              <img
+              <Image
                 src={slide.src}
                 alt={`Slide ${index + 1}`}
-                className="w-full h-full object-cover"
+                layout="fill"
+                objectFit="cover"
+                priority={index === 0} // Load first image fast
               />
             )}
             {/* Slide-Specific Text */}
@@ -60,20 +82,6 @@ export default function HeroSlider() {
           </div>
         ))}
       </div>
-
-      {/* Navigation Arrows */}
-      {/* <button
-        onClick={() => setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1))}
-        className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full"
-      >
-        ❮
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full"
-      >
-        ❯
-      </button> */}
     </div>
   );
 }
