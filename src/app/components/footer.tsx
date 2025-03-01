@@ -40,10 +40,13 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold text-orange-500 mb-3">Contact Us</h3>
           <p className="text-sm text-gray-200 flex items-center">
-            <FaPhoneAlt className="mr-2" /> +92 300 9480157
+            <FaPhoneAlt className="mr-2" />03414311000
           </p>
           <p className="text-sm text-gray-200 flex items-center">
-            <FaPhoneAlt className="mr-2" /> +92 326 421 4241
+            <FaPhoneAlt className="mr-2" /> 03414314000
+          </p>
+          <p className="text-sm text-gray-200 flex items-center">
+            <FaPhoneAlt className="mr-2" /> 03414322000
           </p>
           <h1 className="font-bold mt-2">Office locations:</h1>
           <p className="text-sm text-gray-200 flex items-center">

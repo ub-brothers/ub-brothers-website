@@ -326,13 +326,13 @@ const handleSubmit = async (e: React.FormEvent) => {
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
     
     <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center font-sans text-blue-900">You Can Directly Contact:</h2>
       
   
 
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Narmeen Mughal</p>
-        <p className="text-sm text-gray-500 mt-2">+92 303 4225181</p>
+        <p className="text-sm text-gray-500 mt-2">03414312000</p>
         <p className="text-sm text-gray-500">&#9993;  ubbrothersticketing@gmail.com</p>
       </div>
     </div>

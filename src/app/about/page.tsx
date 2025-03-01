@@ -111,7 +111,7 @@ const AboutUs = () => {
     />
     <h3 className="text-xl font-semibold">Mirza Ali</h3>
     <p className="text-gray-700">Ticketing Sale Officer</p>
-    <p className="text-gray-600">+92 326 4214241</p>
+    <p className="text-gray-600">03414314000</p>
   </div>
 
   <div className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center">
@@ -122,19 +122,19 @@ const AboutUs = () => {
     />
     <h3 className="text-xl font-semibold">Bilal Maqsood</h3>
     <p className="text-gray-700">Sales Executive</p>
-    <p className="text-gray-600">+92 309 4750877</p>
+    <p className="text-gray-600">03414316000</p>
   </div>
 
   <div className="p-4 bg-orange-100 rounded-lg shadow-md">
     <h3 className="text-xl font-semibold">Usman Ali</h3>
     <p className="text-gray-700">Accounts Officer</p>
-    <p className="text-gray-600">+92 320 1426764</p>
+    <p className="text-gray-600">03414315000</p>
   </div>
 
   <div className="p-4 bg-orange-100 rounded-lg shadow-md">
     <h3 className="text-xl font-semibold">Narmeen Mughal</h3>
     <p className="text-gray-700">Admin</p>
-    <p className="text-gray-600">+92 317 4141149</p>
+    <p className="text-gray-600">03414312000</p>
   </div>
 </div>
 

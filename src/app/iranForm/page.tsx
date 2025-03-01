@@ -99,14 +99,14 @@ export default function BookForm() {
     </Suspense>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
     <div className="w-full p-8 mt-10 bg-gray-100">
-      <h2 className="text-3xl font-semibold mb-4 text-center text-black"><u>You Can Directly Contact:</u></h2>
+      <h2 className="text-3xl font-semibold font-sans mb-4 text-center text-black"><u>You Can Directly Contact:</u></h2>
 
       
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
-        <p className="text-lg text-gray-800 mt-2">+92 300 9480157</p>
+        <p className="text-lg text-gray-800 mt-2">03414311000</p>
         <p className="sm:text-2xl text-lg font-semibold font-serif mt-4">Mirza Ali</p>
-        <p className="text-lg text-gray-800 mt-2">+92 326 4214241</p>
+        <p className="text-lg text-gray-800 mt-2">03414314000</p>
       </div>
     </div>
     

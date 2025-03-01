@@ -1,0 +1,1095 @@
+[
+  {
+    "fields": [
+      {
+        "name": "countryName",
+        "type": "string"
+      },
+      {
+        "name": "prize",
+        "type": "number"
+      },
+      {
+        "name": "shortDescription",
+        "type": "text",
+        "title": "Short Description "
+      },
+      {
+        "name": "requirements",
+        "type": "text"
+      },
+      {
+        "name": "requirement1",
+        "type": "text"
+      },
+      {
+        "name": "requirement2",
+        "type": "text"
+      },
+      {
+        "name": "requirement3",
+        "type": "text"
+      },
+      {
+        "name": "requirement4",
+        "type": "text"
+      },
+      {
+        "name": "requirement5",
+        "type": "text"
+      },
+      {
+        "name": "requirement6",
+        "type": "text"
+      },
+      {
+        "name": "requirement7",
+        "type": "text"
+      },
+      {
+        "name": "requirement8",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image2",
+        "type": "image",
+        "title": "Image2"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image3",
+        "type": "image",
+        "title": "Image3"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "name": "rating",
+        "type": "number"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Available Now",
+              "value": "available"
+            },
+            {
+              "title": "Coming Soon",
+              "value": "comingSoon"
+            }
+          ]
+        },
+        "name": "availability",
+        "type": "string"
+      }
+    ],
+    "name": "destinations",
+    "type": "document",
+    "title": "eVisa"
+  },
+  {
+    "fields": [
+      {
+        "name": "countryName",
+        "type": "string"
+      },
+      {
+        "name": "prize",
+        "type": "number"
+      },
+      {
+        "name": "requirements",
+        "type": "text"
+      },
+      {
+        "name": "requirement1",
+        "type": "text",
+        "title": "Requirements1"
+      },
+      {
+        "name": "requirement2",
+        "type": "text",
+        "title": "Requirements2"
+      },
+      {
+        "name": "requirement3",
+        "type": "text",
+        "title": "Requirements3"
+      },
+      {
+        "name": "requirement4",
+        "type": "text",
+        "title": "Requirements4"
+      },
+      {
+        "name": "requirement5",
+        "type": "text",
+        "title": "Requirements5"
+      },
+      {
+        "name": "requirement6",
+        "type": "text",
+        "title": "Requirements6"
+      },
+      {
+        "name": "requirement7",
+        "type": "text",
+        "title": "Requirements7"
+      },
+      {
+        "name": "requirement8",
+        "type": "text",
+        "title": "Requirements8"
+      },
+      {
+        "name": "requirement9",
+        "type": "text",
+        "title": "Requirements9"
+      },
+      {
+        "name": "requirement10",
+        "type": "text",
+        "title": "Requirements10"
+      },
+      {
+        "name": "requirement11",
+        "type": "text",
+        "title": "Requirements11"
+      },
+      {
+        "name": "requirement12",
+        "type": "text",
+        "title": "Requirements12"
+      },
+      {
+        "name": "requirement13",
+        "type": "text",
+        "title": "Requirements13"
+      },
+      {
+        "name": "requirement14",
+        "type": "text",
+        "title": "Requirements14"
+      },
+      {
+        "name": "requirement15",
+        "type": "text",
+        "title": "Requirements15"
+      },
+      {
+        "name": "supportiveDoc",
+        "type": "text",
+        "title": "Supportive Document"
+      },
+      {
+        "name": "requirement16",
+        "type": "text",
+        "title": "Requirements16"
+      },
+      {
+        "name": "requirement17",
+        "type": "text",
+        "title": "Requirements17"
+      },
+      {
+        "name": "requirement18",
+        "type": "text",
+        "title": "Requirements18"
+      },
+      {
+        "name": "requirement19",
+        "type": "text",
+        "title": "Requirements19"
+      },
+      {
+        "name": "requirement20",
+        "type": "text",
+        "title": "Requirements20"
+      },
+      {
+        "name": "requirement21",
+        "type": "text",
+        "title": "Requirements21"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image2",
+        "type": "image",
+        "title": "Image2"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image3",
+        "type": "image",
+        "title": "Image3"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "name": "shortDescription",
+        "type": "text",
+        "title": "Description"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Available Now",
+              "value": "available"
+            },
+            {
+              "title": "Coming Soon",
+              "value": "comingSoon"
+            }
+          ]
+        },
+        "name": "availability",
+        "type": "string"
+      }
+    ],
+    "name": "stickerVisa",
+    "type": "document",
+    "title": "Sticker"
+  },
+  {
+    "fields": [
+      {
+        "name": "countryName",
+        "type": "string"
+      },
+      {
+        "name": "prize",
+        "type": "number"
+      },
+      {
+        "name": "shortDescription",
+        "type": "text",
+        "title": "Short Description "
+      },
+      {
+        "name": "tourIncludeHeading",
+        "type": "text",
+        "title": "Tour Include Head"
+      },
+      {
+        "name": "tourInclude1",
+        "type": "text",
+        "title": "Tour Include1"
+      },
+      {
+        "name": "tourInclude2",
+        "type": "text",
+        "title": "Tour Include2"
+      },
+      {
+        "name": "tourInclude3",
+        "type": "text",
+        "title": "Tour Include3"
+      },
+      {
+        "name": "tourInclude4",
+        "type": "text",
+        "title": "Tour Include4"
+      },
+      {
+        "name": "tourInclude5",
+        "type": "text",
+        "title": "Tour Include5"
+      },
+      {
+        "name": "tourInclude6",
+        "type": "text",
+        "title": "Tour Include6"
+      },
+      {
+        "name": "tourInclude7",
+        "type": "text",
+        "title": "Tour Include7"
+      },
+      {
+        "name": "tourInclude8",
+        "type": "text",
+        "title": "Tour Include8"
+      },
+      {
+        "name": "tourInclude9",
+        "type": "text",
+        "title": "Tour Include9"
+      },
+      {
+        "name": "heading1",
+        "type": "text"
+      },
+      {
+        "name": "day1",
+        "type": "text"
+      },
+      {
+        "name": "heading2",
+        "type": "text"
+      },
+      {
+        "name": "day2",
+        "type": "text"
+      },
+      {
+        "name": "heading3",
+        "type": "text"
+      },
+      {
+        "name": "day3",
+        "type": "text"
+      },
+      {
+        "name": "heading4",
+        "type": "text"
+      },
+      {
+        "name": "day4",
+        "type": "text"
+      },
+      {
+        "name": "heading5",
+        "type": "text"
+      },
+      {
+        "name": "day5",
+        "type": "text"
+      },
+      {
+        "name": "heading6",
+        "type": "text"
+      },
+      {
+        "name": "day6",
+        "type": "text"
+      },
+      {
+        "name": "heading7",
+        "type": "text"
+      },
+      {
+        "name": "day7",
+        "type": "text"
+      },
+      {
+        "name": "heading8",
+        "type": "text"
+      },
+      {
+        "name": "day8",
+        "type": "text"
+      },
+      {
+        "name": "heading9",
+        "type": "text"
+      },
+      {
+        "name": "day9",
+        "type": "text"
+      },
+      {
+        "name": "requirementsH",
+        "type": "text",
+        "title": "RequirementsH"
+      },
+      {
+        "name": "requirement1",
+        "type": "text"
+      },
+      {
+        "name": "requirement2",
+        "type": "text"
+      },
+      {
+        "name": "requirement3",
+        "type": "text"
+      },
+      {
+        "name": "requirement4",
+        "type": "text"
+      },
+      {
+        "name": "requirement5",
+        "type": "text"
+      },
+      {
+        "name": "requirement6",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image2",
+        "type": "image",
+        "title": "Image2"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image3",
+        "type": "image",
+        "title": "Image3"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image4",
+        "type": "image",
+        "title": "Image4"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "tour",
+    "type": "document",
+    "title": "tour"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "list": [
+            7,
+            15,
+            21,
+            28
+          ]
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  7,
+                  15,
+                  21,
+                  28
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "days",
+        "type": "number",
+        "title": "Number of Days"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "price",
+        "type": "number",
+        "title": "Package Price"
+      }
+    ],
+    "name": "umrahDays",
+    "type": "document",
+    "title": "Umrah days"
+  },
+  {
+    "fields": [
+      {
+        "name": "hotelName",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    "sharing",
+                    "penta",
+                    "quad",
+                    "triple",
+                    "doubled"
+                  ]
+                },
+                "name": "categoryName",
+                "type": "string"
+              },
+              {
+                "name": "price",
+                "type": "number",
+                "title": "Price (per night)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "applicableCategories",
+        "type": "array",
+        "title": "Applicable Categories & Prices"
+      }
+    ],
+    "name": "makkahHotel",
+    "type": "document",
+    "title": "Umrah Makkah Hotels"
+  },
+  {
+    "fields": [
+      {
+        "name": "hotelName",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    "sharing",
+                    "penta",
+                    "quad",
+                    "triple",
+                    "doubled"
+                  ]
+                },
+                "name": "categoryName",
+                "type": "string"
+              },
+              {
+                "name": "price",
+                "type": "number",
+                "title": "Price (per night)"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "applicableCategories",
+        "type": "array",
+        "title": "Applicable Categories & Prices"
+      }
+    ],
+    "name": "madinaHotel",
+    "type": "document",
+    "title": "Umrah Madina Hotels"
+  },
+  {
+    "fields": [
+      {
+        "name": "days",
+        "type": "text",
+        "title": "Number of Days"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "makkahHotel",
+        "type": "array",
+        "title": "Makkah Hotels"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "madinaHotel",
+        "type": "array",
+        "title": "Madina Hotels"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "category",
+                "type": "string",
+                "title": "Room Category"
+              },
+              {
+                "name": "price",
+                "type": "number"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "roomCategories",
+        "type": "array",
+        "title": "Room Categories for Selected Days"
+      }
+    ],
+    "name": "hajjDays",
+    "type": "document",
+    "title": "Hajj Days Form"
+  },
+  {
+    "fields": [
+      {
+        "name": "countryName",
+        "type": "string"
+      },
+      {
+        "name": "prize",
+        "type": "number"
+      },
+      {
+        "name": "requirements",
+        "type": "text"
+      },
+      {
+        "name": "requirement1",
+        "type": "text",
+        "title": "Requirements1"
+      },
+      {
+        "name": "requirement2",
+        "type": "text",
+        "title": "Requirements2"
+      },
+      {
+        "name": "requirement3",
+        "type": "text",
+        "title": "Requirements3"
+      },
+      {
+        "name": "requirement4",
+        "type": "text",
+        "title": "Requirements4"
+      },
+      {
+        "name": "requirement5",
+        "type": "text",
+        "title": "Requirements5"
+      },
+      {
+        "name": "requirement6",
+        "type": "text",
+        "title": "Requirements6"
+      },
+      {
+        "name": "requirement7",
+        "type": "text",
+        "title": "Requirements7"
+      },
+      {
+        "name": "requirement8",
+        "type": "text",
+        "title": "Requirements8"
+      },
+      {
+        "name": "requirement9",
+        "type": "text",
+        "title": "Requirements9"
+      },
+      {
+        "name": "requirement10",
+        "type": "text",
+        "title": "Requirements10"
+      },
+      {
+        "name": "requirement11",
+        "type": "text",
+        "title": "Requirements11"
+      },
+      {
+        "name": "requirement12",
+        "type": "text",
+        "title": "Requirements12"
+      },
+      {
+        "name": "requirement13",
+        "type": "text",
+        "title": "Requirements13"
+      },
+      {
+        "name": "requirement14",
+        "type": "text",
+        "title": "Requirements14"
+      },
+      {
+        "name": "requirement15",
+        "type": "text",
+        "title": "Requirements15"
+      },
+      {
+        "name": "requirement16",
+        "type": "text",
+        "title": "Requirements16"
+      },
+      {
+        "name": "requirement17",
+        "type": "text",
+        "title": "Requirements17"
+      },
+      {
+        "name": "supportiveDoc",
+        "type": "text",
+        "title": "Supportive Document"
+      },
+      {
+        "name": "requirement18",
+        "type": "text",
+        "title": "Requirements18"
+      },
+      {
+        "name": "requirement19",
+        "type": "text",
+        "title": "Requirements19"
+      },
+      {
+        "name": "requirement20",
+        "type": "text",
+        "title": "Requirements20"
+      },
+      {
+        "name": "requirement21",
+        "type": "text",
+        "title": "Requirements21"
+      },
+      {
+        "name": "requirement22",
+        "type": "text",
+        "title": "Requirements22"
+      },
+      {
+        "name": "requirement23",
+        "type": "text",
+        "title": "Requirements23"
+      },
+      {
+        "name": "requirement24",
+        "type": "text",
+        "title": "Requirements24"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image2",
+        "type": "image",
+        "title": "Image2"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image3",
+        "type": "image",
+        "title": "Image3"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "name": "shortDescription",
+        "type": "text",
+        "title": "Description"
+      }
+    ],
+    "name": "fileConsultancy",
+    "type": "document",
+    "title": "File and Consultancy"
+  },
+  {
+    "fields": [
+      {
+        "name": "countryName",
+        "type": "string"
+      },
+      {
+        "name": "prize",
+        "type": "number"
+      },
+      {
+        "name": "shortDescription",
+        "type": "text",
+        "title": "Short Description "
+      },
+      {
+        "name": "tourIncludeHeading",
+        "type": "text",
+        "title": "Tour Include Head"
+      },
+      {
+        "name": "tourInclude1",
+        "type": "text",
+        "title": "Tour Include1"
+      },
+      {
+        "name": "tourInclude2",
+        "type": "text",
+        "title": "Tour Include2"
+      },
+      {
+        "name": "tourInclude3",
+        "type": "text",
+        "title": "Tour Include3"
+      },
+      {
+        "name": "tourInclude4",
+        "type": "text",
+        "title": "Tour Include4"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image2",
+        "type": "image",
+        "title": "Image2"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "iranIraq",
+    "type": "document",
+    "title": "Iran Iraq Ziyarat"
+  },
+  {
+    "fields": [
+      {
+        "name": "countryName",
+        "type": "string"
+      },
+      {
+        "name": "prize1",
+        "type": "string",
+        "title": "Prize sharing"
+      },
+      {
+        "name": "prize2",
+        "type": "string",
+        "title": "Prize triple"
+      },
+      {
+        "name": "prize3",
+        "type": "string",
+        "title": "Prize double"
+      },
+      {
+        "name": "shortDescription",
+        "type": "text",
+        "title": "Short Description "
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image2",
+        "type": "image",
+        "title": "Image2"
+      }
+    ],
+    "name": "hajjPackage",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "Ye sirf admin ke liye hai, frontend pe nahi dikhayega.",
+        "hidden": false,
+        "name": "internalTitle",
+        "type": "string",
+        "title": "Internal Title (For Admin Only)"
+      },
+      {
+        "initialValue": 2,
+        "name": "seats",
+        "type": "number"
+      },
+      {
+        "name": "airline",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "airlineLogo",
+        "type": "image"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "description": "Check if this is a return flight",
+                "name": "isReturn",
+                "type": "boolean",
+                "title": "Is Return Flight"
+              },
+              {
+                "options": {
+                  "dateFormat": "DD MMM YYYY"
+                },
+                "name": "date",
+                "type": "date"
+              },
+              {
+                "name": "flightNumber",
+                "type": "string"
+              },
+              {
+                "name": "originDestination",
+                "type": "string",
+                "title": "Origin - Destination"
+              },
+              {
+                "name": "time",
+                "type": "string"
+              },
+              {
+                "name": "baggage",
+                "type": "string"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "flights",
+        "type": "array"
+      },
+      {
+        "name": "meal",
+        "type": "string"
+      },
+      {
+        "name": "price",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "airlineImage",
+        "type": "image"
+      },
+      {
+        "name": "airlineName",
+        "type": "string"
+      }
+    ],
+    "name": "flights",
+    "type": "document",
+    "title": "Ticketing/ Flights"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string",
+        "title": "Offer Title"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string",
+                "title": "Country Name"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Country Image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "countries",
+        "type": "array"
+      },
+      {
+        "name": "originalPrice",
+        "type": "number",
+        "title": "Original Total Price"
+      },
+      {
+        "name": "discountedPrice",
+        "type": "number"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "of": [
+          {
+            "type": "image"
+          }
+        ],
+        "name": "images",
+        "type": "array",
+        "title": "Offer Images"
+      }
+    ],
+    "name": "visaOffer",
+    "type": "document"
+  }
+]

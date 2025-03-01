@@ -16,10 +16,13 @@ export default function ContactInfo() {
           <FaPhoneAlt /> Contact Numbers
         </h2>
         <p className="text-gray-600 text-lg flex items-center justify-center gap-2">
-          <FaPhoneAlt /> +92 300 9480157
+          <FaPhoneAlt /> 03414311000
         </p>
         <p className="text-gray-600 text-lg flex items-center justify-center gap-2">
-          <FaPhoneAlt /> +92 326 4214241
+          <FaPhoneAlt /> 03414314000
+        </p>
+        <p className="text-gray-600 text-lg flex items-center justify-center gap-2">
+          <FaPhoneAlt /> 03414322000
         </p>
       </motion.div>
 

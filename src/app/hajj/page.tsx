@@ -94,41 +94,6 @@ export default function HajjPackage() {
             ))}
         </div>
 
-
-
-
-      {/* <motion.p 
-        className="text-lg text-center text-gray-700 max-w-2xl mb-4"
-        initial={{ opacity: 0, y: 10 }}
-       
-        transition={{ delay: 0.6, duration: 0.6 }}
-        whileInView={{ opacity: 1 }}
-      >
-Customize your travel duration according to your convenience and spiritual needs.
-Our package offers premium hotels, delicious meals, and comfortable transportation.
-All this comes at reasonable prices, ensuring an affordable yet luxurious experience.
-Join us for a Hajj journey with unparalleled comfort and peace of mind.
-      </motion.p>
-      <Link href="/hajjForm">
-      <motion.button 
-        className="bg-blue-600 text-white px-6 py-3 mt-5 rounded-lg text-lg font-semibold hover:bg-blue-700 transition shadow-lg"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        whileInView={{ opacity: 1 }}
-      >
-        Book Now
-      </motion.button></Link>
-<motion.div 
-        className="flex flex-col md:flex-row gap-4 mb-6"
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <Image src="/image/masjid.jpg" alt="Makkah" width={300} height={200} className="rounded-lg shadow-lg" />
-        <Image src="/image/makkahh.jpg" alt="Madina" width={300} height={200} className="rounded-lg shadow-lg" />
-      </motion.div> */}
-      
       <div className="min-h-screen flex flex-col items-center justify-center p-6">
         <div className='my-14'>
       <h2 className="text-3xl font-bold font-sans text-center text-gray-900 mb-6">Hajj Package Includes</h2>
@@ -180,12 +145,12 @@ Join us for a Hajj journey with unparalleled comfort and peace of mind.
       
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
-        <p className="text-sm text-gray-500 mt-2">+92 300 9480157</p>
+        <p className="text-sm text-gray-500 mt-2">03414311000</p>
         <p className="text-sm text-gray-500">&#9993;  ubbrotherspk@gmail.com</p>
       </div>
       <div className="text-center mt-4">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
-        <p className="text-sm text-gray-500 mt-2">+92 326 4214241</p>
+        <p className="text-sm text-gray-500 mt-2">03414314000</p>
         <p className="text-sm text-gray-500">&#9993;  ubbrothersconsultant@gmail.com</p>
       </div>
     </div>

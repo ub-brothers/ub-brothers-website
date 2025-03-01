@@ -46,20 +46,20 @@ export default function DestinationLayout( {children,
     
         <div className="sm:text-right text-center m-4 sm:text-md text-sm">
         <h1  className="font-bold">Narmeen Mughal:</h1>
-        <p>+92 303 4225181</p></div>
+        <p>03414312000</p></div>
       </div>
         {children}
 
 
         <div className="w-full p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
+      <h2 className="text-3xl font-bold font-sans mb-8 text-center text-blue-900">You Can Directly Contact:</h2>
       
   
 
     
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Narmeen Mughal</p>
-        <p className="text-sm text-gray-500 mt-2">+92 303 4225181</p>
+        <p className="text-sm text-gray-500 mt-2">03414312000</p>
         <p className="text-sm text-gray-500">&#9993;  ubbrothersticketing@gmail.com</p>
       </div>
       <motion.div 
