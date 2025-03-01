@@ -111,7 +111,7 @@ const AboutUs = () => {
     />
     <h3 className="text-xl font-semibold">Mirza Ali</h3>
     <p className="text-gray-700">Ticketing Sale Officer</p>
-    <p className="text-gray-600">03414314000</p>
+    <p className="text-gray-600"> 03414314000 </p>
   </div>
 
   <div className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center">
@@ -122,7 +122,7 @@ const AboutUs = () => {
     />
     <h3 className="text-xl font-semibold">Bilal Maqsood</h3>
     <p className="text-gray-700">Sales Executive</p>
-    <p className="text-gray-600">03414316000</p>
+    <p className="text-gray-600">03414316000 </p>
   </div>
 
   <div className="p-4 bg-orange-100 rounded-lg shadow-md">

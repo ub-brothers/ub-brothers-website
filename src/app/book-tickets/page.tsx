@@ -51,7 +51,7 @@ const FlightTable = () => {
   </td>
 </tr>
 
-              {/* Flight Rows */}
+          
               {flightGroup.flights.map((flight, idx) => (
                 <tr key={idx} className="border-t">
                  <td className="px-4 text-center font-bold text-sm bg-blue-200 border">
