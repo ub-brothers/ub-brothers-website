@@ -66,7 +66,7 @@ const AboutUs = () => {
       >
         <Image src="/image/ceo.jpeg" width={300} height={300} alt="CEO" className="rounded-full shadow-lg mb-4" />
         <p className="text-lg text-gray-700 max-w-2xl">
-         Mr. Shaharyaar Mughal, our CEO, is a visionary leader dedicated to driving UB Brothers towards excellence. With years of experience in visa consultancy and travel management, he ensures top-tier services and customer satisfaction.
+        Alhaj M. Shaharyaar, our CEO, is a visionary leader dedicated to driving UB Brothers towards excellence. With years of experience in visa consultancy and travel management, he ensures top-tier services and customer satisfaction.
         </p>
       </motion.div>
       
@@ -104,12 +104,10 @@ const AboutUs = () => {
    
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 text-center">
   <div className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center">
-   <Image 
+  <img 
       src="/image/ali.jpeg" 
       alt="Mirza Ali" 
-      width={96} 
-      height={96} 
-      className="rounded-full object-cover mb-3"
+      className="w-24 h-24 rounded-full object-cover mb-3"
     />
     <h3 className="text-xl font-semibold">Mirza Ali</h3>
     <p className="text-gray-700">Ticketing Sale Officer</p>
@@ -124,7 +122,7 @@ const AboutUs = () => {
       height={96} 
       className="rounded-full object-cover mb-3"
     />
-    <h3 className="text-xl font-semibold">Bilal Maqsood</h3>
+    <h3 className="text-xl font-semibold">Bilal Maqbool</h3>
     <p className="text-gray-700">Sales Executive</p>
     <p className="text-gray-600">03414316000 </p>
   </div>

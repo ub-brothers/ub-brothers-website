@@ -26,7 +26,8 @@ const UmrahBookingForm2 = () => {
   const [madinaHotels, setMadinaHotels] = useState<Hotel[]>([]);
   const [selectedMakkahHotel, setSelectedMakkahHotel] = useState("");
   const [selectedMadinaHotel, setSelectedMadinaHotel] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedMakkahCategory, setSelectedMakkahCategory] = useState<string>("");
+const [selectedMadinaCategory, setSelectedMadinaCategory] = useState<string>("");
   const [totalCost, setTotalCost] = useState<number>(0);
   const [formData, setFormData] = useState({ name: "", phone: "", nationality: "", makkahDay: 0, madinaDay: 0 });
     
@@ -80,18 +81,22 @@ const UmrahBookingForm2 = () => {
     console.log("Madina Hotel Data:", selectedMadinaHotelObj);
 
     const selectedMakkahCategoryObj = selectedMakkahHotelObj?.applicableCategories.find(
-        (c) => c.categoryName === selectedCategory
+        (c) => c.categoryName === selectedMakkahCategory
     );
     const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? selectedMakkahCategoryObj.price * formData.makkahDay : 0;
 
     const selectedMadinaCategoryObj = selectedMadinaHotelObj?.applicableCategories.find(
-        (c) => c.categoryName === selectedCategory
+        (c) => c.categoryName ===  selectedMadinaCategory
     );
     const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price * formData.madinaDay : 0;
 
     const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
 
     let total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
+
+    console.log("Makkah Price:", selectedMakkahCategoryPrice);
+    console.log("Madina Price:", selectedMadinaCategoryPrice);
+    console.log("Total Before Visa Check:", total);
 
     if (visaStatus === "no" && proceedClicked) {
         total += 550;
@@ -126,10 +131,10 @@ const handleSubmit = async (e: React.FormEvent) => {
   formDataToSend.append("days", selectedDays.toString());
   formDataToSend.append("makkahHotel", selectedMakkahHotel);
   formDataToSend.append("makkahDay", String(formData.makkahDay));
-  formDataToSend.append("makkahCategory", selectedCategory);
+  formDataToSend.append("makkahCategory", selectedMakkahCategory);
   formDataToSend.append("madinaHotel", selectedMadinaHotel);
   formDataToSend.append("madinaDay", String(formData.madinaDay));
-  formDataToSend.append("madinaCategory", selectedCategory);
+  formDataToSend.append("madinaCategory", selectedMadinaCategory);
   formDataToSend.append("visaStatus", visaStatus);
   formDataToSend.append("nationality", formData.nationality);
   formDataToSend.append("totalCost", totalCost.toString());
@@ -208,7 +213,7 @@ const handleSubmit = async (e: React.FormEvent) => {
  <label className="font-semibold">Makkah Room Category</label>
  <select 
   disabled={availableMakkahCategories.length === 0} 
-  onChange={(e) => setSelectedCategory(e.target.value)} 
+  onChange={(e) => setSelectedMakkahCategory(e.target.value)} 
   className="w-full p-3 mb-5 border rounded-md" 
 >
 {availableMakkahCategories.length > 0 ? (
@@ -248,7 +253,7 @@ const handleSubmit = async (e: React.FormEvent) => {
          <label className="font-semibold">Madina Room Category</label>
          <select 
   disabled={availableMadinaCategories.length === 0} 
-  onChange={(e) => setSelectedCategory(e.target.value)}
+  onChange={(e) => setSelectedMadinaCategory(e.target.value)}
   className="w-full p-3 mb-5 border rounded-md"
 >
 {availableMadinaCategories.length > 0 ? (

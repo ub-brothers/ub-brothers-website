@@ -17,6 +17,7 @@
     "framer-motion": "^12.4.2",
     "html2pdf.js": "^0.10.2",
     "jimp": "^1.6.0",
+    "jspdf": "^3.0.0",
     "lucide-react": "^0.474.0",
     "multer": "^1.4.5-lts.1",
     "next": "14.2.16",

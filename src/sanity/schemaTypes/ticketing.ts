@@ -12,9 +12,15 @@ export default {
     },
     {
       name: "seats",
-      title: "Seats",
+      title: "Adult Seats",
       type: "number",
       initialValue: 2
+    },
+    {
+      name: "childSeats",
+      title: "Child Seats",
+      type: "number",
+      
     },
     { name: 'airline', title: 'Airline', type: 'string' },
     { 

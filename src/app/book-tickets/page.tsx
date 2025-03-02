@@ -11,7 +11,7 @@ const FlightTable = () => {
 
   useEffect(() => {
     const fetchFlights = async () => {
-      const data: FlightGroup[] = await client.fetch('*[_type == "flights"] | order(_createdAt asc) { id , airline, "airlineLogo": airlineLogo.asset->url ,  flights[], meal, price, airlineName,"airlineImage": airlineImage.asset->url, seats,  }');
+      const data: FlightGroup[] = await client.fetch('*[_type == "flights"] | order(_createdAt asc) { id , airline, "airlineLogo": airlineLogo.asset->url ,  flights[], meal, price, airlineName,"airlineImage": airlineImage.asset->url, seats, childSeats }');
       setFlights(data);
     };
     fetchFlights();
@@ -71,7 +71,7 @@ const FlightTable = () => {
                     <td rowSpan={flightGroup.flights.length} className="text-center bg-blue-200  py-3 border align-middle">
                       <button
                       onClick={() => {
-                        let queryParams = `airline=${encodeURIComponent(flightGroup.airlineImage)}&airlineName=${encodeURIComponent(flightGroup.airlineName)}&meal=${encodeURIComponent(flightGroup.meal)}&price=${encodeURIComponent(flightGroup.price)}  &seats=${encodeURIComponent(flightGroup.seats)}`;
+                        let queryParams = `airline=${encodeURIComponent(flightGroup.airlineImage)}&airlineName=${encodeURIComponent(flightGroup.airlineName)}&meal=${encodeURIComponent(flightGroup.meal)}&price=${encodeURIComponent(flightGroup.price)}  &seats=${encodeURIComponent(flightGroup.seats)}  &childSeats=${encodeURIComponent(flightGroup.childSeats)}`;
                         
                         flightGroup.flights.forEach((flight, idx) => {
                           queryParams += `&date${idx}=${encodeURIComponent(flight.date)}&flightNumber${idx}=${encodeURIComponent(flight.flightNumber)}&originDestination${idx}=${encodeURIComponent(flight.originDestination)}&time${idx}=${encodeURIComponent(flight.time)}&baggage${idx}=${encodeURIComponent(flight.baggage)}&depOrReturn${idx}=${flight.isReturn ? "RET" : "DEP"}`;

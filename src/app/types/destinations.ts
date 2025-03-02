@@ -154,6 +154,7 @@ export interface Flight {
     id: string;
     airline: string;
     seats: number;
+    childSeats: number;
     airlineLogo?:string,
     flights: Flight[];  // Array of flights
     airlineImage: string;  
