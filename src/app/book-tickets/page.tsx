@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 
 const FlightTable = () => {
   const [flights, setFlights] = useState<FlightGroup[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All"); // State for selected category
   const router = useRouter();
+
 
   useEffect(() => {
     const fetchFlights = async () => {
@@ -17,8 +19,103 @@ const FlightTable = () => {
     fetchFlights();
   }, []);
 
+
+  
+ // Function to filter flights based on category
+ const filterFlights = (category: string) => {
+  setSelectedCategory(category);
+};
+
+// Filter flights based on selected category
+const filteredFlights = flights
+  .map((flightGroup) => {
+
+    const hasJED = flightGroup.flights.some((flight) =>
+      flight.originDestination.includes("JED")
+    );
+
+    const depFlights = flightGroup.flights.filter(
+      (flight) => !flight.isReturn // Count DEP flights
+    );
+
+    const filteredFlights = flightGroup.flights.filter((flight) => {
+      if (selectedCategory === "All") return true; // Show all flights
+
+      // Check if destination is in originDestination string
+      if (selectedCategory === "Oman One Way") {
+        return (
+          flight.originDestination.includes("MCT") && depFlights.length === 1 &&  !flight.isReturn // One Way only
+        );
+      } else if (selectedCategory === "Bahrain One Way") {
+        return (
+          flight.originDestination.includes("BAH") && depFlights.length === 1 &&  !flight.isReturn // One Way only
+        );
+      } else if (selectedCategory === "Umrah") {
+        // For Umrah, show all flights if JED is present
+        return hasJED;
+      }
+      return false;
+    });
+
+    // Return a new flight group with filtered flights
+    return {
+      ...flightGroup,
+      flights: filteredFlights,
+    };
+  })
+  .filter((flightGroup) => flightGroup.flights.length > 0);// Remove flight groups with no flights
+
+
+
   return (
-    <div className="max-h-[700px] w-full overflow-x-auto">
+    <div className="w-full mb-6">
+  
+
+          {/* Category Buttons */}
+      <div className="flex justify-center gap-4 my-4">
+        <button
+          onClick={() => filterFlights("All")}
+          className={`px-4 py-2 rounded ${
+            selectedCategory === "All"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+        >
+          All
+        </button>
+        <button
+          onClick={() => filterFlights("Oman One Way")}
+          className={`px-4 py-2 rounded ${
+            selectedCategory === "Oman One Way"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+        >
+          Oman One Way
+        </button>
+        <button
+          onClick={() => filterFlights("Bahrain One Way")}
+          className={`px-4 py-2 rounded ${
+            selectedCategory === "Bahrain One Way"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+        >
+          Bahrain One Way
+        </button>
+        <button
+          onClick={() => filterFlights("Umrah")}
+          className={`px-4 py-2 rounded ${
+            selectedCategory === "Umrah"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+        >
+          Umrah
+        </button>
+      </div>
+
+  <div className="max-h-[700px] w-full overflow-x-auto">
       <table className="w-max min-w-[1000px] sm:min-w-full border-collapse border border-gray-300">
         <thead className="sticky top-0 bg-gray-700 text-white">
           <tr className="bg-gray-700 text-white">
@@ -33,23 +130,23 @@ const FlightTable = () => {
           </tr>
         </thead>
         <tbody>
-          {flights.map((flightGroup, index) => (
-            <React.Fragment key={index}>
-              {/* Airline Name + Logo Row */}
-              <tr className="bg-gray-100">
-  <td colSpan={8} className="px-4 py-2 text-center my-6  font-semibold">
-    <div className="flex justify-center items-center text-2xl w-full">
-      {flightGroup.airlineLogo && (
-        <img
-          src={flightGroup.airlineLogo}
-          alt={flightGroup.airline}
-          className="h-14 mr-2"
-        />
-      )}
-      {flightGroup.airline}
-    </div>
-  </td>
-</tr>
+        {filteredFlights.map((flightGroup, index) => (
+              <React.Fragment key={index}>
+                {/* Airline Name + Logo Row */}
+                <tr className="bg-gray-100">
+                  <td colSpan={8} className="px-4 py-2 text-center my-6 font-semibold">
+                    <div className="flex justify-center items-center text-2xl w-full">
+                      {flightGroup.airlineLogo && (
+                        <img
+                          src={flightGroup.airlineLogo}
+                          alt={flightGroup.airline}
+                          className="h-14 mr-2"
+                        />
+                      )}
+                      {flightGroup.airline}
+                    </div>
+                  </td>
+                </tr>
 
           
               {flightGroup.flights.map((flight, idx) => (
@@ -89,7 +186,7 @@ const FlightTable = () => {
           ))}
         </tbody>
       </table>
-    </div>
+    </div></div>
   );
 };
 

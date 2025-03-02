@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "samiaurooj386@gmail.com",
+      to: "ubbrothersticketing@gmail.com",
       subject: `New Umrah Booking Submission - ${new Date().toLocaleString()}`,
       html: `
        <h2>Umrah Booking Application Details</h2>

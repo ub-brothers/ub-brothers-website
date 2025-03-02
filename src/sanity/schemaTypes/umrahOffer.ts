@@ -9,19 +9,21 @@ export default {
         title: "Offer Title",
       },
       {
-        name: "countries",
-        type: "array",
-        title: "Countries",
-        of: [
-          {
-            type: "object",
-            fields: [
-              { name: "name", type: "string", title: "Country Name" },
-              { name: "image", type: "image", title: "Country Image", options: { hotspot: true } },
-            ],
-          },
-        ],
-      },
+         name: "image",
+          type: "image",
+         title: "Country Image",
+          options: { hotspot: true } 
+        },
+        {
+          name: "daysOfUmrah",
+          type: "number",
+          title: "Days of Umrah",
+        },
+        {
+          name: "description",
+          type: "number",
+          title: "Short description about offer",
+        },
       {
         name: "originalPrice",
         type: "number",
@@ -32,13 +34,7 @@ export default {
         type: "number",
         title: "Discounted Price",
       },
-      {
-        name: "images",
-        type: "array",
-        title: "Offer Images",
-        of: [{ type: "image" }],
-        options: { hotspot: true },
-      },
+      
     ],
   };
   
