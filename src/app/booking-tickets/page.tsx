@@ -63,8 +63,18 @@ const handleDownloadPDF = () => {
     alert("Downloading PDF...");
     const doc = new jsPDF();
 
-    const companyLogo = "/image/logo.png"; // Change this to your actual logo URL
+    const companyLogo = "/image/logo.png";
+    const airlineImageUrl = airlineImage; 
+    
+    
     doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); // 30x30 size
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const imageWidth = 50; // Adjust the width of the airline image
+    const imageHeight = 30; // Adjust the height of the airline image
+    const imageX = pageWidth - imageWidth - 10; // 10 is the margin from the right
+    doc.addImage(airlineImageUrl, "PNG", imageX, 10, imageWidth, imageHeight);
+
 
     // ✅ Add Company Name (Right of Logo)
     doc.setFont("helvetica", "bold"); // Make it bold

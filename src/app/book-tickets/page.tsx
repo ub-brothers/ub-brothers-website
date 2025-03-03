@@ -72,7 +72,7 @@ const filteredFlights = flights
   <div className="max-h-[700px] w-full overflow-x-auto">
 
           {/* Category Buttons */}
-      <div className="flex justify-center gap-4 my-4">
+      <div className="flex justify-center gap-4 my-4 w-full overflow-x-auto min-w-[700px]">
         <button
           onClick={() => filterFlights("All")}
           className={`px-4 py-2 rounded ${
@@ -111,7 +111,7 @@ const filteredFlights = flights
               : "bg-gray-200 text-gray-700"
           }`}
         >
-          Umrah
+          Umrah Group
         </button>
       </div>
 
