@@ -29,7 +29,7 @@ const AboutUs = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }} 
         >
-          <Image src="/image/logo.jpeg" width={500} height={300} alt="UB Brothers" className="w-full max-w-xs md:max-w-md rounded-3xl shadow-lg" />
+          <Image src="/image/logo.png" width={500} height={300} alt="UB Brothers" className="w-full max-w-xs md:max-w-md rounded-3xl shadow-lg" />
         </motion.div>
         <motion.div 
           className="w-full md:w-1/2"

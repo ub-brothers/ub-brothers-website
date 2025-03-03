@@ -69,7 +69,7 @@ const filteredFlights = flights
 
   return (
     <div className="w-full mb-6">
-  
+  <div className="max-h-[700px] w-full overflow-x-auto">
 
           {/* Category Buttons */}
       <div className="flex justify-center gap-4 my-4">
@@ -115,7 +115,7 @@ const filteredFlights = flights
         </button>
       </div>
 
-  <div className="max-h-[700px] w-full overflow-x-auto">
+  
       <table className="w-max min-w-[1000px] sm:min-w-full border-collapse border border-gray-300">
         <thead className="sticky top-0 bg-gray-700 text-white">
           <tr className="bg-gray-700 text-white">

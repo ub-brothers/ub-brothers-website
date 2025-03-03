@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 
 function TicketsContent(){
   const [isConfirmed, setIsConfirmed] = useState(false);
-
+const searchParams = useSearchParams();
   const handleConfirmBooking = async () => {
     setIsConfirmed(true);
    
@@ -57,95 +57,135 @@ function TicketsContent(){
 
 
 
-    // Function to generate and download PDF
-    const handleDownloadPDF = () => {
-      if (isConfirmed) {
-        alert("Downloading PDF...");
-      const doc = new jsPDF();
+ // Function to generate and download PDF
+const handleDownloadPDF = () => {
+  if (isConfirmed) {
+    alert("Downloading PDF...");
+    const doc = new jsPDF();
+
+    const companyLogo = "/image/logo.png"; // Change this to your actual logo URL
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); // 30x30 size
+
+    // ✅ Add Company Name (Right of Logo)
+    doc.setFont("helvetica", "bold"); // Make it bold
+    doc.setFontSize(18);
+    doc.text("UB Brothers", 45, 20); // Position: Right of the logo
     
-      // Add title
-      doc.setFontSize(18);
-      doc.text("Booking Details", 10, 10);
+    // ✅ Add Extra Line Below Name
+    doc.setFont("helvetica", "normal"); // Normal font for tagline
+    doc.setFontSize(12);
+    doc.text("Flight Booking Details", 45, 30); 
+
+
+    // Add Booking Title with background
+    doc.setFillColor(230, 230, 230); // Light gray background
+    doc.rect(10, 45, 190, 10, "F"); // Background box
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Booking Details", 15, 52);
+
+    let y = 60;
+
+
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 120);
+    doc.text(`Airline: ${airlineName}`, 10, y + 7); // Airline name next to the logo
+    y += 15; // Move down for next section
+
+    // Flight Details Section
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 120);
+    doc.text("Flight Details", 10, y);
+    y += 10; // Add space below heading
+
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Total Price (Adults): ${totalPrice}`, 10, y);
     
-      // Add Flight Details
-      doc.setFontSize(14);
-      doc.text("Flight Details", 10, 20);
-    
-      doc.setFontSize(12);
-      doc.text(`Airline: ${airlineName}`, 10, 30);
-      doc.text(`Meal: ${meal}`, 10, 40);
-      doc.text(`Total Price (Adult): ${totalPrice}`, 10, 50);
-    
-      // Add Flight Table Headers
-      let y = 60;
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("Date", 10, y);
-      doc.text("Flight No", 50, y);
-      doc.text("Route", 90, y);
-      doc.text("Time", 130, y);
-      doc.text("Baggage", 170, y);
-      doc.text("Meal", 200, y);
-      doc.text("Price", 230, y);
-      y += 10;
-    
-      // Add Flight Details
-      doc.setFont("helvetica", "normal");
-      flights.forEach((flight, idx) => {
-        doc.text(`${flight.depOrReturn} - ${formatDate(flight.date)}`, 10, y);
-        doc.text(flight.flightNumber || "", 50, y);
-        doc.text(flight.originDestination || "", 90, y);
-        doc.text(flight.time || "", 130, y);
-        doc.text(flight.baggage || "", 170, y);
-        doc.text(idx === 0 ? meal ?? "" : "", 200, y);
-        doc.text(idx === 0 ? priceParam ?? "" : "", 230, y);
-        y += 10;
-      });
-    
-      // Add Passenger Details
-      y += 10; // Add some space
-      doc.setFontSize(14);
-      doc.text("Passenger Details", 10, y);
-      y += 10;
-    
-      passengers.forEach((passenger, index) => {
-        const type = index < adults
+    y += 12;
+    // Flight Table Headers
+   // Flight Table Headers
+doc.setFillColor(200, 220, 255);
+doc.rect(10, y, 190, 8, "F"); // Light blue background for headers
+doc.setFontSize(10);
+doc.setFont("helvetica", "bold");
+doc.setTextColor(0, 0, 0);
+doc.text("Date", 12, y + 5);
+doc.text("Flight No", 55, y + 5); // Adjusted x-coordinate
+doc.text("Route", 80, y + 5); // Adjusted x-coordinate
+doc.text("Time", 115, y + 5); // Adjusted x-coordinate
+doc.text("Baggage", 145, y + 5); // Adjusted x-coordinate
+doc.text("Meal", 175, y + 5); // Adjusted x-coordinate
+
+y += 12; // Space below headers
+
+// Flight Details Rows
+doc.setFont("helvetica", "normal");
+flights.forEach((flight, idx) => {
+  doc.text(`${flight.depOrReturn} - ${formatDate(flight.date)}`, 12, y);
+  doc.text(flight.flightNumber || "", 55, y); // Aligned with "Flight No"
+  doc.text(flight.originDestination || "", 80, y); // Aligned with "Route"
+  doc.text(flight.time || "", 115, y); // Aligned with "Time"
+  doc.text(flight.baggage || "", 145, y); // Aligned with "Baggage"
+  doc.text(idx === 0 ? meal ?? "" : "", 175, y); // Aligned with "Meal"
+ 
+  y += 8; // Space between rows
+});
+
+y += 10; // Add some space before the next section
+   
+
+    // Passenger Details Section
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 120);
+    doc.text("Passenger Details", 10, y);
+    y += 10; // Add space below heading
+
+    passengers.forEach((passenger, index) => {
+      const type =
+        index < adults
           ? `Adult ${index + 1}`
           : index < adults + children
-            ? `Child ${index - adults + 1}`
-            : `Infant ${index - adults - children + 1}`;
-    
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "bold");
-        doc.text(`Passenger ${index + 1} (${type})`, 10, y);
-        y += 10;
-    
-        doc.setFont("helvetica", "normal");
-        doc.text(`Name: ${passenger.name} ${passenger.surname}`, 10, y);
-        y += 10;
-        doc.text(`Passport Number: ${passenger.passportNumber}`, 10, y);
-        y += 10;
-        doc.text(`DOB: ${passenger.dob}`, 10, y);
-        y += 10;
-        doc.text(`Passport Expiry: ${passenger.passportExpiry}`, 10, y);
-        y += 10;
-        doc.text(`Nationality: ${passenger.nationality}`, 10, y);
-        y += 10;
-      });
-    
-      // Save the PDF
-      doc.save("booking-details.pdf");}
-    };
+          ? `Child ${index - adults + 1}`
+          : `Infant ${index - adults - children + 1}`;
 
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.setTextColor(40, 40, 40);
+      doc.text(`Passenger ${index + 1} (${type})`, 10, y);
+      y += 7;
+
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Name: ${passenger.name} ${passenger.surname}`, 10, y);
+      y += 7;
+      doc.text(`Passport Number: ${passenger.passportNumber}`, 10, y);
+      y += 7;
+      doc.text(`DOB: ${passenger.dob}`, 10, y);
+      y += 7;
+      doc.text(`Passport Expiry: ${passenger.passportExpiry}`, 10, y);
+      y += 7;
+      doc.text(`Nationality: ${passenger.nationality}`, 10, y);
+      y += 10;
+    });
+
+    // Save the PDF
+    doc.save("booking-details.pdf");
+  }
+};
 
   
-  const searchParams = useSearchParams();
+  
  // Function to format date
  const formatDate = (dateString:any) => {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 }; 
   const airlineName = searchParams.get("airlineName");
+
   const airlineImage = decodeURIComponent(searchParams.get("airline") || ""); 
   const meal = searchParams.get("meal");
   const priceParam = searchParams.get("price");
@@ -214,6 +254,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
     time: string | null; 
     baggage: string | null; 
     depOrReturn: string | null;
+    
   }[] = [];
   let index = 0;
   while (searchParams.get(`date${index}`)) {
@@ -224,6 +265,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
       time: searchParams.get(`time${index}`),
       baggage: searchParams.get(`baggage${index}`),
       depOrReturn: searchParams.get(`depOrReturn${index}`),
+      
     });
     index++;
   }
@@ -443,7 +485,9 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
   })}
 </tbody>
 
-        <div className="text-center flex">
+     
+      </table>
+         <div className="text-center flex">
       <button onClick={handleConfirmBooking}  className="w-[200px] bg-blue-500 hover:bg-orange-500 rounded-lg mx-4 mt-10 mb-4 h-10 text-white font-bold">Confirm Booking</button>
       {isConfirmed && (
         <button
@@ -454,7 +498,6 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
         </button>
       )}
 </div>
-      </table>
       </div>)}
 
 
