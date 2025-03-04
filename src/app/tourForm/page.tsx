@@ -5,13 +5,24 @@ import { useState } from 'react';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
 import { motion } from 'framer-motion';
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import jsPDF from 'jspdf';
 
-export default function TourForm() {
+
+function TourContent(){
+
+  const searchParams = useSearchParams();
+  const prize = searchParams.get("prize") || "";
+  const countryName = searchParams.get("countryName");
+
+
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
     email: '',
     country: '',
+    price: '',
     message: '',
   });
 
@@ -19,8 +30,17 @@ export default function TourForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
   const handleSubmit = async (e:any) => {
+    setIsConfirmed(true);
     e.preventDefault();
+
+    const updatedFormData = {
+      ...formData,
+      country: countryName || "", 
+      price: prize || "", 
+    };
   
     try {
       const response = await fetch('/api/tourForm', {
@@ -28,14 +48,14 @@ export default function TourForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
   
       const result = await response.json();
       
       if (result.success) {
         alert('Submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '', message: '' }); // Clear form
+        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '' }); // Clear form
       } else {
         alert('Failed to submit. Please try again.');
       }
@@ -43,6 +63,58 @@ export default function TourForm() {
       console.error('Error:', error);
       alert('Something went wrong. Please try again later.');
     }
+  };
+
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+   
+    const companyLogo = "/image/logo.png"; 
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); 
+
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 128); 
+    doc.text("UB Brothers", 45, 20); 
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); 
+    doc.text("Tour Package Booking Details", 45, 30);
+
+   
+    doc.setFontSize(14);
+    let y = 50; 
+
+    
+    const addField = (label:any, value:any) => {
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(0, 0, 128);
+      doc.text(`${label}:`, 10, y); 
+
+      
+      const labelWidth = doc.getTextWidth(`${label}:`); 
+      const valueX = 15 + labelWidth; 
+
+      doc.setFont("helvetica", "normal"); 
+      doc.setTextColor(0, 0, 0); 
+      doc.text(value, valueX, y); 
+
+      y += 10; 
+    };
+
+    
+    addField("Full Name", formData.fullName);
+    addField("Phone Number", formData.phone);
+    addField("Email Address", formData.email);
+    addField("Country", countryName || formData.country);
+    addField("Tour Cost Per Person", `${prize} PKR/-`);
+    addField("Message", formData.message);
+
+
+    doc.save("tour-package-booking-details.pdf");
   };
   
 
@@ -97,13 +169,26 @@ export default function TourForm() {
           />
         </div>
         <div>
-          <label className="block font-semibold mb-1">Country You Want Package For</label>
+          <label className="block font-semibold mb-1">Country</label>
           <input
             type="text"
             name="country"
             placeholder="Enter country name"
-            value={formData.country}
-            onChange={handleChange}
+            value={`${countryName}`}
+            readOnly
+            
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div>
+          <label className="block font-semibold mb-1">Tour Cost Per Person</label>
+          <input
+            type="text"
+            name="country"
+            placeholder="Enter country name"
+            value={`${prize} PKR/-`}
+            readOnly
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -125,6 +210,14 @@ export default function TourForm() {
         >
           Submit
         </button>
+        {isConfirmed && (
+        <button
+        type='button' 
+         onClick={generatePDF}
+          className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-orange-500 transition"
+        >
+          Download Form Details (PDF)
+        </button>)}
       </form>
     </div>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
@@ -179,4 +272,15 @@ export default function TourForm() {
     
     </div>
   );
+}
+
+export default function TourForm() {
+return(
+     <div>
+         <Suspense fallback={<p className="text-center text-gray-600">Loading...</p>}>
+              <TourContent />
+            </Suspense>
+      </div>
+  )
+ 
 }

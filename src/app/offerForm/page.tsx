@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
+import jsPDF from 'jspdf';
 
 
 function FormContent(){
@@ -20,7 +21,10 @@ function FormContent(){
   const countries = searchParams.get("countries")?.split(",") || [];
   const discountedPrice = searchParams.get("discountedPrice") || "";
 
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setIsConfirmed(true);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -41,13 +45,74 @@ function FormContent(){
       });
   
       const data = await response.json();
-      alert(data.message); // Show success message
-  
+      alert(data.message); 
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Failed to submit form. Please try again.");
     }
   };
+
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+   
+    const companyLogo = "/image/logo.png";
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30);
+
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 128); 
+    doc.text("UB Brothers", 45, 20); 
+
+   
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); 
+    doc.text("Visa Offer Booking Details", 45, 30);
+
+    doc.setFontSize(14);
+    let y = 50; 
+
+  
+    const addField = (label:any, value:any) => {
+      doc.setFont("helvetica", "bold"); 
+      doc.setTextColor(0, 0, 128); 
+      doc.text(`${label}:`, 10, y); 
+   
+      const labelWidth = doc.getTextWidth(`${label}:`);
+      const valueX = 15 + labelWidth; 
+
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(0, 0, 0); 
+      doc.text(value, valueX, y);
+      y += 10; 
+    };
+
+    
+    addField("Full Name", formData.fullName);
+    addField("Phone Number", formData.phoneNumber);
+    addField("Email Address", formData.email);
+    addField("Nationality", formData.nationality);
+    addField("Included Countries", countries.join(", "));
+    addField("Discounted Price", `PKR ${discountedPrice}`);
+
+    
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128); 
+    doc.text("Message:", 10, y); 
+    y += 7;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0); 
+    const splitMessage = doc.splitTextToSize(formData.message, 180); 
+    doc.text(splitMessage, 10, y); 
+    y += splitMessage.length * 7; 
+
+  
+    doc.save("visa-offer-booking-details.pdf");
+  };
+
   
   return (
 
@@ -85,6 +150,13 @@ function FormContent(){
         <textarea name="message" placeholder="Any Message" value={formData.message} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" rows={4} required></textarea>
 
         <button type="submit" className="w-full bg-blue-500 hover:bg-orange-500 text-white font-bold rounded-lg p-3">Submit</button>
+        {isConfirmed && (
+        <button
+         onClick={generatePDF}
+          className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-orange-500 transition"
+        >
+          Download Form Details (PDF)
+        </button>)}
       </form>
 
       <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>

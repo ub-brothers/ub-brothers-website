@@ -6,6 +6,7 @@ import Hotels from "../hotelUi/page";
 import PaymentDetails from "../payment/page";
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt } from "react-icons/fa";
+import jsPDF from 'jspdf';
 
 const UmrahBookingForm2 = () => {
   const [visaStatus, setVisaStatus] = useState("yes");
@@ -121,8 +122,10 @@ const handleConfirmProceed = () => {
 
 const [personalPhoto, setPersonalPhoto] = useState<File | null>(null);
 const [passportScan, setPassportScan] = useState<File | null>(null);
+const [isConfirmed, setIsConfirmed] = useState(false);
 
 const handleSubmit = async (e: React.FormEvent) => {
+  setIsConfirmed(true);
   e.preventDefault();
 
   const formDataToSend = new FormData();
@@ -158,6 +161,81 @@ const handleSubmit = async (e: React.FormEvent) => {
   }
 };
 
+
+const generatePDF = () => {
+  const doc = new jsPDF();
+
+  
+  const companyLogo = "/image/logo.png"; 
+  doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); 
+
+  
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.setTextColor(0, 0, 128); 
+  doc.text("UB Brothers", 45, 20); 
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(12);
+  doc.setTextColor(0, 0, 0); 
+  doc.text("Umrah Booking Details", 45, 30);
+
+
+  doc.setFontSize(14);
+  let y = 50;
+ 
+  const addField = (label:any, value:any) => {
+    doc.setFont("helvetica", "bold"); 
+    doc.setTextColor(0, 0, 128); 
+    doc.text(`${label}:`, 10, y); 
+
+   
+    const labelWidth = doc.getTextWidth(`${label}:`); 
+    const valueX = 15 + labelWidth; 
+
+    doc.setFont("helvetica", "normal"); 
+    doc.setTextColor(0, 0, 0); 
+    doc.text(value, valueX, y); 
+
+    y += 10; 
+  };
+
+  
+  addField("Full Name", formData.name);
+  addField("Phone Number", formData.phone);
+  addField("Selected Days", `${selectedDays} Days`);
+  addField("Makkah Hotel", selectedMakkahHotel);
+  addField("Makkah Room Category", selectedMakkahCategory);
+  addField("Makkah Days of Stay", formData.makkahDay.toString());
+  addField("Madina Hotel", selectedMadinaHotel);
+  addField("Madina Room Category", selectedMadinaCategory);
+  addField("Madina Days of Stay", formData.madinaDay.toString());
+  addField("Visa Status", visaStatus === "yes" ? "Yes" : "No");
+  addField("Nationality", formData.nationality);
+  addField("Total Cost", `${totalCost} SAR/-`);
+
+ 
+  if (personalPhoto) {
+    const personalPhotoURL = URL.createObjectURL(personalPhoto);
+    doc.addPage(); 
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128);
+    doc.text("Personal Photo:", 10, 20);
+    doc.addImage(personalPhotoURL, "JPEG", 10, 30, 80, 80); 
+  }
+
+  if (passportScan) {
+    const passportScanURL = URL.createObjectURL(passportScan);
+    doc.addPage(); 
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128);
+    doc.text("Passport Scan:", 10, 20);
+    doc.addImage(passportScanURL, "JPEG", 10, 30, 80, 80); 
+  }
+
+ 
+  doc.save("umrah-booking-details.pdf");
+};
 
 
 
@@ -230,7 +308,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
       <div>
       <p className="font-semibold">Days of Stay:</p>
-      <input type="number" name="makkahDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, makkahDay: Number(e.target.value) })} className="w-full p-3 mb-5 border rounded-md" required></input>
+      <input type="number"  min="0"  name="makkahDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, makkahDay: Number(e.target.value) })} className="w-full p-3 mb-5 border rounded-md" required></input>
       </div>
       
 </div>
@@ -270,7 +348,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
 <div>
       <p className="font-semibold">Days of Stay:</p>
-      <input type="number" name="madinaDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, madinaDay: Number(e.target.value) })} className="w-full p-3 mb-5 border rounded-md" required></input>
+      <input type="number"  min="0"  name="madinaDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, madinaDay: Number(e.target.value) })} className="w-full p-3 mb-5 border rounded-md" required></input>
 
 </div>
 
@@ -327,6 +405,13 @@ const handleSubmit = async (e: React.FormEvent) => {
         </div>
       )}
       <button className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
+      {isConfirmed && (
+        <button
+         onClick={generatePDF}
+          className="w-full bg-blue-600 mt-4 text-white py-2 rounded-md hover:bg-orange-500 transition"
+        >
+          Download Form Details (PDF)
+        </button>)}
     </form>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
     

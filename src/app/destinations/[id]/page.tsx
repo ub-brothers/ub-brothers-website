@@ -88,8 +88,13 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           <p>{countries.requirement8}</p>
         </div>
       </div>
-
-      <Link href="/visaApplication">
+      <Link href={{
+      pathname: "/visaApplication",
+      query: {
+      countryName : countries.countryName,
+      prize: countries.prize,
+      },
+    }} >
         <motion.button
           className="mt-2 px-6 ml-2 py-3 bg-blue-500 text-white font-semibold rounded-lg"
           initial={{ scale: 0.8 }}

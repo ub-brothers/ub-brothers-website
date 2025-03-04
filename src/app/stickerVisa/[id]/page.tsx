@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'; 
 import { Destination } from "@/app/types/destinations";
 import { sanityFetch } from "@/sanity/lib/client";
-import { detailCountry, allDestinations, stickerVisa } from "@/sanity/lib/queries";
+import { detailCountry,  stickerVisa } from "@/sanity/lib/queries";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -97,7 +97,13 @@ export default function DetailPage({ params }: { params: { id: string } }) {
 
       </div> 
 
-      <Link href="/stickerVisaForm">
+      <Link href={{
+      pathname: "/stickerVisaForm",
+      query: {
+      countryName : countries.countryName,
+      prize: countries.prize,
+      },
+    }} >
       <motion.button
           className="mt-2 px-6 ml-2 py-3 bg-blue-500 text-white font-semibold rounded-lg"
           initial={{ scale: 0.8 }}

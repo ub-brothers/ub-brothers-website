@@ -57,7 +57,7 @@ const searchParams = useSearchParams();
 
 
 
- // Function to generate and download PDF
+
 const handleDownloadPDF = () => {
   if (isConfirmed) {
     alert("Downloading PDF...");
@@ -67,29 +67,28 @@ const handleDownloadPDF = () => {
     const airlineImageUrl = airlineImage; 
     
     
-    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); // 30x30 size
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); 
 
     const pageWidth = doc.internal.pageSize.getWidth();
-    const imageWidth = 50; // Adjust the width of the airline image
-    const imageHeight = 30; // Adjust the height of the airline image
-    const imageX = pageWidth - imageWidth - 10; // 10 is the margin from the right
+    const imageWidth = 50;
+    const imageHeight = 30; 
+    const imageX = pageWidth - imageWidth - 10;
     doc.addImage(airlineImageUrl, "PNG", imageX, 10, imageWidth, imageHeight);
 
 
-    // ✅ Add Company Name (Right of Logo)
-    doc.setFont("helvetica", "bold"); // Make it bold
-    doc.setFontSize(18);
-    doc.text("UB Brothers", 45, 20); // Position: Right of the logo
     
-    // ✅ Add Extra Line Below Name
-    doc.setFont("helvetica", "normal"); // Normal font for tagline
+    doc.setFont("helvetica", "bold"); 
+    doc.setFontSize(18);
+    doc.text("UB Brothers", 45, 20); 
+    
+   
+    doc.setFont("helvetica", "normal"); 
     doc.setFontSize(12);
     doc.text("Flight Booking Details", 45, 30); 
 
 
-    // Add Booking Title with background
-    doc.setFillColor(230, 230, 230); // Light gray background
-    doc.rect(10, 45, 190, 10, "F"); // Background box
+    doc.setFillColor(230, 230, 230);
+    doc.rect(10, 45, 190, 10, "F"); 
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0);
     doc.text("Booking Details", 15, 52);
@@ -101,58 +100,54 @@ const handleDownloadPDF = () => {
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(0, 0, 120);
-    doc.text(`Airline: ${airlineName}`, 10, y + 7); // Airline name next to the logo
-    y += 15; // Move down for next section
-
-    // Flight Details Section
+    doc.text(`Airline: ${airlineName}`, 10, y + 7); 
+    y += 15; 
+    
     doc.setFont("helvetica", "bold");
     doc.setTextColor(0, 0, 120);
     doc.text("Flight Details", 10, y);
-    y += 10; // Add space below heading
-
+    y += 10; 
     doc.setFont("helvetica", "normal");
     doc.setTextColor(0, 0, 0);
     doc.text(`Total Price (Adults): ${totalPrice}`, 10, y);
     
     y += 12;
-    // Flight Table Headers
-   // Flight Table Headers
+    
+   
 doc.setFillColor(200, 220, 255);
-doc.rect(10, y, 190, 8, "F"); // Light blue background for headers
+doc.rect(10, y, 190, 8, "F"); 
 doc.setFontSize(10);
 doc.setFont("helvetica", "bold");
 doc.setTextColor(0, 0, 0);
 doc.text("Date", 12, y + 5);
-doc.text("Flight No", 55, y + 5); // Adjusted x-coordinate
-doc.text("Route", 80, y + 5); // Adjusted x-coordinate
-doc.text("Time", 115, y + 5); // Adjusted x-coordinate
-doc.text("Baggage", 145, y + 5); // Adjusted x-coordinate
-doc.text("Meal", 175, y + 5); // Adjusted x-coordinate
+doc.text("Flight No", 55, y + 5);
+doc.text("Route", 80, y + 5); 
+doc.text("Time", 115, y + 5); 
+doc.text("Baggage", 145, y + 5); 
+doc.text("Meal", 175, y + 5); 
+y += 12; 
 
-y += 12; // Space below headers
-
-// Flight Details Rows
 doc.setFont("helvetica", "normal");
 flights.forEach((flight, idx) => {
   doc.text(`${flight.depOrReturn} - ${formatDate(flight.date)}`, 12, y);
-  doc.text(flight.flightNumber || "", 55, y); // Aligned with "Flight No"
-  doc.text(flight.originDestination || "", 80, y); // Aligned with "Route"
-  doc.text(flight.time || "", 115, y); // Aligned with "Time"
-  doc.text(flight.baggage || "", 145, y); // Aligned with "Baggage"
-  doc.text(idx === 0 ? meal ?? "" : "", 175, y); // Aligned with "Meal"
+  doc.text(flight.flightNumber || "", 55, y); 
+  doc.text(flight.originDestination || "", 80, y); 
+  doc.text(flight.time || "", 115, y); 
+  doc.text(flight.baggage || "", 145, y); 
+  doc.text(idx === 0 ? meal ?? "" : "", 175, y);
  
-  y += 8; // Space between rows
+  y += 8; 
 });
 
-y += 10; // Add some space before the next section
+y += 10; 
    
 
-    // Passenger Details Section
+    
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(0, 0, 120);
     doc.text("Passenger Details", 10, y);
-    y += 10; // Add space below heading
+    y += 10; 
 
     passengers.forEach((passenger, index) => {
       const type =
@@ -182,14 +177,13 @@ y += 10; // Add some space before the next section
       y += 10;
     });
 
-    // Save the PDF
     doc.save("booking-details.pdf");
   }
 };
 
   
   
- // Function to format date
+
  const formatDate = (dateString:any) => {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });

@@ -61,7 +61,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           <h1 className="sm:text-3xl text-xl font-bold mt-5 sm:mt-10 font-serif"><u>{countries.countryName}:</u></h1>
           <h2 className="my-2 text-sm sm:text-lg">{countries.shortDescription}</h2>
         
-
+<h2 className='my-4 text-md sm:text-xl font-sans'><b>Total Cost:</b> {countries.prize}</h2>
           <h1 className="font-bold text-md sm:text-xl mt-4">{countries.requirements}</h1>
           <p>{countries.requirement1}</p>
           <p>{countries.requirement2}</p>
@@ -95,7 +95,13 @@ export default function DetailPage({ params }: { params: { id: string } }) {
 
       </div> 
 
-      <Link href="/fileConsultancyForm">
+      <Link href={{
+      pathname: "/fileConsultancyForm",
+      query: {
+      countryName : countries.countryName,
+      prize: countries.prize,
+      },
+    }} >
       <motion.button
           className="mt-2 px-6 ml-2 py-3 bg-blue-500 text-white font-semibold rounded-lg"
           initial={{ scale: 0.8 }}
@@ -103,7 +109,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.3 }}
         >
-          Contact Now
+          Apply Now
         </motion.button>
         </Link>
 

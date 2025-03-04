@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
+import jsPDF from 'jspdf';
 
 function BookFormContent() {
   const searchParams = useSearchParams();
@@ -21,7 +22,10 @@ function BookFormContent() {
   const [selectedCategory, setSelectedCategory] = useState("sharing");
   const [userMessage, setUserMessage] = useState("");
 
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
   const handleSubmit = async (e:any) => {
+    setIsConfirmed(true);
     e.preventDefault();
     const selectedPrize = selectedCategory === "sharing" ? prize1 : selectedCategory === "triple" ? prize2 : prize3;
     const formData = { userName, userNumber, userEmail, shortDescription, selectedCategory, selectedPrize, userMessage };
@@ -46,6 +50,66 @@ function BookFormContent() {
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+ 
+    const companyLogo = "/image/logo.png"; 
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30);
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 128); 
+    doc.text("UB Brothers", 45, 20); 
+ 
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); 
+    doc.text("Hajj & Umrah Form Details", 45, 30);
+
+  
+  doc.setFontSize(14);
+  let y = 50; 
+
+
+  const addField = (label:any, value:any) => {
+    doc.setFont("helvetica", "bold"); 
+    doc.setTextColor(0, 0, 128);
+    doc.text(`${label}:`, 10, y); 
+
+  
+    const labelWidth = doc.getTextWidth(`${label}:`); 
+    const valueX = 15 + labelWidth;
+    doc.setFont("helvetica", "normal"); 
+    doc.setTextColor(0, 0, 0);
+    doc.text(value, valueX, y);
+
+    y += 10; 
+  };
+
+  addField("Full Name", userName);
+  addField("Phone Number", userNumber);
+  addField("Email Address", userEmail);
+  addField("Day Duration", shortDescription);
+  addField("Selected Category", selectedCategory);
+  addField("Selected Prize", selectedCategory === "sharing" ? prize1 : selectedCategory === "triple" ? prize2 : prize3);
+
+  
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 0, 128); 
+  doc.text("Message:", 10, y); 
+  y += 7; 
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0, 0, 0);
+  const splitMessage = doc.splitTextToSize(userMessage, 180); 
+  doc.text(splitMessage, 10, y); 
+  y += splitMessage.length * 7;
+
+  
+    doc.save("hajj-booking-details.pdf");
   };
 
   return (
@@ -85,6 +149,9 @@ function BookFormContent() {
         <textarea value={userMessage} onChange={(e) => setUserMessage(e.target.value)} className="w-full p-2 mb-4 border rounded" placeholder="Enter your message (optional)" rows={3} />
         
         <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-orange-500 hover:shadow-md">Submit</button>
+        {isConfirmed && (
+           <button onClick={generatePDF} className="w-full mt-4 bg-blue-500 text-white p-2 rounded hover:bg-orange-500 hover:shadow-md">Download Hajj Form Details (PDF)</button>
+        )}
       </form>
 
       <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>

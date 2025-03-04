@@ -96,7 +96,13 @@ export default function TourDetail({ params }: { params: { id: string } }) {
         </div>
       </div>
 
-      <Link href="/tourForm">
+      <Link href={{
+      pathname: "/tourForm",
+      query: {
+      countryName : tourCountries.countryName,
+      prize: tourCountries.prize,
+      },
+    }} >
         <motion.button
           className="mt-2 px-6 ml-2 py-3 bg-blue-500 text-white font-semibold rounded-lg"
           initial={{ scale: 0.8 }}
@@ -104,7 +110,7 @@ export default function TourDetail({ params }: { params: { id: string } }) {
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.3 }}
         >
-          Contact Now
+          Apply Now
         </motion.button>
       </Link>
 

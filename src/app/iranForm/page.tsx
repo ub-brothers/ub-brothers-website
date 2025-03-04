@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
+import jsPDF from 'jspdf';
 
 function BookFormContent() {
   const searchParams = useSearchParams();
@@ -17,7 +18,9 @@ function BookFormContent() {
   const [userEmail, setUserEmail] = useState("");
   const [userMessage, setUserMessage] = useState("");
 
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsConfirmed(true);
     e.preventDefault();
 
     const formData = { userName, userNumber, userEmail, userMessage, countryName, shortDescription, prize };
@@ -42,6 +45,70 @@ function BookFormContent() {
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+   
+    const companyLogo = "/image/logo.png"; 
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); 
+
+  
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 128); 
+    doc.text("UB Brothers", 45, 20); 
+
+   
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); // Black color
+    doc.text("Iran Ziyarat Booking Details", 45, 30);
+
+    // Add Form Data
+    doc.setFontSize(14);
+    let y = 50; // Starting Y position for form data
+
+    // Function to add a field with dynamic spacing
+    const addField = (label:any, value:any) => {
+      doc.setFont("helvetica", "bold"); // Bold for label
+      doc.setTextColor(0, 0, 128); // Dark blue for label
+      doc.text(`${label}:`, 10, y); // Write the label
+
+      // Calculate the x-position for the value dynamically
+      const labelWidth = doc.getTextWidth(`${label}:`); // Get the width of the label
+      const valueX = 15 + labelWidth; // Add some padding (e.g., 15) after the label
+
+      doc.setFont("helvetica", "normal"); // Normal for value
+      doc.setTextColor(0, 0, 0); // Black for value
+      doc.text(value, valueX, y); // Write the value at the calculated x-position
+
+      y += 10; // Move down for the next field
+    };
+
+    // Add fields with dynamic spacing
+    addField("Full Name", userName);
+    addField("Phone Number", userNumber);
+    addField("Email Address", userEmail);
+    addField("Ziyarat to", countryName);
+    addField("Ziyarat Route", shortDescription);
+    addField("Price", `${prize} PKR/-`);
+
+    // Add Message field with multi-line support
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128); // Dark blue for label
+    doc.text("Message:", 10, y); // Write the label
+    y += 7; // Move down slightly for the value
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0); // Black for value
+    const splitMessage = doc.splitTextToSize(userMessage, 180); // Wrap long text
+    doc.text(splitMessage, 10, y); // Write the message
+    y += splitMessage.length * 7; // Adjust spacing based on the number of lines
+
+    // Save the PDF
+    doc.save("iran-ziyarat-booking-details.pdf");
   };
 
   return (
@@ -82,6 +149,13 @@ function BookFormContent() {
           <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-orange-500 hover:shadow-md">
             Submit
           </button>
+          {isConfirmed && (
+        <button
+         onClick={generatePDF}
+          className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-orange-500 transition"
+        >
+          Download Form Details (PDF)
+        </button>)}
         </form>
       </div>
     </div>

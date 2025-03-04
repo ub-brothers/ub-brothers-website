@@ -1,15 +1,22 @@
 'use client';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { useState } from 'react';
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from 'framer-motion';
 import PaymentDetails from '../payment/page';
+import jsPDF from 'jspdf';
 
-export default function TourForm() {
+function FileContent(){
+  const searchParams = useSearchParams();
+  const prize = searchParams.get("prize") || "";
+  const countryName = searchParams.get("countryName");
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
     email: '',
     country: '',
+    price:'',
     message: '',
   });
 
@@ -17,8 +24,17 @@ export default function TourForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
   const handleSubmit = async (e:any) => {
+    setIsConfirmed(true);
     e.preventDefault();
+
+    const updatedFormData = {
+      ...formData,
+      country: countryName || "", // Ensure it's added
+      price: prize || "", // Ensure it's added
+    };
   
     try {
       const response = await fetch('/api/fileForm', {
@@ -26,14 +42,14 @@ export default function TourForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
   
       const result = await response.json();
       
       if (result.success) {
         alert('Submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '', message: '' }); // Clear form
+        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '' }); // Clear form
       } else {
         alert('Failed to submit. Please try again.');
       }
@@ -42,6 +58,61 @@ export default function TourForm() {
       alert('Something went wrong. Please try again later.');
     }
   };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+
+    const companyLogo = "/image/logo.png";
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); 
+
+   
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("UB Brothers", 45, 20); 
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text("File & Consultancy Details", 45, 30);
+
+ doc.setFontSize(14);
+ doc.setTextColor(0, 0, 0);
+ let y = 50; 
+
+ 
+ const addField = (label: any, value: any) => {
+   doc.setFont("helvetica", "bold"); 
+   doc.text(`${label}:`, 10, y); 
+
+
+   const labelWidth = doc.getTextWidth(`${label}:`);
+   const valueX = 15 + labelWidth; 
+
+   doc.setFont("helvetica", "normal"); 
+   doc.text(value, valueX, y); 
+
+   y += 10; 
+ };
+
+ 
+ addField("Full Name", formData.fullName);
+ addField("Phone", formData.phone);
+ addField("Email", formData.email);
+ addField("Country" , `${countryName}`);
+ addField("Price" , `${prize} PKR/-`);
+
+ doc.setFont("helvetica", "bold");
+ doc.text("Message:", 10, y); 
+ y += 7; 
+ doc.setFont("helvetica", "normal");
+ const splitMessage = doc.splitTextToSize(formData.message, 180); 
+ doc.text(splitMessage, 10, y); 
+ y += splitMessage.length * 7; 
+
+    
+    doc.save("file-consultancy-form-details.pdf");
+  };
+
   
 
   return (
@@ -95,16 +166,20 @@ export default function TourForm() {
           />
         </div>
         <div>
-          <label className="block font-semibold mb-1">Country You Want File & Consultancy For</label>
+          <label className="block font-semibold mb-1">Country </label>
           <input
             type="text"
             name="country"
             placeholder="Enter country name"
-            value={formData.country}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={`${countryName}`}
+          readOnly
+            className="w-full px-4 py-2 border rounded-md focus:outline-none  bg-gray-100 focus:ring-2 focus:ring-blue-500"
             required
           />
+        </div>
+        <div>
+        <label className="block mb-2 font-semibold text-gray-700">Price</label>
+        <input type="text"  value={`${prize} PKR/-`}  className="w-full p-2 mb-4 border rounded bg-gray-100" />
         </div>
         <div>
           <label className="block font-semibold mb-1">Your Message / Request</label>
@@ -123,6 +198,13 @@ export default function TourForm() {
         >
           Submit
         </button>
+        {isConfirmed && (
+        <button
+         onClick={generatePDF}
+          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-orange-500 transition"
+        >
+          Download Form Details (PDF)
+        </button>)}
       </form>
     </div>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
@@ -174,4 +256,17 @@ export default function TourForm() {
     <PaymentDetails/>
     </div>
   );
+}
+
+
+export default function TourForm() {
+
+  return(
+    <div>
+       <Suspense fallback={<p className="text-center text-gray-600">Loading...</p>}>
+            <FileContent />
+          </Suspense>
+    </div>
+  )
+  
 }

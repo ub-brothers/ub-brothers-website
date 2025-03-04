@@ -8,13 +8,13 @@ export default function FloatingOffer() {
   return (
 <div>
   <Link href="/visaOffers">
-    <div className="fixed top-20 ml- left-10 mt-4 flex flex-col items-center z-50">
+    <div className="fixed bottom-4 right-4 sm:top-20 sm:left-10 sm:bottom-auto sm:right-auto flex flex-col items-center z-50">
       
       
       <motion.img 
         src="/image/offers.png" 
         alt="Offer Icon" 
-        className="w-16 h-16 rounded-xl"
+        className="w-16 h-16 rounded-xl mt-4 shadow-lg hover:shadow-xl transition-shadow"
         animate={{ y: [0, -5, 0] }} 
         transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
       />

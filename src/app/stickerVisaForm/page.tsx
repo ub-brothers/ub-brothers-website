@@ -3,13 +3,24 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import jsPDF from 'jspdf';
 
-export default function StickerVisaForm() {
+
+
+function StickerContent(){
+
+  const searchParams = useSearchParams();
+  const prize = searchParams.get("prize") || "";
+  const countryName = searchParams.get("countryName");
+
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
     email: '',
     country: '',
+    price: '',
     message: '',
   });
 
@@ -17,23 +28,31 @@ export default function StickerVisaForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+ const [isConfirmed, setIsConfirmed] = useState(false);
   const handleSubmit = async (e:any) => {
+    setIsConfirmed(true);
     e.preventDefault();
   
+    const updatedFormData = {
+      ...formData,
+      country: countryName || "", 
+      price: prize || "", 
+    };
+
     try {
       const response = await fetch('/api/stickerForm', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
   
       const result = await response.json();
       
       if (result.success) {
         alert('Your application has been submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '', message: '' }); 
+        setFormData({ fullName: '', phone: '', email: '', country: '', message: '', price: "" }); 
       } else {
         alert('Failed to submit. Please try again.');
       }
@@ -43,6 +62,68 @@ export default function StickerVisaForm() {
     }
   };
   
+
+
+  
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+  
+    const companyLogo = "/image/logo.png"; 
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); 
+
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 128); 
+    doc.text("UB Brothers", 45, 20); 
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); 
+    doc.text("Sticker Visa Application Details", 45, 30);
+
+    
+    doc.setFontSize(14);
+    let y = 50; 
+    
+    const addField = (label:any, value:any) => {
+      doc.setFont("helvetica", "bold"); 
+      doc.setTextColor(0, 0, 128); 
+      doc.text(`${label}:`, 10, y); 
+
+      
+      const labelWidth = doc.getTextWidth(`${label}:`); 
+      const valueX = 15 + labelWidth;
+
+      doc.setFont("helvetica", "normal"); 
+      doc.setTextColor(0, 0, 0); 
+      doc.text(value, valueX, y); 
+
+      y += 10; 
+    };
+
+    addField("Full Name", formData.fullName);
+    addField("Phone Number", formData.phone);
+    addField("Email Address", formData.email);
+    addField("Country", `${countryName}`);
+    addField("Visa Cost", `${prize} PKR/-`);
+
+    
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128); 
+    doc.text("Message:", 10, y); 
+    y += 7; 
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0); 
+    const splitMessage = doc.splitTextToSize(formData.message, 180); 
+    doc.text(splitMessage, 10, y); 
+    y += splitMessage.length * 7; 
+
+    // Save the PDF
+    doc.save("sticker-visa-application-details.pdf");
+  };
+
 
   return (
     <div>
@@ -95,15 +176,28 @@ export default function StickerVisaForm() {
           />
         </div>
         <div>
-          <label className="block font-semibold mb-1">Country You Want Visa For</label>
+          <label className="block font-semibold mb-1">Country</label>
           <input
             type="text"
             name="country"
             placeholder="Enter country name"
-            value={formData.country}
-            onChange={handleChange}
+            value={`${countryName}`}
+           readOnly
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
+            
+          />
+        </div>
+        <div>
+          <label className="block font-semibold mb-1">Visa Cost</label>
+          <input
+            type="text"
+            name="country"
+            readOnly
+            placeholder="Enter country name"
+            value={`${prize} PKR/-`}
+           
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            
           />
         </div>
         <div>
@@ -123,6 +217,14 @@ export default function StickerVisaForm() {
         >
           Submit
         </button>
+        {isConfirmed && (
+        <button
+        type='button'
+         onClick={generatePDF}
+          className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-orange-500 transition"
+        >
+          Download Form Details (PDF)
+        </button>)}
       </form>
     </div>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
@@ -178,4 +280,15 @@ export default function StickerVisaForm() {
     
     </div>
   );
+}
+
+
+export default function StickerVisaForm() {
+return(
+     <div>
+         <Suspense fallback={<p className="text-center text-gray-600">Loading...</p>}>
+              <StickerContent />
+            </Suspense>
+      </div>
+  )
 }

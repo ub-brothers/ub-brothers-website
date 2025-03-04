@@ -41,16 +41,16 @@ const PaymentDetails = () => {
             </p>
             <p className="text-gray-600 mb-2">Account Name: UB BROTHERS TRAVEL & TOURS</p>
             <p className="text-gray-600 mb-2">Account Number: PK18 ABPA 0010 0948 0157 0041</p>
-            <p className="text-gray-600 mb-2">Bank: ABL Bank</p>
+            <p className="text-gray-600 mb-2">Bank: ABL BANK</p>
             <p className="text-gray-600 mb-2">Branch: Akbari Mandi LHR</p>
           
             <p className="text-gray-600 font-semibold mb-2">
              Bank 2:
             </p>
-            <p className="text-gray-600 mb-2">Account Name: Mirza M.Shaharyaar</p>
-            <p className="text-gray-600 mb-2">Account Number: PK63 MEZN 0002 8601 0234 0055</p>
-            <p className="text-gray-600 mb-2">Bank: Meezan Bank</p>
-            <p className="text-gray-600 mb-2">Branch: Shad Bagh LHR</p>
+            <p className="text-gray-600 mb-2">Account Name: UB BROTHERS TRAVEL & TOURS</p>
+            <p className="text-gray-600 mb-2">Account Number: PK57DUIB0000000027927003</p>
+            <p className="text-gray-600 mb-2">Bank: DUBAI ISLAMIC BANK</p>
+            <p className="text-gray-600 mb-2">Branch: CIRCULAR ROAD LHR</p>
           </motion.div>
 
           <motion.div

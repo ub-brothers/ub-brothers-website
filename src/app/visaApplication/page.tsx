@@ -4,9 +4,17 @@ import { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from "../payment/page";
 import { motion } from 'framer-motion';
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import jsPDF from 'jspdf';
 
 
-export default function VisaApplication() {
+function EVisaContent(){
+
+  const searchParams = useSearchParams();
+  const prize = searchParams.get("prize") || "";
+  const countryName = searchParams.get("countryName");
+
   const [photo, setPhoto] = useState(null);
   const [passportPhoto, setPassportPhoto] = useState(null);
   const [idCardPhoto, setIdCardPhoto] = useState(null);
@@ -19,7 +27,7 @@ export default function VisaApplication() {
     nationality: "",
     firstName: "",
     countryName:"",
-   
+   prize: "",
     fatherName: "",
     gender: "",
   
@@ -33,15 +41,18 @@ export default function VisaApplication() {
     approximateDepartureDate: "",
   });
 
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
   const handleSubmit = async (e: any) => {
+    setIsConfirmed(true);
     e.preventDefault();
   
     const formDataToSend = new FormData();
     formDataToSend.append("visaType", formData.visaType);
     formDataToSend.append("nationality", formData.nationality);
     formDataToSend.append("firstName", formData.firstName);
-    formDataToSend.append("countryName", formData.countryName);
-    
+    formDataToSend.append("countryName", `${countryName}`);
+    formDataToSend.append("prize", `${prize} PKR/-`);
     formDataToSend.append("fatherName", formData.fatherName);
     formDataToSend.append("gender", formData.gender);
  
@@ -65,7 +76,7 @@ export default function VisaApplication() {
     if (idCardPhoto) formDataToSend.append("idCardPhoto", idCardPhoto);
 
     for (let pair of formDataToSend.entries()) {
-      console.log(pair[0] + ": " + pair[1]); 
+    
     }
   
     const response = await fetch("/api/visaForm", {
@@ -77,6 +88,109 @@ export default function VisaApplication() {
     alert(result.message);
   };
   
+  const generatePDF = async () => {
+    const doc = new jsPDF();
+  
+    // Add Company Logo
+    const companyLogo = "/image/logo.png"; // Replace with your logo path
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); // Adjust size and position as needed
+  
+    // Add Company Name
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 128); // Dark blue color
+    doc.text("UB Brothers", 45, 20); // Position: Right of the logo
+  
+    // Add Tagline
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); // Black color
+    doc.text("E-Visa Application Details", 45, 30);
+  
+    // Add Form Data
+    doc.setFontSize(14);
+    let y = 50; // Starting Y position for form data
+  
+    // Function to add a field with dynamic spacing
+    const addField = (label:any, value:any) => {
+      doc.setFont("helvetica", "bold"); // Bold for label
+      doc.setTextColor(0, 0, 128); // Dark blue for label
+      doc.text(`${label}:`, 10, y); // Write the label
+  
+      // Calculate the x-position for the value dynamically
+      const labelWidth = doc.getTextWidth(`${label}:`); // Get the width of the label
+      const valueX = 15 + labelWidth; // Add some padding (e.g., 15) after the label
+  
+      doc.setFont("helvetica", "normal"); // Normal for value
+      doc.setTextColor(0, 0, 0); // Black for value
+      doc.text(value, valueX, y); // Write the value at the calculated x-position
+  
+      y += 10; // Move down for the next field
+    };
+  
+    // Add fields with dynamic spacing
+    addField("Visa Type", formData.visaType);
+    addField("Nationality", formData.nationality);
+    addField("Full Name", formData.firstName);
+    addField("Country", countryName || formData.countryName);
+    addField("Visa Cost", `${prize} PKR/-`);
+    addField("Father’s Name", formData.fatherName);
+    addField("Gender", formData.gender);
+    addField("Phone Number", formData.phone);
+    addField("Email", formData.email);
+    addField("Residence Address", formData.residenceAddress);
+    addField("Passport Number", formData.passportNumber);
+    addField("Approximate Arrival Date", formData.approximateArrivalDate);
+    addField("Approximate Departure Date", formData.approximateDepartureDate);
+  
+    // Function to add an image to the PDF
+    const addImageToPDF = async (imageFile:any, label:any) => {
+      if (imageFile) {
+        try {
+          const imageURL = URL.createObjectURL(imageFile);
+          const imageFormat = imageFile.type.split("/")[1].toUpperCase(); // Extract format (JPEG, JPG, PNG)
+  
+          // Load the image and add it to the PDF
+          const img = new Image();
+          img.src = imageURL;
+  
+          await new Promise<void>((resolve) => {
+            img.onload = () => {
+              // Check if a new page is needed
+              if (y + 100 > doc.internal.pageSize.height) {
+                doc.addPage();
+                y = 20; // Reset Y position for the new page
+              }
+  
+              // Add the label
+              doc.setFont("helvetica", "bold");
+              doc.setTextColor(0, 0, 128);
+              doc.text(`${label}:`, 10, y);
+              y += 10;
+  
+              // Add the image
+              doc.addImage(img, imageFormat, 10, y, 80, 80); // Adjust size and position as needed
+              y += 90; // Move down for the next element
+  
+              resolve();
+            };
+          });
+        } catch (error) {
+          console.error(`Error loading image for ${label}:`, error);
+        }
+      }
+    };
+  
+    // Add uploaded images to the PDF
+    await addImageToPDF(photo, "Personal Photo");
+    await addImageToPDF(passportPhoto, "Passport Scan");
+    await addImageToPDF(idCardPhoto, "ID Card Photo");
+  
+    // Save the PDF
+    doc.save("e-visa-application-details.pdf");
+  };
+
+
   const handleChange = (e:any) => {
     setFormData({ 
       ...formData, 
@@ -85,6 +199,7 @@ export default function VisaApplication() {
   };
   const handleFileChange = (e: any) => {
     setPhoto(e.target.files[0]);
+    
   };
 
   
@@ -138,7 +253,7 @@ export default function VisaApplication() {
         const whitePercentage = (whitePixelCount / pixelCount) * 100;
   
         const isImageClear = avgBrightness > 80;
-        const isWhiteBg = whitePercentage > 50;
+        const isWhiteBg = whitePercentage > 40;
   
         if (checkWhiteBg) {
           setValidState(isImageClear && isWhiteBg);
@@ -197,8 +312,13 @@ export default function VisaApplication() {
         </input>
 
        
-        <p>Country you want visa for:</p>
-        <input placeholder="Enter Country name" name="countryName" type="text" value={formData.countryName} onChange={handleChange} className="w-full p-2 border rounded mb-2">
+        <p>Visa Country:</p>
+        <input placeholder="Enter Country name" name="countryName" readOnly type="text" value={`${countryName}`} className="w-full p-2 border rounded mb-2">
+         
+        </input>
+
+        <p>Visa Cost:</p>
+        <input placeholder="Enter Country name" name="countryName" readOnly type="text" value={`${prize} PKR/-`} className="w-full p-2 border rounded mb-2">
          
         </input>
       </section>
@@ -261,9 +381,17 @@ export default function VisaApplication() {
       </section>
       </section>
       <div className="text-center mt-6">
-        <button className="bg-blue-500 hover:bg-orange-500 text-white px-4 py-2 rounded">
-          Save and Proceed
+        <button className="bg-blue-500 w-full hover:bg-orange-500 text-white px-4 py-2 rounded">
+          Submit
         </button>
+        {isConfirmed && (
+        <button
+        type='button'
+         onClick={generatePDF}
+          className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-orange-500 transition"
+        >
+          Download Form Details (PDF)
+        </button>)}
       </div>
       </form>
     
@@ -321,4 +449,15 @@ export default function VisaApplication() {
       
     </div>
   );
+}
+
+export default function VisaApplication() {
+  return(
+       <div>
+           <Suspense fallback={<p className="text-center text-gray-600">Loading...</p>}>
+                <EVisaContent />
+              </Suspense>
+        </div>
+    )
+  
 }
