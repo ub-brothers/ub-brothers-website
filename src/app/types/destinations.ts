@@ -162,3 +162,17 @@ export interface Flight {
     price: string;
     airlineName: string;
   }  
+
+  export interface UmrahOfferType{
+    id: string;
+    title:string;
+    daysOfUmrah: number;
+    description:string;
+    originalPrice:number;
+    discountedPrice:number;
+    image1: string;
+    image2:string;
+    
+  }
+
+  

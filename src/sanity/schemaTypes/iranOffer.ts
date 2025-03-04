@@ -1,7 +1,7 @@
 export default {
-    name: "umrahOffer",
+    name: "iranOffer",
     type: "document",
-    title: "Umrah Offer",
+    title: "Iran Ziyarat Offer",
     fields: [
       {
         name: "title",
@@ -21,10 +21,15 @@ export default {
            options: { hotspot: true } 
          },
         {
-          name: "daysOfUmrah",
-          type: "number",
-          title: "Days of Umrah",
+          name: "destination",
+          type: "string",
+          title: "Destination",
         },
+        {
+            name: "route",
+            type: "string",
+            title: "Route",
+          },
         {
           name: "description",
           type: "string",

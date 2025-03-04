@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname} from "next/navigation";
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt } from "react-icons/fa";
+import UmrahFloatingOffer from "../umrahOfferIcon/page";
 
 
 export default function DestinationLayout( {children,
@@ -13,6 +14,7 @@ export default function DestinationLayout( {children,
     const pathname = usePathname(); 
     return(
         <>
+        <UmrahFloatingOffer/>
         <div className="my-4 text-center ">
            <Link href="/umrah" className="mx-2">
           <button

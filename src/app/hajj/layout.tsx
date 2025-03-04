@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import { usePathname} from "next/navigation";
+import HajjFloatingOffer from "../hajjOfferIcon/page";
 
 
 export default function DestinationLayout( {children,
@@ -11,6 +12,7 @@ export default function DestinationLayout( {children,
     const pathname = usePathname(); 
     return(
         <>
+        <HajjFloatingOffer/>
         <div className="my-4 text-center ">
            <Link href="/umrah" className="mx-2">
           <button

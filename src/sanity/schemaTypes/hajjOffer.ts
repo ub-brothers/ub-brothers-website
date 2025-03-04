@@ -1,7 +1,7 @@
 export default {
-    name: "umrahOffer",
+    name: "hajjOffer",
     type: "document",
-    title: "Umrah Offer",
+    title: "Hajj Offer",
     fields: [
       {
         name: "title",
@@ -21,9 +21,9 @@ export default {
            options: { hotspot: true } 
          },
         {
-          name: "daysOfUmrah",
-          type: "number",
-          title: "Days of Umrah",
+          name: "dateOfHajj",
+          type: "string",
+          title: "Date of Hajj",
         },
         {
           name: "description",

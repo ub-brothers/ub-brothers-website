@@ -87,108 +87,11 @@ function EVisaContent(){
     const result = await response.json();
     alert(result.message);
   };
-  
-  const generatePDF = async () => {
-    const doc = new jsPDF();
-  
-    // Add Company Logo
-    const companyLogo = "/image/logo.png"; // Replace with your logo path
-    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); // Adjust size and position as needed
-  
-    // Add Company Name
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.setTextColor(0, 0, 128); // Dark blue color
-    doc.text("UB Brothers", 45, 20); // Position: Right of the logo
-  
-    // Add Tagline
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    doc.setTextColor(0, 0, 0); // Black color
-    doc.text("E-Visa Application Details", 45, 30);
-  
-    // Add Form Data
-    doc.setFontSize(14);
-    let y = 50; // Starting Y position for form data
-  
-    // Function to add a field with dynamic spacing
-    const addField = (label:any, value:any) => {
-      doc.setFont("helvetica", "bold"); // Bold for label
-      doc.setTextColor(0, 0, 128); // Dark blue for label
-      doc.text(`${label}:`, 10, y); // Write the label
-  
-      // Calculate the x-position for the value dynamically
-      const labelWidth = doc.getTextWidth(`${label}:`); // Get the width of the label
-      const valueX = 15 + labelWidth; // Add some padding (e.g., 15) after the label
-  
-      doc.setFont("helvetica", "normal"); // Normal for value
-      doc.setTextColor(0, 0, 0); // Black for value
-      doc.text(value, valueX, y); // Write the value at the calculated x-position
-  
-      y += 10; // Move down for the next field
-    };
-  
-    // Add fields with dynamic spacing
-    addField("Visa Type", formData.visaType);
-    addField("Nationality", formData.nationality);
-    addField("Full Name", formData.firstName);
-    addField("Country", countryName || formData.countryName);
-    addField("Visa Cost", `${prize} PKR/-`);
-    addField("Father’s Name", formData.fatherName);
-    addField("Gender", formData.gender);
-    addField("Phone Number", formData.phone);
-    addField("Email", formData.email);
-    addField("Residence Address", formData.residenceAddress);
-    addField("Passport Number", formData.passportNumber);
-    addField("Approximate Arrival Date", formData.approximateArrivalDate);
-    addField("Approximate Departure Date", formData.approximateDepartureDate);
-  
-    // Function to add an image to the PDF
-    const addImageToPDF = async (imageFile:any, label:any) => {
-      if (imageFile) {
-        try {
-          const imageURL = URL.createObjectURL(imageFile);
-          const imageFormat = imageFile.type.split("/")[1].toUpperCase(); // Extract format (JPEG, JPG, PNG)
-  
-          // Load the image and add it to the PDF
-          const img = new Image();
-          img.src = imageURL;
-  
-          await new Promise<void>((resolve) => {
-            img.onload = () => {
-              // Check if a new page is needed
-              if (y + 100 > doc.internal.pageSize.height) {
-                doc.addPage();
-                y = 20; // Reset Y position for the new page
-              }
-  
-              // Add the label
-              doc.setFont("helvetica", "bold");
-              doc.setTextColor(0, 0, 128);
-              doc.text(`${label}:`, 10, y);
-              y += 10;
-  
-              // Add the image
-              doc.addImage(img, imageFormat, 10, y, 80, 80); // Adjust size and position as needed
-              y += 90; // Move down for the next element
-  
-              resolve();
-            };
-          });
-        } catch (error) {
-          console.error(`Error loading image for ${label}:`, error);
-        }
-      }
-    };
-  
-    // Add uploaded images to the PDF
-    await addImageToPDF(photo, "Personal Photo");
-    await addImageToPDF(passportPhoto, "Passport Scan");
-    await addImageToPDF(idCardPhoto, "ID Card Photo");
-  
-    // Save the PDF
-    doc.save("e-visa-application-details.pdf");
-  };
+
+
+
+ 
+
 
 
   const handleChange = (e:any) => {
@@ -280,6 +183,89 @@ function EVisaContent(){
   
   
     
+  const generatePDF = async () => {
+    const doc = new jsPDF();
+  
+    // Add company logo (static image)
+    const companyLogo = "/image/logo.png"; // Ensure this path is correct
+    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); // Add logo at top-left corner
+  
+    // Add header text
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 128); // Navy blue color
+    doc.text("UB Brothers", 45, 20); // Add company name
+  
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); // Black color
+    doc.text("E-Visa Application Details", 45, 30); // Add subtitle
+  
+   // Function to add a field with blue bold label and normal black value
+  const addField = (label: string, value: string, yOffset: number): number => {
+    // Add label (blue and bold)
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128); // Navy blue color
+    doc.text(`${label}:`, 10, yOffset);
+
+    // Calculate the width of the label
+    const labelWidth = doc.getTextWidth(`${label}:`);
+
+    // Add value (normal black text)
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0); // Black color
+    doc.text(value, 15 + labelWidth, yOffset); // Position value next to the label
+
+    return yOffset + 10; // Return updated Y offset
+  };
+
+  // Add form data to PDF
+  let yOffset = 50; // Start Y position for form data
+  yOffset = addField("Visa Type", formData.visaType, yOffset);
+  yOffset = addField("Nationality", formData.nationality, yOffset);
+  yOffset = addField("First Name", formData.firstName, yOffset);
+  yOffset = addField("Country Name", `${countryName}`, yOffset);
+  yOffset = addField("Prize", `${prize} PKR/-`, yOffset);
+  yOffset = addField("Father's Name", formData.fatherName, yOffset);
+  yOffset = addField("Gender", formData.gender, yOffset);
+  yOffset = addField("Phone", formData.phone, yOffset);
+  yOffset = addField("Email", formData.email, yOffset);
+  yOffset = addField("Residence Address", formData.residenceAddress, yOffset);
+  yOffset = addField("Passport Number", formData.passportNumber, yOffset);
+  yOffset = addField("Approximate Arrival Date", formData.approximateArrivalDate, yOffset);
+  yOffset = addField("Approximate Departure Date", formData.approximateDepartureDate, yOffset);
+
+  // Add images to new pages
+  if (photo) {
+    const photoURL = URL.createObjectURL(photo);
+    doc.addPage(); // Create a new page for the photo
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128);
+    doc.text("Personal Photo:", 10, 20);
+    doc.addImage(photoURL, "JPEG", 10, 30, 80, 80); // Add the photo
+  }
+
+  if (passportPhoto) {
+    const passportPhotoURL = URL.createObjectURL(passportPhoto);
+    doc.addPage(); // Create a new page for the passport photo
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128);
+    doc.text("Passport Photo:", 10, 20);
+    doc.addImage(passportPhotoURL, "JPEG", 10, 30, 80, 80); // Add the passport photo
+  }
+
+  if (idCardPhoto) {
+    const idCardPhotoURL = URL.createObjectURL(idCardPhoto);
+    doc.addPage(); // Create a new page for the ID card photo
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128);
+    doc.text("ID Card Photo:", 10, 20);
+    doc.addImage(idCardPhotoURL, "JPEG", 10, 30, 80, 80); // Add the ID card photo
+  }
+
+  // Save the PDF
+  doc.save("visa_application.pdf");
+};
 
   return (
     <div>
