@@ -144,7 +144,7 @@ export default function HajjPackage() {
 
       
       <div className="text-center">
-        <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
+        <p className="sm:text-2xl text-lg font-semibold font-serif">Alhaj M. Shaharyaar</p>
         <p className="text-sm text-gray-500 mt-2">03414311000</p>
         <p className="text-sm text-gray-500">&#9993;  ubbrotherspk@gmail.com</p>
       </div>

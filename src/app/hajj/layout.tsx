@@ -44,7 +44,7 @@ export default function DestinationLayout( {children,
         </Link>
     
         <div className="sm:text-right text-center m-4 sm:text-md text-sm">
-        <h1  className="font-bold">Mirza Shaharyaar Mughal:</h1>
+        <h1  className="font-bold">Alhaj M. Shaharyaar:</h1>
         <p>03414311000</p>
         </div>
       </div>

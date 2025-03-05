@@ -136,7 +136,7 @@ const IranIraq = ()=>{
       <h2 className="text-3xl font-semibold font-sans mb-4 text-center text-black"><u>You Can Directly Contact:</u></h2>
 
       <div className="text-center">
-        <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
+        <p className="sm:text-2xl text-lg font-semibold font-serif">Alhaj M. Shaharyaar</p>
         <p className="text-lg text-gray-800 mt-2">03414311000</p>
         <p className="sm:text-2xl text-lg font-semibold font-serif mt-4">Mirza Ali</p>
         <p className="text-lg text-gray-800 mt-2">03414314000</p>

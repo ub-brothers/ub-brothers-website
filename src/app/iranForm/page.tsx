@@ -177,7 +177,7 @@ export default function BookForm() {
 
       
       <div className="text-center">
-        <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Shaharyaar Mughal</p>
+        <p className="sm:text-2xl text-lg font-semibold font-serif">Alhaj M. Shaharyaar</p>
         <p className="text-lg text-gray-800 mt-2">03414311000</p>
         <p className="sm:text-2xl text-lg font-semibold font-serif mt-4">Mirza Ali</p>
         <p className="text-lg text-gray-800 mt-2">03414314000</p>
