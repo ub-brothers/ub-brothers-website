@@ -17,6 +17,11 @@
               
       },
       {
+        name: "prizeForUsers",
+        title: "Prize for Login Users",
+        type: "number",
+      },
+      {
         name: 'requirements',
         title: 'Requirements',
         type: 'text',

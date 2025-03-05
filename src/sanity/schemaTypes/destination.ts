@@ -16,6 +16,11 @@ export default {
         type: 'number',
               
       },
+      {
+        name: "prizeForUsers",
+        title: "Prize for Login Users",
+        type: "number",
+      },
 
       {
         name: 'shortDescription',

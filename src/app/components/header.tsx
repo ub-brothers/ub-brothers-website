@@ -1,9 +1,27 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+      const token = localStorage.getItem("token");
+      setIsLoggedIn(!!token); // If token exists, user is logged in
+  }, []);
+
+  const handleLogout = () => {
+      localStorage.removeItem("token"); // Remove token from local storage
+      setIsLoggedIn(false);
+      router.push("/login"); // Redirect to login page
+  };
+
+
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname(); 
 
@@ -34,12 +52,16 @@ const Header = () => {
 
        
         <div className="hidden lg:flex space-x-4">
-          <Link href="/visaApplication" className="bg-orange-500 text-white border-2 border-white font-sans shadow-inner py-2 px-4 rounded-3xl hover:bg-blue-400 hover:text-black shadow-2xl">
-            Apply Now
+        {isLoggedIn ? (
+                    <button onClick={handleLogout} className="bg-red-500 px-4 py-2 rounded">Logout</button>
+                ) : (  <>
+          <Link href="/login" className="bg-orange-500 text-white border-2 border-white font-sans shadow-inner py-2 px-4 rounded-3xl hover:bg-blue-400 hover:text-black shadow-2xl">
+            Login
           </Link>
-          <Link href="/destinations" className="border-2 bg-orange-500 border-white text-white py-2 px-4 rounded-3xl font-sans hover:bg-blue-400 hover:text-black">
-            Explore More
-          </Link>
+          <Link href="/registeration" className="border-2 bg-orange-500 border-white text-white py-2 px-4 rounded-3xl font-sans hover:bg-blue-400 hover:text-black">
+            Register
+          </Link></>
+          )}
         </div>
 
         
@@ -69,6 +91,12 @@ const Header = () => {
            <Link href="/destinations" className={`w-full text-center py-2 ${getLinkClassName("/destinations")}`} onClick={toggleMenu}>Destinations</Link>
           <Link href="/about" className={`w-full text-center py-2 ${getLinkClassName("/about")}`} onClick={toggleMenu}>About Us</Link>
           <Link href="/contact" className={`w-full text-center py-2 ${getLinkClassName("/contact")}`} onClick={toggleMenu}>Contact</Link>
+
+          {isLoggedIn ? (
+                    <button onClick={handleLogout} className="w-full text-center py-2">Logout</button>
+                ) : (  <>
+          <Link href="/registeration" className={`w-full text-center py-2 ${getLinkClassName("/registeration")}`} onClick={toggleMenu}>Register</Link>
+          <Link href="/login" className={`w-full text-center py-2 ${getLinkClassName("/login")}`} onClick={toggleMenu}>Login</Link></>)}
 
         
         </nav>

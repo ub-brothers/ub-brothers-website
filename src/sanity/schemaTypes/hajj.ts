@@ -17,16 +17,31 @@ export default {
               
       },
       {
+        name: "sharingPrizeForUsers",
+        title: "Sharing Prize for Login Users",
+        type: "number",
+      },
+      {
         name: 'prize2',
         title: 'Prize triple',
         type: 'string',
               
       },
       {
+        name: "triplePrizeForUsers",
+        title: "Triple Prize for Login Users",
+        type: "number",
+      },
+      {
         name: 'prize3',
         title: 'Prize double',
         type: 'string',
               
+      },
+      {
+        name: "doublePrizeForUsers",
+        title: "Double Prize for Login Users",
+        type: "number",
       },
       {
         name: 'shortDescription',

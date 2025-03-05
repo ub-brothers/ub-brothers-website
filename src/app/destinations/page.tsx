@@ -7,9 +7,13 @@ import { allDestinations } from "@/sanity/lib/queries"
 import Link from "next/link"
 import { IoLocationOutline } from "react-icons/io5";
 
+
+
 const DestinationList =()=>{
   const [destination, setDestination] = useState<Destination[]>([])
-  
+
+
+
 
   useEffect(()=>{
       async function fetchedDestination(){
