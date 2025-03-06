@@ -14,6 +14,8 @@ type UmrahOfferType = {
   description: string;
   originalPrice: number;
   discountedPrice: number;
+  originalPriceForUsers:number;
+  discountedPriceForUsers:number;
 };
 
 
@@ -29,7 +31,9 @@ export default function UmrahOfferCard() {
           daysOfUmrah,
           description,
           originalPrice,
-          discountedPrice
+          discountedPrice,
+originalPriceForUsers,
+discountedPriceForUsers,
         }`);
         console.log("Fetched Data:", data);
         setOffer(data);

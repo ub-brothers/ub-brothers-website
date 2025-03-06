@@ -3,18 +3,23 @@
 import { motion } from 'framer-motion'; 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
 import jsPDF from 'jspdf';
+import { jwtDecode } from 'jwt-decode';
 
 function BookFormContent() {
+   const [isApprovedUser, setIsApprovedUser] = useState(false);
   const searchParams = useSearchParams();
   const countryName = searchParams.get("countryName") || "";
   const shortDescription = searchParams.get("shortDescription") || "";
   const prize1 = searchParams.get("prize1") || "";
   const prize2 = searchParams.get("prize2") || "";
   const prize3 = searchParams.get("prize3") || "";
+  const sharingPriceForUsers = searchParams.get("sharingPriceForUsers") || "";
+  const triplePriceForUsers = searchParams.get("triplePriceForUsers") || "";
+  const doublePriceForUsers = searchParams.get("doublePriceForUsers") || "";
 
   const [userName, setUserName] = useState("");
   const [userNumber, setUserNumber] = useState("");
@@ -27,7 +32,7 @@ function BookFormContent() {
   const handleSubmit = async (e:any) => {
     setIsConfirmed(true);
     e.preventDefault();
-    const selectedPrize = selectedCategory === "sharing" ? prize1 : selectedCategory === "triple" ? prize2 : prize3;
+    const selectedPrize = selectedCategory === "sharing" ? (isApprovedUser ? sharingPriceForUsers : prize1) : selectedCategory === "triple" ? (isApprovedUser ? triplePriceForUsers : prize2) :  (isApprovedUser ? doublePriceForUsers : prize3);
     const formData = { userName, userNumber, userEmail, shortDescription, selectedCategory, selectedPrize, userMessage };
     
     try {
@@ -52,6 +57,28 @@ function BookFormContent() {
     }
   };
 
+
+   useEffect(()=>{
+  
+  
+        const token = localStorage.getItem("token");
+  
+        if (token) {
+          try {
+            const decoded: any = jwtDecode(token);
+         
+    
+            if (decoded.approved === true || decoded.approved === "true") {
+              setIsApprovedUser(true);
+            } else {
+              setIsApprovedUser(false);
+            }
+          } catch (error) {
+            console.error("Invalid token", error);
+          }
+        }
+    
+      }, [])
   
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -95,7 +122,7 @@ function BookFormContent() {
   addField("Email Address", userEmail);
   addField("Day Duration", shortDescription);
   addField("Selected Category", selectedCategory);
-  addField("Selected Prize", selectedCategory === "sharing" ? prize1 : selectedCategory === "triple" ? prize2 : prize3);
+  addField("Selected Prize", selectedCategory === "sharing" ? (isApprovedUser ? sharingPriceForUsers : prize1) : selectedCategory === "triple" ? (isApprovedUser ? triplePriceForUsers : prize2) :  (isApprovedUser ? doublePriceForUsers : prize3));
 
   
   doc.setFont("helvetica", "bold");
@@ -140,9 +167,9 @@ function BookFormContent() {
         
         <label className="block font-semibold">Select Category</label>
         <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full p-2 mb-4 border rounded">
-          <option value="sharing">Sharing - {prize1} PKR/-</option>
-          <option value="triple">Triple - {prize2} PKR/-</option>
-          <option value="double">Double - {prize3} PKR/-</option>
+          <option value="sharing">Sharing - {isApprovedUser ? sharingPriceForUsers : prize1} PKR/-</option>
+          <option value="triple">Triple - {isApprovedUser ? triplePriceForUsers: prize2} PKR/-</option>
+          <option value="double">Double - {isApprovedUser ? doublePriceForUsers : prize3} PKR/-</option>
         </select>
         
         <label className="block font-semibold">Your Message</label>
@@ -150,7 +177,7 @@ function BookFormContent() {
         
         <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-orange-500 hover:shadow-md">Submit</button>
         {isConfirmed && (
-           <button onClick={generatePDF} className="w-full mt-4 bg-blue-500 text-white p-2 rounded hover:bg-orange-500 hover:shadow-md">Download Hajj Form Details (PDF)</button>
+           <button type='button' onClick={generatePDF} className="w-full mt-4 bg-blue-500 text-white p-2 rounded hover:bg-orange-500 hover:shadow-md">Download Hajj Form Details (PDF)</button>
         )}
       </form>
 

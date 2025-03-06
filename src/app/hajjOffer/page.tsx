@@ -13,6 +13,8 @@ type HajjOfferType = {
     description:string;
     originalPrice:number;
     discountedPrice:number;
+    originalPriceForUsers:number,
+    discountedPriceForUsers:number,
     image1: string;
     image2:string;
 };
@@ -29,7 +31,9 @@ export default function HajjOfferCard() {
           dateOfHajj,
           description,
           originalPrice,
-          discountedPrice
+          discountedPrice,
+          originalPriceForUsers,
+          discountedPriceForUsers,
         }`);
         console.log("Fetched Data:", data);
         setOffer(data);

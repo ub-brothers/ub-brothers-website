@@ -6,13 +6,37 @@ import Link from 'next/link';
 import { Destination } from '@/app/types/destinations';
 import { sanityFetch } from '@/sanity/lib/client';
 import { detailCountryEVisa, allDestinations } from '@/sanity/lib/queries';
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function DetailPage({ params }: { params: { id: string } }) {
   const [countries, setCountries] = useState<Destination | null>(null);
   const [randomCountries, setRandomCountries] = useState<Destination[]>([]);
+  const [isApprovedUser, setIsApprovedUser] = useState(false);
+
+ 
+
 
   useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+     
+
+        if (decoded.approved === true || decoded.approved === "true") {
+          setIsApprovedUser(true);
+        } else {
+          setIsApprovedUser(false);
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  
+
     async function fetchData() {
       try {
         const countryData: Destination = await sanityFetch({
@@ -74,8 +98,8 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           </h1>
           <h2 className="my-2 text-sm sm:text-lg">{countries.shortDescription}</h2>
           <h2 className="my-4 text-md sm:text-xl font-serif">
-            <b>The visa cost:</b> {countries.prize} PKR/-
-          </h2>
+            <b>The visa cost:</b> {isApprovedUser ? countries.prizeForUsers : countries.prize} PKR/-
+          </h2>  
 
           <h1 className="font-bold text-md sm:text-xl">{countries.requirements}</h1>
           <p>{countries.requirement1}</p>
@@ -93,6 +117,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
       query: {
       countryName : countries.countryName,
       prize: countries.prize,
+      prizeForUsers: countries.prizeForUsers,
       },
     }} >
         <motion.button

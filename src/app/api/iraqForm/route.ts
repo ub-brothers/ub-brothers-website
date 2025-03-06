@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
   try {
-    const { userName, userNumber, userEmail, userMessage, countryName, shortDescription, prize } = await req.json();
+    const { userName, userNumber, userEmail, userMessage, countryName, shortDescription, prize, priceForUsers } = await req.json();
 
     
     const transporter = nodemailer.createTransport({
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
         <p><strong>Email:</strong> ${userEmail}</p>
         <p><strong>Ziyarat To:</strong> ${countryName}</p>
         <p><strong>Ziyarat Route:</strong> ${shortDescription}</p>
-        <p><strong>Price:</strong> ${prize} PKR/-</p>
+        <p><strong>Price:</strong> ${priceForUsers || prize} PKR/-</p>
         <p><strong>Message:</strong> ${userMessage || "No message provided"}</p>
       `,
     };

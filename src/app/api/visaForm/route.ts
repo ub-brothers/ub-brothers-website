@@ -51,7 +51,7 @@ export const POST = async (req:Request) => {
         <p><strong>Nationality:</strong> ${fields.nationality}</p>
  
  <p><strong>Visa Country:</strong> ${fields.countryName}</p>
- <p><strong>Visa Cost:</strong> ${fields.prize}</p>
+ <p><strong>Visa Cost:</strong> ${fields.prizeForUsers || fields.prize}</p>
         <p><strong>Full Name:</strong> ${fields.firstName}</p>
      
         <p><strong>Father's Name:</strong> ${fields.fatherName}</p>

@@ -7,6 +7,7 @@ import Link from "next/link"
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { motion } from 'framer-motion'; 
 import { FaBus, FaPassport, FaTicketAlt, FaHotel, FaUtensils } from "react-icons/fa";
+import { jwtDecode } from 'jwt-decode';
 
 
 const packages = [
@@ -19,8 +20,29 @@ const packages = [
 
 const IranIraq = ()=>{
     const [ tour, setTour ] = useState<IranType[]>([])
+    const [isApprovedUser, setIsApprovedUser] = useState(false);
 
     useEffect(()=>{
+
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        try {
+          const decoded: any = jwtDecode(token);
+       
+  
+          if (decoded.approved === true || decoded.approved === "true") {
+            setIsApprovedUser(true);
+          } else {
+            setIsApprovedUser(false);
+          }
+        } catch (error) {
+          console.error("Invalid token", error);
+        }
+      }
+  
+
+
         async function fetchedTour(){
             const fetchTour: IranType[] = await client.fetch(iranZiyarat)
             setTour(fetchTour)
@@ -83,6 +105,7 @@ const IranIraq = ()=>{
       countryName: tour.countryName,
       shortDescription: tour.shortDescription,
       prize: tour.prize,
+      priceForUsers : tour.priceForUsers,
       },
     }} >
                     <div className="relative group text-center">
@@ -92,7 +115,7 @@ const IranIraq = ()=>{
 
                   <h3 className=" sm:text-xl text-md text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
                   <h3 className=" sm:text-lg text-sm text-left flex ml-4 gap-1  sm:gap-2 text-lg text-gray-600">{tour.shortDescription}</h3>
-                   <h2 className="text-left font-semibold text-sm ml-4 sm:text-md mt-1">{tour.prize} PKR/-</h2>
+                   <h2 className="text-left font-semibold text-sm ml-4 sm:text-md mt-1">{isApprovedUser ? tour.priceForUsers: tour.prize} PKR/-</h2>
                  
                  <div className="text-center">
                     <button className="bg-orange-500 rounded-xl h-8 w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500  hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif text-center">Book Now</button> </div>

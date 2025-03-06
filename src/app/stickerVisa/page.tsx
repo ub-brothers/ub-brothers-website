@@ -6,11 +6,34 @@ import { Destination } from "../types/destinations"
 import { stickerVisa } from "@/sanity/lib/queries"
 import Link from "next/link"
 import { IoLocationOutline } from "react-icons/io5";
+import { jwtDecode } from 'jwt-decode';
+ 
 
 const StickerVisa =()=>{
     const [destination, setDestination] = useState<Destination[]>([])
+    const [isApprovedUser, setIsApprovedUser] = useState(false);
 
     useEffect(()=>{
+
+  const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+     
+
+        if (decoded.approved === true || decoded.approved === "true") {
+          setIsApprovedUser(true);
+        } else {
+          setIsApprovedUser(false);
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  
+
+
         async function fetchedDestination(){
             const fetchedDestination: Destination[] = await client.fetch(stickerVisa)
             setDestination(fetchedDestination)
@@ -39,7 +62,7 @@ const StickerVisa =()=>{
 </div> 
 
                   <h3 className=" sm:text-md text-sm text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black"><IoLocationOutline className="mt-1" />{destination.countryName}</h3>
-                                      <h2 className="text-left text-sm ml-6 sm:text-md mt-1">Rs. {destination.prize}</h2>
+                                      <h2 className="text-left text-sm ml-6 sm:text-md mt-1">Rs. {isApprovedUser ? destination.priceForUsers : destination.prize}</h2>
 
                  
                     <button className="bg-orange-500 rounded-xl w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif">View Details</button></Link>

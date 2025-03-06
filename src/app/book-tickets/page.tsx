@@ -4,16 +4,37 @@ import React from "react";
 import { client } from "@/sanity/lib/client";
 import {  FlightGroup } from "../types/destinations";
 import { useRouter } from "next/navigation";
+import { jwtDecode } from 'jwt-decode';
 
 const FlightTable = () => {
   const [flights, setFlights] = useState<FlightGroup[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All"); // State for selected category
   const router = useRouter();
+  const [isApprovedUser, setIsApprovedUser] = useState(false);
 
 
   useEffect(() => {
+
+      const token = localStorage.getItem("token");
+    
+        if (token) {
+          try {
+            const decoded: any = jwtDecode(token);
+         
+    
+            if (decoded.approved === true || decoded.approved === "true") {
+              setIsApprovedUser(true);
+            } else {
+              setIsApprovedUser(false);
+            }
+          } catch (error) {
+            console.error("Invalid token", error);
+          }
+        }
+
+
     const fetchFlights = async () => {
-      const data: FlightGroup[] = await client.fetch('*[_type == "flights"] | order(_createdAt asc) { id , airline, "airlineLogo": airlineLogo.asset->url ,  flights[], meal, price, airlineName,"airlineImage": airlineImage.asset->url, seats, childSeats }');
+      const data: FlightGroup[] = await client.fetch('*[_type == "flights"] | order(_createdAt asc) { id , airline, "airlineLogo": airlineLogo.asset->url ,  flights[], meal, price,priceForUsers, airlineName,"airlineImage": airlineImage.asset->url, seats, childSeats }');
       setFlights(data);
     };
     fetchFlights();
@@ -162,13 +183,13 @@ const filteredFlights = flights
                     <td rowSpan={flightGroup.flights.length} className="px-4 text-sm font-bold bg-blue-200 text-center border text-center align-middle">{flightGroup.meal}</td>
                   )}
                   {idx === 0 && (
-                    <td rowSpan={flightGroup.flights.length} className="px-4 text-sm font-bold bg-blue-200 text-center border text-center align-middle">{flightGroup.price}</td>
+                    <td rowSpan={flightGroup.flights.length} className="px-4 text-sm font-bold bg-blue-200 text-center border text-center align-middle">{isApprovedUser ? flightGroup.priceForUsers  : flightGroup.price}</td>
                   )}
                   {idx === 0 && (
                     <td rowSpan={flightGroup.flights.length} className="text-center bg-blue-200  py-3 border align-middle">
                       <button
                       onClick={() => {
-                        let queryParams = `airline=${encodeURIComponent(flightGroup.airlineImage)}&airlineName=${encodeURIComponent(flightGroup.airlineName)}&meal=${encodeURIComponent(flightGroup.meal)}&price=${encodeURIComponent(flightGroup.price)}  &seats=${encodeURIComponent(flightGroup.seats)}  &childSeats=${encodeURIComponent(flightGroup.childSeats)}`;
+                        let queryParams = `airline=${encodeURIComponent(flightGroup.airlineImage)}&airlineName=${encodeURIComponent(flightGroup.airlineName)}&meal=${encodeURIComponent(flightGroup.meal)}&price=${encodeURIComponent(flightGroup.price)}&priceForUsers=${encodeURIComponent(flightGroup.priceForUsers)}  &seats=${encodeURIComponent(flightGroup.seats)}  &childSeats=${encodeURIComponent(flightGroup.childSeats)}`;
                         
                         flightGroup.flights.forEach((flight, idx) => {
                           queryParams += `&date${idx}=${encodeURIComponent(flight.date)}&flightNumber${idx}=${encodeURIComponent(flight.flightNumber)}&originDestination${idx}=${encodeURIComponent(flight.originDestination)}&time${idx}=${encodeURIComponent(flight.time)}&baggage${idx}=${encodeURIComponent(flight.baggage)}&depOrReturn${idx}=${flight.isReturn ? "RET" : "DEP"}`;

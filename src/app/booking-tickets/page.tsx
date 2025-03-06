@@ -4,10 +4,13 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Suspense } from "react";
 import jsPDF from "jspdf";
+import { jwtDecode } from 'jwt-decode';
 
 function TicketsContent(){
   const [isConfirmed, setIsConfirmed] = useState(false);
 const searchParams = useSearchParams();
+ const [isApprovedUser, setIsApprovedUser] = useState(false);
+
   const handleConfirmBooking = async () => {
     setIsConfirmed(true);
    
@@ -60,7 +63,7 @@ const searchParams = useSearchParams();
 
 const handleDownloadPDF = () => {
   if (isConfirmed) {
-    alert("Downloading PDF...");
+
     const doc = new jsPDF();
 
     const companyLogo = "/image/logo.png";
@@ -193,7 +196,9 @@ y += 10;
   const airlineImage = decodeURIComponent(searchParams.get("airline") || ""); 
   const meal = searchParams.get("meal");
   const priceParam = searchParams.get("price");
-  
+  const priceForUsersParams = searchParams.get("priceForUsers");
+  console.log("Price For Users:", priceForUsersParams);
+
   const seatParam = searchParams.get("seats");
   const childSeatParam = searchParams.get("childSeats");
   const [children, setChildren] = useState<number>(0); 
@@ -230,6 +235,26 @@ y += 10;
   // Validate seats
   const isSeatAvailable = adults <= availableSeats;
   useEffect(() => {
+
+  const token = localStorage.getItem("token");
+    
+        if (token) {
+          try {
+            const decoded: any = jwtDecode(token);
+         
+    
+            if (decoded.approved === true || decoded.approved === "true") {
+              setIsApprovedUser(true);
+            } else {
+              setIsApprovedUser(false);
+            }
+          } catch (error) {
+            console.error("Invalid token", error);
+          }
+        }
+
+
+
     const totalPassengers = adults + children + infants; // 👈 Children ko bhi include kar diya
     const newPassengerData = Array.from({ length: totalPassengers }, (_, index) => (
       passengers[index] || { surname: "", name: "", passportNumber: "", dob: "", passportExpiry: "", nationality: "" }
@@ -237,6 +262,9 @@ y += 10;
     setPassengers(newPassengerData);
 }, [adults, children, infants, availableSeats]); // 👈 Dependency array mein bhi children add kar diya
 
+
+const extractedUserPrice = priceForUsersParams ? priceForUsersParams.match(/[\d,]+(\.\d+)?/) : null;
+const priceForUsers = extractedUserPrice ? Number(extractedUserPrice[0].replace(/,/g, "")): 0;
 
 
 // Extract only numeric values from the price string
@@ -248,7 +276,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
 
  
   const totalSeats = adults + infants;
-  const totalPrice = adults * price;
+  const totalPrice = adults * (isApprovedUser ? Number(priceForUsers) : Number(price));
 
   // Fetching multiple flights
   const flights: { 
@@ -318,7 +346,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
         <div className="w-32 text-sm">{flight.time}</div>
         <div className="w-32 text-sm">{flight.baggage}</div>
          <div className="w-32 text-sm">{idx === 0 ? meal: ""}</div>
-      <div className="w-32 text-sm">{idx === 0 ? priceParam : ""}</div>
+      <div className="w-32 text-sm">{idx === 0 ? (isApprovedUser ? priceForUsers || "No price found" : priceParam) : ""}</div>
       
       </div>
     ))}
@@ -358,7 +386,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
 
 
               
-              <td className="px-4 py-2 border text-sm">{price}</td>
+              <td className="px-4 py-2 border text-sm">{isApprovedUser ? priceForUsers  : price}</td>
               <td className="px-4 py-2 border text-sm">{totalPrice}</td> </tr>
 
 

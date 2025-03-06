@@ -14,6 +14,8 @@ type IranOfferType = {
     description: string;
     originalPrice: number;
     discountedPrice: number;
+    originalPriceForUsers:number,
+    discountedPriceForUsers:number,
   };
 
 export default function IranOfferCard() {
@@ -29,7 +31,9 @@ export default function IranOfferCard() {
           route,
           description,
           originalPrice,
-          discountedPrice
+          discountedPrice,
+        originalPriceForUsers,
+        discountedPriceForUsers,
         }`);
         console.log("Fetched Data:", data);
         setOffer(data);

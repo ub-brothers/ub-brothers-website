@@ -2,28 +2,29 @@
 import { motion } from 'framer-motion'; 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
 import jsPDF from 'jspdf';
+import { jwtDecode } from 'jwt-decode';
 
 function BookFormContent() {
   const searchParams = useSearchParams();
   const countryName = searchParams.get("countryName") || "";
   const shortDescription = searchParams.get("shortDescription") || "";
   const prize = searchParams.get("prize") || "";
-
+  const priceForUsers = searchParams.get("priceForUsers") || "";
   const [userName, setUserName] = useState("");
   const [userNumber, setUserNumber] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userMessage, setUserMessage] = useState("");
-
+  const [isApprovedUser, setIsApprovedUser] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsConfirmed(true);
     e.preventDefault();
 
-    const formData = { userName, userNumber, userEmail, userMessage, countryName, shortDescription, prize };
+    const formData = { userName, userNumber, userEmail, userMessage, countryName, shortDescription, prize, priceForUsers };
 
     try {
       const res = await fetch("/api/iraqForm", {
@@ -47,7 +48,28 @@ function BookFormContent() {
     }
   };
 
-  
+    useEffect(()=>{
+    
+    
+          const token = localStorage.getItem("token");
+    
+          if (token) {
+            try {
+              const decoded: any = jwtDecode(token);
+           
+      
+              if (decoded.approved === true || decoded.approved === "true") {
+                setIsApprovedUser(true);
+              } else {
+                setIsApprovedUser(false);
+              }
+            } catch (error) {
+              console.error("Invalid token", error);
+            }
+          }
+      
+        }, [])
+
   const generatePDF = () => {
     const doc = new jsPDF();
 
@@ -94,7 +116,7 @@ function BookFormContent() {
     addField("Email Address", userEmail);
     addField("Ziyarat to", countryName);
     addField("Ziyarat Route", shortDescription);
-    addField("Price", `${prize} PKR/-`);
+    addField("Price", `${isApprovedUser ? priceForUsers : prize} PKR/-`);
 
     // Add Message field with multi-line support
     doc.setFont("helvetica", "bold");
@@ -141,7 +163,7 @@ function BookFormContent() {
           <input type="text" value={shortDescription} readOnly className="w-full p-2 mb-4 border rounded bg-gray-100" />
 
           <label className="block mb-2 font-semibold text-gray-700">Price</label>
-          <input type="text" value={`${prize} PKR/-`} readOnly className="w-full p-2 mb-4 border rounded bg-gray-100" />
+          <input type="text" value={`${isApprovedUser ? priceForUsers : prize} PKR/-`} readOnly className="w-full p-2 mb-4 border rounded bg-gray-100" />
 
           <label className="block mb-2 font-semibold text-gray-700">Your Message</label>
           <textarea value={userMessage} onChange={(e) => setUserMessage(e.target.value)} className="w-full p-2 mb-4 border rounded" placeholder="Enter your message (optional)" rows={3} />
@@ -151,6 +173,7 @@ function BookFormContent() {
           </button>
           {isConfirmed && (
         <button
+        type='button'
          onClick={generatePDF}
           className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-orange-500 transition"
         >

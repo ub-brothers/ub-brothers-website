@@ -19,7 +19,7 @@ export default {
       {
         name: "sharingPriceForUsers",
         title: "Sharing Price for Login Users",
-        type: "number",
+        type: "string",
       },
       {
         name: 'prize2',
@@ -30,7 +30,7 @@ export default {
       {
         name: "triplePriceForUsers",
         title: "Triple Price for Login Users",
-        type: "number",
+        type: "string",
       },
       {
         name: 'prize3',
@@ -41,7 +41,7 @@ export default {
       {
         name: "doublePriceForUsers",
         title: "Double Price for Login Users",
-        type: "number",
+        type: "string",
       },
       {
         name: 'shortDescription',

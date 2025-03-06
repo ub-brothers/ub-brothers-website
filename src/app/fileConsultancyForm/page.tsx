@@ -1,15 +1,19 @@
 'use client';
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from 'framer-motion';
 import PaymentDetails from '../payment/page';
 import jsPDF from 'jspdf';
+import { jwtDecode } from 'jwt-decode';
 
 function FileContent(){
+  const [isApprovedUser, setIsApprovedUser] = useState(false);
+
   const searchParams = useSearchParams();
   const prize = searchParams.get("prize") || "";
+  const prizeForUsers = searchParams.get("prizeForUsers") || "";
   const countryName = searchParams.get("countryName");
   const [formData, setFormData] = useState({
     fullName: '',
@@ -17,8 +21,29 @@ function FileContent(){
     email: '',
     country: '',
     price:'',
+    prizeForUsers:"",
     message: '',
   });
+
+
+  useEffect(() => {
+      const token = localStorage.getItem("token");
+    
+      if (token) {
+        try {
+          const decoded: any = jwtDecode(token);
+        
+          if (decoded.approved) {
+            setIsApprovedUser(true);
+          } else {
+            setIsApprovedUser(false);
+          }
+        } catch (error) {
+          console.error("Invalid token", error);
+        }
+      }
+    }, []);
+
 
   const handleChange = (e:any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,7 +58,8 @@ function FileContent(){
     const updatedFormData = {
       ...formData,
       country: countryName || "", // Ensure it's added
-      price: prize || "", // Ensure it's added
+      price: prize || "",
+      prizeForUsers: prizeForUsers || "",
     };
   
     try {
@@ -49,7 +75,7 @@ function FileContent(){
       
       if (result.success) {
         alert('Submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '' }); // Clear form
+        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '',prizeForUsers:"" }); // Clear form
       } else {
         alert('Failed to submit. Please try again.');
       }
@@ -99,7 +125,7 @@ function FileContent(){
  addField("Phone", formData.phone);
  addField("Email", formData.email);
  addField("Country" , `${countryName}`);
- addField("Price" , `${prize} PKR/-`);
+ addField("Price" , `${isApprovedUser ? prizeForUsers : prize} PKR/-`);
 
  doc.setFont("helvetica", "bold");
  doc.text("Message:", 10, y); 
@@ -178,8 +204,8 @@ function FileContent(){
           />
         </div>
         <div>
-        <label className="block mb-2 font-semibold text-gray-700">Price</label>
-        <input type="text"  value={`${prize} PKR/-`}  className="w-full p-2 mb-4 border rounded bg-gray-100" />
+        <label className="block mb-2 font-semibold text-gray-700">Visa Cost</label>
+        <input type="text"  value={`${isApprovedUser ? prizeForUsers : prize} PKR/-`}  className="w-full p-2 mb-4 border rounded bg-gray-100" />
         </div>
         <div>
           <label className="block font-semibold mb-1">Your Message / Request</label>
@@ -200,6 +226,7 @@ function FileContent(){
         </button>
         {isConfirmed && (
         <button
+        type="button"
          onClick={generatePDF}
           className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-orange-500 transition"
         >

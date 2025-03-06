@@ -1,18 +1,20 @@
 'use client';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import jsPDF from 'jspdf';
-
+import { jwtDecode } from 'jwt-decode';
 
 
 function StickerContent(){
+const [isApprovedUser, setIsApprovedUser] = useState(false);
 
   const searchParams = useSearchParams();
   const prize = searchParams.get("prize") || "";
+  const priceForUsers = searchParams.get("priceForUsers") || "";
   const countryName = searchParams.get("countryName");
 
   const [formData, setFormData] = useState({
@@ -20,6 +22,7 @@ function StickerContent(){
     phone: '',
     email: '',
     country: '',
+    priceForUsers:"",
     price: '',
     message: '',
   });
@@ -37,6 +40,7 @@ function StickerContent(){
       ...formData,
       country: countryName || "", 
       price: prize || "", 
+      priceForUsers: priceForUsers || "",
     };
 
     try {
@@ -52,7 +56,7 @@ function StickerContent(){
       
       if (result.success) {
         alert('Your application has been submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '', message: '', price: "" }); 
+        setFormData({ fullName: '', phone: '', email: '', country: '', message: '', price: "", priceForUsers:"" }); 
       } else {
         alert('Failed to submit. Please try again.');
       }
@@ -63,7 +67,24 @@ function StickerContent(){
   };
   
 
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+  
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+      
+        if (decoded.approved) {
+          setIsApprovedUser(true);
+        } else {
+          setIsApprovedUser(false);
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  }, []);
+ 
   
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -107,7 +128,7 @@ function StickerContent(){
     addField("Phone Number", formData.phone);
     addField("Email Address", formData.email);
     addField("Country", `${countryName}`);
-    addField("Visa Cost", `${prize} PKR/-`);
+    addField("Visa Cost", `${isApprovedUser ? priceForUsers : prize} PKR/-`);
 
     
     doc.setFont("helvetica", "bold");
@@ -194,7 +215,7 @@ function StickerContent(){
             name="country"
             readOnly
             placeholder="Enter country name"
-            value={`${prize} PKR/-`}
+            value={`${isApprovedUser ? priceForUsers : prize} PKR/-`}
            
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             

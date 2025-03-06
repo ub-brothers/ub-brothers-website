@@ -73,7 +73,7 @@ export default function Login() {
                         placeholder="Password" 
                         required 
                         onChange={handleChange} 
-                        className="border p-2 rounded w-full" 
+                        className="border p-2 text-black rounded w-full" 
                     />
                     <button 
                         type="button" 

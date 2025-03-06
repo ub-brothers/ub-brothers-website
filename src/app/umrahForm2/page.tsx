@@ -7,21 +7,23 @@ import PaymentDetails from "../payment/page";
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import jsPDF from 'jspdf';
+import { jwtDecode } from 'jwt-decode';
 
 const UmrahBookingForm2 = () => {
+   const [isApprovedUser, setIsApprovedUser] = useState(false);
   const [visaStatus, setVisaStatus] = useState("yes");
   
-  const [daysOptions, setDaysOptions] = useState<{ days: number; price: number }[]>([]);
-  const [categories, setCategories] = useState<{ categoryName: string; price: number }[]>([]);
+  const [daysOptions, setDaysOptions] = useState<{ days: number; price: number, priceForUsers:number }[]>([]);
+  const [categories, setCategories] = useState<{ categoryName: string; price: number, priceForUsers:number }[]>([]);
   const [selectedDays, setSelectedDays] = useState<number>(7);
   
-  const [availableMakkahCategories, setAvailableMakkahCategories] = useState< { categoryName: string; price: number }[]>([]);
-  const [availableMadinaCategories, setAvailableMadinaCategories] = useState< { categoryName: string; price: number }[]>([]);
+  const [availableMakkahCategories, setAvailableMakkahCategories] = useState< { categoryName: string; price: number, priceForUsers:number }[]>([]);
+  const [availableMadinaCategories, setAvailableMadinaCategories] = useState< { categoryName: string; price: number,priceForUsers:number }[]>([]);
 
   type Hotel = {
     hotelName: string;
     price: number;
-    applicableCategories: { categoryName: string; price: number }[];
+    applicableCategories: { categoryName: string; price: number , priceForUsers:number}[];
   };
   const [makkahHotels, setMakkahHotels] = useState<Hotel[]>([]);
   const [madinaHotels, setMadinaHotels] = useState<Hotel[]>([]);
@@ -54,13 +56,32 @@ const [selectedMadinaCategory, setSelectedMadinaCategory] = useState<string>("")
   
 
   useEffect(() => {
+
+const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+     
+
+        if (decoded.approved === true || decoded.approved === "true") {
+          setIsApprovedUser(true);
+        } else {
+          setIsApprovedUser(false);
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+
+
     const fetchData = async () => {
-      const makkahData = await client.fetch<{ hotelName: string; price: number, applicableCategories: { categoryName: string; price: number }[] }[]>(`*[_type == "makkahHotel"]{hotelName, price, applicableCategories[]{ categoryName, price } }`);
-      const madinaData = await client.fetch<{ hotelName: string; price: number , applicableCategories: { categoryName: string; price: number }[] }[]>(`*[_type == "madinaHotel"]{hotelName, price, applicableCategories[]{ categoryName, price } }`);
+      const makkahData = await client.fetch<{ hotelName: string; price: number, applicableCategories: { categoryName: string; price: number,priceForUsers:number }[] }[]>(`*[_type == "makkahHotel"]{hotelName, price, applicableCategories[]{ categoryName, price,priceForUsers } }`);
+      const madinaData = await client.fetch<{ hotelName: string; price: number , applicableCategories: { categoryName: string; price: number,priceForUsers:number }[] }[]>(`*[_type == "madinaHotel"]{hotelName, price, applicableCategories[]{ categoryName, price,priceForUsers } }`);
 
 
-      const daysData = await client.fetch<{ days: number; price: number }[]>(`*[_type == "umrahDays"]{days, price}`);
-      const categoriesData = await client.fetch<{ categoryName: string; price: number }[]>(`*[_type == "roomCategories"]{categoryName, price}`);
+      const daysData = await client.fetch<{ days: number; price: number,priceForUsers:number }[]>(`*[_type == "umrahDays"]{days, price,priceForUsers}`);
+      const categoriesData = await client.fetch<{ categoryName: string; price: number, priceForUsers:number }[]>(`*[_type == "roomCategories"]{categoryName, price}`);
 
       setMakkahHotels(makkahData);
       setMadinaHotels(madinaData);
@@ -78,26 +99,21 @@ const [selectedMadinaCategory, setSelectedMadinaCategory] = useState<string>("")
     const selectedMakkahHotelObj = makkahHotels.find((h) => h.hotelName === selectedMakkahHotel);
     const selectedMadinaHotelObj = madinaHotels.find((h) => h.hotelName === selectedMadinaHotel);
 
-    console.log("Makkah Hotel Data:", selectedMakkahHotelObj);
-    console.log("Madina Hotel Data:", selectedMadinaHotelObj);
 
     const selectedMakkahCategoryObj = selectedMakkahHotelObj?.applicableCategories.find(
         (c) => c.categoryName === selectedMakkahCategory
     );
-    const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? selectedMakkahCategoryObj.price * formData.makkahDay : 0;
+    const selectedMakkahCategoryPrice = selectedMakkahCategoryObj ? (isApprovedUser ? selectedMakkahCategoryObj.priceForUsers : selectedMakkahCategoryObj.price) * formData.makkahDay : 0;
 
     const selectedMadinaCategoryObj = selectedMadinaHotelObj?.applicableCategories.find(
         (c) => c.categoryName ===  selectedMadinaCategory
     );
-    const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? selectedMadinaCategoryObj.price * formData.madinaDay : 0;
+    const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? (isApprovedUser ? selectedMadinaCategoryObj.priceForUsers : selectedMadinaCategoryObj.price) * formData.madinaDay : 0;
 
     const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
 
     let total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
 
-    console.log("Makkah Price:", selectedMakkahCategoryPrice);
-    console.log("Madina Price:", selectedMadinaCategoryPrice);
-    console.log("Total Before Visa Check:", total);
 
     if (visaStatus === "no" && proceedClicked) {
         total += 550;
@@ -294,10 +310,11 @@ const generatePDF = () => {
   onChange={(e) => setSelectedMakkahCategory(e.target.value)} 
   className="w-full p-3 mb-5 border rounded-md" 
 >
+  <option>Select Room Category</option>
 {availableMakkahCategories.length > 0 ? (
     availableMakkahCategories.map((catObj) => (
       <option key={catObj.categoryName} value={catObj.categoryName}>
-        {catObj.categoryName}: {catObj.price} SAR/- (per night).
+        {catObj.categoryName}: {isApprovedUser ? catObj.priceForUsers : catObj.price} SAR/- (per night).
       </option>
     ))
   ) : (
@@ -334,10 +351,11 @@ const generatePDF = () => {
   onChange={(e) => setSelectedMadinaCategory(e.target.value)}
   className="w-full p-3 mb-5 border rounded-md"
 >
+<option>Select Room Category</option>
 {availableMadinaCategories.length > 0 ? (
     availableMadinaCategories.map((catObj) => (
       <option key={catObj.categoryName} value={catObj.categoryName}>
-        {catObj.categoryName}: {catObj.price} SAR/- (per night).
+        {catObj.categoryName}: {isApprovedUser ? catObj.priceForUsers : catObj.price} SAR/- (per night).
       </option>
     ))
   ) : (
@@ -407,11 +425,12 @@ const generatePDF = () => {
       <button className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
       {isConfirmed && (
         <button
+        type="button"
          onClick={generatePDF}
           className="w-full bg-blue-600 mt-4 text-white py-2 rounded-md hover:bg-orange-500 transition"
         >
           Download Form Details (PDF)
-        </button>)}
+        </button>)} 
     </form>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
     

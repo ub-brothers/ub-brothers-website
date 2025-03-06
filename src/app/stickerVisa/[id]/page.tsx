@@ -7,13 +7,35 @@ import { detailCountry,  stickerVisa } from "@/sanity/lib/queries";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function DetailPage({ params }: { params: { id: string } }) {
   const [countries, setCountries] = useState<Destination | null>(null);
   const [randomCountries, setRandomCountries] = useState<Destination[]>([]);
+    const [isApprovedUser, setIsApprovedUser] = useState(false);
 
   useEffect(() => {
+
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+     
+
+        if (decoded.approved === true || decoded.approved === "true") {
+          setIsApprovedUser(true);
+        } else {
+          setIsApprovedUser(false);
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+
+
     async function fetchData() {
       const countryData: Destination = await sanityFetch({ query: detailCountry, params: { id: params.id } });
       setCountries(countryData);
@@ -60,7 +82,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
         <div className="mx-6 ">
           <h1 className="sm:text-3xl text-xl font-bold mt-5 sm:mt-10 font-serif"><u>{countries.countryName}:</u></h1>
           <h2 className="my-2 text-sm sm:text-lg">{countries.shortDescription}</h2>
-          <h2 className="my-4 text-md sm:text-xl "><b>The visa cost:</b> {countries.prize} PKR/-</h2>
+          <h2 className="my-4 text-md sm:text-xl "><b>The visa cost:</b> {isApprovedUser ? countries.priceForUsers : countries.prize} PKR/-</h2>
         
 
           <h1 className="font-bold text-md sm:text-xl">{countries.requirements}</h1>
@@ -102,6 +124,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
       query: {
       countryName : countries.countryName,
       prize: countries.prize,
+      priceForUsers: countries.priceForUsers,
       },
     }} >
       <motion.button

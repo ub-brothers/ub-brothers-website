@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         <p><strong>Email</strong>: ${userEmail}</p> 
         <p><strong>Day Duration</strong>: ${shortDescription}</p>
         <p><strong>Category</strong>: ${selectedCategory}</p>
-        <p><strong>Price</strong>: ${selectedPrize}</p>
+        <p><strong>Price</strong>: ${selectedPrize} PKR/-</p>
         <p><strong>Message</strong>: ${userMessage}</p>
       `,
     };

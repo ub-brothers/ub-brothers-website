@@ -10,6 +10,8 @@ type VisaOfferType = {
     title: string;
     originalPrice: number;
     discountedPrice: number;
+    discountedPriceForUsers:number;
+    originalPriceForUsers:number;
     countries: {
       name: string;
       imageUrl?: string | null;
@@ -24,6 +26,8 @@ export default function VisaOffer() {
     title,
     originalPrice,
     discountedPrice,
+    originalPriceForUsers,
+    discountedPriceForUsers,
     countries[] {
       name,
       "imageUrl": image.asset->url

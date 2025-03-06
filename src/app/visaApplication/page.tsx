@@ -1,18 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from "../payment/page";
 import { motion } from 'framer-motion';
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import jsPDF from 'jspdf';
-
+import { jwtDecode } from 'jwt-decode';
 
 function EVisaContent(){
+ const [isApprovedUser, setIsApprovedUser] = useState(false);
+
+
 
   const searchParams = useSearchParams();
-  const prize = searchParams.get("prize") || "";
+  
   const countryName = searchParams.get("countryName");
 
   const [photo, setPhoto] = useState(null);
@@ -21,6 +24,9 @@ function EVisaContent(){
   const [photoValid, setPhotoValid] = useState(null);
   const [passportValid, setPassportValid] = useState(null);
   const [idCardValid, setIdCardValid] = useState(null);
+const prize = searchParams.get("prize") || "";
+const prizeForUsers = searchParams.get("prizeForUsers")||"";
+console.log("Prize For Users:", searchParams.get("prizeForUsers"));
 
   const [formData, setFormData] = useState({
     visaType: "",
@@ -28,6 +34,7 @@ function EVisaContent(){
     firstName: "",
     countryName:"",
    prize: "",
+   prizeForUsers:"",
     fatherName: "",
     gender: "",
   
@@ -52,7 +59,7 @@ function EVisaContent(){
     formDataToSend.append("nationality", formData.nationality);
     formDataToSend.append("firstName", formData.firstName);
     formDataToSend.append("countryName", `${countryName}`);
-    formDataToSend.append("prize", `${prize} PKR/-`);
+    formDataToSend.append("prize", `${isApprovedUser ? prizeForUsers : prize} PKR/-`);
     formDataToSend.append("fatherName", formData.fatherName);
     formDataToSend.append("gender", formData.gender);
  
@@ -107,7 +114,23 @@ function EVisaContent(){
 
   
 
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+  
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+      
+        if (decoded.approved) {
+          setIsApprovedUser(true);
+        } else {
+          setIsApprovedUser(false);
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  }, []);
  
 
   const checkImageQuality = (file: File, checkWhiteBg: boolean, setValidState: any , setImage: (image: string)=> void) => {
@@ -225,7 +248,7 @@ function EVisaContent(){
   yOffset = addField("Nationality", formData.nationality, yOffset);
   yOffset = addField("First Name", formData.firstName, yOffset);
   yOffset = addField("Country Name", `${countryName}`, yOffset);
-  yOffset = addField("Prize", `${prize} PKR/-`, yOffset);
+  yOffset = addField("Prize", `${isApprovedUser ? prizeForUsers : prize} PKR/-`, yOffset);
   yOffset = addField("Father's Name", formData.fatherName, yOffset);
   yOffset = addField("Gender", formData.gender, yOffset);
   yOffset = addField("Phone", formData.phone, yOffset);
@@ -304,7 +327,7 @@ function EVisaContent(){
         </input>
 
         <p>Visa Cost:</p>
-        <input placeholder="Enter Country name" name="countryName" readOnly type="text" value={`${prize} PKR/-`} className="w-full p-2 border rounded mb-2">
+        <input placeholder="Enter Country name" name="countryName" readOnly type="text" value={`${isApprovedUser ? prizeForUsers : prize} PKR/-`} className="w-full p-2 border rounded mb-2">
          
         </input>
       </section>

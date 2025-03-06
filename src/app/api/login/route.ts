@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         }
 
         // JWT Token Generate karein
-        const token = jwt.sign({ userId: user._id, email: user.email }, SECRET_KEY, { expiresIn: "7d" });
+        const token = jwt.sign({ userId: user._id, email: user.email,approved: user.approved }, SECRET_KEY, { expiresIn: "7d" });
 
         return NextResponse.json({ token, message: "Login successful!" });
     } catch (error) {

@@ -7,13 +7,35 @@ import {  fileAndConsultancy, fileAndConsultancyDetail } from "@/sanity/lib/quer
 import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function DetailPage({ params }: { params: { id: string } }) {
+  const [isApprovedUser, setIsApprovedUser] = useState(false);
   const [countries, setCountries] = useState<FileCons | null>(null);
   const [randomCountries, setRandomCountries] = useState<FileCons[]>([]);
 
   useEffect(() => {
+
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+     
+
+        if (decoded.approved === true || decoded.approved === "true") {
+          setIsApprovedUser(true);
+        } else {
+          setIsApprovedUser(false);
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+
+
     async function fetchData() {
       const countryData: FileCons = await sanityFetch({ query: fileAndConsultancyDetail, params: { id: params.id } });
       setCountries(countryData);
@@ -61,7 +83,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           <h1 className="sm:text-3xl text-xl font-bold mt-5 sm:mt-10 font-serif"><u>{countries.countryName}:</u></h1>
           <h2 className="my-2 text-sm sm:text-lg">{countries.shortDescription}</h2>
         
-<h2 className='my-4 text-md sm:text-xl font-sans'><b>Total Cost:</b> {countries.prize}</h2>
+<h2 className='my-4 text-md sm:text-xl font-sans'><b>Total Cost:</b> {isApprovedUser ? countries.prizeForUsers : countries.prize} PKR/-</h2>
           <h1 className="font-bold text-md sm:text-xl mt-4">{countries.requirements}</h1>
           <p>{countries.requirement1}</p>
           <p>{countries.requirement2}</p>
@@ -100,6 +122,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
       query: {
       countryName : countries.countryName,
       prize: countries.prize,
+      prizeForUsers: countries.prizeForUsers,
       },
     }} >
       <motion.button

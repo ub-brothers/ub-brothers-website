@@ -6,12 +6,32 @@ import { TourType } from "@/app/types/destinations";
 import { sanityFetch } from "@/sanity/lib/client";
 import { tourDetailQuery } from "@/sanity/lib/queries";
 import Link from 'next/link';
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function TourDetail({ params }: { params: { id: string } }) {
   const [tourCountries, setTourCountries] = useState<TourType | null>(null);
+   const [isApprovedUser, setIsApprovedUser] = useState(false);
 
   useEffect(() => {
+
+    const token = localStorage.getItem("token");
+            
+                if (token) {
+                  try {
+                    const decoded: any = jwtDecode(token);
+                 
+            
+                    if (decoded.approved === true || decoded.approved === "true") {
+                      setIsApprovedUser(true);
+                    } else {
+                      setIsApprovedUser(false);
+                    }
+                  } catch (error) {
+                    console.error("Invalid token", error);
+                  }
+                }
+              
     const fetchData = async () => {
       const data: TourType = await sanityFetch({ query: tourDetailQuery, params: { id: params.id } });
       setTourCountries(data);
@@ -85,7 +105,7 @@ export default function TourDetail({ params }: { params: { id: string } }) {
               )
           ))}
 
-          <h2 className="my-4 text-md sm:text-xl font-serif"><b>Tour Package cost:</b> {tourCountries.prize} PKR/- Per person.</h2>
+          <h2 className="my-4 text-md sm:text-xl font-serif"><b>Tour Package cost:</b> {isApprovedUser ? tourCountries.priceForUsers : tourCountries.prize} PKR/- Per person.</h2>
 
           <h1 className="my-4 text-md sm:text-xl font-serif font-bold"><u>Requirements:</u></h1>
           <p>Original Passport</p>
@@ -101,6 +121,7 @@ export default function TourDetail({ params }: { params: { id: string } }) {
       query: {
       countryName : tourCountries.countryName,
       prize: tourCountries.prize,
+      priceForUsers: tourCountries.priceForUsers,
       },
     }} >
         <motion.button

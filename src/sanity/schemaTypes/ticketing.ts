@@ -7,7 +7,7 @@ export default {
       name: "internalTitle",
       title: "Internal Title (For Admin Only)",
       type: "string",
-      description: "Ye sirf admin ke liye hai, frontend pe nahi dikhayega.",
+      description: "Ye sirf admin ke liye hai, frontend pe nahi dikhega.",
       hidden: false, // Studio me dikhayega
     },
     {
@@ -63,7 +63,7 @@ export default {
     {
       name: "priceForUsers",
       title: "Price for Login Users",
-      type: "number",
+      type: "string",
     },
 
     {

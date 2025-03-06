@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
@@ -8,14 +8,34 @@ import { motion } from 'framer-motion';
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import jsPDF from 'jspdf';
+import { jwtDecode } from 'jwt-decode';
 
 
 function TourContent(){
-
+  const [isApprovedUser, setIsApprovedUser] = useState(false);
   const searchParams = useSearchParams();
   const prize = searchParams.get("prize") || "";
+  const priceForUsers = searchParams.get("priceForUsers") || "";
   const countryName = searchParams.get("countryName");
 
+
+   useEffect(() => {
+      const token = localStorage.getItem("token");
+    
+      if (token) {
+        try {
+          const decoded: any = jwtDecode(token);
+        
+          if (decoded.approved) {
+            setIsApprovedUser(true);
+          } else {
+            setIsApprovedUser(false);
+          }
+        } catch (error) {
+          console.error("Invalid token", error);
+        }
+      }
+    }, []);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -23,6 +43,7 @@ function TourContent(){
     email: '',
     country: '',
     price: '',
+    priceForUsers:"",
     message: '',
   });
 
@@ -40,6 +61,7 @@ function TourContent(){
       ...formData,
       country: countryName || "", 
       price: prize || "", 
+      priceForUsers: priceForUsers || "", 
     };
   
     try {
@@ -55,7 +77,7 @@ function TourContent(){
       
       if (result.success) {
         alert('Submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '' }); // Clear form
+        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '',priceForUsers:"" }); // Clear form
       } else {
         alert('Failed to submit. Please try again.');
       }
@@ -110,7 +132,7 @@ function TourContent(){
     addField("Phone Number", formData.phone);
     addField("Email Address", formData.email);
     addField("Country", countryName || formData.country);
-    addField("Tour Cost Per Person", `${prize} PKR/-`);
+    addField("Tour Cost Per Person", `${isApprovedUser ? priceForUsers : prize} PKR/-`);
     addField("Message", formData.message);
 
 
@@ -187,7 +209,7 @@ function TourContent(){
             type="text"
             name="country"
             placeholder="Enter country name"
-            value={`${prize} PKR/-`}
+            value={`${isApprovedUser ? priceForUsers : prize} PKR/-`}
             readOnly
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             required

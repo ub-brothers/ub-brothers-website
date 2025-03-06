@@ -4,13 +4,33 @@ import { TourType } from "../types/destinations"
 import {client} from "@/sanity/lib/client"
 import { tourPackage } from "@/sanity/lib/queries"
 import Link from "next/link"
-import { motion } from 'framer-motion'; 
 
+import { jwtDecode } from 'jwt-decode';
+ 
 
 const TourPackage = ()=>{
     const [ tour, setTour ] = useState<TourType[]>([])
+ const [isApprovedUser, setIsApprovedUser] = useState(false);
 
     useEffect(()=>{
+         const token = localStorage.getItem("token");
+        
+            if (token) {
+              try {
+                const decoded: any = jwtDecode(token);
+             
+        
+                if (decoded.approved === true || decoded.approved === "true") {
+                  setIsApprovedUser(true);
+                } else {
+                  setIsApprovedUser(false);
+                }
+              } catch (error) {
+                console.error("Invalid token", error);
+              }
+            }
+          
+        
         async function fetchedTour(){
             const fetchTour: TourType[] = await client.fetch(tourPackage)
             setTour(fetchTour)
@@ -38,7 +58,7 @@ const TourPackage = ()=>{
 
 
                   <h3 className=" sm:text-md text-sm text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
-                                      <h2 className="text-left text-sm ml-4 sm:text-md mt-1">Rs. {tour.prize}</h2>
+                                      <h2 className="text-left text-sm ml-4 sm:text-md mt-1">Rs. {isApprovedUser ? tour.priceForUsers : tour.prize}</h2>
                  
                     <button className="bg-orange-500 rounded-xl w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500 ml-6 hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif text-center">View Details</button>
                     </Link>

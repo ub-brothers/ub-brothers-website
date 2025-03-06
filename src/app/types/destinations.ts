@@ -5,6 +5,7 @@ export interface Destination {
     countryName: string,
     prize: number,
     prizeForUsers: number,
+    priceForUsers: number,
     requirements:string,
     requirement1:string,
     requirement2:string,
@@ -132,6 +133,9 @@ export interface IranType {
     prize: number,
     priceForUsers:number,
     shortDescription: string,
+    sharingPriceForUsers:string;
+    triplePriceForUsers:string;
+    doublePriceForUsers:string;
    prize1: string,
    prize2: string,
    prize3:string,
@@ -164,8 +168,7 @@ export interface Flight {
     airlineImage: string;  
      meal: string;
     price: string;
-    priceForUsers:number;
-      
+    priceForUsers:string;
     airlineName: string;
   }  
 
