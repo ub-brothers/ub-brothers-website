@@ -17,6 +17,11 @@
               
       },
       {
+        name: "priceForUsers",
+        title: "Price for Login Users",
+        type: "number",
+      },
+      {
         name: 'requirements',
         title: 'Requirements',
         type: 'text',

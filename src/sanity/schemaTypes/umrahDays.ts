@@ -12,9 +12,14 @@ export default {
       },
       {
         name: "price",
-        title: "Package Price",
+        title: "Package Price (Except hotel cost)",
         type: "number",
         validation: (Rule: any) => Rule.required().min(10),
+      },
+      {
+        name: "priceForUsers",
+        title: "Package Price for Login Users (Except hotel cost)",
+        type: "number",
       },
     ],
   };

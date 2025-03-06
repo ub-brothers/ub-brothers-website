@@ -18,7 +18,7 @@ export default {
       },
       {
         name: "prizeForUsers",
-        title: "Prize for Login Users",
+        title: "Price for Login Users",
         type: "number",
       },
 

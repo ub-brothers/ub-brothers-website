@@ -16,6 +16,11 @@ export default {
         type: 'number',
               
       },
+      {
+        name: "priceForUsers",
+        title: "Price for Login Users",
+        type: "number",
+      },
 
       {
         name: 'shortDescription',

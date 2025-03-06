@@ -28,17 +28,21 @@ export default {
         title: "Original Total Price",
       },
       {
+        name: "originalPriceForUsers",
+        title: "Original Price for Login Users",
+        type: "number",
+      },
+      {
         name: "discountedPrice",
         type: "number",
         title: "Discounted Price",
       },
       {
-        name: "images",
-        type: "array",
-        title: "Offer Images",
-        of: [{ type: "image" }],
-        options: { hotspot: true },
+        name: "discountedPriceForUsers",
+        title: "Discounted Price for Login Users",
+        type: "number",
       },
+    
     ],
   };
   

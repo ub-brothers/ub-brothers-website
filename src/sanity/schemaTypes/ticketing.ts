@@ -60,6 +60,11 @@ export default {
     // Yeh meal aur price ab flights ke andar nahi, balki group level par hai
     { name: 'meal', title: 'Meal', type: 'string' },
     { name: 'price', title: 'Price', type: 'string' },
+    {
+      name: "priceForUsers",
+      title: "Price for Login Users",
+      type: "number",
+    },
 
     {
       name: "airlineImage",

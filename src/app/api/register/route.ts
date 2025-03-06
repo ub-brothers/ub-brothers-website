@@ -28,14 +28,10 @@ export async function POST(req: Request) {
             email: body.email,
             password: hashedPassword,
             officeName: body.officeName,
-            officialName: body.officialName,
-            registrationNumber: body.registrationNumber,
-            taxNumber: body.taxNumber,
             country: body.country,
             city: body.city,
             zipCode: body.zipCode,
             address: body.address,
-            companyUrl: body.companyUrl,
             officialEmail: body.officialEmail,
             title: body.title,
             firstName: body.firstName,
@@ -43,11 +39,9 @@ export async function POST(req: Request) {
             phone: body.phone,
             mobile: body.mobile,
             position: body.position,
-            skypeId: body.skypeId,
             approved: false,
         }); 
 
-        console.log("New User Created:", newUser); // 🛠 Debugging step
 
         return NextResponse.json({ message: "User registered successfully!" }, { status: 200 });
 

@@ -36,10 +36,22 @@ export default {
         title: "Original Total Price",
       },
       {
+        name: "originalPriceForUsers",
+        title: "Original Price for Login Users",
+        type: "number",
+      },
+
+      {
         name: "discountedPrice",
         type: "number",
         title: "Discounted Price",
       },
+      {
+        name: "discountedPriceForUsers",
+        title: "Discounted Price for Login Users",
+        type: "number",
+      },
+
       
     ],
   };

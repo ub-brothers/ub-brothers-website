@@ -12,35 +12,35 @@ export default {
       },
       {
         name: 'prize1',
-        title: 'Prize sharing',
+        title: 'Price sharing',
         type: 'string',
               
       },
       {
-        name: "sharingPrizeForUsers",
-        title: "Sharing Prize for Login Users",
+        name: "sharingPriceForUsers",
+        title: "Sharing Price for Login Users",
         type: "number",
       },
       {
         name: 'prize2',
-        title: 'Prize triple',
+        title: 'Price triple',
         type: 'string',
               
       },
       {
-        name: "triplePrizeForUsers",
-        title: "Triple Prize for Login Users",
+        name: "triplePriceForUsers",
+        title: "Triple Price for Login Users",
         type: "number",
       },
       {
         name: 'prize3',
-        title: 'Prize double',
+        title: 'Price double',
         type: 'string',
               
       },
       {
-        name: "doublePrizeForUsers",
-        title: "Double Prize for Login Users",
+        name: "doublePriceForUsers",
+        title: "Double Price for Login Users",
         type: "number",
       },
       {

@@ -29,6 +29,11 @@ export default {
               type: "number",
               title: "Price (per night)",
             },
+            {
+              name: "priceForUsers",
+              title: "Price for Login Users",
+              type: "number",
+            },
           ],
         },
       ],

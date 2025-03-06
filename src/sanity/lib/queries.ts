@@ -30,6 +30,7 @@ requirement21,
    "imageUrl2": image2.asset->url,
     "imageUrl3": image3.asset->url,
   prize,
+  priceForUsers,
   shortDescription,
 
   availability
@@ -51,6 +52,7 @@ export const detailCountryEVisa = defineQuery(`*[_type == "destinations"  && _id
   "imageUrl2": image2.asset->url,
    "imageUrl3": image3.asset->url,
  prize,
+ prizeForUsers,
  shortDescription,
 rating,
  availability
@@ -66,6 +68,7 @@ export const allDestinations = defineQuery(`*[_type == "destinations"]{
    "imageUrl2": image2.asset->url,
     "imageUrl3": image3.asset->url,
   prize,
+  prizeForUsers,
   shortDescription,
  rating,
   availability
@@ -77,6 +80,7 @@ export const featuredestinations = defineQuery(`*[_type == "destinations"][5..12
   countryName,
   "imageUrl": image.asset->url,
   prize,
+  prizeForUsers,
   shortDescription,
  rating,
   availability
@@ -91,6 +95,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
     "image3": image.asset->url,
   "imageUrl": image.asset->url,
   prize,
+  priceForUsers,
   shortDescription,
   availability
   
@@ -100,6 +105,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
     _id,
     countryName,
     prize,
+    priceForUsers,
     shortDescription,
     tourIncludeHeading,
     tourInclude1,
@@ -142,6 +148,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
        _id,
     countryName,
     prize,
+    priceForUsers,
     shortDescription,
     requirement1,
     requirement2,
@@ -189,6 +196,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
     _id,
     countryName,
     prize,
+    prizeForUsers,
     requirements,
     requirement1,
     "imageUrl": image.asset->url,
@@ -230,6 +238,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
     "imageUrl2": image2.asset->url,
      "imageUrl3": image3.asset->url,
    prize,
+   prizeForUsers,
    shortDescription
  }`)
 
@@ -239,6 +248,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
   _id,
   countryName,
   prize,
+  priceForUsers,
   shortDescription,
   tourIncludeHeading,
   tourInclude1,
@@ -255,8 +265,11 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
     _id,
     countryName,
     prize1,
+    sharingPriceForUsers,
      prize2,
+     triplePriceForUsers,
       prize3,
+      doublePriceForUsers,
     shortDescription,
     "imageUrl": image.asset->url,
      "imageUrl2": image2.asset->url

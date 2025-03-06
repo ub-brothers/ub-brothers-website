@@ -12,13 +12,13 @@
       },
       {
         name: 'prize',
-        title: 'Prize',
+        title: 'Price',
         type: 'number',
               
       },
       {
         name: "prizeForUsers",
-        title: "Prize for Login Users",
+        title: "Price for Login Users",
         type: "number",
       },
       {

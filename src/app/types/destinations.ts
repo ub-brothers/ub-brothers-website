@@ -4,6 +4,7 @@ export interface Destination {
     _id: string,
     countryName: string,
     prize: number,
+    prizeForUsers: number,
     requirements:string,
     requirement1:string,
     requirement2:string,
@@ -40,6 +41,7 @@ export interface TourType {
     _id: string,
     countryName: string,
     prize: number,
+    priceForUsers:number,
     shortDescription: string,
    
     tourIncludeHeading: string,
@@ -89,6 +91,7 @@ export interface FileCons {
     _id: string,
     countryName: string,
     prize: number,
+    prizeForUsers:number,
     requirements:string,
     requirement1:string,
     requirement2:string,
@@ -127,6 +130,7 @@ export interface IranType {
     _id: string,
     countryName: string,
     prize: number,
+    priceForUsers:number,
     shortDescription: string,
    prize1: string,
    prize2: string,
@@ -160,6 +164,8 @@ export interface Flight {
     airlineImage: string;  
      meal: string;
     price: string;
+    priceForUsers:number;
+      
     airlineName: string;
   }  
 

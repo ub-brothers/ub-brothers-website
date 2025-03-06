@@ -12,9 +12,14 @@ export default {
       },
       {
         name: 'prize',
-        title: 'Prize',
+        title: 'Price',
         type: 'number',
               
+      },
+      {
+        name: "priceForUsers",
+        title: "Price for Login Users",
+        type: "number",
       },
 
       {
