@@ -24,6 +24,20 @@ export default {
         initialValue: false, // Default false hoga
       },
       {
+        name: "resetToken",
+        title: "Reset Token",
+        type: "string",
+        readOnly: true,
+        hidden: false,
+      },
+      {
+        name: "tokenExpiry",
+        title: "Token Expiry",
+        type: "datetime", // Change type to datetime
+        readOnly: true,
+        hidden: false,
+      },
+      {
         name: "officeName",
         title: "Office Name",
         readOnly: true,

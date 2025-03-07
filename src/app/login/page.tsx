@@ -6,6 +6,7 @@ import IssueForm from "../loginIssue/page";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import ForgotPassword from "../forgotPassword/page";
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -83,8 +84,9 @@ export default function Login() {
                         {showPassword ? "👁️" : "👁️‍🗨️"}
                     </button>
                 </div>
-                <Link href="/loginIssue">
-                <h2 className="text-sm text-gray-200"><i>Having any issue while logging in? <u>Click Here</u></i></h2></Link>
+              
+                <Link href="/forgotPassword">
+                <h2 className="text-sm text-right text-gray-200"><i><u>Forgot Password?</u></i></h2></Link>
                 <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

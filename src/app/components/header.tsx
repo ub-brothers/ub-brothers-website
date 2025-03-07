@@ -1,18 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { FiUser } from "react-icons/fi";
+import { useProfile } from "../profileContext";
 
 const Header = () => {
+  const { profileImage } = useProfile();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 const pathname = usePathname(); 
   useEffect(() => {
+
+    
   
     setDropdownOpen(false);
       const token = localStorage.getItem("token");
@@ -27,6 +32,23 @@ const pathname = usePathname();
       router.push("/login"); 
   };
 
+
+  // Dropdown ke bahar click karne par band karne ka logic
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false); // Dropdown ko band karen
+      }
+    };
+
+    // Event listener add karen
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup function
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,24 +80,34 @@ const pathname = usePathname();
         </div>
 
        <div className="hidden lg:flex">
-        <div className="relative">
+        <div className="relative"  ref={dropdownRef}>
       {isLoggedIn ? (
-        <div className="relative">
-          <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
-          >
-            <FiUser className="text-2xl" />
-          </button>
+        <div className="relative" >
+          <button className=" bg-gray-200 rounded-full hover:bg-gray-300" onClick={() => setDropdownOpen(!dropdownOpen)}>
+          {profileImage && profileImage.trim() !== ""  ? (
+            <img src={profileImage} alt="Profile" className="w-12 h-12 rounded-full" />
+          ) : (
+            <FiUser className="text-2xl text-gray-600 w-12 h-12 flex items-center justify-center rounded-full border border-gray-400 p-2" />
+          )}
+        </button>
 
-          {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md">
+          {dropdownOpen &&  isLoggedIn && (
+            <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg">
+              <Link href="/myAccount">
+             <button
+                
+                className="w-full text-left text-gray-500 font-sans px-4  hover:text-black py-2 "
+              >
+                My Account
+              </button> </Link>
+              <hr></hr>
               <button
                 onClick={() => setShowConfirm(true)}
-                className="w-full text-left text-gray-500 font-sans px-4 py-2 rounded-lg "
+                className="w-full text-left text-gray-500 font-sans px-4 py-2 hover:text-black"
               >
                 Logout
               </button>
+              
             </div>
           )}
         </div>
@@ -154,12 +186,14 @@ const pathname = usePathname();
    {/* Mobile Menu Profile and Logout Section */}
    {isLoggedIn ? (
             <div className="w-full text-center">
-              <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
-              >
-                <FiUser className="text-2xl" />
-              </button>
+              <button className="bg-gray-200 rounded-full hover:bg-gray-300">
+          {profileImage ? (
+            <img src={profileImage} alt="Profile" className="h-12 w-12 rounded-full" />
+          ) : (
+            <FiUser className="text-2xl" />
+          )}
+        </button>
+
               {dropdownOpen && (
                 <div className="mt-2 w-[200px] mx-auto bg-white shadow-md rounded-md">
                   <button
