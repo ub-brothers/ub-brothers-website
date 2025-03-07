@@ -1,14 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
 import jsPDF from 'jspdf';
+import { jwtDecode } from 'jwt-decode';
 
 
 function FormContent(){
+
+   const [isApprovedUser, setIsApprovedUser] = useState(false);
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -20,6 +23,8 @@ function FormContent(){
 
   const countries = searchParams.get("countries")?.split(",") || [];
   const discountedPrice = searchParams.get("discountedPrice") || "";
+const discountedPriceForUsers = searchParams.get("discountedPriceForUsers")||"";
+
 
   const [isConfirmed, setIsConfirmed] = useState(false);
 
@@ -41,6 +46,7 @@ function FormContent(){
           ...formData,
           countries: countries.join(", "),
           discountedPrice,
+          discountedPriceForUsers,
         }),
       });
   
@@ -51,6 +57,30 @@ function FormContent(){
       alert("Failed to submit form. Please try again.");
     }
   };
+
+
+
+    useEffect(()=>{
+    
+    
+          const token = localStorage.getItem("token");
+    
+          if (token) {
+            try {
+              const decoded: any = jwtDecode(token);
+           
+      
+              if (decoded.approved === true || decoded.approved === "true") {
+                setIsApprovedUser(true);
+              } else {
+                setIsApprovedUser(false);
+              }
+            } catch (error) {
+              console.error("Invalid token", error);
+            }
+          }
+      
+        }, [])
 
 
   const generatePDF = () => {
@@ -96,7 +126,7 @@ function FormContent(){
     addField("Email Address", formData.email);
     addField("Nationality", formData.nationality);
     addField("Included Countries", countries.join(", "));
-    addField("Discounted Price", `PKR ${discountedPrice}`);
+    addField("Discounted Price", ` ${isApprovedUser? discountedPriceForUsers: discountedPrice} PKR/-`);
 
     
     doc.setFont("helvetica", "bold");
@@ -141,7 +171,7 @@ function FormContent(){
         <input type="text" value={countries.join(", ")} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
 
         <label className="block text-lg font-semibold mb-2">Discounted Price</label>
-        <input type="text" value={`PKR ${discountedPrice}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
+        <input type="text" value={` ${isApprovedUser? discountedPriceForUsers: discountedPrice} PKR/-`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
 
         <label className="block text-lg font-semibold mb-2">Nationality</label>
         <input type="text" name="nationality" placeholder="Your Nationality" value={formData.nationality} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" required />
@@ -152,6 +182,7 @@ function FormContent(){
         <button type="submit" className="w-full bg-blue-500 hover:bg-orange-500 text-white font-bold rounded-lg p-3">Submit</button>
         {isConfirmed && (
         <button
+        type="button"
          onClick={generatePDF}
           className="w-full bg-blue-600 text-white py-2 mt-4 rounded-md hover:bg-orange-500 transition"
         >

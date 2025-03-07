@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { useRouter } from "next/navigation";
+import { jwtDecode } from 'jwt-decode';
 
 
-// Define the type for the Umrah Offer
 type UmrahOfferType = {
   title: string;
   image1: string;
@@ -20,11 +20,30 @@ type UmrahOfferType = {
 
 
 export default function UmrahOfferCard() {
+ const [isApprovedUser, setIsApprovedUser] = useState(false);
     const [offer, setOffer] = useState<UmrahOfferType | null>(null);
   
     useEffect(() => {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        try {
+          const decoded: any = jwtDecode(token);
+       
+  
+          if (decoded.approved === true || decoded.approved === "true") {
+            setIsApprovedUser(true);
+          } else {
+            setIsApprovedUser(false);
+          }
+        } catch (error) {
+          console.error("Invalid token", error);
+        }
+      }
+
+
       const fetchOffer = async () => {
-        const data: UmrahOfferType = await client.fetch(`*[_type == "umrahOffer"][0] {
+        const data: UmrahOfferType = await client.fetch(`*[_type == "umrahOffer"]{
           title,
           "image1": image1.asset->url,
           "image2": image2.asset->url,
@@ -41,7 +60,7 @@ discountedPriceForUsers,
       fetchOffer();
     }, []);
   
-    if (!offer) {
+    if (!offer || Object.keys(offer).length === 0) {
       return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
           <h1 className="text-6xl font-bold text-gray-500">No Offer Available Now!</h1>
@@ -56,6 +75,7 @@ const handleApplyNow = () => {
     title: offer.title,
     originalPrice: offer.originalPrice.toString(),
     discountedPrice: offer.discountedPrice.toString(),
+    discountedPriceForUsers : offer.discountedPriceForUsers.toString(),
    daysOfUmrah: offer.daysOfUmrah.toString(),
   }).toString();
 
@@ -78,8 +98,8 @@ const handleApplyNow = () => {
         <p className="text-gray-700 text-lg mt-6 text-center">Days: <span className="font-semibold">{offer.daysOfUmrah} Days</span></p>
         <p className="text-gray-600 text-lg mt-2 text-center">{offer.description}</p>
         <div className="mt-6 flex justify-center items-center text-center">
-          <p className="text-gray-500 text-2xl line-through mr-4">Rs. {offer.originalPrice}</p>
-          <p className="text-3xl font-bold text-green-600">Rs. {offer.discountedPrice}</p>
+          <p className="text-gray-500 text-2xl line-through mr-4">Rs. {isApprovedUser ? offer.originalPriceForUsers: offer.originalPrice}</p>
+          <p className="text-3xl font-bold text-green-600">Rs. {isApprovedUser ? offer.discountedPriceForUsers: offer.discountedPrice}</p>
         </div>
         <div className="flex justify-center mt-6">
           <button onClick={handleApplyNow} className="px-8 py-3 bg-blue-600 text-white text-lg rounded-lg hover:bg-blue-700 transition">Book Now</button>

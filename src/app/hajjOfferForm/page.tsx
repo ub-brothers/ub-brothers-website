@@ -1,14 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
 import jsPDF from 'jspdf';
+import { jwtDecode } from 'jwt-decode';
 
 
 function FormContent(){
+    const [isApprovedUser, setIsApprovedUser] = useState(false);
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     fullName: "",
@@ -20,7 +22,7 @@ function FormContent(){
 
   const dateOfHajj = searchParams.get("dateOfHajj") || "";
   const discountedPrice = searchParams.get("discountedPrice") || "";
-
+const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "";
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -41,6 +43,7 @@ function FormContent(){
           ...formData,
           dateOfHajj,
           discountedPrice,
+          discountedPriceForUsers,
         }),
       });
   
@@ -51,6 +54,30 @@ function FormContent(){
       alert("Failed to submit form. Please try again.");
     }
   };
+
+
+  useEffect(()=>{
+    
+    
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decoded: any = jwtDecode(token);
+     
+
+        if (decoded.approved === true || decoded.approved === "true") {
+          setIsApprovedUser(true);
+        } else {
+          setIsApprovedUser(false);
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+
+  }, [])
+
 
 
   const generatePDF = () => {
@@ -96,7 +123,7 @@ function FormContent(){
     addField("Email Address", formData.email);
     addField("Nationality", formData.nationality);
     addField("Date Of Hajj", `${dateOfHajj}`);
-    addField("Discounted Price", `PKR ${discountedPrice}`);
+    addField("Discounted Price", `PKR ${isApprovedUser ? discountedPriceForUsers : discountedPrice}`);
 
    
     doc.setFont("helvetica", "bold");
@@ -141,7 +168,7 @@ function FormContent(){
         <input type="text" value={`${dateOfHajj}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
 
         <label className="block text-lg font-semibold mb-2">Discounted Price</label>
-        <input type="text" value={`PKR ${discountedPrice}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
+        <input type="text" value={`PKR ${isApprovedUser? discountedPriceForUsers: discountedPrice}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
 
         <label className="block text-lg font-semibold mb-2">Nationality</label>
         <input type="text" name="nationality" placeholder="Your Nationality" value={formData.nationality} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" required />

@@ -11,22 +11,26 @@ const Header = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
-
+const pathname = usePathname(); 
   useEffect(() => {
+  
+    setDropdownOpen(false);
       const token = localStorage.getItem("token");
       setIsLoggedIn(!!token); // If token exists, user is logged in
-  }, []);
+  }, [pathname]);
 
   const handleLogout = () => {
       localStorage.removeItem("token"); // Remove token from local storage
       setIsLoggedIn(false);
-      router.push("/login"); // Redirect to login page
+      setDropdownOpen(false);
+      setShowConfirm(false);
+      router.push("/login"); 
   };
 
 
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname(); 
+  
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -53,7 +57,7 @@ const Header = () => {
           </nav>
         </div>
 
-       
+       <div className="hidden lg:flex">
         <div className="relative">
       {isLoggedIn ? (
         <div className="relative">
@@ -68,7 +72,7 @@ const Header = () => {
             <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md">
               <button
                 onClick={() => setShowConfirm(true)}
-                className="w-full text-left text-black font-serif px-4 py-2 rounded-lg bg-blue-100 hover:bg-blue-200"
+                className="w-full text-left text-gray-500 font-sans px-4 py-2 rounded-lg "
               >
                 Logout
               </button>
@@ -79,13 +83,13 @@ const Header = () => {
         <>
           <Link
             href="/login"
-            className="bg-orange-500 mx-3 font-bold font-serif text-white border-2 border-white font-sans shadow-inner py-2 px-4 rounded-3xl hover:bg-blue-400 hover:text-black shadow-2xl"
+            className="bg-orange-500 mx-3 font-bold font-sans text-white border-2 border-white font-sans shadow-inner py-2 px-4 rounded-3xl hover:bg-blue-400 hover:text-black shadow-2xl"
           >
             Login
           </Link>
           <Link
             href="/registeration"
-            className="border-2 bg-orange-500 font-bold font-serif  border-white text-white py-2 px-4 rounded-3xl font-sans hover:bg-blue-400 hover:text-black"
+            className="border-2 bg-orange-500 font-bold font-sans  border-white text-white py-2 px-4 rounded-3xl font-sans hover:bg-blue-400 hover:text-black"
           >
             Register
           </Link>
@@ -100,7 +104,7 @@ const Header = () => {
             <div className="flex justify-end space-x-2">
               <button
                 onClick={() => setShowConfirm(false)}
-                className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+                className="px-4 py-2 bg-gray-400 rounded-md hover:bg-gray-500"
               >
                 No
               </button>
@@ -119,7 +123,7 @@ const Header = () => {
         </div>
       )}
     </div>
-
+</div>
         
         <button onClick={toggleMenu} className="lg:hidden text-white">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -147,15 +151,62 @@ const Header = () => {
            <Link href="/destinations" className={`w-full text-center py-2 ${getLinkClassName("/destinations")}`} onClick={toggleMenu}>Destinations</Link>
           <Link href="/about" className={`w-full text-center py-2 ${getLinkClassName("/about")}`} onClick={toggleMenu}>About Us</Link>
           <Link href="/contact" className={`w-full text-center py-2 ${getLinkClassName("/contact")}`} onClick={toggleMenu}>Contact</Link>
-
-          {isLoggedIn ? (
-                    <button onClick={handleLogout} className="w-full text-center py-2">Logout</button>
-                ) : (  <>
-          <Link href="/registeration" className={`w-full text-center py-2 ${getLinkClassName("/registeration")}`} onClick={toggleMenu}>Register</Link>
-          <Link href="/login" className={`w-full text-center py-2 ${getLinkClassName("/login")}`} onClick={toggleMenu}>Login</Link></>)}
-
-        
+   {/* Mobile Menu Profile and Logout Section */}
+   {isLoggedIn ? (
+            <div className="w-full text-center">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
+              >
+                <FiUser className="text-2xl" />
+              </button>
+              {dropdownOpen && (
+                <div className="mt-2 w-[200px] mx-auto bg-white shadow-md rounded-md">
+                  <button
+                    onClick={() => setShowConfirm(true)}
+                    className="w-full  text-center text-gray-500 font-sans  px-4 py-2 rounded-lg hover:bg-blue-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <Link href="/registeration" className={`w-full text-center py-2 ${getLinkClassName("/registeration")}`} onClick={toggleMenu}>Register</Link>
+              <Link href="/login" className={`w-full text-center py-2 ${getLinkClassName("/login")}`} onClick={toggleMenu}>Login</Link>
+            </>
+          )}
         </nav>
+
+        {/* Logout Confirmation Modal for Mobile */}
+        {showConfirm && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-md shadow-md">
+              <p className="mb-4 fontbold text-black font-serif">Are you sure you want to logout?</p>
+              <div className="flex justify-end space-x-2">
+                <button
+                  onClick={() => setShowConfirm(false)}
+                  className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+                >
+                  No
+                </button>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setShowConfirm(false);
+                    setDropdownOpen(false);
+                  }}
+                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+   
       </div>
     </header>
   );

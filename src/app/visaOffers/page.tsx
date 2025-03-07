@@ -4,6 +4,7 @@ import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { jwtDecode } from 'jwt-decode';
 
 // Define the type for the Visa Offer
 type VisaOfferType = {
@@ -19,8 +20,29 @@ type VisaOfferType = {
   };
 export default function VisaOffer() {
   const [offer, setOffer] = useState<VisaOfferType | null>(null);
+      const [isApprovedUser, setIsApprovedUser] = useState(false);
 
   useEffect(() => {
+
+ const token = localStorage.getItem("token");
+
+      if (token) {
+        try {
+          const decoded: any = jwtDecode(token);
+       
+  
+          if (decoded.approved === true || decoded.approved === "true") {
+            setIsApprovedUser(true);
+          } else {
+            setIsApprovedUser(false);
+          }
+        } catch (error) {
+          console.error("Invalid token", error);
+        }
+      }
+  
+
+
     const fetchOffer = async () => {
       const data: VisaOfferType = await client.fetch(`  *[_type == "visaOffer"][0] {
     title,
@@ -48,6 +70,8 @@ const handleApplyNow = () => {
     title: offer.title,
     originalPrice: offer.originalPrice.toString(),
     discountedPrice: offer.discountedPrice.toString(),
+    discountedPriceForUsers: offer.discountedPriceForUsers.toString(),
+    
     countries: offer.countries.map(c => c.name).join(","),
   }).toString();
 
@@ -93,8 +117,8 @@ const handleApplyNow = () => {
       
       
       <div className="text-center text-xl font-semibold mb-6 bg-red-100 p-4 rounded-lg">
-        <span className="line-through text-gray-500 text-2xl">PKR {offer.originalPrice}</span><br></br>
-        <span className="text-red-600 text-3xl font-bold ml-3">Only PKR {offer.discountedPrice}</span>
+        <span className="line-through text-gray-500 text-2xl">PKR {isApprovedUser ? offer.originalPriceForUsers: offer.originalPrice}</span><br></br>
+        <span className="text-red-600 text-3xl font-bold ml-3">Only PKR {isApprovedUser ? offer.discountedPriceForUsers: offer.discountedPrice}</span>
 
        
       </div>
