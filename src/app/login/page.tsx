@@ -48,7 +48,7 @@ export default function Login() {
     };
 
     return (
-        <div className="mx-4">
+        <div className="">
           <div className="relative flex items-center justify-center h-screen bg-gray-900 text-white">
             <Image src="/image/aero.jpg" quality={100} alt="Background" layout="fill" objectFit="cover" className="opacity-50" />
             <motion.div 
@@ -61,7 +61,7 @@ export default function Login() {
             <h2 className="text-2xl text-white text-center font-serif mt-4 font-bold mb-2"><u>Login</u></h2>
             {error && <p className="text-red-500">{error}</p>}
 
-            <form onSubmit={handleSubmit} className="grid gap-3">
+            <form onSubmit={handleSubmit} className="grid gap-3 mx-4">
                 <p className="font-semibold mb-0">Email</p>
                 <input type="email" name="email" placeholder="Email" required onChange={handleChange} className="border p-2 rounded text-black" />
 
