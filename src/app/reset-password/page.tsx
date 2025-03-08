@@ -1,10 +1,10 @@
 'use client'; // Mark this component as a Client Component
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation'; // Use useSearchParams in App Router
 import { motion } from "framer-motion";
 
-const ResetPassword = () => {
+const ResetPasswordForm = () => {
   const searchParams = useSearchParams(); // Extract search parameters
   const token = searchParams.get('token'); // Get token from URL
 
@@ -83,6 +83,16 @@ const ResetPassword = () => {
       </motion.div>
     </div>
   );
+};
+
+const ResetPassword=()=>{
+  return(
+    <div>
+      <Suspense fallback={<p className="text-white text-center mt-10">Loading...</p>}>
+        <ResetPasswordForm/>
+      </Suspense>
+    </div>
+  )
 };
 
 export default ResetPassword;

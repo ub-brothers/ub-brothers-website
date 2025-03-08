@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from "framer-motion";
 
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');

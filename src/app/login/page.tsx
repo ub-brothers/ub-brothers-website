@@ -6,7 +6,7 @@ import IssueForm from "../loginIssue/page";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import ForgotPassword from "../forgotPassword/page";
+
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -48,7 +48,7 @@ export default function Login() {
     };
 
     return (
-        <div>
+        <div className="mx-4">
           <div className="relative flex items-center justify-center h-screen bg-gray-900 text-white">
             <Image src="/image/aero.jpg" quality={100} alt="Background" layout="fill" objectFit="cover" className="opacity-50" />
             <motion.div 
@@ -63,7 +63,7 @@ export default function Login() {
 
             <form onSubmit={handleSubmit} className="grid gap-3">
                 <p className="font-semibold mb-0">Email</p>
-                <input type="email" name="email" placeholder="Email" required onChange={handleChange} className="border p-2 rounded" />
+                <input type="email" name="email" placeholder="Email" required onChange={handleChange} className="border p-2 rounded text-black" />
 
 
                 <p className='font-semibold mt-4'>Enter your Password</p>
