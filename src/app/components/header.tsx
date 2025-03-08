@@ -91,25 +91,6 @@ const pathname = usePathname();
           )}
         </button>
 
-          {dropdownOpen &&  isLoggedIn && (
-            <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg">
-              <Link href="/myAccount">
-             <button
-                
-                className="w-full text-left text-gray-500 font-sans px-4  hover:text-black py-2 "
-              >
-                My Account
-              </button> </Link>
-              <hr></hr>
-              <button
-                onClick={() => setShowConfirm(true)}
-                className="w-full text-left text-gray-500 font-sans px-4 py-2 hover:text-black"
-              >
-                Logout
-              </button>
-              
-            </div>
-          )}
         </div>
       ) : (
         <>

@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       .commit();
 
     // Send email with reset link
-    const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
+    const resetUrl = `https://ub-brothers-website.vercel.app/reset-password?token=${resetToken}`;
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: existingUser.email,
