@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
     // Check if user exists
     const existingUser = await client.fetch(
-      `*[_type == "user" && email == $email][0]`,
+      `*[_type == "user" && email == $email && approved == true][0]`,
       { email: body.email }
     );
    
