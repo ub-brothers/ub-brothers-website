@@ -29,7 +29,7 @@ export async function POST(req: Request) {
       `*[_type == "user" && email == $email][0]`,
       { email: body.email }
     );
-    console.log("Existing User:", existingUser); // 🛠 Debugging step
+   
 
     if (!existingUser) {
       return NextResponse.json({ error: "User not found!" }, { status: 404 });
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       .commit();
 
     // Send email with reset link
-    const resetUrl = `https://ub-brothers-website.vercel.app/reset-password?token=${resetToken}`;
+    const resetUrl = `https://ub-brothers-website-qlou.vercel.app/reset-password?token=${resetToken}`;
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: existingUser.email,

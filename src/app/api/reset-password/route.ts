@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       `*[_type == "user" && resetToken == $token && tokenExpiry > now()][0]`,
       { token }
     );
-    console.log("Existing User:", existingUser); // 🛠 Debugging step
+  
 
     if (!existingUser) {
       return NextResponse.json({ error: "Invalid or expired token" }, { status: 400 });
