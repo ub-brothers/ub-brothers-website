@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
   try {
-    const { airlineName, meal, totalPrice, adults, infants,children, passengers, flights } =
+    const { airlineName, meal, totalPrice, adults, infants,children, passengers, flights, phoneNumber, emailAddress } =
       await req.json();
 
     // Nodemailer Transporter Setup
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     // Email content
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ubbrothersticketing@gmail.com",
+      to: "samiaurooj386@gmail.com",
       subject: `New Ticket Booking - ${new Date().toLocaleString()}`,
       html: `
      <p><strong>Airline</strong>: ${airlineName}</p> 
@@ -26,7 +26,8 @@ export async function POST(req: Request) {
 <p><strong>Total Adults</strong>: ${adults}</p>
 <p><strong>Total Children</strong>: ${children}</p>
 <p><strong>Total Infants</strong>: ${infants}</p>
-
+<p><strong>Total Infants</strong>: ${phoneNumber}</p>
+<p><strong>Total Infants</strong>: ${emailAddress}</p>
 <p><strong>Flights:</strong></p>
 ${flights
   .map(

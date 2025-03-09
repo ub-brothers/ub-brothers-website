@@ -10,6 +10,8 @@ function TicketsContent(){
   const [isConfirmed, setIsConfirmed] = useState(false);
 const searchParams = useSearchParams();
  const [isApprovedUser, setIsApprovedUser] = useState(false);
+ const [phoneNumber, setPhoneNumber] = useState("");
+const [emailAddress, setEmailAddress] = useState("");
 
   const handleConfirmBooking = async () => {
     setIsConfirmed(true);
@@ -43,6 +45,8 @@ const searchParams = useSearchParams();
           children,
           passengers: updatedPassengers,
           flights,
+          phoneNumber,
+          emailAddress,
         }),
       });
   
@@ -356,9 +360,15 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
 <hr/>
 
 
-<div>
-  <p>Phone Number:</p>
-  <input placeholder="Enter your phone number" type="text" ></input>
+<div className="flex gap-10 my-10">
+  <div>
+  <p className="font-bold mb-2">Phone Number:</p>
+  <input value={phoneNumber}
+      onChange={(e) => setPhoneNumber(e.target.value)} name="phone" placeholder="Enter your phone number" type="text" className="border p-2 text-black rounded w-full" required></input></div>
+  <div>
+  <p className="font-bold mb-2">Email Address:</p>
+  <input   value={emailAddress}
+      onChange={(e) => setEmailAddress(e.target.value)} name="email" type="email" placeholder="Enter your email address" className="border p-2 text-black rounded w-full" required></input></div>
 </div>
 <h2 className="text-lg font-bold mt-6 mb-2 "><u>Passenger Details</u></h2>
       <div className=" rounded-xl bg-gray-100 shadow-lg">

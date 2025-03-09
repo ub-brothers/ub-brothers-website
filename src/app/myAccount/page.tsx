@@ -10,6 +10,7 @@ import ChangePassword from '../change-password/page';
 import Link from 'next/link';
 
 
+
 export default function ProfilePage() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [bookings, setBookings] = useState<any[]>([]);
@@ -233,6 +234,24 @@ const handleSidebarOptionClick = (option: string) => {
   setSelectedOption(option);
   setIsSidebarOpen(false); // Close sidebar on mobile after selecting an option
 };
+ // Function to close sidebar when clicking outside
+ useEffect(() => {
+  const handleClickOutside = (event:any) => {
+    if (
+      isSidebarOpen &&
+      !event.target.closest(".sidebar-menu") && // Check if click is outside sidebar
+      !event.target.closest(".hamburger-btn") // Check if click is outside hamburger button
+    ) {
+      setIsSidebarOpen(false);
+    }
+  };
+
+  document.addEventListener("click", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("click", handleClickOutside);
+  };
+}, [isSidebarOpen]);
 
 // Render content based on the selected option
 const renderContent = () => {
@@ -288,17 +307,18 @@ const renderContent = () => {
      {/* Sidebar */}
         {/* Hamburger Menu Button (Mobile Only) */}
         <button
+        
         onClick={toggleSidebar}
-        className="sm:hidden w-[40px] mt-2 left-4  p-2 bg-gray-400 text-black rounded-md"
+        className="sm:hidden w-[40px] mt-2 left-4 p-2 bg-gray-400 text-black rounded-md"
       >
-        {isSidebarOpen ? <FaTimes size={24} /> : <FaBars size={24}  />}
+        {isSidebarOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
       </button>
 
       {/* Sidebar */}
       <div
         className={`fixed lg:static lg:block w-64 bg-gray-200 h-screen text-black p-4 transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        } z-50`}
+        } z-20`}
       >
         <h2 className="text-lg font-semibold mb-4">User Profile</h2>
         <ul>
