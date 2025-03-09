@@ -260,7 +260,7 @@ y += 10;
       passengers[index] || { surname: "", name: "", passportNumber: "", dob: "", passportExpiry: "", nationality: "" }
     ));
     setPassengers(newPassengerData);
-}, [adults, children, infants, availableSeats]); // 👈 Dependency array mein bhi children add kar diya
+}, [adults, children, infants, availableSeats]); 
 
 
 const extractedUserPrice = priceForUsersParams ? priceForUsersParams.match(/[\d,]+(\.\d+)?/) : null;
@@ -354,6 +354,12 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
 </div>
 
 <hr/>
+
+
+<div>
+  <p>Phone Number:</p>
+  <input placeholder="Enter your phone number" type="text" ></input>
+</div>
 <h2 className="text-lg font-bold mt-6 mb-2 "><u>Passenger Details</u></h2>
       <div className=" rounded-xl bg-gray-100 shadow-lg">
         

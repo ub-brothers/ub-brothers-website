@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import IssueForm from "../loginIssue/page";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,6 +40,8 @@ export default function Login() {
 
         // Store the token in local storage
         localStorage.setItem("token", data.token);
+       
+        localStorage.setItem("userEmail", formData.email);
         alert("Login successful!");
 
         // Redirect to dashboard or homepage

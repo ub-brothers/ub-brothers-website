@@ -1,31 +1,59 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Cropper from 'react-easy-crop';
 import Image from 'next/image';
 import {jwtDecode , JwtPayload } from "jwt-decode";
 import { useProfile } from '../profileContext';
 import { FaBars, FaTimes } from 'react-icons/fa'; 
+import ChangePassword from '../change-password/page';
+import Link from 'next/link';
 
 
 export default function ProfilePage() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [bookings, setBookings] = useState<any[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
-    const { setProfileImage } = useProfile();
+  
+    const { profileImage, updateProfileImage } = useProfile();
     
 
     const handleProfileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]) {
-          const newImage = URL.createObjectURL(event.target.files[0]);
-          
-          // Save to localStorage
-          localStorage.setItem("profileImage", newImage);
-          
-          // Update global state
-          setProfileImage(newImage);
+      if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+    
+        reader.onload = () => {
+          if (typeof reader.result === "string") {
+            console.log("Image Uploaded: ", reader.result);
+            if (email) {
+              localStorage.setItem(`profileImage_${email}`, reader.result);
+
+              updateProfileImage(reader.result);
+            }
+          }
+        };
+    
+        reader.readAsDataURL(file); // ✅ Convert to base64 (permanent URL)
+      }
+    };
+    const dropdownRef = useRef<HTMLDivElement>(null); 
+    useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+          setShowOptions(false); // Close dropdown
         }
       };
+  
+      // Add event listener
+      document.addEventListener("mousedown", handleClickOutside);
+  
+      // Cleanup
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, []);
+    
 
   const [name, setName] = useState<string | null>(null);
   const [editingName, setEditingName] = useState(false);
@@ -48,31 +76,40 @@ export default function ProfilePage() {
   };
 
   const [email, setEmail] = useState<string|null>(""); // Replace with actual user email
+  useEffect(() => {
+    const userEmail = localStorage.getItem("userEmail");
+    if (userEmail) {
+      setEmail(userEmail);
+    } else {
+      console.error("userEmail is null in localStorage");
+    }
+  }, []);
   const [showUpload, setShowUpload] = useState(false);
   interface DecodedToken extends JwtPayload {
     email?: string;
   }
-
   useEffect(() => {
     const token = localStorage.getItem("token"); 
     if (token) {
       try {
         const decoded: DecodedToken = jwtDecode(token); 
         if (decoded.email) {
-          setEmail(decoded.email); 
+          setEmail(decoded.email);  // Email set kar raha hai
         }
       } catch (error) {
         console.error("Invalid token", error);
       }
+    } 
+}, []); 
+useEffect(() => {
+  if (email) {
+    const savedImage = localStorage.getItem(`profileImage_${email}`);
+    if (savedImage) {
+        setCroppedImage(savedImage);
+        updateProfileImage(savedImage);
     }
-       // Retrieve the saved image from localStorage on component mount
-       const savedImage = localStorage.getItem("profileImage");
-       if (savedImage) {
-           setCroppedImage(savedImage);
-           setProfileImage(savedImage); // Update global state
-       }
-
-  }, [setProfileImage]);
+  }
+}, [email,profileImage,updateProfileImage]); 
 
   const [image, setImage] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -87,7 +124,7 @@ export default function ProfilePage() {
 
   const handleCropDone = async () => {
     if (!image || !croppedArea) {
-      console.log("No image or crop area selected");
+     
       return;
     }
   
@@ -95,12 +132,12 @@ export default function ProfilePage() {
     const croppedImg = await getCroppedImg(image, croppedArea);
     
     if (croppedImg) {
-      console.log("Cropped Image URL:", croppedImg);
+      
       setCroppedImage(croppedImg);
       setShowCropper(false);
        // Save the cropped image to localStorage
-       localStorage.setItem("profileImage", croppedImg);
-       setProfileImage(croppedImg); 
+       localStorage.setItem(`profileImage_${email}`, croppedImg);
+       updateProfileImage(croppedImg); 
 
     } else {
       console.log("Cropping failed");
@@ -146,9 +183,20 @@ export default function ProfilePage() {
       const reader = new FileReader();
       reader.onload = () => {
         if (typeof reader.result === "string") {
+          const imageUrl = reader.result;
+
+          // Update profile image in localStorage and context
+          if (email) {
+            updateProfileImage(imageUrl);
+          } else {
+            console.error("Email is null. Cannot update profile image.");
+          }
           setImage(reader.result);
           setShowCropper(true); // ✅ Show Cropper when image is uploaded
         }
+      };
+      reader.onerror = () => {
+        console.error("Error reading file:", reader.error);
       };
       reader.readAsDataURL(file);
     }
@@ -157,14 +205,18 @@ export default function ProfilePage() {
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleProfileUpload(event);
     handleImageUpload(event);
+
 };
 
 const [showOptions, setShowOptions] = useState(false);
 
 const handleDeleteProfileImage = () => {
-  localStorage.removeItem("profileImage");
+
+ if (email) {
+    localStorage.removeItem(`profileImage_${email}`);
+  }
   setCroppedImage(null);
-  setProfileImage(null);
+  updateProfileImage(null);
   setShowOptions(false); // Dropdown band kar de
 };
 
@@ -220,8 +272,9 @@ const renderContent = () => {
     case 'Password Settings':
       return (
         <div>
-          <h2 className="text-xl font-semibold mb-4">Password Settings</h2>
-          <p>Update your password here.</p>
+        <ChangePassword/>
+        <Link href="/forgotPassword">
+        <p className='text-black text-md text-center'><i><u>Forgot your password?</u></i></p></Link>
         </div>
       );
     default:
@@ -236,16 +289,16 @@ const renderContent = () => {
         {/* Hamburger Menu Button (Mobile Only) */}
         <button
         onClick={toggleSidebar}
-        className="sm:hidden fixed top-20 mt-2 left-4 z-50 p-2 bg-gray-400 text-black rounded-md"
+        className="sm:hidden w-[40px] mt-2 left-4  p-2 bg-gray-400 text-black rounded-md"
       >
-        {isSidebarOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+        {isSidebarOpen ? <FaTimes size={24} /> : <FaBars size={24}  />}
       </button>
 
       {/* Sidebar */}
       <div
         className={`fixed lg:static lg:block w-64 bg-gray-200 h-screen text-black p-4 transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        }`}
+        } z-50`}
       >
         <h2 className="text-lg font-semibold mb-4">User Profile</h2>
         <ul>
@@ -284,7 +337,7 @@ const renderContent = () => {
 
 
 {showOptions && (
-    <div className="absolute top-24 left-0 w-40 bg-white shadow-lg rounded-md overflow-hidden">
+    <div ref={dropdownRef} className="absolute top-24 left-0 w-40 bg-white shadow-lg rounded-md overflow-hidden">
       <label className="block text-sm px-4 py-2 text-gray-800 cursor-pointer hover:bg-gray-100">
         Upload Profile
         <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />

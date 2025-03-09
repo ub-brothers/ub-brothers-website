@@ -22,7 +22,7 @@ const generateToken = () => {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log("Received Body:", body); // 🛠 Debugging step
+    
 
     // Check if user exists
     const existingUser = await client.fetch(

@@ -7,7 +7,7 @@ import { FiUser } from "react-icons/fi";
 import { useProfile } from "../profileContext";
 
 const Header = () => {
-  const { profileImage } = useProfile();
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -15,25 +15,32 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 const pathname = usePathname(); 
-  useEffect(() => {
 
-    
-  
-    setDropdownOpen(false);
-      const token = localStorage.getItem("token");
-      setIsLoggedIn(!!token); // If token exists, user is logged in
-  }, [pathname]);
+const { profileImage, updateProfileImage } = useProfile();
+console.log("Header Image:", profileImage);
+ console.log("Header re-rendered with profileImage:", profileImage);
+
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  setIsLoggedIn(!!token); // If token exists, user is logged in
+}, [pathname]);
+
+
+
+
 
   const handleLogout = () => {
+  localStorage.removeItem("userEmail");
       localStorage.removeItem("token"); // Remove token from local storage
       setIsLoggedIn(false);
       setDropdownOpen(false);
       setShowConfirm(false);
       router.push("/login"); 
+      window.location.reload(); 
   };
 
 
-  // Dropdown ke bahar click karne par band karne ka logic
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {

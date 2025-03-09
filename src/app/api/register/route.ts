@@ -5,14 +5,14 @@ import bcrypt from 'bcryptjs';
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        console.log("Received Body:", body); // 🛠 Debugging step
+      
 
         // Check if user already exists
         const existingUser = await client.fetch(
             `*[_type == "user" && email == $email][0]`,
             { email: body.email }
         );
-        console.log("Existing User:", existingUser); // 🛠 Debugging step
+       
 
         if (existingUser) {
             return NextResponse.json({ error: "Email already registered!" }, { status: 400 });
