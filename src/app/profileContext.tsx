@@ -12,7 +12,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
-  console.log("🚀 ProfileProvider Mounted"); 
+
 
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === `profileImage_${userEmail}`) {
-        console.log("Storage Updated:", event.newValue);
+      
         setProfileImage(event.newValue);
       }
     };
@@ -48,7 +48,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   const updateProfileImage = (newImage: string | null) => {
     const userEmail = localStorage.getItem("userEmail");
     if (userEmail) {
-      console.log("⚡ Updating Profile Image in Context:", newImage);
+      
       if (newImage) {
         localStorage.setItem(`profileImage_${userEmail}`, newImage);
       } else {

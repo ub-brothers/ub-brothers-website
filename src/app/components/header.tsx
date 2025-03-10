@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -17,28 +17,24 @@ const Header = () => {
 const pathname = usePathname(); 
 
 const { profileImage, updateProfileImage } = useProfile();
-console.log("Header Image:", profileImage);
- console.log("Header re-rendered with profileImage:", profileImage);
-
 
 useEffect(() => {
   const token = localStorage.getItem("token");
-  setIsLoggedIn(!!token); // If token exists, user is logged in
+  setIsLoggedIn(!!token); 
 }, [pathname]);
 
 
-
-
-
-  const handleLogout = () => {
+const handleLogout = useCallback(() => {
   localStorage.removeItem("userEmail");
-      localStorage.removeItem("token"); // Remove token from local storage
-      setIsLoggedIn(false);
-      setDropdownOpen(false);
-      setShowConfirm(false);
-      router.push("/login"); 
-      window.location.reload(); 
-  };
+  localStorage.removeItem("token");
+  setIsLoggedIn(false);
+  setDropdownOpen(false);
+  setShowConfirm(false);
+  router.push("/login");
+  setTimeout(() => {
+    window.location.reload();
+  }, 500);
+}, [router]);
 
 
   useEffect(() => {
@@ -48,10 +44,10 @@ useEffect(() => {
       }
     };
 
-    // Event listener add karen
+    
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Cleanup function
+    
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -63,8 +59,17 @@ useEffect(() => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const getLinkClassName = (path: string) =>
-    pathname === path ? "text-yellow-500 border-b-2 border-yellow-500" : "text-white hover:text-gray-300";
+  const getLinkClassName = useCallback(
+    (path: string) =>
+      pathname === path ? "text-yellow-500 border-b-2 border-yellow-500" : "text-white hover:text-gray-300",
+    [pathname]
+  );
+  const profileIcon = useMemo(() => {
+    if (profileImage && profileImage.trim() !== "") {
+      return <img src={profileImage} alt="Profile" className="w-12 h-12 rounded-full" />;
+    }
+    return <FiUser className="text-2xl text-gray-600 w-12 h-12 flex items-center justify-center rounded-full border border-gray-400 p-2" />;
+  }, [profileImage]);
 
   return (
     <header className="bg-blue-600 text-white py-4 px-6 sticky top-0 z-50 shadow-md">
@@ -91,11 +96,7 @@ useEffect(() => {
       {isLoggedIn ? (
         <div className="relative" >
           <button className=" bg-gray-200 rounded-full hover:bg-gray-300" onClick={() => setDropdownOpen(!dropdownOpen)}>
-          {profileImage && profileImage.trim() !== ""  ? (
-            <img src={profileImage} alt="Profile" className="w-12 h-12 rounded-full" />
-          ) : (
-            <FiUser className="text-2xl text-gray-600 w-12 h-12 flex items-center justify-center rounded-full border border-gray-400 p-2" />
-          )}
+          {profileIcon}
         </button>
 
           {dropdownOpen &&  isLoggedIn && (
@@ -190,40 +191,34 @@ useEffect(() => {
            <Link href="/destinations" className={`w-full text-center py-2 ${getLinkClassName("/destinations")}`} onClick={toggleMenu}>Destinations</Link>
           <Link href="/about" className={`w-full text-center py-2 ${getLinkClassName("/about")}`} onClick={toggleMenu}>About Us</Link>
           <Link href="/contact" className={`w-full text-center py-2 ${getLinkClassName("/contact")}`} onClick={toggleMenu}>Contact</Link>
-   {/* Mobile Menu Profile and Logout Section */}
+  
    {isLoggedIn ? (
             <div className="w-full text-center">
-              <button className="bg-gray-200 rounded-full hover:bg-gray-300">
-          {profileImage ? (
-            <img src={profileImage} alt="Profile" className="h-12 w-12 rounded-full" />
-          ) : (
-            <FiUser className="text-2xl" />
-          )}
-        </button>
+              <div className="bg-gray-300 text-blue-800">
+              <Link href="/myAccount">
+              <button className="bg-gray-200 mt-4 rounded-full hover:bg-gray-300">
+          {profileIcon}
+        </button><h1 className="mb-2">My Account</h1></Link></div>
 
-              {dropdownOpen && (
-                <div className="mt-2 w-[200px] mx-auto bg-white shadow-md rounded-md">
-                  <button
-                    onClick={() => setShowConfirm(true)}
-                    className="w-full  text-center text-gray-500 font-sans  px-4 py-2 rounded-lg hover:bg-blue-200"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
+        <button
+      onClick={() => setShowConfirm(true)}
+      className="mt-2 block w-full text-center text-red-600 hover:text-red-800"
+    >
+     <b> Logout</b>
+    </button>
             </div>
           ) : (
             <>
-              <Link href="/registeration" className={`w-full text-center py-2 ${getLinkClassName("/registeration")}`} onClick={toggleMenu}>Register</Link>
-              <Link href="/login" className={`w-full text-center py-2 ${getLinkClassName("/login")}`} onClick={toggleMenu}>Login</Link>
+              <Link href="/registeration" className={`w-full text-center py-2 ${getLinkClassName("/registeration")}`} onClick={toggleMenu}><b>Register</b></Link>
+              <Link href="/login" className={`w-full text-center py-2 ${getLinkClassName("/login")}`} onClick={toggleMenu}><b>Login</b></Link>
             </>
           )}
         </nav>
 
         {/* Logout Confirmation Modal for Mobile */}
         {showConfirm && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-md shadow-md">
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-md shadow-md  w-80 sm:w-96">
               <p className="mb-4 fontbold text-black font-serif">Are you sure you want to logout?</p>
               <div className="flex justify-end space-x-2">
                 <button

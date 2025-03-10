@@ -127,17 +127,28 @@ const AboutUs = () => {
     <p className="text-gray-600">03414316000 </p>
   </div>
 
-  <div className="p-4 bg-orange-100 rounded-lg shadow-md">
+  <div className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center">
+  <img 
+      src="/image/usman.jpeg" 
+      alt="Usman Ali" 
+      className="w-24 h-24 rounded-full object-cover mb-3"
+    />
     <h3 className="text-xl font-semibold">Usman Ali</h3>
     <p className="text-gray-700">Accounts Officer</p>
-    <p className="text-gray-600">03414315000</p>
+    <p className="text-gray-600"> 03414315000</p>
   </div>
 
-  <div className="p-4 bg-orange-100 rounded-lg shadow-md">
+  <div className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center">
+  <img 
+      src="/image/narmeen.jpeg" 
+      alt="Narmeen Mughal" 
+      className="w-24 h-24 rounded-full object-cover mb-3"
+    />
     <h3 className="text-xl font-semibold">Narmeen Mughal</h3>
     <p className="text-gray-700">Admin</p>
     <p className="text-gray-600">03414312000</p>
   </div>
+ 
 </div>
 
       <div className="my-5">

@@ -32,6 +32,20 @@ body {
 
 }
 
+/* .table-container {
+  position: relative;
+}
+
+.table-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8));
+  pointer-events: none;
+} */
 
 .whatsapp-button {
   position: fixed; 

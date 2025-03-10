@@ -44,7 +44,7 @@ export default function VisaOffer() {
 
 
     const fetchOffer = async () => {
-      const data: VisaOfferType = await client.fetch(`  *[_type == "visaOffer"][0] {
+      const data: VisaOfferType = await client.fetch(`  *[_type == "visaOffer"]{
     title,
     originalPrice,
     discountedPrice,

@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { Suspense } from "react";
 import jsPDF from "jspdf";
 import { jwtDecode } from 'jwt-decode';
+import {client} from "@/sanity/lib/client"
+import { v4 as uuidv4 } from "uuid"; 
 
 function TicketsContent(){
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -28,7 +30,14 @@ const [emailAddress, setEmailAddress] = useState("");
           } else {
             return { ...passenger, type: "Infant" };
           }
-        });
+        
+        }
+        
+      );
+
+        const storedEmail = localStorage.getItem("userEmail");
+        
+    
 
 
       const response = await fetch("/api/tickets", {
@@ -38,6 +47,7 @@ const [emailAddress, setEmailAddress] = useState("");
         },
         body: JSON.stringify({
           airlineName,
+          airlineImage,
           meal,
           totalPrice,
           adults,
@@ -47,9 +57,11 @@ const [emailAddress, setEmailAddress] = useState("");
           flights,
           phoneNumber,
           emailAddress,
+          storedUserEmail: storedEmail,
         }),
       });
   
+      
       const result = await response.json();
       if (response.ok) {
         alert("Booking confirmed!");
@@ -201,7 +213,7 @@ y += 10;
   const meal = searchParams.get("meal");
   const priceParam = searchParams.get("price");
   const priceForUsersParams = searchParams.get("priceForUsers");
-  console.log("Price For Users:", priceForUsersParams);
+  
 
   const seatParam = searchParams.get("seats");
   const childSeatParam = searchParams.get("childSeats");
@@ -271,7 +283,6 @@ const extractedUserPrice = priceForUsersParams ? priceForUsersParams.match(/[\d,
 const priceForUsers = extractedUserPrice ? Number(extractedUserPrice[0].replace(/,/g, "")): 0;
 
 
-// Extract only numeric values from the price string
 const extractedPrice = priceParam ? priceParam.match(/[\d,]+(\.\d+)?/) : null;
 
 // Remove commas and convert to number
@@ -407,7 +418,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
 
 
               <tr className="border-t">
-    <td className="px-4 py-2 border text-sm">Children</td>
+    <td className="px-4 py-2 border text-sm">Child</td>
     <td className="px-4 py-2 border text-sm">
         <input type="number" value={children}
             onChange={(e) => {
@@ -416,7 +427,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
                     setChildren(Math.max(0, value)); // Minimum 0 ho
                     setChildrenError(""); // Agar value sahi hai to error hatao
                 } else {
-                    setChildrenError(`Only ${availableChildSeats} seats available for children.`); // Error show karo
+                    setChildrenError(`Only ${availableChildSeats} seats available for child.`); // Error show karo
                 }
             }}
             className="w-16 border p-1"

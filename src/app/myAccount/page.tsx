@@ -8,6 +8,7 @@ import { useProfile } from '../profileContext';
 import { FaBars, FaTimes } from 'react-icons/fa'; 
 import ChangePassword from '../change-password/page';
 import Link from 'next/link';
+import MyBookings from '../bookingUser/page';
 
 
 
@@ -15,6 +16,8 @@ export default function ProfilePage() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [bookings, setBookings] = useState<any[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
+  const [activeOption, setActiveOption] = useState("");
+  
   
     const { profileImage, updateProfileImage } = useProfile();
     
@@ -26,7 +29,7 @@ export default function ProfilePage() {
     
         reader.onload = () => {
           if (typeof reader.result === "string") {
-            console.log("Image Uploaded: ", reader.result);
+           
             if (email) {
               localStorage.setItem(`profileImage_${email}`, reader.result);
 
@@ -128,8 +131,7 @@ useEffect(() => {
      
       return;
     }
-  
-    console.log("Cropping image with:", croppedArea);
+ 
     const croppedImg = await getCroppedImg(image, croppedArea);
     
     if (croppedImg) {
@@ -186,7 +188,7 @@ useEffect(() => {
         if (typeof reader.result === "string") {
           const imageUrl = reader.result;
 
-          // Update profile image in localStorage and context
+          
           if (email) {
             updateProfileImage(imageUrl);
           } else {
@@ -232,6 +234,7 @@ const toggleSidebar = () => {
 
 const handleSidebarOptionClick = (option: string) => {
   setSelectedOption(option);
+  setActiveOption(option);
   setIsSidebarOpen(false); // Close sidebar on mobile after selecting an option
 };
  // Function to close sidebar when clicking outside
@@ -253,39 +256,39 @@ const handleSidebarOptionClick = (option: string) => {
   };
 }, [isSidebarOpen]);
 
-// Render content based on the selected option
+
 const renderContent = () => {
   switch (selectedOption) {
     case 'All Bookings':
       return (
         <div>
-          <h2 className="text-xl font-semibold mb-4">All Bookings</h2>
-          {bookings.length > 0 ? (
-            <ul>
-              {bookings.map((booking) => (
-                <li key={booking.id} className="mb-2 p-2 bg-gray-100 rounded">
-                  <p><b>Type:</b> {booking.type}</p>
-                  <p><b>Date:</b> {booking.date}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No bookings</p>
-          )}
+          <h2 className="text-2xl font-bold text-left mb-4"><u>All Bookings</u></h2>
+         {/* Add this container */}
+        <MyBookings filterStatus="confirmed" />
+     
         </div>
       );
     case 'Confirmed Booking':
       return (
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Confirmed Bookings</h2>
-          <p>Your confirmed bookings will appear here.</p>
-        </div>
+        
+        <div className="w-full overflow-x-auto">
+          <div  className="overflow-x-auto min-w-[700px]">
+        <h2 className="text-2xl font-bold text-left mb-4">
+          <u>Confirmed Bookings</u>
+        </h2>
+       {/* Add this container */}
+
+        <MyBookings filterStatus="confirmed" />
+    </div>
+      </div>
       );
     case 'Cancel Booking':
       return (
         <div>
-          <h2 className="text-xl font-semibold mb-4">Cancel Bookings</h2>
-          <p>Your canceled bookings will appear here.</p>
+        <h2 className="text-2xl font-bold mb-4"><u>Cancel Bookings</u></h2>
+       {/* Add this container */}
+        <MyBookings filterStatus="cancelled" />
+    
         </div>
       );
     case 'Password Settings':
@@ -303,7 +306,7 @@ const renderContent = () => {
 
 
   return (
-  <div className='flex flex-col sm:flex-row'>
+  <div className='flex flex-col sm:flex-row overflow-x-auto'>
      {/* Sidebar */}
         {/* Hamburger Menu Button (Mobile Only) */}
         <button
@@ -316,23 +319,31 @@ const renderContent = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed lg:static lg:block w-64 bg-gray-200 h-screen text-black p-4 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed lg:static lg:block w-64 bg-gray-200 min-h-screen text-black p-4 transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         } z-20`}
       >
         <h2 className="text-lg font-semibold mb-4">User Profile</h2>
         <ul>
           <li className="mb-2">
-            <button onClick={() => handleSidebarOptionClick('All Bookings')} className="w-full text-left hover:bg-gray-400 p-2 rounded">All Bookings</button>
+            <button onClick={() => handleSidebarOptionClick('All Bookings')}  className={`w-full text-left hover:bg-gray-400 p-2 rounded ${
+                activeOption === "All Bookings" ? "bg-gray-400 text-white" : ""
+              }`} >All Bookings</button>
           </li>
           <li className="mb-2">
-            <button onClick={() => handleSidebarOptionClick('Confirmed Booking')} className="w-full text-left hover:bg-gray-400 p-2 rounded">Confirmed Booking</button>
+            <button onClick={() => handleSidebarOptionClick('Confirmed Booking')} className={`w-full text-left hover:bg-gray-400 p-2 rounded ${
+                activeOption === "Confirmed Booking" ? "bg-gray-400 text-white " : ""
+              }`}>Confirmed Booking</button>
           </li>
           <li className="mb-2">
-            <button  onClick={() => handleSidebarOptionClick('Cancel Booking')} className="w-full text-left hover:bg-gray-400 p-2 rounded">Cancel Booking</button>
+            <button  onClick={() => handleSidebarOptionClick('Cancel Booking')} className={`w-full text-left hover:bg-gray-400 p-2 rounded ${
+                activeOption === "Cancel Booking" ? "bg-gray-400 text-white" : ""
+              }`}>Cancel Booking</button>
           </li>
           <li className="mb-2">
-            <button onClick={() => handleSidebarOptionClick('Password Settings')} className="w-full text-left hover:bg-gray-400 p-2 rounded">Password Settings</button>
+            <button onClick={() => handleSidebarOptionClick('Password Settings')} className={`w-full text-left hover:bg-gray-400 p-2 rounded ${
+                activeOption === "Password Settings" ? "bg-gray-400 text-white" : ""
+              }`}>Password Settings</button>
           </li>
         </ul>
       </div>
@@ -340,7 +351,7 @@ const renderContent = () => {
      
 
       {/* Profile Section */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-6 overflow-x-hidden ">
         {/* Profile Image (Click to Upload) */}
         <div className="relative">
         <div className="w-24 h-24 border-2 border-gray-300 rounded-full overflow-hidden cursor-pointer hover:opacity-80 transition"
@@ -439,7 +450,7 @@ const renderContent = () => {
       
       <hr className='my-4 w-full'></hr>
     
-    <div> 
+    <div className=""> 
    {renderContent()}
     </div>
  

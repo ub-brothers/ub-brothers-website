@@ -40,11 +40,11 @@ const ServicesSection = () => {
             transition={{ delay: 0.4, duration: 1 }}
            
           >
-            <h3 className="text-xl font-semibold text-blue-500 mb-4">Tour Packages</h3>
+            <h3 className="text-xl font-semibold text-blue-500 mb-4">Umrah Packages</h3>
             <p className="text-gray-700 mb-4">
-              Explore the world with our exciting tour packages. From exotic destinations to local gems, we provide customized tours for every traveler.
+            We offer Umrah package, providing a seamless pilgrimage experience. We ensure comfort, convenience, and a spiritually fulfilling journey for our valued customers.
             </p>
-            <Link href="/tour">
+            <Link href="/umrah">
             <button className="bg-orange-400 text-white py-2 px-6 rounded-full hover:bg-orange-500 transition duration-300">
               View Packages
             </button></Link>
