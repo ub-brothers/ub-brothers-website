@@ -7,12 +7,13 @@ import {jwtDecode , JwtPayload } from "jwt-decode";
 import { useProfile } from '../profileContext';
 import { FaBars, FaTimes } from 'react-icons/fa'; 
 import ChangePassword from '../change-password/page';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import MyBookings from '../bookingUser/page';
 
 
 
-export default function ProfilePage() {
+export default function ProfilePage( { searchParams }: { searchParams: { filterStatus?: "cancelled" | "confirmed" } }) {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [bookings, setBookings] = useState<any[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
@@ -264,7 +265,7 @@ const renderContent = () => {
         <div>
           <h2 className="text-2xl font-bold text-left mb-4"><u>All Bookings</u></h2>
          {/* Add this container */}
-        <MyBookings filterStatus="confirmed" />
+         <MyBookings searchParams={{ filterStatus: "confirmed" }} />
      
         </div>
       );
@@ -277,8 +278,7 @@ const renderContent = () => {
           <u>Confirmed Bookings</u>
         </h2>
        {/* Add this container */}
-
-        <MyBookings filterStatus="confirmed" />
+       <MyBookings searchParams={{ filterStatus: "confirmed" }} />
     </div>
       </div>
       );
@@ -287,7 +287,7 @@ const renderContent = () => {
         <div>
         <h2 className="text-2xl font-bold mb-4"><u>Cancel Bookings</u></h2>
        {/* Add this container */}
-        <MyBookings filterStatus="cancelled" />
+       <MyBookings searchParams={{ filterStatus: "cancelled" }} />
     
         </div>
       );

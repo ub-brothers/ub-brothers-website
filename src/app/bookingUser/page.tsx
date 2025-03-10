@@ -42,12 +42,12 @@ type Booking = {
 
 
 
-const MyBookings = ({ filterStatus }: { filterStatus?: "cancelled" | "confirmed" }) => {
+const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelled" | "confirmed" } }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const storedUserEmail = typeof window !== "undefined" ? localStorage.getItem("userEmail") : null;
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null); // ✅ Store selected booking for modal
   const [showModal, setShowModal] = useState(false); // ✅ Modal state
- 
+  const { filterStatus } = searchParams;
 
 
   useEffect(() => {
@@ -107,8 +107,8 @@ const handleCancelClick = (bookingId: string) => {
 
 
 const filteredBookings = filterStatus
-    ? bookings.filter((b) => (filterStatus === "cancelled" ? b.status === "cancelled" : b.status !== "cancelled"))
-    : bookings;
+? bookings.filter((b) => (filterStatus === "cancelled" ? b.status === "cancelled" : b.status !== "cancelled"))
+: bookings;
 
   return (
     <div className="max-w-5xl mx-auto">
