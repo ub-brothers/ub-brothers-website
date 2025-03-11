@@ -15,7 +15,7 @@ export default {
         type: 'string',
         title: 'Airline Name',
       },
-
+      
       {
         name: 'userEmail',
         type: 'string',

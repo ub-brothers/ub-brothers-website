@@ -7,7 +7,6 @@ import {jwtDecode , JwtPayload } from "jwt-decode";
 import { useProfile } from '../profileContext';
 import { FaBars, FaTimes } from 'react-icons/fa'; 
 import ChangePassword from '../change-password/page';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import MyBookings from '../bookingUser/page';
 

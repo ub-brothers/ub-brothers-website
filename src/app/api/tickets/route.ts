@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { createClient } from "@sanity/client";
-import {client} from "@/sanity/lib/client"
 import { v4 as uuidv4 } from "uuid"; 
+
 
 
 const sanityClient = createClient({
@@ -44,6 +44,7 @@ export async function POST(req: Request) {
     // ✅ Yeh Step Zaroori Hai (TypeScript Ko Bata Raha Hai ke yeh kis Type ka Data Hai)
     const {
       airlineName,
+     
       meal,
       totalPrice,
       adults,
@@ -57,6 +58,7 @@ export async function POST(req: Request) {
       userEmail,
     }: {
       airlineName: string;
+      
       meal: string;
       totalPrice: number;
       adults: number;
@@ -71,10 +73,14 @@ export async function POST(req: Request) {
     } = body;
 
 
+
+
       const updatedPassengers: Passenger[] = passengers.map((passenger:Passenger) => ({
         ...passenger,
         _key: uuidv4(),
       }));
+
+
   
       const updatedFlights: Flight[] = flights.map((flight:Flight) => ({
         ...flight,
@@ -95,7 +101,6 @@ export async function POST(req: Request) {
     children,
     phoneNumber,
     status: "confirmed",
-    createdAt: new Date().toISOString(), 
     flights:updatedFlights,
     passengers:updatedPassengers,
     

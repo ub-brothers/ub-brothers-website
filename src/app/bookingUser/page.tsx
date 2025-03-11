@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
+
 
 type Flight = {
   _key?: string;
@@ -43,6 +45,8 @@ type Booking = {
 
 
 const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelled" | "confirmed" } }) => {
+
+ 
   const [bookings, setBookings] = useState<Booking[]>([]);
   const storedUserEmail = typeof window !== "undefined" ? localStorage.getItem("userEmail") : null;
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null); // ✅ Store selected booking for modal
@@ -110,6 +114,8 @@ const filteredBookings = filterStatus
 ? bookings.filter((b) => (filterStatus === "cancelled" ? b.status === "cancelled" : b.status !== "cancelled"))
 : bookings;
 
+
+
   return (
     <div className="max-w-5xl mx-auto">
       {filteredBookings.length === 0 ? (
@@ -118,6 +124,13 @@ const filteredBookings = filterStatus
         filteredBookings.map((booking, index) => (
           <div key={index} className="bg-white shadow-lg rounded-md p-4 mb-6">
             {/* Ticket Header */}
+         
+            <p className="text-gray-600 text-sm mb-2">
+  {" "}
+  {booking.createdAt
+    ? format(new Date(booking.createdAt), "dd MMM yyyy, hh:mm a")
+    : "Invalid Date"}
+</p>
             <div className="flex justify-between items-center border-b pb-2 mb-4">
               <h3 className="text-lg font-semibold text-blue-600">
                 Airline: {booking.airlineName}

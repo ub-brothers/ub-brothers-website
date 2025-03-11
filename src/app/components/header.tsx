@@ -86,6 +86,7 @@ const handleLogout = useCallback(() => {
             <Link href="/umrah" className={getLinkClassName("/umrah")}>Hajj & Umrah Packages</Link>
             <Link href="/book-tickets" className={getLinkClassName("/book-tickets")}>Ticketing</Link>
              <Link href="/destinations" className={getLinkClassName("/destinations")}>Destinations</Link>
+             <Link href="/bankDetails" className={getLinkClassName("/bankDetails")}>Bank Details</Link>
             <Link href="/about" className={getLinkClassName("/about")}>About Us</Link>
             <Link href="/contact" className={getLinkClassName("/contact")}>Contact</Link>
           </nav>
