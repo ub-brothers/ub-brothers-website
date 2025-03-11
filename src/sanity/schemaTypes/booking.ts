@@ -5,10 +5,31 @@ export default {
     title: 'Booking', // Schema ka title
     fields: [
       {
+        name: "isConfirmed",
+        type: "boolean",
+        title: "Is Confirmed",
+        initialValue: false, // Default to false
+      },
+      {
         name: "createdAt",
         type: "datetime",
         title: "Created At",
         initialValue: new Date().toISOString(), // ✅ Automatically set current time
+      },
+      {
+        name: "airlineImage",
+        type: "image",
+        title: "Airline Image",
+        options: {
+          hotspot: true, // Enable hotspot for better image cropping
+        }, fields: [
+          {
+            name: "alt",
+            type: "string",
+            title: "Alternative Text",
+            description: "Description of the image for accessibility",
+          },
+        ],
       },
       {
         name: 'airlineName',

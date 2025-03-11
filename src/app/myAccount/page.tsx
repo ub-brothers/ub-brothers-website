@@ -264,7 +264,7 @@ const renderContent = () => {
         <div>
           <h2 className="text-2xl font-bold text-left mb-4"><u>All Bookings</u></h2>
          {/* Add this container */}
-         <MyBookings searchParams={{ filterStatus: "confirmed" }} />
+         <MyBookings searchParams={{}} />
      
         </div>
       );
@@ -350,7 +350,7 @@ const renderContent = () => {
      
 
       {/* Profile Section */}
-      <div className="flex items-center gap-6 overflow-x-hidden ">
+      <div className="flex items-center gap-6 ">
         {/* Profile Image (Click to Upload) */}
         <div className="relative">
         <div className="w-24 h-24 border-2 border-gray-300 rounded-full overflow-hidden cursor-pointer hover:opacity-80 transition"
@@ -359,7 +359,7 @@ const renderContent = () => {
     {croppedImage ? (
         <Image src={croppedImage} alt="Profile" onError={handleImageError} width={96} height={96} className="rounded-full" />
     ) : (
-        <div className="w-full h-full text-center bg-gray-200 flex items-center justify-center text-gray-600">
+        <div className="w-full text-center bg-gray-200 flex items-center justify-center text-gray-600">
             Upload Image
         </div>
     )}
@@ -447,7 +447,7 @@ const renderContent = () => {
         </div>
       )}
       
-      <hr className='my-4 w-full'></hr>
+      <hr className='my-10 w-full'></hr>
     
     <div className=""> 
    {renderContent()}

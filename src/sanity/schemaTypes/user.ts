@@ -37,6 +37,7 @@ export default {
         readOnly: true,
         hidden: false,
       },
+      
       {
         name: "officeName",
         title: "Office Name",
@@ -115,5 +116,12 @@ export default {
       },
    
     ],
+    preview: {
+      select:
+    {
+     
+      title: "Office Name",
+    },
+  },
   };
   

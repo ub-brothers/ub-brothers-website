@@ -39,6 +39,7 @@ type Booking = {
   flights: Flight[];
   passengers: Passenger[];
   status: string; // ✅ Status field added
+  isConfirmed: boolean;
 };
 
 
@@ -109,11 +110,18 @@ const handleCancelClick = (bookingId: string) => {
   setShowModal(true);
 };
 
+const filteredBookings = bookings.filter((booking) => {
+  const isWithin3Hours = isCancellable(booking.createdAt);
 
-const filteredBookings = filterStatus
-? bookings.filter((b) => (filterStatus === "cancelled" ? b.status === "cancelled" : b.status !== "cancelled"))
-: bookings;
-
+  if (filterStatus === "cancelled") {
+    return booking.status === "cancelled";
+  } else if (filterStatus === "confirmed") {
+    return booking.isConfirmed; // Only show confirmed bookings
+  } else {
+    // For "All Bookings", show bookings that are either confirmed or within 3 hours
+    return booking.isConfirmed || isWithin3Hours;
+  }
+});
 
 
   return (
@@ -186,7 +194,8 @@ const filteredBookings = filterStatus
             )}
           </div>
         ))
-      )}
+      )} 
+     
         {/* ✅ Modal for Confirmation */}
         {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -208,7 +217,9 @@ const filteredBookings = filterStatus
               </button>
             </div>
           </div>
+         
         </div>
+        
       )}
     </div>
   );

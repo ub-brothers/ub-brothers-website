@@ -8,13 +8,13 @@ export default {
         title: "Number of Days",
         type: "number",
         options: { list: [7, 15, 21, 28] },
-        validation: (Rule: any) => Rule.required(),
+    
       },
       {
         name: "price",
         title: "Package Price (Except hotel cost)",
         type: "number",
-        validation: (Rule: any) => Rule.required().min(10),
+     
       },
       {
         name: "priceForUsers",

@@ -101,6 +101,7 @@ export async function POST(req: Request) {
     children,
     phoneNumber,
     status: "confirmed",
+    isConfirmed: false,
     flights:updatedFlights,
     passengers:updatedPassengers,
     
