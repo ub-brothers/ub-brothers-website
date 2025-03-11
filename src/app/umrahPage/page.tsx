@@ -36,7 +36,15 @@ export default function UmrahPage(){
           tailored to provide comfort and convenience at every step.
         </p>
   
-       
+        <Link href="/umrahForm2">
+        <motion.button 
+          className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-orange-500"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          Book Now
+        </motion.button></Link>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <motion.div 
             className="rounded-lg overflow-hidden shadow-lg"
@@ -54,23 +62,13 @@ export default function UmrahPage(){
           </motion.div>
         </div>
   
-     
-        <div className="text-gray-700 text-lg space-y-2">
-     <h1>Experience a comfortable Umrah journey with our premium package! You can visit holy sites with guided Ziyarat services, ensuring a spiritually enriching experience. We offer complete flexibility—you can select the number of days and hotels based on your preference, and we will arrange everything accordingly. Whether you prefer a budget-friendly stay or a luxury experience, we customize the package to fit your needs. Let us take care of all the details while you have a peaceful and memorable Umrah. Book your personalized package today and embark on a stress-free spiritual journey! </h1>
-        </div>
+    
   
       
         <div>
         <h3 className="text-xl font-semibold">Book Your Stay Now!</h3>
         <p className="text-gray-600 mt-2">Contact us to customize your package as per your needs.</p></div>
-        <Link href="/umrahForm2">
-        <motion.button 
-          className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-300 hover:bg-orange-500"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          Book Now
-        </motion.button></Link>
+        
   
        
       </div>

@@ -148,9 +148,12 @@ const AboutUs = () => {
     <p className="text-gray-700">Admin</p>
     <p className="text-gray-600">03414312000</p>
   </div>
- 
+
 </div>
 
+ <div>
+        <ClientReviews/>
+      </div>
       <div className="my-5">
       <WhatAreWe/>
 </div>
@@ -158,9 +161,7 @@ const AboutUs = () => {
         <WhyUs/>
       </div>
       <ServicesSection/>
-      <div>
-        <ClientReviews/>
-      </div>
+      
     </div>
   );
 };    

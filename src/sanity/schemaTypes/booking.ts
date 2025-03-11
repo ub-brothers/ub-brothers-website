@@ -17,21 +17,6 @@ export default {
         initialValue: new Date().toISOString(), // ✅ Automatically set current time
       },
       {
-        name: "airlineImage",
-        type: "image",
-        title: "Airline Image",
-        options: {
-          hotspot: true, // Enable hotspot for better image cropping
-        }, fields: [
-          {
-            name: "alt",
-            type: "string",
-            title: "Alternative Text",
-            description: "Description of the image for accessibility",
-          },
-        ],
-      },
-      {
         name: 'airlineName',
         type: 'string',
         title: 'Airline Name',

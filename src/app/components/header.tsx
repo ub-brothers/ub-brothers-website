@@ -30,10 +30,7 @@ const handleLogout = useCallback(() => {
   setIsLoggedIn(false);
   setDropdownOpen(false);
   setShowConfirm(false);
-  router.replace("/login"); 
-  setTimeout(() => {
-    window.location.reload();
-  }, 1200);
+  router.replace("/login");
 }, [router]);
 
 
