@@ -102,4 +102,11 @@ export default {
         title: 'Email Address',
       },
     ],
+    preview: {
+      select:
+    {
+     
+      title: "userEmail",
+    },
+  },
   };
