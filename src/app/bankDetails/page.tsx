@@ -8,7 +8,7 @@ const banks = [
     logo: "/image/bank3.png",
     accountTitle:"UB BROTHERS TRAVEL & TOURS",
     account: "PK18 ABPA 0010 0948 0157 0041",
-    branch:"Akbari Mandi LHR"
+    branch:"Akbari Mandi Lahore"
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ const banks = [
     logo: "/image/bank2.png",
     accountTitle:"UB BROTHERS",
     account: "PK36 MUCB 0518 0844 1100 0919",
-    branch:"Misri Shah LHR"
+    branch:"Misri Shah Lahore"
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const banks = [
     logo: "/image/bank3.png",
     accountTitle:"UB BROTHERS",
     account: "PK25 ABPA 0010 0948 0157 0012",
-    branch:"Akbari Mandi LHR"
+    branch:"Akbari Mandi Lahore"
   },
   {
     id: 4,
@@ -32,7 +32,7 @@ const banks = [
     logo: "/image/bank4.1.webp",
     accountTitle:"UB BROTHERS TRAVEL & TOURS",
     account: "PK57DUIB0000000027927003",
-    branch:"Circular Road LHR"
+    branch:"Circular Road Lahore"
   },
   {
     id: 5,
@@ -40,7 +40,7 @@ const banks = [
     logo: "/image/bank5.png",
     accountTitle:"UB BROTHERS TRAVEL & TOURS",
     account: "PK34AIIN 0000 1025 3754 1010",
-    branch:"Mall Road LHR"
+    branch:"Mall Road Lahore"
   },
   {
     id: 6,
@@ -48,7 +48,7 @@ const banks = [
     logo: "/image/bankk.png",
     accountTitle:"UB BROTHERS",
     account: "PK91 SUMB 0329 0271 4012 7980",
-    branch:"Egerton Road LHR"
+    branch:"Egerton Road Lahore"
   }
 ];
 
