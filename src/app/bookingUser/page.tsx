@@ -27,6 +27,7 @@ type Passenger = {
 type Booking = {
   _id: string;
   airlineName: string;
+
   createdAt:string;
   meal: string;
   totalPrice: number;
@@ -53,6 +54,16 @@ const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelle
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null); // ✅ Store selected booking for modal
   const [showModal, setShowModal] = useState(false); // ✅ Modal state
   const { filterStatus } = searchParams;
+
+  const airlineImages = {
+    "Fly Jinnah": "/image/flyjinnah.png",
+    "Air Sial": "/image/airsial.png",
+    "Saudia": "/image/saudia.png",
+    "Serene Air": "/image/sereneair.png",
+    "Salam Air" : "/image/salamair.png",
+    
+  };
+  
 
 
   useEffect(() => {
@@ -140,9 +151,18 @@ const filteredBookings = bookings.filter((booking) => {
     : "Invalid Date"}
 </p>
             <div className="flex justify-between items-center border-b pb-2 mb-4">
-              <h3 className="text-lg font-semibold text-blue-600">
-                Airline: {booking.airlineName}
-              </h3>
+<div className="flex items-center gap-2">
+            {airlineImages[booking.airlineName as keyof typeof airlineImages] && (
+              <img
+                src={airlineImages[booking.airlineName as keyof typeof airlineImages]}
+                alt={booking.airlineName}
+                className="w-24 h-16 object-contain"
+              />
+            )}
+            
+              <h3 className="text-lg font-semibold ml-0 text-blue-600">
+                {booking.airlineName}
+              </h3></div>
               <p className="text-gray-600"><b>Total Price:</b> {booking.totalPrice} PKR/-</p>
             </div>
 

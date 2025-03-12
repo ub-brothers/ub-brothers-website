@@ -322,7 +322,7 @@ const renderContent = () => {
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         } z-20`}
       >
-        <h2 className="text-lg font-semibold mb-4">User Profile</h2>
+        <h2 className="text-lg font-semibold mb-4">My Account</h2>
         <ul>
           <li className="mb-2">
             <button onClick={() => handleSidebarOptionClick('All Bookings')}  className={`w-full text-left hover:bg-gray-400 p-2 rounded ${

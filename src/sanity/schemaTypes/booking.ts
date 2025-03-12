@@ -16,6 +16,7 @@ export default {
         title: "Created At",
         initialValue: new Date().toISOString(), // ✅ Automatically set current time
       },
+      
       {
         name: 'airlineName',
         type: 'string',
