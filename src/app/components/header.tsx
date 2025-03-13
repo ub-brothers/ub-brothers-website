@@ -23,6 +23,23 @@ useEffect(() => {
   setIsLoggedIn(!!token); 
 }, [pathname]);
 
+const sidebarRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+  
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
+
 
 const handleLogout = useCallback(() => {
   localStorage.removeItem("userEmail");
@@ -174,7 +191,7 @@ const handleLogout = useCallback(() => {
       </div>
 
      
-      <div className={`fixed top-0 left-0 bg-blue-600 w-1/2 h-full z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out`}>
+      <div  ref={sidebarRef} className={`fixed top-0 left-0 bg-blue-600 w-1/2 h-full z-50 transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out`}>
         <div className="flex justify-between items-center p-4">
           <img src="/image/logo.jpeg" alt="Logo" className="w-12 h-12 rounded-3xl" />
           <button onClick={toggleMenu} className="text-white">

@@ -205,7 +205,7 @@ const generatePDF = () => {
   let y = 50;
 
   // Function to split text into multiple lines
-  const splitTextIntoLines = (text, maxWidth) => {
+  const splitTextIntoLines = (text:any, maxWidth:any) => {
     const words = text.split(" ");
     const lines = [];
     let currentLine = words[0];
@@ -225,7 +225,7 @@ const generatePDF = () => {
   };
 
   // Function to add a field with label and value
-  const addField = (label, value, x, maxWidth) => {
+  const addField = (label:any, value:any, x:any, maxWidth:any) => {
     doc.setFont("helvetica", "bold");
     doc.setTextColor(0, 0, 128); // Navy blue color
     doc.text(`${label}:`, x, y);
@@ -249,7 +249,7 @@ const generatePDF = () => {
   addField("Phone Number", formData.phone, 10, 180);
   addField("Selected Days", `${selectedDays} Days`, 10, 180);
   // Function to draw a box around content
-  const drawBox = (x, y, width, height) => {
+  const drawBox = (x:any, y:any, width:any, height:any) => {
     doc.setDrawColor(0, 0, 128); // Navy blue border color
     doc.setLineWidth(0.5); // Border thickness
     doc.rect(x, y, width, height); // Draw rectangle
