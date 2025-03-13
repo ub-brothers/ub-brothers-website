@@ -84,6 +84,9 @@ const handleLogout = useCallback(() => {
             <Link href="/book-tickets" className={getLinkClassName("/book-tickets")}>Ticketing</Link>
              <Link href="/destinations" className={getLinkClassName("/destinations")}>Destinations</Link>
              <Link href="/bankDetails" className={getLinkClassName("/bankDetails")}>Bank Details</Link>
+             {isLoggedIn && (
+    <Link href="/myLedger" className={getLinkClassName("/myLedger")}>My Ledger</Link>
+  )}
             <Link href="/about" className={getLinkClassName("/about")}>About Us</Link>
             <Link href="/contact" className={getLinkClassName("/contact")}>Contact</Link>
           </nav>
@@ -187,6 +190,10 @@ const handleLogout = useCallback(() => {
           <Link href="/umrah" className={`w-full text-center py-2 ${getLinkClassName("/umrah")}`} onClick={toggleMenu}>Hajj & Umrah Packages</Link>
           <Link href="/book-tickets" className={`w-full text-center py-2 ${getLinkClassName("/book-tickets")}`} onClick={toggleMenu}>Ticketing</Link>
            <Link href="/destinations" className={`w-full text-center py-2 ${getLinkClassName("/destinations")}`} onClick={toggleMenu}>Destinations</Link>
+           {isLoggedIn && (
+    <Link href="/myLedger" className={`w-full text-center py-2 ${getLinkClassName("/myLedger")}`} onClick={toggleMenu}>My Ledger</Link>
+  )}
+           <Link href="/bankDetails" className={`w-full text-center py-2 ${getLinkClassName("/bankDetails")}`} onClick={toggleMenu}>Bank Details</Link>
           <Link href="/about" className={`w-full text-center py-2 ${getLinkClassName("/about")}`} onClick={toggleMenu}>About Us</Link>
           <Link href="/contact" className={`w-full text-center py-2 ${getLinkClassName("/contact")}`} onClick={toggleMenu}>Contact</Link>
   

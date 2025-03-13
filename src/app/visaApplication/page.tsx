@@ -221,7 +221,7 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.setTextColor(0, 0, 128); // Navy blue color
-    doc.text("UB Brothers", 45, 20); // Add company name
+    doc.text("UB Brothers Travel & Tours", 45, 20); // Add company name
   
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);

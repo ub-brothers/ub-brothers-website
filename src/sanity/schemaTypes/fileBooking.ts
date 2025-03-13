@@ -15,7 +15,7 @@ export default {
         initialValue: new Date().toISOString(),
       },
       {
-        name: "countryName",
+        name: "country",
         title: "Country Name",
         type: "string",
       },
@@ -25,13 +25,8 @@ export default {
         type: "string",
       },
       {
-        name: "prize",
+        name: "price",
         title: "Prize",
-        type: "number",
-      },
-      {
-        name: "prizeForUsers",
-        title: "Price for Login Users",
         type: "number",
       },
     ],

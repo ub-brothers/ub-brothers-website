@@ -12,22 +12,6 @@ const banks = [
   },
   {
     id: 2,
-    name: "MCB Bank",
-    logo: "/image/bank2.png",
-    accountTitle:"UB BROTHERS",
-    account: "PK36 MUCB 0518 0844 1100 0919",
-    branch:"Misri Shah Lahore"
-  },
-  {
-    id: 3,
-    name: "Allied Bank Limited",
-    logo: "/image/bank3.png",
-    accountTitle:"UB BROTHERS",
-    account: "PK25 ABPA 0010 0948 0157 0012",
-    branch:"Akbari Mandi Lahore"
-  },
-  {
-    id: 4,
     name: "Dubai Islamic Bank",
     logo: "/image/bank4.1.webp",
     accountTitle:"UB BROTHERS TRAVEL & TOURS",
@@ -35,13 +19,30 @@ const banks = [
     branch:"Circular Road Lahore"
   },
   {
-    id: 5,
+    id: 3,
     name: "Al Baraka Bank",
     logo: "/image/bank5.png",
     accountTitle:"UB BROTHERS TRAVEL & TOURS",
     account: "PK34AIIN 0000 1025 3754 1010",
     branch:"Mall Road Lahore"
   },
+  {
+    id: 4,
+    name: "MCB Bank",
+    logo: "/image/bank2.png",
+    accountTitle:"UB BROTHERS",
+    account: "PK36 MUCB 0518 0844 1100 0919",
+    branch:"Misri Shah Lahore"
+  },
+  {
+    id: 5,
+    name: "Allied Bank Limited",
+    logo: "/image/bank3.png",
+    accountTitle:"UB BROTHERS",
+    account: "PK25 ABPA 0010 0948 0157 0012",
+    branch:"Akbari Mandi Lahore"
+  },
+ 
   {
     id: 6,
     name: "Summit Bank",

@@ -23,8 +23,8 @@ function BookFormContent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsConfirmed(true);
     e.preventDefault();
-
-    const formData = { userName, userNumber, userEmail, userMessage, countryName, shortDescription, prize, priceForUsers };
+    const storedEmail = localStorage.getItem("userEmail");
+    const formData = { userName, userNumber, userEmail, userMessage, countryName, shortDescription, prize, priceForUsers,storedUserEmail:storedEmail };
 
     try {
       const res = await fetch("/api/iraqForm", {
@@ -81,7 +81,7 @@ function BookFormContent() {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.setTextColor(0, 0, 128); 
-    doc.text("UB Brothers", 45, 20); 
+    doc.text("UB Brothers Travel & Tours", 45, 20); 
 
    
     doc.setFont("helvetica", "normal");
@@ -156,7 +156,7 @@ function BookFormContent() {
           <label className="block mb-2 font-semibold text-gray-700">Email Address</label>
           <input type="email" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} className="w-full p-2 mb-4 border rounded" placeholder="Enter your email" />
 
-          <label className="block mb-2 font-semibold text-gray-700">Ziyarat to</label>
+          <label className="block mb-2 font-semibold text-gray-700">Ziyarat Places</label>
           <input type="text" value={countryName} readOnly className="w-full p-2 mb-4 border rounded bg-gray-100" />
 
           <label className="block mb-2 font-semibold text-gray-700">Ziyarat Route</label>

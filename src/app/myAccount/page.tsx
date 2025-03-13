@@ -15,6 +15,9 @@ import TourBookings from '../getTourBooking/page';
 import HajjBookings from '../hajjBooking/page';
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
+import { PiMosqueFill } from "react-icons/pi";
+import { MdMosque } from "react-icons/md";
+import { FaKaaba } from "react-icons/fa";
 import {
   FaTicketAlt,
   FaCheckCircle,
@@ -22,11 +25,11 @@ import {
   FaUmbrellaBeach,
   FaPassport,
   FaFileAlt,
-  FaCogs,
-  FaBook,
   FaLock,
-  FaMosque
+
 } from "react-icons/fa";
+import UmrahBookings from '../umrahBooking/page';
+import IranBookings from '../iranBooking/page';
 
 
 
@@ -316,7 +319,14 @@ const renderContent = () => {
         <HajjBookings/>
           </div>
         );
-
+        case 'Iran Bookings':
+          return (
+            <div>
+            <h2 className="text-2xl font-bold mb-4"><u>Your Ziyarat Bookings</u></h2>
+           
+          <IranBookings/>
+            </div>
+          );
       case 'Visa Bookings':
       return (
         <div>
@@ -341,6 +351,14 @@ const renderContent = () => {
       <TourBookings/>
         </div>
       );
+      case 'Umrah Bookings':
+        return (
+          <div>
+          <h2 className="text-2xl font-bold mb-4"><u>Your Umrah Bookings</u></h2>
+         
+        <UmrahBookings/>
+          </div>
+        );
     case 'Password Settings':
       return (
         <div>
@@ -444,17 +462,42 @@ const toggleTicketOptions = () => {
               activeOption === "Hajj Bookings" ? "border-b-2 border-black" : ""
             }`}
           >
-            <FaMosque className="mr-3" />
+            <FaKaaba  className="mr-3" />
             Hajj Bookings
           </button>
         </li>
+      
+          <li>
+          <button
+            onClick={() => handleSidebarOptionClick("Umrah Bookings")}
+            className={` flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
+              activeOption === "Umrah Bookings" ? "border-b-2 border-black" : ""
+            }`}
+          >
+            <PiMosqueFill className="mr-3" />
+           Umrah Bookings
+          </button>
+        </li>  
+
+        <li>
+          <button
+            onClick={() => handleSidebarOptionClick("Iran Bookings")}
+            className={` flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
+              activeOption === "Iran Bookings" ? "border-b-2 border-black" : ""
+            }`}
+          >
+            <MdMosque  className="mr-3" />
+           Ziyarat Bookings
+          </button>
+        </li>  
+
         <li>
           <button
             onClick={() => handleSidebarOptionClick("Visa Bookings")}
             className={`  flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
               activeOption === "Visa Bookings" ? "border-b-2 border-black" : ""
             }`}
-          >
+          > 
             <FaPassport className="mr-3" />
             Visa Bookings
           </button>
@@ -498,17 +541,7 @@ const toggleTicketOptions = () => {
             Password Settings
           </button>
         </li>
-        <li>
-          <button
-            onClick={() => handleSidebarOptionClick("My Ledger")}
-            className={` flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
-              activeOption === "My Ledger" ? "border-b-2 border-black" : ""
-            }`}
-          >
-            <FaBook className="mr-3" />
-            My Ledger
-          </button>
-        </li>
+       
       </ul>
     </div>
     <div className="flex flex-col items-start p-10 w-full">
@@ -612,7 +645,7 @@ const toggleTicketOptions = () => {
         </div>
       )}
       
-      <hr className='my-2 w-full'></hr>
+      <hr className='my-2 w-full mb-6'></hr>
     
     <div className=""> 
    {renderContent()}

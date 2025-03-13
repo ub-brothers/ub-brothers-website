@@ -158,6 +158,11 @@ const handleSubmit = async (e: React.FormEvent) => {
   formDataToSend.append("nationality", formData.nationality);
   formDataToSend.append("totalCost", totalCost.toString());
 
+  const userEmail = localStorage.getItem("userEmail");
+  if (userEmail) {
+   formDataToSend.append("userEmail", userEmail);
+ }
+
   if (personalPhoto) {
     formDataToSend.append("personalPhoto", personalPhoto);
   }
@@ -181,75 +186,138 @@ const handleSubmit = async (e: React.FormEvent) => {
 const generatePDF = () => {
   const doc = new jsPDF();
 
-  
-  const companyLogo = "/image/logo.png"; 
-  doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); 
+  // Add company logo
+  const companyLogo = "/image/logo.png";
+  doc.addImage(companyLogo, "PNG", 10, 10, 30, 30);
 
-  
+  // Add company name and title
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.setTextColor(0, 0, 128); 
-  doc.text("UB Brothers", 45, 20); 
+  doc.setTextColor(0, 0, 128); // Navy blue color
+  doc.text("UB Brothers Travel & Tours", 45, 20);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(12);
-  doc.setTextColor(0, 0, 0); 
+  doc.setTextColor(0, 0, 0); // Black color
   doc.text("Umrah Booking Details", 45, 30);
 
-
-  doc.setFontSize(14);
+  // Set initial y position for content
   let y = 50;
- 
-  const addField = (label:any, value:any) => {
-    doc.setFont("helvetica", "bold"); 
-    doc.setTextColor(0, 0, 128); 
-    doc.text(`${label}:`, 10, y); 
 
-   
-    const labelWidth = doc.getTextWidth(`${label}:`); 
-    const valueX = 15 + labelWidth; 
+  // Function to split text into multiple lines
+  const splitTextIntoLines = (text, maxWidth) => {
+    const words = text.split(" ");
+    const lines = [];
+    let currentLine = words[0];
 
-    doc.setFont("helvetica", "normal"); 
-    doc.setTextColor(0, 0, 0); 
-    doc.text(value, valueX, y); 
-
-    y += 10; 
+    for (let i = 1; i < words.length; i++) {
+      const word = words[i];
+      const width = doc.getTextWidth(currentLine + " " + word);
+      if (width < maxWidth) {
+        currentLine += " " + word;
+      } else {
+        lines.push(currentLine);
+        currentLine = word;
+      }
+    }
+    lines.push(currentLine);
+    return lines;
   };
 
-  
-  addField("Full Name", formData.name);
-  addField("Phone Number", formData.phone);
-  addField("Selected Days", `${selectedDays} Days`);
-  addField("Makkah Hotel", selectedMakkahHotel);
-  addField("Makkah Room Category", selectedMakkahCategory);
-  addField("Makkah Days of Stay", formData.makkahDay.toString());
-  addField("Madina Hotel", selectedMadinaHotel);
-  addField("Madina Room Category", selectedMadinaCategory);
-  addField("Madina Days of Stay", formData.madinaDay.toString());
-  addField("Visa Status", visaStatus === "yes" ? "Yes" : "No");
-  addField("Nationality", formData.nationality);
-  addField("Total Cost", `${totalCost} SAR/-`);
+  // Function to add a field with label and value
+  const addField = (label, value, x, maxWidth) => {
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 128); // Navy blue color
+    doc.text(`${label}:`, x, y);
 
+    const labelWidth = doc.getTextWidth(`${label}:`);
+    const valueX = x + labelWidth + 5; // Add a small gap after the label
+
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0); // Black color
+
+    // Split the value into multiple lines if it's too long
+    const valueLines = splitTextIntoLines(value, maxWidth);
+    valueLines.forEach((line, index) => {
+      doc.text(line, valueX, y + index * 10); // Add each line below the previous one
+    });
+
+    y += valueLines.length * 10; // Move y position based on the number of lines
+  };
+  
+  addField("Full Name", formData.name, 10, 180); // Max width for full page
+  addField("Phone Number", formData.phone, 10, 180);
+  addField("Selected Days", `${selectedDays} Days`, 10, 180);
+  // Function to draw a box around content
+  const drawBox = (x, y, width, height) => {
+    doc.setDrawColor(0, 0, 128); // Navy blue border color
+    doc.setLineWidth(0.5); // Border thickness
+    doc.rect(x, y, width, height); // Draw rectangle
+  };
+
+  // Add Makkah details
+  const makkahX = 10;
+  const makkahY = y;
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 0, 128);
+  
+  y += 10;
+
+  addField("Makkah Hotel", selectedMakkahHotel, makkahX, 180); // Max width for Makkah box
+  addField("Makkah Room Category", selectedMakkahCategory, makkahX, 180);
+  addField("Makkah Days of Stay", formData.makkahDay.toString(), makkahX, 180);
+
+  // Draw a box around Makkah details
+  drawBox(makkahX - 5, makkahY - 5, 190, y - makkahY + 10);
+
+  // Add spacing between Makkah and Madina details
+  y += 20;
+
+  // Add Madina details
+  const madinaX = 10;
+  const madinaY = y;
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 0, 128);
  
+  y += 10;
+
+  addField("Madina Hotel", selectedMadinaHotel, madinaX, 180); // Max width for Madina box
+  addField("Madina Room Category", selectedMadinaCategory, madinaX, 180);
+  addField("Madina Days of Stay", formData.madinaDay.toString(), madinaX, 180);
+
+  // Draw a box around Madina details
+  drawBox(madinaX - 5, madinaY - 5, 190, y - madinaY + 10);
+
+  // Add spacing between Madina and other details
+  y += 20;
+
+  // Add other fields below the boxes
+
+  addField("Visa Status", visaStatus === "yes" ? "Yes" : "No", 10, 180);
+  addField("Nationality", formData.nationality, 10, 180);
+  addField("Total Cost", `${totalCost} SAR/-`, 10, 180);
+
+  // Add personal photo if available
   if (personalPhoto) {
     const personalPhotoURL = URL.createObjectURL(personalPhoto);
-    doc.addPage(); 
+    doc.addPage();
     doc.setFont("helvetica", "bold");
     doc.setTextColor(0, 0, 128);
     doc.text("Personal Photo:", 10, 20);
-    doc.addImage(personalPhotoURL, "JPEG", 10, 30, 80, 80); 
+    doc.addImage(personalPhotoURL, "JPEG", 10, 30, 80, 80);
   }
 
+  // Add passport scan if available
   if (passportScan) {
     const passportScanURL = URL.createObjectURL(passportScan);
-    doc.addPage(); 
+    doc.addPage();
     doc.setFont("helvetica", "bold");
     doc.setTextColor(0, 0, 128);
     doc.text("Passport Scan:", 10, 20);
-    doc.addImage(passportScanURL, "JPEG", 10, 30, 80, 80); 
+    doc.addImage(passportScanURL, "JPEG", 10, 30, 80, 80);
   }
 
- 
+  // Save the PDF
   doc.save("umrah-booking-details.pdf");
 };
 

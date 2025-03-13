@@ -20,12 +20,12 @@ export default {
         type: "string",
       },
       {
-        name: "fullName",
+        name: "firstName",
         title: "Full Name",
         type: "string",
       },
       {
-        name: "price",
+        name: "prize",
         title: "Prize",
         type: "number",
       },

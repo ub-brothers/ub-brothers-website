@@ -20,18 +20,59 @@ export default {
         type: "string",
       },
       {
-        name: "fullName",
+        name: "name",
         title: "Full Name",
         type: "string",
       },
+     
       {
-        name: "prize",
-        title: "Prize",
+        name: "phone",
+        title: "PhoneNumber",
+        type: "string",
+      },
+      
+      {
+        name: "days",
+        title: "Number of Days",
         type: "number",
       },
       {
-        name: "priceForUsers",
-        title: "Price for Login Users",
+        name: "makkahHotel",
+        title: "Makkah Hotel",
+        type: "string",
+      },
+      {
+        name: "makkahDay",
+        title: "Makkah Day",
+        type: "number",
+      },
+      {
+        name: "makkahCategory",
+        title: "Makkah Room Ctegory",
+        type: "string",
+      },
+
+      {
+        name: "madinaHotel",
+        title: "Madina Hotel",
+        type: "string",
+      },
+      {
+        name: "madinaDay",
+        title: "Madina Day",
+        type: "number",
+      },
+      {
+        name: "madinaCategory",
+        title: "Madina Room Ctegory",
+        type: "string",
+      },
+      
+
+
+      {
+        name: "totalCost",
+        title: "Total Cost",
         type: "number",
       },
     ],

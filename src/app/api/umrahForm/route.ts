@@ -1,5 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { createClient } from "@sanity/client";
+
+const sanityClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, // Replace with your actual Project ID
+  dataset: "production",
+  useCdn: false,
+  apiVersion: "2025-01-30",
+  token: process.env.SANITY_API_TOKEN, // Add your Sanity API token in .env
+});
+
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,6 +26,7 @@ export async function POST(req: NextRequest) {
     const visaStatus = formData.get("visaStatus");
     const nationality = formData.get("nationality");
     const totalCost = formData.get("totalCost");
+    const userEmail = formData.get("userEmail");
     
     
     const personalPhoto = formData.get("personalPhoto");
@@ -67,9 +78,32 @@ export async function POST(req: NextRequest) {
     };
 
     await transporter.sendMail(mailOptions);
+
+    if (userEmail) {
+      const umrahDoc = {
+        _type: "umrahBooking",
+        userEmail: userEmail,
+        createdAt: new Date().toISOString(),
+        name: name,
+        days: days,
+        makkahHotel: makkahHotel,
+        makkahDay:makkahDay,
+        makkahCategory: makkahCategory,
+        madinaHotel:madinaHotel,
+        madinaDay:madinaDay,
+        madinaCategory:madinaCategory,
+        totalCost:totalCost,
+        visaStatus:visaStatus,
+      };
+
+      await sanityClient.create(umrahDoc);
+
     
     return NextResponse.json({ success: true, message: "Email sent successfully!" });
-  } catch (error) {
+  } else {
+      return NextResponse.json({ message: "Email sent, but not stored (User not logged in)" }, { status: 200 });
+    }}
+    catch (error) {
     console.error("Email sending error:", error);
     return NextResponse.json({ success: false, message: "Failed to send email." }, { status: 500 });
   }

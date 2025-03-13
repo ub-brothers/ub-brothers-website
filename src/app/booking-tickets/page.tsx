@@ -98,7 +98,7 @@ const handleDownloadPDF = () => {
     
     doc.setFont("helvetica", "bold"); 
     doc.setFontSize(18);
-    doc.text("UB Brothers", 45, 20); 
+    doc.text("UB Brothers Travel & Tours", 45, 20); 
     
    
     doc.setFont("helvetica", "normal"); 

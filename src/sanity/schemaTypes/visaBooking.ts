@@ -30,13 +30,13 @@ export default {
       {
         name: 'prize',
         title: 'Prize',
-        type: 'number',
+        type: 'string',
               
       },
       {
         name: "prizeForUsers",
         title: "Price for Login Users",
-        type: "number",
+        type: "string",
       },
       
     ],
