@@ -33,7 +33,8 @@ function BookFormContent() {
     setIsConfirmed(true);
     e.preventDefault();
     const selectedPrize = selectedCategory === "sharing" ? (isApprovedUser ? sharingPriceForUsers : prize1) : selectedCategory === "triple" ? (isApprovedUser ? triplePriceForUsers : prize2) :  (isApprovedUser ? doublePriceForUsers : prize3);
-    const formData = { userName, userNumber, userEmail, shortDescription, selectedCategory, selectedPrize, userMessage };
+    const storedEmail = localStorage.getItem("userEmail");
+    const formData = { userName, userNumber, userEmail, shortDescription, selectedCategory, selectedPrize, userMessage, storedUserEmail:storedEmail };
     
     try {
       const res = await fetch("/api/hajjForm2", {

@@ -2,7 +2,7 @@
 export default {
     name: 'booking', // Schema ka naam
     type: 'document', // Document type
-    title: 'Booking', // Schema ka title
+    title: 'Ticket Booking', // Schema ka title
     fields: [
       {
         name: "isConfirmed",

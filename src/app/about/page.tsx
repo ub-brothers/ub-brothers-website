@@ -140,7 +140,7 @@ const AboutUs = () => {
 
   <div className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center">
   <img 
-      src="/image/narmeen.jpeg" 
+      src="/image/narmen.jpeg" 
       alt="Narmeen Mughal" 
       className="w-24 h-24 rounded-full object-cover mb-3"
     />

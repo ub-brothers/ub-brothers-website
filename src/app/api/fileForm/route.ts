@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { createClient } from "@sanity/client";
+
+const sanityClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, // Replace with your actual Project ID
+  dataset: "production",
+  useCdn: false,
+  apiVersion: "2025-01-30",
+  token: process.env.SANITY_API_TOKEN, // Add your Sanity API token in .env
+});
 
 export async function POST(req: NextRequest) {
   try {
-    const { fullName, phone, email, country, message, price, prizeForUsers} = await req.json();
+    const { fullName, phone, email, country, message, price, prizeForUsers, userEmail} = await req.json();
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -15,7 +24,7 @@ export async function POST(req: NextRequest) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ubbrothersconsultant@gmail.com", 
+      to: "samiaurooj386@gmail.com", 
       subject: `New File and Consultancy Submission - ${new Date().toLocaleString()}`,
       html: `
         <h2>File and consultancy Details</h2>
@@ -30,8 +39,23 @@ export async function POST(req: NextRequest) {
 
     await transporter.sendMail(mailOptions);
 
+     if (userEmail) {
+          const fileDoc = {
+            _type: "fileBooking",
+            userEmail: userEmail,
+            countryName: country,
+            createdAt: new Date().toISOString(),
+            price: prizeForUsers || price,
+            fullName: fullName,
+          };
+    
+          await sanityClient.create(fileDoc);
+
     return NextResponse.json({ success: true, message: "Submitted successfully!" }, { status: 200 });
-  } catch (error) {
+  }else {
+      return NextResponse.json({ message: "Email sent, but not stored (User not logged in)" }, { status: 200 });
+    }}
+     catch (error) {
     console.error("Error sending email:", error);
     return NextResponse.json({ success: false, message: "Failed to submit." }, { status: 500 });
   }

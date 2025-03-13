@@ -1,21 +1,22 @@
+
 import { NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
 
 export async function POST(req: Request) {
     try {
-      const { userEmail } = await req.json();
+      const { storedUserEmail } = await req.json();
     
   
-      if (!userEmail) {
+      if (!storedUserEmail) {
         return NextResponse.json({ error: "User email is required" }, { status: 400 });
       }
 
   
-      const query = `*[_type == "booking" && userEmail == $userEmail]`;
+      const query = `*[_type == "hajjBooking" && storedUserEmail == $storedUserEmail] | order(createdAt asc)`;
      
   
-      const bookings = await client.fetch(query, { userEmail });
-  
+      const bookings = await client.fetch(query, { storedUserEmail });
+      console.log("Fetched Bookings:", bookings);
     
   
       return NextResponse.json(bookings);

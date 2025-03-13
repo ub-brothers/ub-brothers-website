@@ -28,6 +28,8 @@ const prize = searchParams.get("prize") || "";
 const prizeForUsers = searchParams.get("prizeForUsers")||"";
 console.log("Prize For Users:", searchParams.get("prizeForUsers"));
 
+
+
   const [formData, setFormData] = useState({
     visaType: "",
     nationality: "",
@@ -40,12 +42,10 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
   
     phone: "",
     email: "",
-
     residenceAddress: "",
     passportNumber: "",
    
-    approximateArrivalDate: "",
-    approximateDepartureDate: "",
+   
   });
 
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -69,8 +69,10 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
     formDataToSend.append("residenceAddress", formData.residenceAddress);
     formDataToSend.append("passportNumber", formData.passportNumber);
  
-    formDataToSend.append("approximateArrivalDate", formData.approximateArrivalDate);
-    formDataToSend.append("approximateDepartureDate", formData.approximateDepartureDate);
+ const storedEmail = localStorage.getItem("userEmail");
+ if (storedEmail) {
+  formDataToSend.append("storedUserEmail", storedEmail);
+}
 
     Object.entries(formData).forEach(([key, value]) => {
       if (value) {
@@ -85,10 +87,12 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
     for (let pair of formDataToSend.entries()) {
     
     }
-  
+
+ 
     const response = await fetch("/api/visaForm", {
       method: "POST",
       body: formDataToSend,
+      
     });
   
     const result = await response.json();
@@ -248,15 +252,13 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
   yOffset = addField("Nationality", formData.nationality, yOffset);
   yOffset = addField("First Name", formData.firstName, yOffset);
   yOffset = addField("Country Name", `${countryName}`, yOffset);
-  yOffset = addField("Prize", `${isApprovedUser ? prizeForUsers : prize} PKR/-`, yOffset);
+  yOffset = addField("Prize", `${isApprovedUser ? prizeForUsers : prize}`, yOffset);
   yOffset = addField("Father's Name", formData.fatherName, yOffset);
   yOffset = addField("Gender", formData.gender, yOffset);
   yOffset = addField("Phone", formData.phone, yOffset);
   yOffset = addField("Email", formData.email, yOffset);
   yOffset = addField("Residence Address", formData.residenceAddress, yOffset);
   yOffset = addField("Passport Number", formData.passportNumber, yOffset);
-  yOffset = addField("Approximate Arrival Date", formData.approximateArrivalDate, yOffset);
-  yOffset = addField("Approximate Departure Date", formData.approximateDepartureDate, yOffset);
 
   // Add images to new pages
   if (photo) {
@@ -365,6 +367,12 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
         <p>Residence Address</p>
         <input type="text" placeholder="Enter Address" name="residenceAddress" value={formData.residenceAddress}  onChange={handleChange} className="w-full p-2 border rounded mb-2" />
       </section>
+        <section>
+        <h3 className="text-lg  mb-2">ID Card Photo (Clear Image)</h3>
+        <input type="file"  name="idCardPhoto" onChange={(e) => handleFileUpload(e, "idCardPhoto", setIdCardValid)} className="w-full p-2 border rounded mb-2" />
+        {idCardPhoto && <img src={idCardPhoto} alt="ID Card" className="h-24 mt-2" />} 
+        {idCardValid !== null && (idCardValid ? "✅" : "❌ Photo is not clear")}
+      </section>
 
       <section>
         <h3 className="text-xl font-semibold text-blue-800 mb-2 mt-10"><u>Passport Information</u></h3>
@@ -378,16 +386,7 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
         {passportPhoto && <img src={passportPhoto} alt="Passport" className="h-24 mt-2" />} 
         {passportValid !== null && (passportValid ? "✅" : "❌ Photo is not clear")}
       </section>
-        <p>Approximate Arrival Date</p>
-        <input type="date" className="w-full p-2 border rounded mb-2" name="approximateArrivalDate" value={formData.approximateArrivalDate} onChange={handleChange}/>
-        <p>Approximate Departure Date</p>
-        <input type="date" className="w-full p-2 border rounded mb-2" name="approximateDepartureDate" value={formData.approximateDepartureDate} onChange={handleChange}/>
-        <section>
-        <h3 className="text-lg  mb-2">ID Card Photo (Clear Image)</h3>
-        <input type="file"  name="idCardPhoto" onChange={(e) => handleFileUpload(e, "idCardPhoto", setIdCardValid)} className="w-full p-2 border rounded mb-2" />
-        {idCardPhoto && <img src={idCardPhoto} alt="ID Card" className="h-24 mt-2" />} 
-        {idCardValid !== null && (idCardValid ? "✅" : "❌ Photo is not clear")}
-      </section>
+       
       </section>
       <div className="text-center mt-6">
         <button className="bg-blue-500 w-full hover:bg-orange-500 text-white px-4 py-2 rounded">

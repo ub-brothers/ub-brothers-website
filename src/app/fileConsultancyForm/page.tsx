@@ -23,6 +23,7 @@ function FileContent(){
     price:'',
     prizeForUsers:"",
     message: '',
+    userEmail:'',
   });
 
 
@@ -55,9 +56,12 @@ function FileContent(){
     setIsConfirmed(true);
     e.preventDefault();
 
+    const storedEmail = localStorage.getItem("userEmail");
+
     const updatedFormData = {
       ...formData,
       country: countryName || "", // Ensure it's added
+      userEmail: storedEmail || "",
       price: prize || "",
       prizeForUsers: prizeForUsers || "",
     };
@@ -75,7 +79,7 @@ function FileContent(){
       
       if (result.success) {
         alert('Submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '',prizeForUsers:"" }); // Clear form
+        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '',prizeForUsers:"", userEmail:"" }); // Clear form
       } else {
         alert('Failed to submit. Please try again.');
       }

@@ -1,3 +1,4 @@
+
 import { NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
 
@@ -11,12 +12,10 @@ export async function POST(req: Request) {
       }
 
   
-      const query = `*[_type == "booking" && userEmail == $userEmail]`;
+      const query = `*[_type == "tourBooking" && userEmail == $userEmail]`;
      
   
       const bookings = await client.fetch(query, { userEmail });
-  
-    
   
       return NextResponse.json(bookings);
     } catch (error) {

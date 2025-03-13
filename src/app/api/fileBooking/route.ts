@@ -1,3 +1,4 @@
+
 import { NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
 
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
       }
 
   
-      const query = `*[_type == "booking" && userEmail == $userEmail]`;
+      const query = `*[_type == "fileBooking" && userEmail == $userEmail] | order(createdAt asc)`;
      
   
       const bookings = await client.fetch(query, { userEmail });

@@ -45,6 +45,7 @@ function TourContent(){
     price: '',
     priceForUsers:"",
     message: '',
+    userEmail:'',
   });
 
   const handleChange = (e:any) => {
@@ -52,7 +53,7 @@ function TourContent(){
   };
 
   const [isConfirmed, setIsConfirmed] = useState(false);
-
+  const storedEmail = localStorage.getItem("userEmail");
   const handleSubmit = async (e:any) => {
     setIsConfirmed(true);
     e.preventDefault();
@@ -61,6 +62,7 @@ function TourContent(){
       ...formData,
       country: countryName || "", 
       price: prize || "", 
+      userEmail: storedEmail || "",
       priceForUsers: priceForUsers || "", 
     };
   
@@ -77,7 +79,7 @@ function TourContent(){
       
       if (result.success) {
         alert('Submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '',priceForUsers:"" }); // Clear form
+        setFormData({ fullName: '', phone: '', email: '', country: '',price:'', message: '',priceForUsers:"", userEmail:"" }); // Clear form
       } else {
         alert('Failed to submit. Please try again.');
       }

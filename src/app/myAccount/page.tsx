@@ -9,6 +9,24 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import ChangePassword from '../change-password/page';
 import Link from 'next/link';
 import MyBookings from '../bookingUser/page';
+import VisaBookings from '../getVisa/page';
+import FileBookings from '../fileBookingShow/page';
+import TourBookings from '../getTourBooking/page';
+import HajjBookings from '../hajjBooking/page';
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
+import {
+  FaTicketAlt,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaUmbrellaBeach,
+  FaPassport,
+  FaFileAlt,
+  FaCogs,
+  FaBook,
+  FaLock,
+  FaMosque
+} from "react-icons/fa";
 
 
 
@@ -271,14 +289,14 @@ const renderContent = () => {
     case 'Confirmed Booking':
       return (
         
-        <div className="w-full overflow-x-auto">
-          <div  className="overflow-x-auto min-w-[700px]">
+        <div className="">
+          
         <h2 className="text-2xl font-bold text-left mb-4">
           <u>Confirmed Bookings</u>
         </h2>
        {/* Add this container */}
        <MyBookings searchParams={{ filterStatus: "confirmed" }} />
-    </div>
+    
       </div>
       );
     case 'Cancel Booking':
@@ -288,6 +306,39 @@ const renderContent = () => {
        {/* Add this container */}
        <MyBookings searchParams={{ filterStatus: "cancelled" }} />
     
+        </div>
+      );
+      case 'Hajj Bookings':
+        return (
+          <div>
+          <h2 className="text-2xl font-bold mb-4"><u>Your Hajj Bookings</u></h2>
+         
+        <HajjBookings/>
+          </div>
+        );
+
+      case 'Visa Bookings':
+      return (
+        <div>
+        <h2 className="text-2xl font-bold mb-4"><u>Your Visa Bookings</u></h2>
+       
+       <VisaBookings/>
+        </div>
+      );
+      case 'File & Consultancy Bookings':
+      return (
+        <div>
+        <h2 className="text-2xl font-bold mb-4"><u>Your File & Consultancy Bookings</u></h2>
+       
+      <FileBookings/>
+        </div>
+      );
+      case 'Tour Package Bookings':
+      return (
+        <div>
+        <h2 className="text-2xl font-bold mb-4"><u>Your Tour Package Bookings</u></h2>
+       
+      <TourBookings/>
         </div>
       );
     case 'Password Settings':
@@ -301,6 +352,12 @@ const renderContent = () => {
     default:
       return null;
   }
+};
+
+const [showTicketOptions, setShowTicketOptions] = useState(false);
+
+const toggleTicketOptions = () => {
+  setShowTicketOptions(!showTicketOptions);
 };
 
 
@@ -322,30 +379,138 @@ const renderContent = () => {
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         } z-20`}
       >
-        <h2 className="text-lg font-semibold mb-4">My Account</h2>
-        <ul>
-          <li className="mb-2">
-            <button onClick={() => handleSidebarOptionClick('All Bookings')}  className={`w-full text-left hover:bg-gray-400 p-2 rounded ${
-                activeOption === "All Bookings" ? "bg-gray-400 text-white" : ""
-              }`} >All Bookings</button>
-          </li>
-          <li className="mb-2">
-            <button onClick={() => handleSidebarOptionClick('Confirmed Booking')} className={`w-full text-left hover:bg-gray-400 p-2 rounded ${
-                activeOption === "Confirmed Booking" ? "bg-gray-400 text-white " : ""
-              }`}>Confirmed Booking</button>
-          </li>
-          <li className="mb-2">
-            <button  onClick={() => handleSidebarOptionClick('Cancel Booking')} className={`w-full text-left hover:bg-gray-400 p-2 rounded ${
-                activeOption === "Cancel Booking" ? "bg-gray-400 text-white" : ""
-              }`}>Cancel Booking</button>
-          </li>
-          <li className="mb-2">
-            <button onClick={() => handleSidebarOptionClick('Password Settings')} className={`w-full text-left hover:bg-gray-400 p-2 rounded ${
-                activeOption === "Password Settings" ? "bg-gray-400 text-white" : ""
-              }`}>Password Settings</button>
-          </li>
-        </ul>
-      </div>
+          <h2 className="text-xl font-bold mb-6  border-gray-700 pb-4">
+        My Account
+      </h2>
+      <ul className="space-y-4">
+        {/* Ticket Booking Dropdown */}
+        <li>
+          <button
+            onClick={toggleTicketOptions}
+            className={`w-full flex justify-between items-center text-left hover:text-gray-400  transition-colors duration-200 ${
+              showTicketOptions ? "border-b-2 border-black" : ""
+            }`}
+          >
+            <div className="flex items-center">
+              <FaTicketAlt className="mr-3" />
+              <span className='text-sm'>Ticket Booking</span>
+            </div>
+            <span>{showTicketOptions ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
+          </button>
+          {showTicketOptions && (
+            <div className="ml-6 mt-2 space-y-2">
+              <button
+                onClick={() => handleSidebarOptionClick("All Bookings")}
+                className={`w-full flex items-center text-sm hover:bg-gray-400 p-2 rounded-lg transition-colors duration-200 ${
+                  activeOption === "All Bookings"
+                    ? "bg-gray-400 "
+                    : ""
+                }`}
+              >
+                <FaCheckCircle className="mr-2" />
+                All Bookings
+              </button>
+              <button
+                onClick={() => handleSidebarOptionClick("Confirmed Booking")}
+                className={`w-full flex items-center text-sm hover:bg-gray-400 p-2 rounded-lg transition-colors duration-200 ${
+                  activeOption === "Confirmed Booking"
+                    ? "bg-gray-400"
+                    : ""
+                }`}
+              >
+                <FaCheckCircle className="mr-2" />
+                Confirmed Booking
+              </button>
+              <button
+                onClick={() => handleSidebarOptionClick("Cancel Booking")}
+                className={`w-full flex items-center text-sm hover:bg-gray-400 p-2 rounded-lg transition-colors duration-200 ${
+                  activeOption === "Cancel Booking"
+                    ? "bg-gray-400"
+                    : ""
+                }`}
+              >
+                <FaTimesCircle className="mr-2" />
+                Cancel Booking
+              </button>
+            </div>
+          )}
+        </li>
+
+        {/* Other Menu Items */}
+        <li>
+          <button
+            onClick={() => handleSidebarOptionClick("Hajj Bookings")}
+            className={`flex my-2 items-center text-left text-sm hover:text-gray-400  transition-colors duration-200 ${
+              activeOption === "Hajj Bookings" ? "border-b-2 border-black" : ""
+            }`}
+          >
+            <FaMosque className="mr-3" />
+            Hajj Bookings
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => handleSidebarOptionClick("Visa Bookings")}
+            className={`  flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
+              activeOption === "Visa Bookings" ? "border-b-2 border-black" : ""
+            }`}
+          >
+            <FaPassport className="mr-3" />
+            Visa Bookings
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => handleSidebarOptionClick("File & Consultancy Bookings")}
+            className={` flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
+              activeOption === "File & Consultancy Bookings"
+                ? "border-b-2 border-black"
+                : ""
+            }`}
+          >
+            <FaFileAlt className="mr-3" />
+            File & Consultancy Bookings
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => handleSidebarOptionClick("Tour Package Bookings")}
+            className={` flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
+              activeOption === "Tour Package Bookings"
+                ? "border-b-2 border-black"
+                : ""
+            }`}
+          >
+            <FaUmbrellaBeach className="mr-3" />
+            Tour Package Bookings
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => handleSidebarOptionClick("Password Settings")}
+            className={` flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
+              activeOption === "Password Settings"
+                ? "border-b-2 border-black"
+                : ""
+            }`}
+          >
+            <FaLock className="mr-3" />
+            Password Settings
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => handleSidebarOptionClick("My Ledger")}
+            className={` flex items-center text-sm text-left hover:text-gray-400  transition-colors duration-200 ${
+              activeOption === "My Ledger" ? "border-b-2 border-black" : ""
+            }`}
+          >
+            <FaBook className="mr-3" />
+            My Ledger
+          </button>
+        </li>
+      </ul>
+    </div>
     <div className="flex flex-col items-start p-10 w-full">
      
 
@@ -447,7 +612,7 @@ const renderContent = () => {
         </div>
       )}
       
-      <hr className='my-10 w-full'></hr>
+      <hr className='my-2 w-full'></hr>
     
     <div className=""> 
    {renderContent()}

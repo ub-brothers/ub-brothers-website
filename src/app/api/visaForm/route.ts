@@ -2,7 +2,16 @@ import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import {client} from "@/sanity/lib/client"
+import { createClient } from "@sanity/client";
 
+const sanityClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, // Replace with your actual Project ID
+  dataset: "production",
+  useCdn: false,
+  apiVersion: "2025-01-30",
+  token: process.env.SANITY_API_TOKEN, // Add your Sanity API token in .env
+});
 
 export const POST = async (req:Request) => {
   try {
@@ -12,7 +21,7 @@ export const POST = async (req:Request) => {
     for (const entry of formData.entries()) {
       console.log(entry);
     }
-    
+    const storedUserEmail = formData.get("storedUserEmail");
    
     for (let [key, value] of formData.entries()) {
       if (value instanceof Blob) {
@@ -43,7 +52,7 @@ export const POST = async (req:Request) => {
    
     const mailOptions = {
       from: "emailforclient88@gmail.com",
-      to: "ubbrothersconsultant@gmail.com",
+      to: "samiaurooj386@gmail.com",
       subject: `New E-Visa Application Submission - ${new Date().toLocaleString()}`,
       html: `
         <h2>E-Visa Application Details</h2>
@@ -51,7 +60,7 @@ export const POST = async (req:Request) => {
         <p><strong>Nationality:</strong> ${fields.nationality}</p>
  
  <p><strong>Visa Country:</strong> ${fields.countryName}</p>
- <p><strong>Visa Cost:</strong> ${fields.prizeForUsers || fields.prize}</p>
+ <p><strong>Visa Cost:</strong> ${fields.prizeForUsers || fields.prize} PKR/- </p>
         <p><strong>Full Name:</strong> ${fields.firstName}</p>
      
         <p><strong>Father's Name:</strong> ${fields.fatherName}</p>
@@ -65,18 +74,33 @@ export const POST = async (req:Request) => {
         <p><strong>Residence Address:</strong> ${fields.residenceAddress}</p>
         <p><strong>Passport Number:</strong> ${fields.passportNumber}</p>
       
-  
-        <p><strong>Arrival Date:</strong> ${fields.approximateArrivalDate}</p>
-        <p><strong>Departure Date:</strong> ${fields.approximateDepartureDate}</p>
       `,
       attachments,
     };
 
     // Send Email
     await transporter.sendMail(mailOptions);
+  
+    // ✅ Store in Sanity Only if User is Logged In
+    if (storedUserEmail) {
+      const visaDoc = {
+        _type: "visaBooking",
+        userEmail: storedUserEmail,
+        countryName: fields.countryName,
+        createdAt: new Date().toISOString(),
+        prize: fields.prizeForUsers || fields.prize,
+        firstName: fields.firstName,
+       
+       
+      };
+
+      await sanityClient.create(visaDoc);
 
     return NextResponse.json({ message: "Submitted successfully!" }, { status: 200 });
-  } catch (error) {
+  }else {
+    return NextResponse.json({ message: "Email sent, but not stored (User not logged in)" }, { status: 200 });
+  }}
+   catch (error) {
     console.error("Error sending email:", error);
     return NextResponse.json({ message: "Failed to submit" }, { status: 500 });
   }

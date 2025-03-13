@@ -25,6 +25,7 @@ const [isApprovedUser, setIsApprovedUser] = useState(false);
     priceForUsers:"",
     price: '',
     message: '',
+   userEmail:"",
   });
 
   const handleChange = (e:any) => {
@@ -35,9 +36,12 @@ const [isApprovedUser, setIsApprovedUser] = useState(false);
   const handleSubmit = async (e:any) => {
     setIsConfirmed(true);
     e.preventDefault();
-  
+
+    const storedEmail = localStorage.getItem("userEmail");
+   
     const updatedFormData = {
       ...formData,
+      userEmail: storedEmail || "",
       country: countryName || "", 
       price: prize || "", 
       priceForUsers: priceForUsers || "",
@@ -55,8 +59,8 @@ const [isApprovedUser, setIsApprovedUser] = useState(false);
       const result = await response.json();
       
       if (result.success) {
-        alert('Your application has been submitted successfully!');
-        setFormData({ fullName: '', phone: '', email: '', country: '', message: '', price: "", priceForUsers:"" }); 
+        alert('Submitted successfully!');
+        setFormData({ fullName: '', phone: '', email: '', country: '', message: '', price: "", priceForUsers:"", userEmail:"" }); 
       } else {
         alert('Failed to submit. Please try again.');
       }
