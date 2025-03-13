@@ -9,7 +9,7 @@ const sanityClient = createClient({
   token: process.env.SANITY_API_TOKEN, // Add your Sanity API token in .env
 });
 
-export const ledgerQuery = `{
+const ledgerQuery = `{
   "Tickets": *[_type == "booking" && userEmail == $userEmail && isConfirmed == true] | order(createdAt asc),
   "File & Consultancy": *[_type == "fileBooking" && userEmail == $userEmail] | order(createdAt asc),
   "Iran Ziyarat": *[_type == "iranBooking" && (userEmail == $userEmail || storedUserEmail == $userEmail)] | order(createdAt asc),
