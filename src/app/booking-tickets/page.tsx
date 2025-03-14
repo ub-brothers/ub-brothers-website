@@ -3,10 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Suspense } from "react";
-import jsPDF from "jspdf";
 import { jwtDecode } from 'jwt-decode';
-import {client} from "@/sanity/lib/client"
-import { v4 as uuidv4 } from "uuid"; 
+import { format, differenceInMilliseconds, addHours } from "date-fns";
 
 function TicketsContent(){
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -14,8 +12,22 @@ const searchParams = useSearchParams();
  const [isApprovedUser, setIsApprovedUser] = useState(false);
  const [phoneNumber, setPhoneNumber] = useState("");
 const [emailAddress, setEmailAddress] = useState("");
+const pnr = searchParams.get("pnr");
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+const [showTicketOnHoldModal, setShowTicketOnHoldModal] = useState(false);
+const [timer, setTimer] = useState(0);
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    setIsLoggedIn(true); // User is logged in
+  } else {
+    setIsLoggedIn(false); // User is not logged in
+  }
+}, []);
 
   const handleConfirmBooking = async () => {
+  
     setIsConfirmed(true);
    
 
@@ -30,8 +42,9 @@ const [emailAddress, setEmailAddress] = useState("");
           } else {
             return { ...passenger, type: "Infant" };
           }
-        
+           
         }
+        
         
       );
 
@@ -50,6 +63,7 @@ const [emailAddress, setEmailAddress] = useState("");
           airlineImage,
           meal,
           totalPrice,
+          pnr,
           adults,
           infants,
           children,
@@ -64,7 +78,10 @@ const [emailAddress, setEmailAddress] = useState("");
       
       const result = await response.json();
       if (response.ok) {
-        alert("Booking confirmed!");
+        setIsConfirmed(true);
+        setIsConfirmationModalOpen(false);
+        setShowTicketOnHoldModal(true); // Open the "Ticket on Hold" modal
+        setTimer(3 * 60 * 60);
       } else {
         alert("Failed: " + result.error);
       }
@@ -73,132 +90,6 @@ const [emailAddress, setEmailAddress] = useState("");
       alert("Something went wrong!");
     }
   };
-
-
-
-
-const handleDownloadPDF = () => {
-  if (isConfirmed) {
-
-    const doc = new jsPDF();
-
-    const companyLogo = "/image/logo.png";
-    const airlineImageUrl = airlineImage; 
-    
-    
-    doc.addImage(companyLogo, "PNG", 10, 10, 30, 30); 
-
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const imageWidth = 50;
-    const imageHeight = 30; 
-    const imageX = pageWidth - imageWidth - 10;
-    doc.addImage(airlineImageUrl, "PNG", imageX, 10, imageWidth, imageHeight);
-
-
-    
-    doc.setFont("helvetica", "bold"); 
-    doc.setFontSize(18);
-    doc.text("UB Brothers Travel & Tours", 45, 20); 
-    
-   
-    doc.setFont("helvetica", "normal"); 
-    doc.setFontSize(12);
-    doc.text("Flight Booking Details", 45, 30); 
-
-
-    doc.setFillColor(230, 230, 230);
-    doc.rect(10, 45, 190, 10, "F"); 
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 0);
-    doc.text("Booking Details", 15, 52);
-
-    let y = 60;
-
-
-
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 120);
-    doc.text(`Airline: ${airlineName}`, 10, y + 7); 
-    y += 15; 
-    
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 120);
-    doc.text("Flight Details", 10, y);
-    y += 10; 
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Total Price (Adults): ${totalPrice}`, 10, y);
-    
-    y += 12;
-    
-   
-doc.setFillColor(200, 220, 255);
-doc.rect(10, y, 190, 8, "F"); 
-doc.setFontSize(10);
-doc.setFont("helvetica", "bold");
-doc.setTextColor(0, 0, 0);
-doc.text("Date", 12, y + 5);
-doc.text("Flight No", 55, y + 5);
-doc.text("Route", 80, y + 5); 
-doc.text("Time", 115, y + 5); 
-doc.text("Baggage", 145, y + 5); 
-doc.text("Meal", 175, y + 5); 
-y += 12; 
-
-doc.setFont("helvetica", "normal");
-flights.forEach((flight, idx) => {
-  doc.text(`${flight.depOrReturn} - ${formatDate(flight.date)}`, 12, y);
-  doc.text(flight.flightNumber || "", 55, y); 
-  doc.text(flight.originDestination || "", 80, y); 
-  doc.text(flight.time || "", 115, y); 
-  doc.text(flight.baggage || "", 145, y); 
-  doc.text(idx === 0 ? meal ?? "" : "", 175, y);
- 
-  y += 8; 
-});
-
-y += 10; 
-   
-
-    
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 120);
-    doc.text("Passenger Details", 10, y);
-    y += 10; 
-
-    passengers.forEach((passenger, index) => {
-      const type =
-        index < adults
-          ? `Adult ${index + 1}`
-          : index < adults + children
-          ? `Child ${index - adults + 1}`
-          : `Infant ${index - adults - children + 1}`;
-
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(11);
-      doc.setTextColor(40, 40, 40);
-      doc.text(`Passenger ${index + 1} (${type})`, 10, y);
-      y += 7;
-
-      doc.setFont("helvetica", "normal");
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Name: ${passenger.name} ${passenger.surname}`, 10, y);
-      y += 7;
-      doc.text(`Passport Number: ${passenger.passportNumber}`, 10, y);
-      y += 7;
-      doc.text(`DOB: ${passenger.dob}`, 10, y);
-      y += 7;
-      doc.text(`Passport Expiry: ${passenger.passportExpiry}`, 10, y);
-      y += 7;
-      doc.text(`Nationality: ${passenger.nationality}`, 10, y);
-      y += 10;
-    });
-
-    doc.save("booking-details.pdf");
-  }
-};
 
   
   
@@ -213,7 +104,8 @@ y += 10;
   const meal = searchParams.get("meal");
   const priceParam = searchParams.get("price");
   const priceForUsersParams = searchParams.get("priceForUsers");
-  
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false); // Controls modal visibility
+const [isInformationCorrect, setIsInformationCorrect] = useState(false); // Checkbox state
 
   const seatParam = searchParams.get("seats");
   const childSeatParam = searchParams.get("childSeats");
@@ -246,6 +138,26 @@ y += 10;
       passengers[index] || { surname: "", name: "", passportNumber: "", dob: "", passportExpiry: "", nationality: "" }
     ));
     setPassengers(newPassengerData);
+  };
+
+  useEffect(() => {
+    if (showTicketOnHoldModal && timer > 0) {
+      const interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [showTicketOnHoldModal, timer]);
+
+  // Format the timer into HH:MM:SS
+  const formatTimer = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+      2,
+      "0"
+    )}:${String(secs).padStart(2, "0")}`;
   };
 
   // Validate seats
@@ -546,16 +458,67 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
 
      
       </table>
-         <div className="text-center flex">
-      <button onClick={handleConfirmBooking}  className="w-[200px] bg-blue-500 hover:bg-orange-500 rounded-lg mx-4 mt-10 mb-4 h-10 text-white font-bold">Confirm Booking</button>
-      {isConfirmed && (
+         <div className="text-center flex"> 
+           <button onClick={() => {
+  
+      setIsConfirmationModalOpen(true); // Open confirmation modal
+    }}
+ // Disable button if not logged in
+  className="w-[200px] bg-blue-500 hover:bg-orange-500 rounded-lg mx-4 mt-10 mb-4 h-10 text-white font-bold">Submit Booking</button>
+         {isConfirmationModalOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"   onClick={() => setIsConfirmationModalOpen(false)} >
+    <div className="bg-white p-6 rounded-lg shadow-lg" onClick={(e) => e.stopPropagation()}>
+      <h2 className="text-lg font-bold mb-4">Are you sure this information is correct?</h2>
+      <div className="flex items-center mb-4">
+        <input
+          type="checkbox"
+          checked={isInformationCorrect}
+          onChange={(e) => setIsInformationCorrect(e.target.checked)}
+          className="mr-2"
+        />
+        <label>I confirm that the information is correct.</label>
+      </div>
+      <div className="flex justify-end">
         <button
-          onClick={handleDownloadPDF}
-          className="w-[250px] bg-green-500 hover:bg-green-600 rounded-lg mx-4 mt-10 mb-4 h-10 text-white font-bold"
+          onClick={() => setIsConfirmationModalOpen(false)} // Close modal
+          className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2"
         >
-          Download ticket info (PDF)
+          Edit
         </button>
+        <button
+          onClick={handleConfirmBooking} // Call booking function
+          disabled={!isInformationCorrect} // Disable if checkbox is not ticked
+          className={`${
+            isInformationCorrect
+              ? "bg-blue-500 hover:bg-blue-600"
+              : "bg-gray-400 cursor-not-allowed"
+          } text-white font-bold py-2 px-4 rounded`}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+  {/* Modal for Ticket on Hold */}
+  {showTicketOnHoldModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h2 className="text-lg font-bold mb-4">Ticket on Hold</h2>
+            <p>
+              Your ticket is on hold <br></br>{" "}
+              <span className="font-bold">{formatTimer(timer)}</span>.
+            </p>
+            <button
+              onClick={() => setShowTicketOnHoldModal(false)}
+              className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+            >
+              OK
+            </button>
+          </div>
+        </div>
       )}
+   
 </div>
       </div>)}
 

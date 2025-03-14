@@ -55,6 +55,7 @@ export async function POST(req: Request) {
       phoneNumber,
       emailAddress,
       storedUserEmail,
+      pnr,
       userEmail,
     }: {
       airlineName: string;
@@ -64,6 +65,7 @@ export async function POST(req: Request) {
       adults: number;
       infants: number;
       children: number;
+      pnr:string;
       passengers: Passenger[];
       flights: Flight[];
       phoneNumber: string;
@@ -94,6 +96,7 @@ export async function POST(req: Request) {
     userEmail: storedUserEmail, 
     emailAddress, // Store user email
     airlineName,
+    pnr,
     createdAt: new Date().toISOString(),
     meal,
     totalPrice,
@@ -126,7 +129,7 @@ export async function POST(req: Request) {
     // Email content
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ubbrothersticketing@gmail.com",
+      to: "ubbrothersconsultant@gmail.com",
       subject: `New Ticket Booking - ${new Date().toLocaleString()}`,
       html: `
      <p><strong>Airline</strong>: ${airlineName}</p> 

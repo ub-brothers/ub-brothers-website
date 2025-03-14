@@ -1,7 +1,7 @@
 // Country Schema for Sanity (or your CMS)
 export default {
     name: 'tour',
-    title: 'tour',
+    title: 'Tour Package',
     type: 'document',
     fields: [
       {

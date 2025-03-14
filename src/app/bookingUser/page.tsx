@@ -1,6 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
+import { format, differenceInMilliseconds, addHours } from "date-fns";
+import {FaTimes, FaFilePdf } from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
+import jsPDF from "jspdf";
+import { useProfile } from "../profileContext";
 
 
 type Flight = {
@@ -27,52 +31,45 @@ type Passenger = {
 type Booking = {
   _id: string;
   airlineName: string;
-
-  createdAt:string;
+  createdAt: string;
   meal: string;
   totalPrice: number;
   adults: number;
   children: number;
   infants: number;
-  userEmail:string;
+  userEmail: string;
   phoneNumber: string;
   emailAddress: string;
   flights: Flight[];
   passengers: Passenger[];
-  status: string; // ✅ Status field added
+  status: string; // "pending", "confirmed", "cancelled"
   isConfirmed: boolean;
+  pnr: string;
 };
 
-
-
-
-const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelled" | "confirmed" } }) => {
-
- 
+const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelled" | "confirmed" | "all" } }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const storedUserEmail = typeof window !== "undefined" ? localStorage.getItem("userEmail") : null;
-  const [selectedBooking, setSelectedBooking] = useState<string | null>(null); // ✅ Store selected booking for modal
-  const [showModal, setShowModal] = useState(false); // ✅ Modal state
+  const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
   const { filterStatus } = searchParams;
 
+  const { profileImage } = useProfile();
+
+  
   const airlineImages = {
     "Fly Jinnah": "/image/flyjinnah.png",
     "Air Sial": "/image/airsial.png",
     "Saudia": "/image/saudia.png",
     "Serene Air": "/image/sereneair.png",
-    "Salam Air" : "/image/salamair.png",
-    
+    "Salam Air": "/image/salamair.png",
   };
-  
-
 
   useEffect(() => {
+    const storedUserEmail = localStorage.getItem("userEmail");
     if (storedUserEmail) {
       fetch("/api/getUserBooking", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userEmail: storedUserEmail }),
       })
         .then((res) => res.json())
@@ -80,144 +77,445 @@ const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelle
           if (!data.error) {
             setBookings(data);
           }
+          setLoading(false);
         })
         .catch((error) => console.error("Error fetching bookings:", error));
     }
-  }, [storedUserEmail]);
+  }, []);
 
   const isCancellable = (createdAt: string) => {
-    const bookingTime = new Date(createdAt).getTime(); // Convert to timestamp
-    const currentTime = Date.now(); // Current time
-    const threeHours = 3 * 60 * 60 * 1000; // 3 hours in milliseconds
-
-    return currentTime - bookingTime < threeHours; // ✅ Check if within 3 hours
+    const bookingTime = new Date(createdAt).getTime();
+    const currentTime = Date.now();
+    const threeHours = 3 * 60 * 60 * 1000;
+    return currentTime - bookingTime < threeHours;
   };
 
- // ✅ Cancel booking function
- const cancelBooking = async () => {
+  const cancelBooking = async () => {
+    if (!selectedBooking) return;
+
+    const response = await fetch("/api/cancelBooking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bookingId: selectedBooking }),
+    });
+
+    if (response.ok) {
+      alert("Booking cancelled successfully!");
+      setBookings((prev) =>
+        prev.map((b) => (b._id === selectedBooking ? { ...b, status: "cancelled" } : b))
+      );
+    } else {
+      alert("Error cancelling booking. Please try again.");
+    }
+
+    setShowModal(false);
+    setSelectedBooking(null);
+  };
+
+  const handleCancelClick = (bookingId: string) => {
+    setSelectedBooking(bookingId);
+    setShowModal(true);
+  };
+
+  const cropImageToCircle = (imageUrl: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
   
-  if (!selectedBooking) return;
+      if (!ctx) {
+        reject(new Error("Canvas 2D context is not supported"));
+        return;
+      }
+  
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = imageUrl;
+  
+      img.onload = () => {
+        const size = Math.min(img.width, img.height);
+        canvas.width = size;
+        canvas.height = size;
+  
+        // **Transparent background**
+        ctx.clearRect(0, 0, size, size);
+        ctx.fillStyle = "rgba(0,0,0,0)"; // Transparent background
+        ctx.fillRect(0, 0, size, size);
+  
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+  
+        ctx.drawImage(img, 0, 0, size, size);
+        ctx.restore();
+  
+        // **Use PNG instead of JPEG**
+        const croppedImageUrl = canvas.toDataURL("image/png");
+        resolve(croppedImageUrl);
+      };
+  
+      img.onerror = () => {
+        reject(new Error("Failed to load image"));
+      };
+    });
+  };
 
-  const response = await fetch("/api/cancelBooking", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ bookingId: selectedBooking }),
-  });
+  const handleDownloadPDF = async (booking: Booking) => {
+    const doc = new jsPDF();
+  
+    // Add airline image to the top right
+    const airlineImageUrl = airlineImages[booking.airlineName as keyof typeof airlineImages];
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const imageWidth = 60;
+    const imageHeight = 40;
+    const imageX = pageWidth - imageWidth - 10;
+    doc.addImage(airlineImageUrl, "PNG", imageX, 10, imageWidth, imageHeight);
+  
+   
 
-  if (response.ok) {
-    alert("Booking cancelled successfully!");
-    setBookings((prev) =>
-      prev.map((b) => (b._id === selectedBooking ? { ...b, status: "cancelled" } : b))
-    );
-  } else {
-    alert("Error cancelling booking. Please try again.");
-  }
+    if (profileImage) {
+      try {
+        const croppedProfileImage = await cropImageToCircle(profileImage);
+        const profileImageWidth = 30;
+        const profileImageHeight = 30;
+        const profileImageX = 10;
+        const profileImageY = 10;
+        doc.addImage(
+          croppedProfileImage,
+          "PNG",
+          profileImageX,
+          profileImageY,
+          profileImageWidth,
+          profileImageHeight
+        );
+      } catch (error) {
+        console.error("Failed to crop profile image:", error);
+      }
+    }
+  
+    // Add booking details
+    doc.setFillColor(230, 230, 230);
+    doc.rect(10, 45, 190, 10, "F");
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Booking Details", 15, 52);
+  
+    let y = 60;
+  
+    // Airline and PNR
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 120);
+    doc.text(`Airline: ${booking.airlineName}`, 10, y + 7);
+    y += 15;
+  
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 120);
+    doc.text(`Booking Reference (PNR): ${booking.pnr}`, 10, y);
+    y += 10;
+  
+    // Flight details
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 120);
+    doc.text("Flight Details", 10, y);
+    y += 10;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Total Price (Adults): ${booking.totalPrice}`, 10, y);
+    y += 12;
+  
+    // Flight table
+    doc.setFillColor(200, 220, 255);
+    doc.rect(10, y, 190, 8, "F");
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 0);
+    doc.text("Date", 12, y + 5);
+    doc.text("Flight No", 55, y + 5);
+    doc.text("Route", 80, y + 5);
+    doc.text("Time", 115, y + 5);
+    doc.text("Baggage", 145, y + 5);
+    doc.text("Meal", 175, y + 5);
+    y += 12;
+  
+    doc.setFont("helvetica", "normal");
+    booking.flights.forEach((flight, idx) => {
+      doc.text(`${flight.depOrReturn} - ${flight.date}`, 12, y);
+      doc.text(flight.flightNumber || "", 55, y);
+      doc.text(flight.originDestination || "", 80, y);
+      doc.text(flight.time || "", 115, y);
+      doc.text(flight.baggage || "", 145, y);
+      doc.text(idx === 0 ? booking.meal ?? "" : "", 175, y);
+      y += 8;
+    });
+  
+    y += 10;
+  
+    // Passenger details
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 120);
+    doc.text("Passenger Details", 10, y);
+    y += 10;
+  
+    booking.passengers.forEach((passenger, index) => {
+      const type =
+        index < booking.adults
+          ? `Adult ${index + 1}`
+          : index < booking.adults + booking.children
+          ? `Child ${index - booking.adults + 1}`
+          : `Infant ${index - booking.adults - booking.children + 1}`;
+  
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.setTextColor(40, 40, 40);
+      doc.text(`Passenger ${index + 1} (${type})`, 10, y);
+      y += 7;
+  
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Name: ${passenger.name} ${passenger.surname}`, 10, y);
+      y += 7;
+      doc.text(`Passport Number: ${passenger.passportNumber}`, 10, y);
+      y += 7;
+      doc.text(`DOB: ${passenger.dob}`, 10, y);
+      y += 7;
+      doc.text(`Passport Expiry: ${passenger.passportExpiry}`, 10, y);
+      y += 7;
+      doc.text(`Nationality: ${passenger.nationality}`, 10, y);
+      y += 10;
+    });
+  
+// Convert the PDF to a Blob URL
+const pdfBlob = doc.output("blob");
+const pdfUrl = URL.createObjectURL(pdfBlob);
 
-  setShowModal(false);
-  setSelectedBooking(null);
-};
-const handleCancelClick = (bookingId: string) => {
-  setSelectedBooking(bookingId);
-  setShowModal(true);
-};
+// Open the PDF in a new tab for preview
+const previewWindow = window.open(pdfUrl);
+if (!previewWindow) {
+  alert("Please allow pop-ups to preview the PDF.");
+  return;
+}
 
-const filteredBookings = bookings.filter((booking) => {
-  const isWithin3Hours = isCancellable(booking.createdAt);
+// Add a download button in the preview window
+previewWindow.document.write(`
+<html>
+  <head>
+    <title>UB Brothers Ticket PDF Preview</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        text-align: center;
+      }
+      .pdf-container {
+        margin: 0 auto;
+        max-width: 800px;
+      }
+      .pdf-actions {
+        margin-bottom: 20px; /* Move buttons above the PDF */
+      }
+      .pdf-actions button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 10px;
+      }
+      .pdf-actions button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pdf-container">
+      <!-- Buttons above the PDF -->
+      <div class="pdf-actions">
+       <a href="${pdfUrl}" download="booking-ticket.pdf">
+  <button>Download PDF</button>
+</a>
+      </div>
+      <!-- PDF Preview -->
+      <embed src="${pdfUrl}" type="application/pdf" width="100%" height="600px" />
+    </div>
+    
+  </body>
+</html>
+`);
+previewWindow.document.close();
+  };
 
-  if (filterStatus === "cancelled") {
-    return booking.status === "cancelled";
-  } else if (filterStatus === "confirmed") {
-    return booking.isConfirmed; // Only show confirmed bookings
-  } else {
-    // For "All Bookings", show bookings that are either confirmed or within 3 hours
-    return booking.isConfirmed || isWithin3Hours;
-  }
-});
+  const filteredBookings = bookings
+  .filter((booking) => {
+    if (filterStatus === "cancelled") {
+      return booking.status === "cancelled";
+    } else if (filterStatus === "confirmed") {
+      return booking.isConfirmed;
+    } else {
+      return true; // Show all bookings
+    }
+  })
+  .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
+  const Timer = ({ createdAt, status, isConfirmed }: { createdAt: string; status: string; isConfirmed: boolean }) => {
+    const [remainingTime, setRemainingTime] = useState("");
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        const bookingTime = new Date(createdAt);
+        const expiryTime = addHours(bookingTime, 3);
+        const remainingTimeMs = differenceInMilliseconds(expiryTime, new Date());
+
+        if (remainingTimeMs <= 0 || status === "cancelled" || isConfirmed) {
+          setRemainingTime("");
+          clearInterval(interval);
+        } else {
+          const hours = Math.floor(remainingTimeMs / (1000 * 60 * 60));
+          const minutes = Math.floor((remainingTimeMs % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((remainingTimeMs % (1000 * 60)) / 1000);
+          setRemainingTime(`${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }, [createdAt, status, isConfirmed]);
+
+    if (status === "cancelled") {
+      return <span className="text-red-600 text-center">Cancelled</span>;
+    } else if (isConfirmed) {
+      return <span className="text-green-600">Confirmed</span>;
+    } else if (remainingTime) {
+      return (
+        <div className="flex flex-col items-center">
+          <span className="text-sm text-gray-600">Ticket on Hold</span>
+          <span className="text-yellow-600">{remainingTime}</span>
+        </div>
+      );
+    } else {
+      return <span className="text-red-600">Expired</span>;
+    }
+  };
+   const [loading, setLoading] = useState(true);
+  if (loading) return <p className="text-center text-lg font-semibold">Loading bookings...</p>;
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="min-w-[1000px] mx-auto p-4" >
+
+<Tooltip id="tooltip" />
       {filteredBookings.length === 0 ? (
         <p className="text-center text-gray-500">No bookings found.</p>
       ) : (
-        filteredBookings.map((booking, index) => (
-          <div key={index} className="bg-white shadow-lg rounded-md p-4 mb-6">
-            {/* Ticket Header */}
-         
-            <p className="text-gray-600 text-sm mb-2">
-  {" "}
-  {booking.createdAt
-    ? format(new Date(booking.createdAt), "dd MMM yyyy, hh:mm a")
-    : "Invalid Date"}
-</p>
-            <div className="flex justify-between items-center border-b pb-2 mb-4">
-<div className="flex items-center gap-2">
-            {airlineImages[booking.airlineName as keyof typeof airlineImages] && (
-              <img
-                src={airlineImages[booking.airlineName as keyof typeof airlineImages]}
-                alt={booking.airlineName}
-                className="w-24 h-16 object-contain"
-              />
-            )}
-            
-              <h3 className="text-lg font-semibold ml-0 text-blue-600">
-                {booking.airlineName}
-              </h3></div>
-              <p className="text-gray-600"><b>Total Price:</b> {booking.totalPrice} PKR/-</p>
-            </div>
-
-            {/* Table */}
-            <div className="w-full overflow-x-auto">
-              <table className=" border-collapse border border-gray-300">
-                <thead>
-                  <tr className="bg-gray-700 text-white text-sm">
-                    <th className="border p-2">Flight Type</th>
-                    <th className="border p-2">Date</th>
-                    <th className="border p-2">Flight Number</th>
-                    <th className="border p-2">Route</th>
-                    <th className="border p-2">Time</th>
-                    <th className="border p-2">Baggage</th>
-                    <th className="border p-2">Meal</th>
-                  </tr>
-                </thead>
-                <tbody>
+        <table  className="w-full border border-gray-300">
+          <thead>
+            <tr className="bg-gray-700 text-white text-sm">
+              <th className=" border-r border-gray-300 px-4 p-2 ">Booking Details</th>
+              <th className="border-r border-gray-300 px-4 p-2">Flight Details</th>
+              <th className="border-r border-gray-300 px-4 p-2">Passengers</th>
+              <th className="border-r border-gray-300 px-4 p-2">Price (PKR)</th>
+              <th className="border-r border-gray-300 px-4 p-2">Status</th>
+              <th className="border-r border-gray-300 px-4 p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredBookings.map((booking) => {
+              const bookingTime = new Date(booking.createdAt);
+              const expiryTime = addHours(bookingTime, 3);
+              const remainingTimeMs = differenceInMilliseconds(expiryTime, new Date());
+              const remainingTime = remainingTimeMs > 0 ? `${Math.floor(remainingTimeMs / (1000 * 60 * 60))}:${Math.floor((remainingTimeMs % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, "0")}:${Math.floor((remainingTimeMs % (1000 * 60)) / 1000).toString().padStart(2, "0")}` : "";
+            return(
+              
+              <>
+              <tr key={booking._id} className="text-left bg-blue-100">
+                <td className="border p-2 border-r border-gray-300 px-4">
+                  <div className="flex flex-col text-left">
+                    <img
+                      src={airlineImages[booking.airlineName as keyof typeof airlineImages]}
+                      alt={booking.airlineName}
+                      className="w-20 h-16 object-contain"
+                    />
+                     <p className="font-semibold">{booking.airlineName}</p>
+                    <p className="text-sm text-gray-600">
+                      <b>Booking Reference (PNR)</b>: {booking.pnr}
+                    </p>
+                    
+                    <span className="text-sm text-gray-600">
+                      <b>Created At</b>: {format(new Date(booking.createdAt), "dd MMM yyyy")}
+                    </span>
+                   
+                  </div>
+                </td>
+                <td className="border p-2 text-sm text-gray-600 border-r border-gray-300 px-4">
                   {booking.flights.map((flight, idx) => (
-                    <tr key={idx} className="text-center bg-blue-200">
-                      <td className="border p-2">{flight.depOrReturn}</td>
-                      <td className="border p-2">{flight.date}</td>
-                      <td className="border p-2">{flight.flightNumber}</td>
-                      <td className="border p-2">{flight.originDestination}</td>
-                      <td className="border p-2">{flight.time}</td>
-                      <td className="border p-2">{flight.baggage}</td>
-                      <td className="border p-2">{booking.meal}</td>
-                    </tr>
+                    <div key={idx} className="text-left mb-4">
+                     
+                      <p>{flight.originDestination}</p>
+                      <p>{flight.depOrReturn}</p>
+                      <p>{flight.date} {flight.time}</p>
+                      <p><b>Flight #</b>  {flight.flightNumber}</p>
+                      {idx < booking.flights.length - 1 && <hr className="my-2 border-gray-300" />}
+                    </div>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </td>
+                <td className="border p-2 border-r border-gray-300 px-4">
+                  {booking.passengers.map((p, idx) => (
+                    <div key={idx} className="text-left">
+                      <p>{p.name} {p.surname}</p>
+                      
+                    </div>
+                  ))}
+                </td>
+                <td><p className="text-sm text-center text-gray-600">{booking.totalPrice} PKR/-</p></td> 
+                <td className="border p-2 border-r border-gray-300 px-4">
+                  <Timer createdAt={booking.createdAt} status={booking.status} isConfirmed={booking.isConfirmed} />
+                </td>
+                <td className="border p-2">
+                  
+                  {booking.status !== "cancelled" &&(
+                    <div className="flex items-center justify-center gap-4">
+                      {isCancellable(booking.createdAt) && (
+                        <button
+                          onClick={() => handleCancelClick(booking._id)}
+                          className="text-red-600 hover:text-red-800"
+                          title="Cancel Booking"
+                          data-tooltip-id="tooltip"
+  data-tooltip-content="Cancel Booking"
+                        >
+                          <FaTimes />
+                        </button>
+                      )}
+                     {booking.status !== "cancelled" && remainingTime !== "" && booking.status !== "confirmed" && (
+          <button
+            onClick={() => handleDownloadPDF(booking)}
+            className="text-blue-600 hover:text-blue-800"
+             title="Download Ticket"
+             data-tooltip-id="tooltip"
+  data-tooltip-content="Download Ticket"
+          >
+            <FaFilePdf />
+          </button>
+        )}
+                    </div>
+                  )}
+                </td>
+                
+              </tr> 
+              <tr>
+            <td colSpan={6} className="border-b border-gray-300"></td>
+          </tr>
+             </>
+            
+            )})}
+              
+          </tbody>
+        </table>
+      )}
 
-            {/* Passengers List */}
-            <div className="mt-4">
-              <h4 className="font-semibold text-gray-700 mb-2">Passengers:</h4>
-              {booking.passengers.map((p, idx) => (
-                <p key={idx} className="text-gray-600">
-                  {p.name} {p.surname} - {p.passportNumber} ({p.nationality})
-                </p>
-              ))}
-            </div>
-
-            {/* ✅ Cancel Booking Button */}
-            {filterStatus !== "cancelled" &&  isCancellable(booking.createdAt) && ( // ✅ Cancel button only for non-cancelled bookings
-              <button onClick={() => handleCancelClick(booking._id)} className="bg-red-500 text-white px-4 py-2 mt-2 rounded">
-                Cancel Booking
-              </button>
-            )}
-          </div>
-        ))
-      )} 
-     
-        {/* ✅ Modal for Confirmation */}
-        {showModal && (
+      {/* Modal for Cancellation Confirmation */}
+      {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
             <h2 className="text-lg font-bold mb-4">Confirm Cancellation</h2>
@@ -237,9 +535,7 @@ const filteredBookings = bookings.filter((booking) => {
               </button>
             </div>
           </div>
-         
         </div>
-        
       )}
     </div>
   );

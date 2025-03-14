@@ -168,6 +168,7 @@ export interface Flight {
     airlineImage: string;  
      meal: string;
     price: string;
+    pnr:string;
     priceForUsers:string;
     airlineName: string;
   }  

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getItemKey } from "sanity";
 
 
 const cleanPrice = (price: any): number => {
@@ -31,11 +32,12 @@ async function fetchLedger(storedUserEmail: string) {
 }
 
 export default function Ledger() {
-  const [bookings, setBookings] = useState<any>(null);
+  const [bookings, setBookings] = useState<Record<string, any[]>>({});
   const [totalCost, setTotalCost] = useState(0);
   const [storedUserEmail, setStoredUserEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true); // Loading state for better UX
-
+  const [totalPaid, setTotalPaid] = useState(0); // Add totalPaid state
+  const [totalDue, setTotalDue] = useState(0);
   useEffect(() => {
     const email = localStorage.getItem("userEmail");
     if (email) {
@@ -53,6 +55,8 @@ export default function Ledger() {
       if (result) {
         setBookings(result.bookings);
         setTotalCost(result.totalCost);
+        setTotalPaid(result.totalPaid || 0); // Set totalPaid
+        setTotalDue(result.totalDue || 0); 
       }
     }
     loadLedger();
@@ -79,6 +83,8 @@ export default function Ledger() {
             <th className="border p-2">Date</th>
             <th className="border p-2">Details</th>
             <th className="border p-2">Price</th>
+            <th className="border p-2">Paid</th> {/* Add Paid column */}
+            <th className="border p-2">Due</th> 
           </tr>
         </thead>
         <tbody>
@@ -123,13 +129,19 @@ export default function Ledger() {
                     </div>
                   )}
                 </td>
-                <td className="border p-2 text-right">
+                <td className="border p-2 text-center text-md">
                 {cleanPrice(
                     item.totalPrice || item.prize || item.prizeForUsers || 
                     item.price || item.priceForUsers || item.selectedPrize || 
                     item.totalCost || item.Prize || 0
-                  )}  PKR
+                  )}  <span className="text-sm">PKR</span>
                 </td>
+                <td className="border p-2  text-center text-md">
+                {cleanPrice(item.paid || 0)} <span className="text-sm">PKR</span> {/* Display Paid */}
+              </td>
+              <td className="border p-2  text-center text-md">
+                {cleanPrice(item.due || 0)} <span className="text-sm">PKR</span> {/* Display Due */}
+              </td>
               </tr>
             ))
           )}
@@ -137,7 +149,9 @@ export default function Ledger() {
           {/* Total Cost Row */}
           <tr className="bg-gray-100 font-bold">
             <td className="border p-2" colSpan={3}>Total Cost</td>
-            <td className="border p-2 text-right">{totalCost} PKR</td>
+            <td className="border p-2 text-center">{totalCost} <span className="text-sm">PKR</span></td>
+            <td className="border p-2 text-center">{totalPaid} <span className="text-sm">PKR</span></td> {/* Total Paid */}
+          <td className="border p-2 text-center">{totalDue} <span className="text-sm">PKR</span></td> 
           </tr>
         </tbody>
       </table>

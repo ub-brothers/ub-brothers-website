@@ -34,7 +34,7 @@ const FlightTable = () => {
 
 
     const fetchFlights = async () => {
-      const data: FlightGroup[] = await client.fetch('*[_type == "flights"] | order(_createdAt asc) { id , airline, "airlineLogo": airlineLogo.asset->url ,  flights[], meal, price,priceForUsers, airlineName,"airlineImage": airlineImage.asset->url, seats, childSeats }');
+      const data: FlightGroup[] = await client.fetch('*[_type == "flights"] | order(_createdAt asc) { id , airline, "airlineLogo": airlineLogo.asset->url ,  flights[], meal, price,priceForUsers, airlineName,"airlineImage": airlineImage.asset->url, seats, childSeats, pnr }');
       setFlights(data);
     };
     fetchFlights();
@@ -91,9 +91,11 @@ const filteredFlights = flights
   return (
     <div className="w-full mb-6">
   <div className="max-h-[700px] w-full overflow-x-auto">
+  
 
           {/* Category Buttons */}
-      <div className="flex justify-center gap-4 my-4 w-full overflow-x-auto min-w-[700px]">
+      <div className="flex justify-center gap-4 my-4 w-full overflow-x-auto min-w-[700px]"> 
+         
         <button
           onClick={() => filterFlights("All")}
           className={`px-4 py-2 rounded ${
@@ -134,8 +136,12 @@ const filteredFlights = flights
         >
           Umrah Group
         </button>
+        
       </div>
 
+<div className="text-right text-sm mx-2 my-2">
+        <h1 className="font-bold ">Mirza Ali:</h1>
+    <p>03414314000</p></div>
   
       <table className="w-max min-w-[1000px] sm:min-w-full border-collapse border border-gray-300">
         <thead className="sticky top-0 bg-gray-700 text-white">
@@ -189,7 +195,7 @@ const filteredFlights = flights
                     <td rowSpan={flightGroup.flights.length} className="text-center bg-blue-200  py-3 border align-middle">
                       <button
                       onClick={() => {
-                        let queryParams = `airline=${encodeURIComponent(flightGroup.airlineImage)}&airlineName=${encodeURIComponent(flightGroup.airlineName)}&meal=${encodeURIComponent(flightGroup.meal)}&price=${encodeURIComponent(flightGroup.price)}&priceForUsers=${encodeURIComponent(flightGroup.priceForUsers)}  &seats=${encodeURIComponent(flightGroup.seats)}  &childSeats=${encodeURIComponent(flightGroup.childSeats)}`;
+                        let queryParams = `airline=${encodeURIComponent(flightGroup.airlineImage)}&airlineName=${encodeURIComponent(flightGroup.airlineName)}&meal=${encodeURIComponent(flightGroup.meal)}&price=${encodeURIComponent(flightGroup.price)}&priceForUsers=${encodeURIComponent(flightGroup.priceForUsers)}  &seats=${encodeURIComponent(flightGroup.seats)}  &childSeats=${encodeURIComponent(flightGroup.childSeats)} &pnr=${encodeURIComponent(flightGroup.pnr)}`;
                         
                         flightGroup.flights.forEach((flight, idx) => {
                           queryParams += `&date${idx}=${encodeURIComponent(flight.date)}&flightNumber${idx}=${encodeURIComponent(flight.flightNumber)}&originDestination${idx}=${encodeURIComponent(flight.originDestination)}&time${idx}=${encodeURIComponent(flight.time)}&baggage${idx}=${encodeURIComponent(flight.baggage)}&depOrReturn${idx}=${flight.isReturn ? "RET" : "DEP"}`;

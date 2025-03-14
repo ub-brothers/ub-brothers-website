@@ -46,7 +46,10 @@ export const POST = async (req: Request) => {
     const bookings = await sanityClient.fetch(ledgerQuery, { userEmail: storedUserEmail });
 
     // Calculate total cost
+    
     let totalCost = 0;
+    let totalPaid = 0;
+    let totalDue = 0;
     const categories = ["Tickets", "File & Consultancy", "Iran Ziyarat", "Sticker Visa", "Hajj Package", "Tour Package", "Umrah Package", "E-Visa"];
     categories.forEach((category) => {
       if (bookings[category]) {
@@ -75,11 +78,14 @@ export const POST = async (req: Request) => {
             selectedPrize +
             totalCostField +
             Prize;
+
+            totalPaid += cleanPrice(item.paid || 0);
+            totalDue += cleanPrice(item.due || 0);
         });
       }
     });
 
-    return NextResponse.json({ bookings, totalCost }, { status: 200 });
+    return NextResponse.json({ bookings, totalCost, totalPaid,totalDue }, { status: 200 });
   } catch (error) {
     console.error("Error fetching ledger data:", error);
     return NextResponse.json({ error: "Failed to fetch ledger data" }, { status: 500 });

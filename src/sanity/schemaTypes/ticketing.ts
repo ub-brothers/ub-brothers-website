@@ -11,6 +11,11 @@ export default {
       hidden: false, // Studio me dikhayega
     },
     {
+      name: "pnr",
+      title: "PNR",
+      type: "string",
+    },
+    {
       name: "seats",
       title: "Adult Seats",
       type: "number",
