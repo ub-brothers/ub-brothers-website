@@ -380,21 +380,21 @@ const toggleTicketOptions = () => {
 
 
   return (
-  <div className='flex flex-col sm:flex-row overflow-x-auto'>
+  <div className='flex flex-col xl:flex-row overflow-x-auto'>
      {/* Sidebar */}
         {/* Hamburger Menu Button (Mobile Only) */}
         <button
         
         onClick={toggleSidebar}
-        className="sm:hidden w-[40px] mt-2 left-4 p-2 bg-gray-400 text-black rounded-md"
+        className="xl:hidden w-[40px] mt-2 left-4 p-2 bg-gray-400 text-black rounded-md"
       >
         {isSidebarOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
       </button>
 
       {/* Sidebar */}
       <div
-        className={`fixed lg:static lg:block w-64 bg-gray-200 min-h-screen text-black p-4 transform transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        className={`fixed xl:static xl:block w-64 bg-gray-200 min-h-screen text-black p-4 transform transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full xl:translate-x-0'
         } z-20`}
       >
           <h2 className="text-xl font-bold mb-6  border-gray-700 pb-4">
