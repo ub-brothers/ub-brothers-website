@@ -1,6 +1,8 @@
 "use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { VscEyeClosed } from "react-icons/vsc";
+import { RxEyeOpen } from "react-icons/rx";
 
 export default function Register() {
     const router = useRouter();
@@ -196,7 +198,7 @@ export default function Register() {
                         className="absolute right-2 top-3 text-gray-600" 
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        {showPassword ? "👁️" : "👁️‍🗨️"}
+                        {showPassword ?  <RxEyeOpen/>:<VscEyeClosed />}
                     </button>
                 </div></div>
 
@@ -209,7 +211,7 @@ export default function Register() {
                         className="absolute right-2 top-3 text-gray-600" 
                         onClick={() => setShowRepeatPassword(!showRepeatPassword)}
                     >
-                        {showRepeatPassword ? "👁️" : "👁️‍🗨️"}
+                        {showRepeatPassword ?  <RxEyeOpen/>:<VscEyeClosed />}
                     </button></div></div>
 </div>
 

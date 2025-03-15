@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-
+import { VscEyeClosed } from "react-icons/vsc";
+import { RxEyeOpen } from "react-icons/rx";
 
 export default function Login() {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -85,7 +86,7 @@ export default function Login() {
                         className="absolute right-2 top-3 text-gray-600" 
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        {showPassword ? "👁️" : "👁️‍🗨️"}
+                        {showPassword ? <RxEyeOpen />:<VscEyeClosed />  }
                     </button>
                 </div>
                 <div className="flex items-center">

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-
+import { VscEyeClosed } from "react-icons/vsc";
+import { RxEyeOpen } from "react-icons/rx";
 const ChangePassword = () => {
   const [email, setEmail] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -88,7 +89,7 @@ const ChangePassword = () => {
                         className="absolute right-2 top-3 text-gray-600" 
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        {showPassword ? "👁️" : "👁️‍🗨️"}
+                        {showPassword ? <RxEyeOpen/>:<VscEyeClosed />}
                     </button></div>
         </div>
         </div>
@@ -111,7 +112,7 @@ const ChangePassword = () => {
                         className="absolute right-2 top-3 text-gray-600" 
                         onClick={() => setShowNewPassword(!showNewPassword)}
                     >
-                        {showNewPassword ? "👁️" : "👁️‍🗨️"}
+                        {showNewPassword ? <RxEyeOpen/>:<VscEyeClosed />}
                     </button></div>
         </div>
         <div className="mb-4">
@@ -132,7 +133,7 @@ const ChangePassword = () => {
                         className="absolute right-2 top-3 text-gray-600" 
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     >
-                        {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
+                        {showConfirmPassword ? <RxEyeOpen/>:<VscEyeClosed />}
                     </button></div>
         </div></div>
         <button
