@@ -31,21 +31,15 @@ export default function Login() {
             body: JSON.stringify(formData),
         });
 
-        const data = await res.json();
         setLoading(false);
 
-        if (!res.ok) {
-            setError(data.error);
-            return;
-        }
-
-        if (rememberMe) {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("userEmail", formData.email);
-        } else {
-            sessionStorage.setItem("token", data.token);
-            sessionStorage.setItem("userEmail", formData.email);
-        }
+        if (res.ok) {
+            const data = await res.json();
+            const storage = rememberMe ? localStorage : sessionStorage; // Use localStorage if "Remember Me" is checked
+            storage.setItem("userEmail", formData.email); // Save email
+            storage.setItem("token", data.token); // Save token
+            router.push("/");
+          }
 
     
         alert("Login successful!");

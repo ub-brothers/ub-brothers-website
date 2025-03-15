@@ -52,6 +52,7 @@ export default function ProfilePage( { searchParams }: { searchParams: { filterS
           if (typeof reader.result === "string") {
            
             if (email) {
+              
               localStorage.setItem(`profileImage_${email}`, reader.result);
 
               updateProfileImage(reader.result);
@@ -102,13 +103,15 @@ export default function ProfilePage( { searchParams }: { searchParams: { filterS
 
   const [email, setEmail] = useState<string|null>(""); // Replace with actual user email
   useEffect(() => {
-    const userEmail = localStorage.getItem("userEmail");
+    const userEmail = sessionStorage.getItem("userEmail") || localStorage.getItem("userEmail");
     if (userEmail) {
       setEmail(userEmail);
     } else {
       console.error("userEmail is null in localStorage");
     }
   }, []);
+
+
   const [showUpload, setShowUpload] = useState(false);
   interface DecodedToken extends JwtPayload {
     email?: string;
