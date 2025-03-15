@@ -17,10 +17,10 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
 
   useEffect(() => {
    
-    const storedEmail = localStorage.getItem("userEmail");
+    const storedEmail = localStorage.getItem("userEmail") || sessionStorage.getItem("userEmail");
     if (storedEmail) {
       setUserEmail(storedEmail);
-      const savedImage = localStorage.getItem(`profileImage_${storedEmail}`);
+      const savedImage = localStorage.getItem(`profileImage_${storedEmail}`)|| sessionStorage.getItem(`profileImage_${storedEmail}`);
       if (savedImage) {
         setProfileImage(savedImage);
       }
@@ -46,13 +46,15 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   }, []);
 
   const updateProfileImage = (newImage: string | null) => {
-    const userEmail = localStorage.getItem("userEmail");
+    const userEmail = localStorage.getItem("userEmail") || sessionStorage.getItem("userEmail");
     if (userEmail) {
       
       if (newImage) {
         localStorage.setItem(`profileImage_${userEmail}`, newImage);
+        sessionStorage.setItem(`profileImage_${userEmail}`, newImage);
       } else {
         localStorage.removeItem(`profileImage_${userEmail}`);
+        sessionStorage.removeItem(`profileImage_${userEmail}`);
       }
       setProfileImage(newImage);
     }

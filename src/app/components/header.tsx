@@ -19,9 +19,10 @@ const pathname = usePathname();
 const { profileImage, updateProfileImage } = useProfile();
 
 useEffect(() => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token")|| sessionStorage.getItem("token");
   setIsLoggedIn(!!token); 
 }, [pathname]);
+
 
 const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -115,7 +116,7 @@ const handleLogout = useCallback(() => {
         <div className="relative"  ref={dropdownRef}>
       {isLoggedIn ? (
         <div className="relative" >
-          <button className=" bg-gray-200 rounded-full hover:bg-gray-300" onClick={() => setDropdownOpen(!dropdownOpen)}>
+          <button  className=" bg-gray-200 rounded-full hover:bg-gray-300" onClick={() => setDropdownOpen(!dropdownOpen)}>
           {profileIcon}
         </button>
 
