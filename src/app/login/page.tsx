@@ -13,7 +13,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
-
+    const [rememberMe, setRememberMe] = useState(false);
     
 
     const handleChange = (e: any) => {
@@ -38,13 +38,16 @@ export default function Login() {
             return;
         }
 
-        // Store the token in local storage
-        localStorage.setItem("token", data.token);
-       
-        localStorage.setItem("userEmail", formData.email);
-        alert("Login successful!");
+        if (rememberMe) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userEmail", formData.email);
+        } else {
+            sessionStorage.setItem("token", data.token);
+            sessionStorage.setItem("userEmail", formData.email);
+        }
 
-        // Redirect to dashboard or homepage
+    
+        alert("Login successful!");
         router.push("/");
     };
 
@@ -85,6 +88,16 @@ export default function Login() {
                         {showPassword ? "👁️" : "👁️‍🗨️"}
                     </button>
                 </div>
+                <div className="flex items-center">
+                            <input 
+                                type="checkbox" 
+                                id="rememberMe" 
+                                checked={rememberMe} 
+                                onChange={(e) => setRememberMe(e.target.checked)} 
+                                className="mr-2"
+                            />
+                            <label htmlFor="rememberMe" className="text-sm text-gray-200">Remember Me</label>
+                        </div>
               
                 <Link href="/forgotPassword">
                 <h2 className="text-sm text-right text-gray-200"><i><u>Forgot Password?</u></i></h2></Link>

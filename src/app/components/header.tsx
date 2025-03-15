@@ -44,10 +44,12 @@ useEffect(() => {
 const handleLogout = useCallback(() => {
   localStorage.removeItem("userEmail");
   localStorage.removeItem("token");
+  sessionStorage.removeItem("userEmail");
+  sessionStorage.removeItem("token");
   setIsLoggedIn(false);
   setDropdownOpen(false);
   setShowConfirm(false);
-  router.replace("/login");
+  router.push("/login");
 }, [router]);
 
 

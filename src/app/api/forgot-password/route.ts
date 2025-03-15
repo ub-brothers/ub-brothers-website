@@ -133,7 +133,7 @@ export async function POST(req: Request) {
         <!-- Footer -->
         <div class="email-footer">
           <p>If you have any questions, feel free to <a href="mailto:ubbrotherspk@gmail.com">contact us</a>.</p>
-          <p>&copy; 2025 UB Brothers. All rights reserved.</p>
+          <p>&copy; 2025 UB Brothers Travel & Tours. All rights reserved.</p>
         </div>
       </div>
     </body>
