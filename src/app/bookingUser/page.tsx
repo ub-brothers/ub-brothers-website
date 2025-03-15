@@ -194,100 +194,121 @@ const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelle
       }
     }
   
-    // Add booking details
+    const bookingIconUrl = "/image/icon2.png"; // Path to your booking icon
+    const bookingIconWidth = 12; // Icon width
+    const bookingIconHeight = 12; // Icon height
+    
+    // Draw "Booking Details" section
     doc.setFillColor(230, 230, 230);
     doc.rect(10, 45, 190, 10, "F");
     doc.setFontSize(14);
     doc.setTextColor(0, 0, 0);
-    doc.text("Booking Details", 15, 52);
+    
+    const bookingText = "Booking Details";
+    const bookingTextX = 15; // Text ka X position
+    const bookingTextWidth = doc.getTextWidth(bookingText);
+    
+    // "Booking Details" text likhna
+    doc.text(bookingText, bookingTextX, 52);
+    
+    // Image ko right side me lagana
+    const bookingIconX = bookingTextX + bookingTextWidth + 1; // 5px ka gap
+    const bookingIconY = 45 + (10 / 2) - (bookingIconHeight / 2); // Center align with text
+    
+    doc.addImage(bookingIconUrl, "PNG", bookingIconX, bookingIconY, bookingIconWidth, bookingIconHeight);
   
-    let y = 60;
-  
-    // Airline and PNR
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 120);
-    doc.text(`Airline: ${booking.airlineName}`, 10, y + 7);
-    y += 15;
-  
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 120);
-    doc.text(`Booking Reference (PNR): ${booking.pnr}`, 10, y);
-    y += 10;
-  
-    // Flight details
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 120);
-    doc.text("Flight Details", 10, y);
-    y += 10;
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Total Price (Adults): ${booking.totalPrice}`, 10, y);
-    y += 12;
-  
-    // Flight table
-    doc.setFillColor(200, 220, 255);
-    doc.rect(10, y, 190, 8, "F");
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 0);
-    doc.text("Date", 12, y + 5);
-    doc.text("Flight No", 55, y + 5);
-    doc.text("Route", 80, y + 5);
-    doc.text("Time", 115, y + 5);
-    doc.text("Baggage", 145, y + 5);
-    doc.text("Meal", 175, y + 5);
-    y += 12;
-  
-    doc.setFont("helvetica", "normal");
-    booking.flights.forEach((flight, idx) => {
-      doc.text(`${flight.depOrReturn} - ${flight.date}`, 12, y);
-      doc.text(flight.flightNumber || "", 55, y);
-      doc.text(flight.originDestination || "", 80, y);
-      doc.text(flight.time || "", 115, y);
-      doc.text(flight.baggage || "", 145, y);
-      doc.text(idx === 0 ? booking.meal ?? "" : "", 175, y);
-      y += 8;
-    });
-  
-    y += 10;
-  
-    // Passenger details
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 120);
-    doc.text("Passenger Details", 10, y);
-    y += 10;
-  
-    booking.passengers.forEach((passenger, index) => {
-      const type =
-        index < booking.adults
-          ? `Adult ${index + 1}`
-          : index < booking.adults + booking.children
-          ? `Child ${index - booking.adults + 1}`
-          : `Infant ${index - booking.adults - booking.children + 1}`;
-  
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(11);
-      doc.setTextColor(40, 40, 40);
-      doc.text(`Passenger ${index + 1} (${type})`, 10, y);
-      y += 7;
-  
-      doc.setFont("helvetica", "normal");
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Name: ${passenger.name} ${passenger.surname}`, 10, y);
-      y += 7;
-      doc.text(`Passport Number: ${passenger.passportNumber}`, 10, y);
-      y += 7;
-      doc.text(`DOB: ${passenger.dob}`, 10, y);
-      y += 7;
-      doc.text(`Passport Expiry: ${passenger.passportExpiry}`, 10, y);
-      y += 7;
-      doc.text(`Nationality: ${passenger.nationality}`, 10, y);
-      y += 10;
-    });
-  
+    let y = 65;
+
+  // Airline and PNR
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(64, 64, 64); // Dark gray color
+  doc.text(`Airline: ${booking.airlineName}`, 10, y);
+  y += 7; // Adjusted vertical spacing
+
+  doc.text(`Booking Reference (PNR): ${booking.pnr}`, 10, y);
+  y += 7; // Adjusted vertical spacing
+
+  doc.text(`Total Price: ${booking.totalPrice}`, 10, y);
+  y += 15; // Adjusted vertical spacing
+
+  // Flight details
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 0, 120);
+  doc.text("Flight Details", 10, y);
+  y += 5;
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0, 0, 0);
+
+  // Flight table
+  doc.setFillColor(200, 220, 255);
+  doc.rect(10, y, 190, 8, "F");
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(0, 0, 0);
+  doc.text("Date", 12, y + 5);
+  doc.text("Flight No", 55, y + 5);
+  doc.text("Route", 80, y + 5);
+  doc.text("Time", 115, y + 5);
+  doc.text("Baggage", 145, y + 5);
+  doc.text("Meal", 175, y + 5);
+  y += 12;
+
+  doc.setFont("helvetica", "normal");
+  booking.flights.forEach((flight, idx) => {
+    doc.text(`${flight.depOrReturn} - ${flight.date}`, 12, y);
+    doc.text(flight.flightNumber || "", 55, y);
+    doc.text(flight.originDestination || "", 80, y);
+    doc.text(flight.time || "", 115, y);
+    doc.text(flight.baggage || "", 145, y);
+    doc.text(idx === 0 ? booking.meal ?? "" : "", 175, y);
+    y += 8;
+  });
+
+  y += 10;
+
+  // Passenger details table
+doc.setFontSize(12);
+doc.setFont("helvetica", "bold");
+doc.setTextColor(0, 0, 120);
+doc.text("Passenger Details", 10, y);
+y += 5;
+
+// Table headers
+doc.setFillColor(200, 220, 255);
+doc.rect(10, y, 190, 8, "F"); // 190mm width tak limit
+doc.setFontSize(10);
+doc.setFont("helvetica", "bold");
+doc.setTextColor(0, 0, 0);
+
+// Adjusted column positions
+doc.text("Type", 12, y + 5);
+doc.text("Name", 40, y + 5);
+doc.text("Passport No.", 85, y + 5); // Shortened heading
+doc.text("DOB", 125, y + 5);
+doc.text("Expiry", 155, y + 5); // Shortened heading
+doc.text("Nationality", 180, y + 5); // Shifted left
+y += 12;
+
+// Table rows
+doc.setFont("helvetica", "normal");
+booking.passengers.forEach((passenger, index) => {
+  const type =
+    index < booking.adults
+      ? `Adult ${index + 1}`
+      : index < booking.adults + booking.children
+      ? `Child ${index - booking.adults + 1}`
+      : `Infant ${index - booking.adults - booking.children + 1}`;
+
+  doc.text(type, 12, y);
+  doc.text(`${passenger.name} ${passenger.surname}`, 40, y);
+  doc.text(passenger.passportNumber, 85, y); // Shifted left
+  doc.text(passenger.dob, 125, y);
+  doc.text(passenger.passportExpiry, 155, y); // Shifted left
+  doc.text(passenger.nationality, 180, y); // Shifted left
+  y += 8;
+});
+
 // Convert the PDF to a Blob URL
 const pdfBlob = doc.output("blob");
 const pdfUrl = URL.createObjectURL(pdfBlob);
@@ -487,7 +508,7 @@ previewWindow.document.close();
                           <FaTimes />
                         </button>
                       )}
-                     {booking.status !== "cancelled" && remainingTime !== "" && booking.status !== "confirmed" && (
+                     {booking.status !== "cancelled"  && booking.isConfirmed && (
           <button
             onClick={() => handleDownloadPDF(booking)}
             className="text-blue-600 hover:text-blue-800"
