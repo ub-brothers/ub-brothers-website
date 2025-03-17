@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "samiaurooj286@gmail.com",
+      to: "ubbrothersticketing@gmail.com",
       subject: `New Umrah Offer Submission - ${new Date().toLocaleString()}`,
       html: `
         <h2>New Umrah Offer Submission</h2>
