@@ -108,10 +108,12 @@ export default function TourDetail({ params }: { params: { id: string } }) {
           <h2 className="my-4 text-md sm:text-xl font-serif"><b>Tour Package cost:</b> {isApprovedUser ? tourCountries.priceForUsers : tourCountries.prize} PKR/- Per person.</h2>
 
           <h1 className="my-4 text-md sm:text-xl font-serif font-bold"><u>Requirements:</u></h1>
-          <p>Original Passport</p>
-          <p>Bank statement (last 6 months)</p>
-          <p>ID Copy (CNIC)</p>
-          <p>Recent Photographs (White background)</p>
+          <p>{tourCountries.requirement1}</p>
+          <p>{tourCountries.requirement2}</p>
+          <p>{tourCountries.requirement3}</p>
+          <p>{tourCountries.requirement4}</p>
+          <p>{tourCountries.requirement5}</p>
+          <p>{tourCountries.requirement6}</p>
           <p className="my-2"><b>Note: </b>You will need to visit the office in person to submit the required documents.</p>
         </div>
       </div>

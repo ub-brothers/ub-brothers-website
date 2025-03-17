@@ -18,14 +18,37 @@ export default {
       {
         name: "paid",
         type: "number",
-        title: "Paid Amount",
-        description: "The amount paid by the user.",
+        title: "Debit Amount"
       },
       {
         name: "due",
         type: "number",
-        title: "Due Amount",
-        description: "The remaining amount to be paid.",
+        title: "Credit Amount"
+      },
+      {
+        name: "amountReceive",
+        type: "string",
+        title: "Amount Received From Heading",
+      },
+      {
+        name: "personName",
+        type: "string",
+        title: "Person Name",
+      },
+      {
+        name: "bankName",
+        type: "string",
+        title: "Bank Name",
+      },
+      {
+        name: "markedPayment",
+        type: "string",
+        title: "Heading For Payment Marked For",
+      },
+      {
+        name: "bookingNumber",
+        type: "string",
+        title: "Booking Number",
       },
       {
         name: 'countryName',

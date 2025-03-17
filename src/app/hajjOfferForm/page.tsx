@@ -23,6 +23,11 @@ function FormContent(){
   const dateOfHajj = searchParams.get("dateOfHajj") || "";
   const discountedPrice = searchParams.get("discountedPrice") || "";
 const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "";
+const title = searchParams.get("title")|| "";
+const totalDays = searchParams.get("totalDays")||"";
+const makkahHotel = searchParams.get("makkahHotel")||"";
+const madinaHotel = searchParams.get("madinaHotel")||"";
+
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -32,7 +37,7 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+    const storedEmail = localStorage.getItem("userEmail");
     try {
       const response = await fetch("/api/hajjOfferForm", {
         method: "POST",
@@ -41,9 +46,14 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
         },
         body: JSON.stringify({
           ...formData,
+          title,
+          makkahHotel,
+          madinaHotel,
+          totalDays,
           dateOfHajj,
           discountedPrice,
           discountedPriceForUsers,
+          userEmail:storedEmail,
         }),
       });
   
@@ -123,6 +133,9 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
     addField("Email Address", formData.email);
     addField("Nationality", formData.nationality);
     addField("Date Of Hajj", `${dateOfHajj}`);
+    addField("Total Days", `${totalDays}`);
+    addField("Makkah Hotel", `${makkahHotel}`);
+    addField("Madina Hotel", `${madinaHotel}`);
     addField("Discounted Price", `PKR ${isApprovedUser ? discountedPriceForUsers : discountedPrice}`);
 
    
@@ -164,8 +177,16 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
         <label className="block text-lg font-semibold mb-2">Email Address</label>
         <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" required />
 
-        <label className="block text-lg font-semibold mb-2">Umrah Day Duration</label>
+        <label className="block text-lg font-semibold mb-2">Hajj Date</label>
         <input type="text" value={`${dateOfHajj}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
+
+        <label className="block text-lg font-semibold mb-2">Hajj Day Duration</label>
+        <input type="text" value={`${totalDays}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
+
+        <label className="block text-lg font-semibold mb-2">Makkah Hotel</label>
+        <input type="text" value={`${makkahHotel}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
+        <label className="block text-lg font-semibold mb-2">Madina Hotel</label>
+        <input type="text" value={`${madinaHotel}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
 
         <label className="block text-lg font-semibold mb-2">Discounted Price</label>
         <input type="text" value={`PKR ${isApprovedUser? discountedPriceForUsers: discountedPrice}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />

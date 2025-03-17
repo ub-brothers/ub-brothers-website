@@ -1,32 +1,94 @@
 'use client';
-import { useEffect, useState } from "react"
-import { IranType} from "../types/destinations"
+import { useEffect, useState } from "react";
 import {client} from "@/sanity/lib/client"
 import Image from 'next/image';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { motion } from 'framer-motion';
-import { FaPlane, FaHotel, FaUtensils, FaBus, FaMosque } from 'react-icons/fa';
+import { FaPlane, FaHotel, FaUtensils, FaBus, FaMosque,FaFileAlt,FaCalendarAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import PaymentDetails from '../payment/page';
 import { hajjPack } from '@/sanity/lib/queries';
 import { jwtDecode } from 'jwt-decode';
+import { hajjFeature } from "@/sanity/lib/queries";
+import Modal from "../components/modal";
+import { ModalContentType } from "../types/destinations";
+import HajjCard from "../hajjCard/page";
+interface Feature {
+  icon: JSX.Element;
+  title: string;
+  fields: (keyof ModalContentType)[];
+}
 
 
-
-const features = [
-  { icon: <FaPlane size={50} className="text-blue-600" />, title: 'Ticket' },
-  { icon: <FaHotel size={40} className="text-blue-600" />, title: 'Hotel' },
-  { icon: <FaUtensils size={40} className="text-blue-600" />, title: 'Food' },
-  { icon: <FaBus size={40} className="text-blue-600" />, title: 'Transport' },
-  { icon: <FaMosque size={40} className="text-blue-600" />, title: 'Ziyarat & Ibadat' }
+const features:Feature[] = [
+  {
+    icon: <FaPlane size={50} className="text-blue-600" />,
+    title: 'Ticket',
+    fields: [
+      'ticketHead',
+      'airlineName',
+      'airlineImage',
+      'dep',
+      'flightNum1',
+      'dateOfFlight1',
+      'route1',
+      'time1',
+      'return',
+      'flightNum2',
+      'dateOfFlight2',
+      'route2',
+      'time2',
+    ],
+  },
+  {
+    icon: <FaHotel size={40} className="text-blue-600" />,
+    title: 'Hotel',
+    fields: ['makkahHotelH', 'makkahHotel', 'madinaHotelH', 'madinaHotel'],
+  },
+  {
+    icon: <FaUtensils size={40} className="text-blue-600" />,
+    title: 'Food',
+    fields: ['foodHead', 'food'],
+  },
+  {
+    icon: <FaBus size={40} className="text-blue-600" />,
+    title: 'Transport',
+    fields: ['transportHead', 'transport'],
+  },
+  {
+    icon: <FaMosque size={40} className="text-blue-600" />,
+    title: 'Ziyarat & Ibadat',
+    fields: ['holyZiaratHead', 'holyziarat'],
+  },
+  {
+    icon: <FaFileAlt size={40} className="text-blue-600" />,
+    title: 'Documents',
+    fields: ['documentsH', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', 'doc6'],
+  },
+  {
+    icon: <FaCalendarAlt size={40} className="text-blue-600" />,
+    title: 'Day Durations',
+    fields: ['azizaStay', 'azizaStayDetail','azizaStay2',"azizaStayDetail2", 'makkahStay', 'makkahStayDetail', 'madinaStay', 'madinaStayDetail'],
+  },
 ];
-
 
 export default function HajjPackage() {
 
-  const [ tour, setTour ] = useState<IranType[]>([])
+  const [ tour, setTour ] = useState<ModalContentType[]>([])
     const [isApprovedUser, setIsApprovedUser] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+
+    useEffect(() => {
+      async function fetchData() {
+        const data = await client.fetch(hajjFeature);
+        setTour(data);
+      }
+      fetchData();
+    }, []);
+
+    
     useEffect(()=>{
 
 
@@ -47,15 +109,26 @@ export default function HajjPackage() {
         }
       }
   
-
-        async function fetchedTour(){
-            const fetchTour: IranType[] = await client.fetch(hajjPack)
-            setTour(fetchTour)
-        }
-        fetchedTour();
     }, [])
+    
+    const [clickedTitle, setClickedTitle] = useState<string | null>(null);
+    const [modalContent, setModalContent] = useState<ModalContentType | null>(null);
 
-
+    const handleIconClick = (title: string, fields: (keyof ModalContentType)[]) => {
+      // Find the relevant data from the `tour` array based on the clicked icon title
+      const content = tour.map((item) => {
+        const filteredData: Partial<ModalContentType> = {};
+        fields.forEach((field) => {
+          if (field in item) {
+            filteredData[field] = item[field] as ModalContentType[keyof ModalContentType];
+          }
+        });
+        return filteredData;
+      });
+      setModalContent(content[0] as ModalContentType); // Cast to ModalContentType
+      setClickedTitle(title); // Store the clicked icon's title
+      setIsModalOpen(true);
+    };
   
   return (
     <div className="min-h-screen  flex flex-col items-center p-6">
@@ -81,65 +154,172 @@ export default function HajjPackage() {
 
       
 <h1 className="text-3xl text-center font-bold mt-8 mb-6 mx-4 font-sans">Below are our Hajj Packages, Book your spot Now!</h1>
-
-      
-
-<div className="flex grid lg:grid-cols-3 sm:grid-cols-2 mb-8">
-            {tour.map ((tour)=>(
-             
-<div key={tour._id} className="w-[290px]  rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
-<Link href={{
-  pathname: "/hajjForm",
-  query: {
-    countryName: tour.countryName,
-    shortDescription: tour.shortDescription,
-    prize1: tour.prize1,
-    prize2: tour.prize2,
-    prize3: tour.prize3,
-    sharingPriceForUsers: tour.sharingPriceForUsers,
-    triplePriceForUsers:tour.triplePriceForUsers,
-    doublePriceForUsers:tour.doublePriceForUsers,
-  },
-}} >
-<div className="relative group text-center">
-<img src={tour.imageUrl2} alt={tour.countryName} className="mx-auto my-4 h-[250px] rounded-lg w-[250px] sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
- 
-</div> 
-
-<h3 className=" sm:text-xl text-md text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
-<h3 className=" sm:text-lg text-sm text-left flex ml-4 gap-1  sm:gap-2 text-lg text-gray-600">{tour.shortDescription}</h3>
-<h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Sharing: <b>{isApprovedUser ? tour.sharingPriceForUsers : tour.prize1}</b> PKR/-</h2>
-<h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Triple: <b>{isApprovedUser ? tour.triplePriceForUsers : tour.prize2}</b> PKR/-</h2>
-<h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Double: <b>{isApprovedUser ? tour.doublePriceForUsers : tour.prize3}</b> PKR/-</h2>
-<div className="text-center">
-<button className="bg-orange-500 rounded-xl h-8 w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500  hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif text-center">Book Now</button> </div>
-</Link>
-                   
-                </div>
-            ))}
-        </div>
+<HajjCard/>
 
       <div className="min-h-screen flex flex-col items-center justify-center p-6">
+
+
         <div className='my-14'>
       <h2 className="text-3xl font-bold font-sans text-center text-gray-900 mb-6">Hajj Package Includes</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-        {features.map((feature, index) => (
-          <motion.div 
-            key={index} 
-            className="flex flex-col items-center justify-center border-2 border-blue-600 p-6 rounded-lg shadow-md bg-white"
-            initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.5 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-           
-          >
-            {feature.icon}
-            <p className="mt-3 text-lg font-semibold text-gray-800">{feature.title}</p>
-          </motion.div>
-        ))}
+  {features.map((feature, index) => (
+    <motion.div
+      key={index}
+      className="flex flex-col items-center justify-center border-2 border-blue-600 p-6 rounded-lg shadow-md bg-white cursor-pointer"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.2, duration: 0.5 }}
+      viewport={{ once: true }}
+      whileHover={{ scale: 1.05 }}
+      onClick={() => handleIconClick(feature.title, feature.fields)} // Handle icon click
+    >
+      {feature.icon}
+      <p className="mt-3 text-lg font-semibold text-gray-800">{feature.title}</p>
+    </motion.div>
+  ))}
+</div>
+<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+  {modalContent && clickedTitle && (
+    <div>
+      {/* Display the icon and title */}
+      <div className="flex items-center justify-center mb-4">
+        {features.find((feature) => feature.title === clickedTitle)?.icon}
+        <h2 className="text-2xl font-bold ml-2">{clickedTitle}</h2>
       </div>
+
+      {/* Display content based on the clicked icon */}
+      {clickedTitle === 'Ticket' && (
+        <>
+          {/* Ticket Section */}
+          {modalContent.ticketHead && <h3 className="text-xl font-semibold">{modalContent.ticketHead}</h3>}
+          {modalContent.airlineName && (
+            <div className="mt-4">
+              <h4 className="text-lg font-semibold">Airline: {modalContent.airlineName}</h4>
+              {modalContent.airlineImage && (
+                <Image
+                  src={modalContent.airlineImage}
+                  alt="Airline Logo"
+                  width={100}
+                  height={50}
+                  className="mt-2"
+                />
+              )}
+            </div>
+          )}
+
+          {/* Flight Details Table */}
+          <div className="mt-6">
+            <h4 className="text-lg font-semibold mb-4">Flight Schedule</h4>
+            <table className="min-w-full bg-white border border-gray-200">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="py-2 px-4 border-b">Flight Number</th>
+                  <th className="py-2 px-4 border-b">Date</th>
+                  <th className="py-2 px-4 border-b">Route</th>
+                  <th className="py-2 px-4 border-b">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Departure Flight */}
+                {modalContent.flightNum1 && (
+                  <tr>
+                    <td className="py-2 px-4 border-b text-center">{modalContent.flightNum1}</td>
+                    <td className="py-2 px-4 border-b text-center">{modalContent.dateOfFlight1}</td>
+                    <td className="py-2 px-4 border-b text-center">{modalContent.route1}</td>
+                    <td className="py-2 px-4 border-b text-center">{modalContent.time1}</td>
+                  </tr>
+                )}
+                {/* Return Flight */}
+                {modalContent.flightNum2 && (
+                  <tr>
+                    <td className="py-2 px-4 border-b text-center">{modalContent.flightNum2}</td>
+                    <td className="py-2 px-4 border-b text-center">{modalContent.dateOfFlight2}</td>
+                    <td className="py-2 px-4 border-b text-center">{modalContent.route2}</td>
+                    <td className="py-2 px-4 border-b text-center">{modalContent.time2}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+
+      {clickedTitle === 'Hotel' && (
+        <>
+          {/* Hotel Section */}
+          {modalContent.makkahHotelH && <h2 className="text-xl font-bold">{modalContent.makkahHotelH}</h2>}
+          {modalContent.makkahHotel && (
+            <p className=" text-gray-700">{modalContent.makkahHotel}</p>
+          )}
+          {modalContent.madinaHotelH && <h2 className="text-xl mt-2 font-bold">{modalContent.madinaHotelH}</h2>}
+          {modalContent.madinaHotel && (
+            <p className=" text-gray-700">{modalContent.madinaHotel}</p>
+          )}
+        </>
+      )}
+
+      {clickedTitle === 'Food' && (
+        <>
+          {/* Food Section */}
+          {modalContent.foodHead && <h2 className="text-xl font-bold flex">{modalContent.foodHead}</h2>}
+          {modalContent.food && <p className="mt-2 text-gray-700">{modalContent.food}</p>}
+        </>
+      )}
+
+      {clickedTitle === 'Transport' && (
+        <>
+          {/* Transport Section */}
+          {modalContent.transportHead && <h2 className="text-xl font-bold">{modalContent.transportHead}</h2>}
+          {modalContent.transport && <p className="mt-2 text-gray-700">{modalContent.transport}</p>}
+        </>
+      )}
+
+      {clickedTitle === 'Documents' && (
+        <>
+          {/* Documents Section */}
+          {modalContent.documentsH && <h2 className="text-xl font-bold">{modalContent.documentsH}</h2>}
+          <div>
+            <h3 className="font-semibold">Documents:</h3>
+            <ul>
+              {modalContent.doc1 && <li>{modalContent.doc1}</li>}
+              {modalContent.doc2 && <li>{modalContent.doc2}</li>}
+              {modalContent.doc3 && <li>{modalContent.doc3}</li>}
+              {modalContent.doc4 && <li>{modalContent.doc4}</li>}
+              {modalContent.doc5 && <li>{modalContent.doc5}</li>}
+              {modalContent.doc6 && <li>{modalContent.doc6}</li>}
+            </ul>
+          </div>
+        </>
+      )}
+  {clickedTitle === 'Ziyarat & Ibadat' && (
+        <>
+          {/* Documents Section */}
+          {modalContent.holyZiaratHead && <h2 className="text-xl font-bold">{modalContent.holyZiaratHead}</h2>}
+          <div>
+        
+            <ul>
+              {modalContent.holyziarat && <li>{modalContent.holyziarat}</li>}
+            </ul>
+          </div>
+        </>
+      )}
+      {clickedTitle === 'Day Durations' && (
+        <>
+          {/* Day Durations Section */}
+          {modalContent.azizaStay && <h2 className="text-xl font-bold">{modalContent.azizaStay}</h2>}
+          {modalContent.azizaStayDetail && <p className=" text-gray-700">{modalContent.azizaStayDetail}</p>}
+          {modalContent.makkahStay && <h2 className="text-xl mt-2 font-bold">{modalContent.makkahStay}</h2>}
+          {modalContent.makkahStayDetail && <p className=" text-gray-700">{modalContent.makkahStayDetail}</p>}
+          {modalContent.azizaStay2 && <h2 className="text-xl font-bold">{modalContent.azizaStay2}</h2>}
+          {modalContent.azizaStayDetail2 && <p className=" text-gray-700">{modalContent.azizaStayDetail2}</p>}
+          {modalContent.madinaStay && <h2 className="text-xl mt-2 font-bold">{modalContent.madinaStay}</h2>}
+          {modalContent.madinaStayDetail && <p className=" text-gray-700">{modalContent.madinaStayDetail}</p>}
+        </>
+      )}
+    </div>
+  )}
+</Modal>
       </div>
 
       <h1 className="my-4 font-bold text-xl sm:text-2xl font-sans">Stay in Comfortable and Quality Makkah and Madina Hotels!</h1>

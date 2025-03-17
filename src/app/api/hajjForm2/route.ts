@@ -13,7 +13,7 @@ const sanityClient = createClient({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { userName, userNumber, userEmail, shortDescription, selectedCategory, selectedPrize, userMessage, storedUserEmail } = body;
+    const { userName, userNumber, userEmail, shortDescription, selectedCategory, selectedPrize, userMessage, storedUserEmail, makkahHotel,madinaHotel } = body;
 
     if (!userName || !userNumber || !userEmail || !shortDescription || !selectedCategory || !selectedPrize) {
       return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
@@ -37,6 +37,8 @@ export async function POST(req: Request) {
         <p><strong>Phone Number</strong>: ${userNumber}</p> 
         <p><strong>Email</strong>: ${userEmail}</p> 
         <p><strong>Day Duration</strong>: ${shortDescription}</p>
+          <p><strong>Makkah Hotel</strong>: ${makkahHotel}</p>
+            <p><strong>Madina Hotel</strong>: ${madinaHotel}</p>
         <p><strong>Category</strong>: ${selectedCategory}</p>
         <p><strong>Price</strong>: ${selectedPrize} PKR/-</p>
         <p><strong>Message</strong>: ${userMessage}</p>

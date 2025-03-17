@@ -23,7 +23,7 @@ export default {
         {
           name: "daysOfUmrah",
           type: "number",
-          title: "Days of Umrah",
+          title: "Total Days of Umrah",
         },
         {
           name: "description",
@@ -50,7 +50,172 @@ export default {
         title: "Discounted Price for Login Users",
         type: "number",
       },
-      
+      {
+        name: 'makkahHotelH',
+        title: 'Makkah Hotel Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'makkahHotel',
+        title: 'Makkah Hotel',
+        type: 'string',
+          
+      },
+      {
+        name: 'makkahHotelDaysH',
+        title: 'Makkah Hotel Days Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'makkahHotelDays',
+        title: 'Makkah Hotel Days',
+        type: 'string',
+          
+      },
+      {
+        name: 'madinaHotelH',
+        title: 'Madina Hotel Heading',
+        type: 'string',
+          
+      },
+ {
+        name: 'madinaHotel',
+        title: 'Madina Hotel',
+        type: 'string',
+          
+      },
+      {
+        name: 'madinaHotelDaysH',
+        title: 'Madina Hotel Days Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'madinaHotelDays',
+        title: 'Madina Hotel Days',
+        type: 'string',
+          
+      },
+      {
+        name: 'foodHead',
+        title: 'Food Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'food',
+        title: 'Food Included',
+        type: 'string',
+          
+      },
+      {
+        name: 'transportHead',
+        title: 'Transport Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'transport',
+        title: 'Transport detail',
+        type: 'string',
+          
+      },
+      {
+        name: 'holyZiaratHead',
+        title: 'Holy Ziarat Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'holyziarat',
+        title: 'Holy Ziarat Detail',
+        type: 'string',
+          
+      },
+      {
+        name: 'ticketHead',
+        title: 'Ticket Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'airlineName',
+        title: 'Airline Name',
+        type: 'string',
+          
+      },
+      {
+        name: 'airlineImage',
+        title: 'Airline Image',
+        type: 'image',
+        options: {
+          hotspot: true
+        },
+   
+      },
+      {
+        name: 'dep',
+        title: 'Departure Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'flightNum1',
+        title: 'Flight Num Dep',
+        type: 'string',
+          
+      },
+      {
+        name: 'dateOfFlight1',
+        title: 'Date Of Flight Dep',
+        type: 'string',
+          
+      },
+      {
+        name: 'route1',
+        title: 'Route Dep',
+        type: 'string',
+          
+      },
+      {
+        name: 'time1',
+        title: 'Time Of Dep',
+        type: 'string',
+          
+      },
+      {
+        name: 'return',
+        title: 'Return Heading',
+        type: 'string',
+          
+      },
+      {
+        name: 'flightNum2',
+        title: 'Flight Num Ret',
+        type: 'string',
+          
+      },
+      {
+        name: 'dateOfFlight2',
+        title: 'Date Of Flight Ret',
+        type: 'string',
+          
+      },
+      {
+        name: 'route2',
+        title: 'Route Ret',
+        type: 'string',
+          
+      },
+      {
+        name: 'time2',
+        title: 'Time Ret',
+        type: 'string',
+          
+      },
+
     ],
   };
   

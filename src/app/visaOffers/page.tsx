@@ -11,119 +11,120 @@ type VisaOfferType = {
     title: string;
     originalPrice: number;
     discountedPrice: number;
-    discountedPriceForUsers:number;
-    originalPriceForUsers:number;
+    discountedPriceForUsers: number;
+    originalPriceForUsers: number;
     countries: {
-      name: string;
-      imageUrl?: string | null;
+        name: string;
+        imageUrl?: string | null;
     }[];
-  };
-export default function VisaOffer() {
-  const [offer, setOffer] = useState<VisaOfferType | null>(null);
-      const [isApprovedUser, setIsApprovedUser] = useState(false);
-
-  useEffect(() => {
-
- const token = localStorage.getItem("token");
-
-      if (token) {
-        try {
-          const decoded: any = jwtDecode(token);
-       
-  
-          if (decoded.approved === true || decoded.approved === "true") {
-            setIsApprovedUser(true);
-          } else {
-            setIsApprovedUser(false);
-          }
-        } catch (error) {
-          console.error("Invalid token", error);
-        }
-      }
-  
-
-
-    const fetchOffer = async () => {
-      const data: VisaOfferType = await client.fetch(`  *[_type == "visaOffer"]{
-    title,
-    originalPrice,
-    discountedPrice,
-    originalPriceForUsers,
-    discountedPriceForUsers,
-    countries[] {
-      name,
-      "imageUrl": image.asset->url
-    }
-  }`);
-  console.log("Fetched Data:", data);
-      setOffer(data);
-    };
-    fetchOffer();
-  }, []);
-
-  if (!offer) return <p className="text-center text-lg">Loading offer...</p>;
-
-  const router = useRouter();
-
-const handleApplyNow = () => {
-  const queryParams = new URLSearchParams({
-    title: offer.title,
-    originalPrice: offer.originalPrice.toString(),
-    discountedPrice: offer.discountedPrice.toString(),
-    discountedPriceForUsers: offer.discountedPriceForUsers.toString(),
-    
-    countries: offer.countries.map(c => c.name).join(","),
-  }).toString();
-
-  router.push(`/offerForm?${queryParams}`);
 };
 
-  return (
-    <div className="w-full p-8 bg-gray-100 shadow-xl rounded-xl  border border-gray-200">
-      {/* Offer Heading */}
-      <h1 className="sm:text-4xl text-2xl font-bold font-serif text-center text-blue-600 mb-6 uppercase">
-       <u> {offer.title}</u>
-      </h1>
-      
-      {/* Countries List with Images */}
-      <div className="bg-gray-100 p-4 rounded-lg mb-6">
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">Included Countries</h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {offer.countries.map((country, index) => (
-  <div key={index} className="flex flex-col items-center bg-gray-500 p-4 rounded shadow-lg">
-    {country.imageUrl? (
-      <Image 
-        src={country.imageUrl} 
-        alt={country.name} 
-        width={150} 
-        height={140} 
-        quality={100} 
-        unoptimized
-        className="object-cover w-full h-44 rounded-md mb-2"
-      />
-    ) : (
-      <div className="w-[150px] h-[100px] bg-gray-200 flex items-center justify-center rounded-md mb-2">
-        <span className="text-gray-500 text-sm">No Image</span>
-      </div>
-    )}
-    <p className="text-lg text-white font-bold font-sans">{country.name}</p>
-  </div>
-))}
-        </div>
-      </div>
-      <p className="text-lg text-gray-700 text-center mb-6 font-medium">
-      Get visa for all these countries at an exclusive discounted price!
-      </p>
-      
-      
-      <div className="text-center text-xl font-semibold mb-6 bg-red-100 p-4 rounded-lg">
-        <span className="line-through text-gray-500 text-2xl">PKR {isApprovedUser ? offer.originalPriceForUsers: offer.originalPrice}</span><br></br>
-        <span className="text-red-600 text-3xl font-bold ml-3">Only PKR {isApprovedUser ? offer.discountedPriceForUsers: offer.discountedPrice}</span>
+export default function VisaOffer() {
+    const [offer, setOffer] = useState<VisaOfferType | null>(null);
+    const [isApprovedUser, setIsApprovedUser] = useState(false);
 
-       
-      </div>
-      <div className="text-center">
- <button onClick={handleApplyNow} className="bg-blue-500 hover:bg-orange-500 w-[250px] text-white font-bold font-sans rounded-lg h-12">Apply for offer Now!</button></div>
-    </div>
-  );
+    useEffect(() => {
+        const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+        if (token) {
+            try {
+                const decoded: any = jwtDecode(token);
+                setIsApprovedUser(decoded.approved === true || decoded.approved === "true");
+            } catch (error) {
+                console.error("Invalid token", error);
+            }
+        }
+
+        const fetchOffer = async () => {
+            try {
+                const data: VisaOfferType[] = await client.fetch(`*[_type == "visaOffer"]{
+                    title,
+                    originalPrice,
+                    discountedPrice,
+                    originalPriceForUsers,
+                    discountedPriceForUsers,
+                    countries[] {
+                        name,
+                        "imageUrl": image.asset->url
+                    }
+                }`);
+                console.log("Fetched Data:", data);
+                if (data && data.length > 0) {
+                    setOffer(data[0]); // Assuming you want the first offer
+                }
+            } catch (error) {
+                console.error("Failed to fetch offer:", error);
+            }
+        };
+        fetchOffer();
+    }, []);
+
+    if (!offer || Object.keys(offer).length === 0) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-gray-100">
+                <h1 className="text-6xl font-bold text-gray-500">No Offer Available Now!</h1>
+            </div>
+        );
+    }
+
+    const router = useRouter();
+
+    const handleApplyNow = () => {
+        const queryParams = new URLSearchParams({
+            title: offer.title,
+            originalPrice: offer.originalPrice.toString(),
+            discountedPrice: offer.discountedPrice.toString(),
+            discountedPriceForUsers: offer.discountedPriceForUsers.toString(),
+            countries: offer.countries.map(c => c.name).join(","),
+        }).toString();
+
+        router.push(`/offerForm?${queryParams}`);
+    };
+
+    return (
+        <div className="w-full p-8 bg-gray-100 shadow-xl rounded-xl border border-gray-200">
+            {/* Offer Heading */}
+            <h1 className="sm:text-4xl text-2xl font-bold font-serif text-center text-blue-600 mb-6 uppercase">
+                <u>{offer.title}</u>
+            </h1>
+
+            {/* Countries List with Images */}
+            <div className="bg-gray-100 p-4 rounded-lg mb-6">
+                <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">Included Countries</h2>
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    {offer.countries?.map((country, index) => (
+                        <div key={index} className="flex flex-col items-center bg-gray-500 p-4 rounded shadow-lg">
+                            {country.imageUrl ? (
+                                <Image
+                                    src={country.imageUrl}
+                                    alt={country.name}
+                                    width={150}
+                                    height={140}
+                                    quality={100}
+                                    unoptimized
+                                    className="object-cover w-full h-44 rounded-md mb-2"
+                                />
+                            ) : (
+                                <div className="w-[150px] h-[100px] bg-gray-200 flex items-center justify-center rounded-md mb-2">
+                                    <span className="text-gray-500 text-sm">No Image</span>
+                                </div>
+                            )}
+                            <p className="text-lg text-white font-bold font-sans">{country.name}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <p className="text-lg text-gray-700 text-center mb-6 font-medium">
+                Get visa for all these countries at an exclusive discounted price!
+            </p>
+
+            <div className="text-center text-xl font-semibold mb-6 bg-red-100 p-4 rounded-lg">
+                <span className="line-through text-gray-500 text-2xl">PKR {isApprovedUser ? offer.originalPriceForUsers : offer.originalPrice}</span><br></br>
+                <span className="text-red-600 text-3xl font-bold ml-3">Only PKR {isApprovedUser ? offer.discountedPriceForUsers : offer.discountedPrice}</span>
+            </div>
+            <div className="text-center">
+                <button onClick={handleApplyNow} className="bg-blue-500 hover:bg-orange-500 w-[250px] text-white font-bold font-sans rounded-lg h-12">Apply for offer Now!</button>
+            </div>
+        </div>
+    );
 }

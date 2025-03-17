@@ -25,6 +25,7 @@ function FormContent(){
   const route = searchParams.get("route") || "";
   const discountedPrice = searchParams.get("discountedPrice") || "";
 const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "";
+const title = searchParams.get("title") || "";
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -57,7 +58,7 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+    const storedEmail = localStorage.getItem("userEmail");
     try {
       const response = await fetch("/api/iranOfferForm", {
         method: "POST",
@@ -66,10 +67,12 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
         },
         body: JSON.stringify({
           ...formData,
+          title,
           destination,
           route,
           discountedPrice,
           discountedPriceForUsers,
+          userEmail:storedEmail,
         }),
       });
   

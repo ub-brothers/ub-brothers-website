@@ -87,19 +87,32 @@ const handleApplyNow = () => {
 
 
     return (
-      <div className=" bg-white rounded-3xl shadow-2xl overflow-hidden p-8 border border-gray-300 mt-10 mb-10">
+      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden p-8 border border-gray-300 mt-10 mb-10">
         <h2 className="text-3xl font-serif font-bold text-gray-900 text-center mb-6"><u>{offer.title}</u></h2>
-        <div className="flex gap-6 justify-center">
-          <div className="relative w-1/2 h-64">
-            <Image src={offer.image1} alt="Image 1" layout="fill" objectFit="cover" className="rounded-xl" />
-          </div>
-          <div className="relative w-1/2 h-64">
-            <Image src={offer.image2} alt="Image 2" layout="fill" objectFit="cover" className="rounded-xl" />
-          </div>
-        </div>
+
+         <div className="flex flex-col md:flex-row gap-4 justify-center">
+         <div className="relative w-full md:w-1/2 h-40 md:h-48 lg:h-64 overflow-hidden rounded-xl">
+           <Image 
+             src={offer.image1} 
+             alt="Image 1" 
+             fill 
+             className="object-cover rounded-xl" 
+           />
+         </div>
+         
+         <div className="relative w-full md:w-1/2 h-40 md:h-48 lg:h-64 overflow-hidden rounded-xl">
+           <Image 
+             src={offer.image2} 
+             alt="Image 2" 
+             fill 
+             className="object-cover rounded-xl" 
+           />
+         </div>
+       </div>
+
          <p className="text-gray-600 text-lg mt-6 text-center">{offer.description}</p>
-        <p className="text-gray-700 text-lg mt-2 text-center"><span className="font-semibold">{offer.destination}</span></p>
-        <p className="text-gray-700 text-lg mt-2 text-center"><span className="font-semibold">{offer.route}</span></p>
+        <p className="text-gray-700 text-lg mt-2 text-center"><span className="font-semibold">Place Of Ziyarat: {offer.destination}</span></p>
+        <p className="text-gray-700 text-lg mt-2 text-center"><span className="font-semibold">Route: {offer.route}</span></p>
        
         <div className="mt-6 flex justify-center items-center text-center">
           <p className="text-gray-500 text-2xl line-through mr-4">Rs. {isApprovedUser ? offer.originalPriceForUsers: offer.originalPrice}</p>

@@ -44,9 +44,13 @@ function FormContent(){
 
   }, [])
 
-
+const makkahHotel = searchParams.get("makkahHotel")||"";
+const madinaHotel =searchParams.get("madinaHotel") || "";
   const daysOfUmrah = searchParams.get("daysOfUmrah") || "";
   const discountedPrice = searchParams.get("discountedPrice") || "";
+  const makkahHotelDays = searchParams.get("makkahHotelDays")||"";
+  const madinaHotelDays = searchParams.get("madinaHotelDays")||"";
+  const title = searchParams.get("title")||"";
 const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "";
   const [isConfirmed, setIsConfirmed] = useState(false);
 
@@ -57,7 +61,7 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+    const storedEmail = localStorage.getItem("userEmail");
     try {
       const response = await fetch("/api/umrahOfferForm", {
         method: "POST",
@@ -69,6 +73,12 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
           daysOfUmrah,
           discountedPrice,
           discountedPriceForUsers,
+          makkahHotel,
+          madinaHotel,
+          makkahHotelDays,
+          madinaHotelDays,
+          title,
+          userEmail:storedEmail,
         }),
       });
   
@@ -123,7 +133,11 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
     addField("Phone Number", formData.phoneNumber);
     addField("Email Address", formData.email);
     addField("Nationality", formData.nationality);
+    
     addField("Umrah Day Duration", `${daysOfUmrah}`);
+    addField("Makkah Hotel:", `${makkahHotel}`);
+    addField("Madina Hotel:", `${madinaHotel}`);
+
     addField("Discounted Price", `PKR ${isApprovedUser? discountedPriceForUsers: discountedPrice}`);
 
     
@@ -167,7 +181,10 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
 
         <label className="block text-lg font-semibold mb-2">Umrah Day Duration</label>
         <input type="text" value={`${daysOfUmrah} days.`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
-
+        <label className="block text-lg font-semibold mb-2">Makkah Hotel</label>
+        <input type="text" value={`${makkahHotel}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
+        <label className="block text-lg font-semibold mb-2">Madina Hotel</label>
+        <input type="text" value={`${madinaHotel}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
         <label className="block text-lg font-semibold mb-2">Discounted Price</label>
         <input type="text" value={`PKR ${isApprovedUser? discountedPriceForUsers: discountedPrice}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
 
@@ -175,7 +192,7 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
         <input type="text" name="nationality" placeholder="Your Nationality" value={formData.nationality} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" required />
 
         <label className="block text-lg font-semibold mb-2">Message</label>
-        <textarea name="message" placeholder="Any Message" value={formData.message} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" rows={4} required></textarea>
+        <textarea name="message" placeholder="Any Message" value={formData.message} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" rows={4}></textarea>
 
         <button type="submit" className="w-full bg-blue-500 hover:bg-orange-500 text-white font-bold rounded-lg p-3">Submit</button>
         {isConfirmed && (

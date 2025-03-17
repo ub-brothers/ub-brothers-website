@@ -136,6 +136,45 @@ export interface IranType {
     sharingPriceForUsers:string;
     triplePriceForUsers:string;
     doublePriceForUsers:string;
+    
+    azizaStay2:string;
+    azizaStayDetail2:string;
+    ticketHead: string;
+    airlineName: string;
+    airlineImage: string;
+    dep: string;
+    flightNum1: string;
+    dateOfFlight1: string;
+    route1: string;
+    time1: string;
+    return: string;
+    flightNum2: string;
+    dateOfFlight2: string;
+    route2: string;
+    time2: string;
+    makkahHotelH: string;
+    makkahHotel: string;
+    madinaHotelH: string;
+    madinaHotel: string;
+    foodHead: string;
+    food: string;
+    transportHead: string;
+    transport: string;
+    holyZiaratHead: string;
+    holyziarat: string;
+    documentsH: string;
+    doc1: string;
+    doc2: string;
+    doc3: string;
+    doc4: string;
+    doc5: string;
+    doc6: string;
+    azizaStay: string;
+    azizaStayDetail: string;
+    makkahStay: string;
+    makkahStayDetail: string;
+    madinaStay: string;
+    madinaStayDetail: string;
    prize1: string,
    prize2: string,
    prize3:string,
@@ -147,6 +186,48 @@ export interface IranType {
     imageUrl :string,
     imageUrl2: string
     
+}
+
+export interface ModalContentType {
+  // Include fields for the modal content
+  ticketHead: string;
+  azizaStay2:string;
+  azizaStayDetail2:string;
+  airlineName: string;
+  airlineImage: string;
+  dep: string;
+  flightNum1: string;
+  dateOfFlight1: string;
+  route1: string;
+  time1: string;
+  return: string;
+  flightNum2: string;
+  dateOfFlight2: string;
+  route2: string;
+  time2: string;
+  makkahHotelH: string;
+  makkahHotel: string;
+  madinaHotelH: string;
+  madinaHotel: string;
+  foodHead: string;
+  food: string;
+  transportHead: string;
+  transport: string;
+  holyZiaratHead: string;
+  holyziarat: string;
+  documentsH: string;
+  doc1: string;
+  doc2: string;
+  doc3: string;
+  doc4: string;
+  doc5: string;
+  doc6: string;
+  azizaStay: string;
+  azizaStayDetail: string;
+  makkahStay: string;
+  makkahStayDetail: string;
+  madinaStay: string;
+  madinaStayDetail: string;
 }
 
 export interface Flight {

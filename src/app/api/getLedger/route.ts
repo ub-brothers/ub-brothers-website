@@ -17,7 +17,11 @@ const ledgerQuery = `{
   "Hajj Package": *[_type == "hajjBooking" && (userEmail == $userEmail || storedUserEmail == $userEmail)] | order(createdAt asc),
   "Tour Package": *[_type == "tourBooking" && userEmail == $userEmail] | order(createdAt asc),
   "Umrah Package": *[_type == "umrahBooking" && userEmail == $userEmail] | order(createdAt asc),
-  "E-Visa": *[_type == "visaBooking" && userEmail == $userEmail] | order(createdAt asc)
+  "E-Visa": *[_type == "visaBooking" && userEmail == $userEmail] | order(createdAt asc),
+   "Visa Offer": *[_type == "visaOfferBooking" && userEmail == $userEmail] | order(createdAt asc),
+    "Iran Ziyarat Offer": *[_type == "iranOfferBooking" && userEmail == $userEmail] | order(createdAt asc),
+    "Hajj Offer": *[_type == "hajjOfferBooking" && userEmail == $userEmail] | order(createdAt asc),
+    "Umrah Offer": *[_type == "umrahOfferBooking" && userEmail == $userEmail] | order(createdAt asc)
 }`;
 const cleanPrice = (price: any): number => {
   if (typeof price === "number") return price; // If already a number, return as is
@@ -50,7 +54,7 @@ export const POST = async (req: Request) => {
     let totalCost = 0;
     let totalPaid = 0;
     let totalDue = 0;
-    const categories = ["Tickets", "File & Consultancy", "Iran Ziyarat", "Sticker Visa", "Hajj Package", "Tour Package", "Umrah Package", "E-Visa"];
+    const categories = ["Tickets", "File & Consultancy", "Iran Ziyarat", "Sticker Visa", "Hajj Package", "Tour Package", "Umrah Package", "E-Visa", "Visa Offer", "Iran Ziyarat Offer", "Hajj Offer", "Umrah Offer"];
     categories.forEach((category) => {
       if (bookings[category]) {
         bookings[category].forEach((item: any) => {
@@ -60,6 +64,7 @@ export const POST = async (req: Request) => {
           const price = cleanPrice(item.price);
           const priceForUsers = cleanPrice(item.priceForUsers);
           const selectedPrize = cleanPrice(item.selectedPrize);
+          const discountedPriceForUsers = cleanPrice(item.discountedPriceForUsers);
           let totalCostField = cleanPrice(item.totalCost); 
           const Prize = cleanPrice(item.Prize);
 
@@ -71,6 +76,7 @@ export const POST = async (req: Request) => {
 
             totalCost +=
             totalPrice +
+            discountedPriceForUsers+
             prize +
             prizeForUsers +
             price +

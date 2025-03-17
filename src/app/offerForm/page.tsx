@@ -25,7 +25,7 @@ function FormContent(){
   const discountedPrice = searchParams.get("discountedPrice") || "";
 const discountedPriceForUsers = searchParams.get("discountedPriceForUsers")||"";
 
-
+const title = searchParams.get("title") || "";
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,7 +35,7 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers")||"";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+    const storedEmail = localStorage.getItem("userEmail");
     try {
       const response = await fetch("/api/offerForm", {
         method: "POST",
@@ -47,6 +47,8 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers")||"";
           countries: countries.join(", "),
           discountedPrice,
           discountedPriceForUsers,
+          title,
+          userEmail:storedEmail,
         }),
       });
   

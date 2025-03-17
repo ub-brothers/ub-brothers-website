@@ -24,9 +24,12 @@ import tourBooking from './tourBooking'
 import hajjBooking from './hajjBooking'
 import umrahBooking from './umrahBooking'
 import iranBooking from './iranBooking'
-
+import hajjFeature from './hajjFeature'
+import visaOfferBooking from './visaOfferBooking'
+import iranOfferBooking from './iranOfferBooking'
+import hajjOfferBooking from './hajjOfferBooking'
+import umrahOfferBooking from './umrahOfferBooking'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [user,booking,stickerVisaBooking, visaBooking,fileBooking,tourBooking,hajjBooking,umrahBooking,iranBooking, destination, stickerVisa, tour,   umrahDays, makkahHotel, madinaHotel , fileConsultancy, iran, hajj, ticketing, offer, umrahOffer,hajjOffer, iranOffer ],
+  types: [user,booking,stickerVisaBooking, visaBooking,fileBooking,tourBooking,hajjBooking,umrahBooking,iranBooking,visaOfferBooking,iranOfferBooking,hajjOfferBooking,umrahOfferBooking, destination, stickerVisa, tour,   umrahDays, makkahHotel, madinaHotel , fileConsultancy, iran, hajj,hajjFeature, ticketing, offer, umrahOffer,hajjOffer, iranOffer ],
 }
-  

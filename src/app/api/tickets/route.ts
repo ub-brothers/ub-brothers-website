@@ -132,6 +132,7 @@ export async function POST(req: Request) {
       to: "ubbrothersconsultant@gmail.com",
       subject: `New Ticket Booking - ${new Date().toLocaleString()}`,
       html: `
+      ${storedUserEmail ? '<p><strong>This email is from a logged-in user</strong></p>' : ''}
      <p><strong>Airline</strong>: ${airlineName}</p> 
    <p><strong>Total Price (Adults)</strong>: ${totalPrice}</p> 
 <p><strong>Total Adults</strong>: ${adults}</p>

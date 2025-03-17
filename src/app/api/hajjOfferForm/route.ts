@@ -1,9 +1,18 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { createClient } from "@sanity/client";
+
+const sanityClient = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, // Replace with your actual Project ID
+  dataset: "production",
+  useCdn: false,
+  apiVersion: "2025-01-30",
+  token: process.env.SANITY_API_TOKEN, // Add your Sanity API token in .env
+});
 
 export async function POST(req: Request) {
   try {
-    const { fullName, phoneNumber, email, nationality, message, dateOfHajj, discountedPrice, discountedPriceForUsers } = await req.json();
+    const { fullName, phoneNumber, email, nationality, message, dateOfHajj, discountedPrice, discountedPriceForUsers, userEmail, title, totalDays,makkahHotel,madinaHotel } = await req.json();
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -15,7 +24,7 @@ export async function POST(req: Request) {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ubbrotherspk@gmail.com",
+      to: "samiaurooj386@gmail.com",
       subject: `New Hajj Offer Submission - ${new Date().toLocaleString()}`,
       html: `
         <h2>New Hajj Offer Submission</h2>
@@ -30,9 +39,28 @@ export async function POST(req: Request) {
     };
 
     await transporter.sendMail(mailOptions);
+
+    if (userEmail) { 
+      const hajjOfferDoc = {
+      _type: 'hajjOfferBooking',
+      title:title,
+      userEmail,
+      dateOfHajj:dateOfHajj,
+      totalDays:totalDays,
+      createdAt: new Date().toISOString(),
+      makkahHotel: makkahHotel,
+      madinaHotel:madinaHotel,
+    discountedPriceForUsers: discountedPriceForUsers,
+     
+    };
+
+    await sanityClient.create(hajjOfferDoc);
+
     return NextResponse.json({ message: "Submitted Successfully!" });
 
-  }
+  }else {
+    return NextResponse.json({ message: "Email sent, but not stored (User not logged in)" }, { status: 200 });
+  }}
    catch (error) {
     console.error("Email Send Error:", error);
     return NextResponse.json({ message: "Error Submission" }, { status: 500 });
