@@ -13,7 +13,7 @@ const UmrahBookingForm2 = () => {
    const [isApprovedUser, setIsApprovedUser] = useState(false);
   const [visaStatus, setVisaStatus] = useState("yes");
   
-  const [daysOptions, setDaysOptions] = useState<{ days: number; price: number, priceForUsers:number }[]>([]);
+  const [daysOptions, setDaysOptions] = useState<{ days: number; price: number, priceForUsers:number, visaCost:number }[]>([]);
   const [categories, setCategories] = useState<{ categoryName: string; price: number, priceForUsers:number }[]>([]);
   const [selectedDays, setSelectedDays] = useState<number>(7);
   
@@ -80,7 +80,7 @@ const token = localStorage.getItem("token");
       const madinaData = await client.fetch<{ hotelName: string; price: number , applicableCategories: { categoryName: string; price: number,priceForUsers:number }[] }[]>(`*[_type == "madinaHotel"]{hotelName, price, applicableCategories[]{ categoryName, price,priceForUsers } }`);
 
 
-      const daysData = await client.fetch<{ days: number; price: number,priceForUsers:number }[]>(`*[_type == "umrahDays"]{days, price,priceForUsers}`);
+      const daysData = await client.fetch<{ days: number; price: number,priceForUsers:number, visaCost:number }[]>(`*[_type == "umrahDays"]{days, price,priceForUsers, visaCost}`);
       const categoriesData = await client.fetch<{ categoryName: string; price: number, priceForUsers:number }[]>(`*[_type == "roomCategories"]{categoryName, price}`);
 
       setMakkahHotels(makkahData);
@@ -114,9 +114,9 @@ const token = localStorage.getItem("token");
 
     let total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
 
-
+    const visaCost = daysOptions[0]?.visaCost || 0;
     if (visaStatus === "no" && proceedClicked) {
-        total += 550;
+        total += visaCost;
     }
 
     setTotalCost(total);
@@ -451,7 +451,7 @@ const generatePDF = () => {
       {visaStatus === "no" && (
         <div className="bg-gray-100 p-4 rounded-md">
           <h3 className="font-bold">Fill out the form and apply for Visa!</h3>
-          <h3 className="font-bold mb-2">Charges: 550 SAR/-</h3>
+          <h3 className="font-bold mb-2">Visa Cost: {daysOptions[0]?.visaCost} SAR/-</h3>
 
           <label className="font-semibold">Personal Photo (White BG)</label>
           <input type="file" accept="image/*" onChange={(e) => setPersonalPhoto(e.target.files?.[0] || null)} className="w-full p-3 border mb-5 rounded-md" />

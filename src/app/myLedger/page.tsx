@@ -32,7 +32,7 @@ const bookingFieldsMapping: Record<BookingType, { key: string; label: string }[]
     { key: "airlineName", label: "Airline" },
     { key: "flights", label: "Flights" },
     { key: "passengers", label: "Passengers" },
-    { key: "totalPrice", label: "Total Cost (PKR])" },
+    { key: "totalPrice", label: "Total Cost (PKR)" },
   ],
   "Hajj Package": [
     {key: "userName" , label:"Name"},
@@ -45,7 +45,7 @@ const bookingFieldsMapping: Record<BookingType, { key: string; label: string }[]
     { key: "days", label: "Total Days" },
     { key: "makkahHotel", label: "Makkah Hotel" },
     { key: "madinaHotel", label: "Madina Hotel" },
-    { key: "totalCost", label: "Total Cost (SAR)" },
+    { key: "totalCost", label: "Total Cost (PKR)" },
   ],
   "Visa Offer": [
     {key: "title",label:"Offer"},
@@ -64,7 +64,7 @@ const bookingFieldsMapping: Record<BookingType, { key: string; label: string }[]
     { key: "makkahHotelDays", label: "Days In Makkh" },
     { key: "madinaHotel", label: "Madina Hotel" },
     { key: "madinaHotelDays", label: "Days In Madina" },
-    { key: "discountedPriceForUsers", label: "Total Cost" },
+    { key: "discountedPriceForUsers", label: "Total Cost(PKR)" },
   ],
   "Tour Package": [
     {key: "fullName",label:"Name"},

@@ -21,6 +21,11 @@ export default {
         title: "Package Price for Login Users (Except hotel cost)",
         type: "number",
       },
+      {
+        name: "visaCost",
+        title: "Visa Cost",
+        type: "number",
+      },
     ],
   };
   
