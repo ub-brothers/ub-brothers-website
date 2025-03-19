@@ -144,7 +144,12 @@ export interface IranType {
     sharingPriceForUsers:string;
     triplePriceForUsers:string;
     doublePriceForUsers:string;
-    
+    usd1:string,
+    usdLogin1:string,
+    usd2:string,
+    usdLogin2:string,
+    usd3:string,
+      usdLogin3:string,
     azizaStay2:string;
     azizaStayDetail2:string;
     ticketHead: string;

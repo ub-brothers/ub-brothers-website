@@ -63,6 +63,12 @@ export default {
         type: 'string',
         title: 'Airline Name',
       },
+      {
+        name: "airlineImage",
+        title: "Airline Image",
+        type: "image",
+        options: { hotspot: true }
+      },
       
       {
         name: 'userEmail',

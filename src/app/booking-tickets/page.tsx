@@ -82,6 +82,10 @@ useEffect(() => {
         setIsConfirmationModalOpen(false);
         setShowTicketOnHoldModal(true); // Open the "Ticket on Hold" modal
         setTimer(3 * 60 * 60);
+
+
+        
+
       } else {
         alert("Failed: " + result.error);
       }

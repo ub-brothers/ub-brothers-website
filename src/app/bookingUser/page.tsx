@@ -5,7 +5,8 @@ import {FaTimes, FaFilePdf } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
 import jsPDF from "jspdf";
 import { useProfile } from "../profileContext";
-
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
 type Flight = {
   _key?: string;
@@ -27,6 +28,11 @@ type Passenger = {
   passportExpiry: string;
   nationality: string;
 };
+type AirlineImage = {
+  asset: {
+    url: string;
+  };
+};
 
 type Booking = {
   _id: string;
@@ -34,6 +40,7 @@ type Booking = {
   createdAt: string;
   meal: string;
   totalPrice: number;
+  airlineImage: AirlineImage | string; 
   adults: number;
   children: number;
   infants: number;
@@ -47,22 +54,37 @@ type Booking = {
   pnr: string;
 };
 
+function AirlineImage (){
+  const searchParams = useSearchParams();
+  const airlineImage = searchParams.get("airline") || "";
+  return(
+    <div>
+
+    </div>
+  )
+}
+
 const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelled" | "confirmed" | "all" } }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
   const { filterStatus } = searchParams;
 
+  const params = useSearchParams();
+  const airlineImage = params.get("airline") || "";
+  
   const { profileImage } = useProfile();
 
-  
-  const airlineImages = {
-    "Fly Jinnah": "/image/flyjinnah.png",
-    "Air Sial": "/image/airsial.png",
-    "Saudia": "/image/saudia.png",
-    "Serene Air": "/image/sereneair.png",
-    "Salam Air": "/image/salamair.png",
-  };
+  // const airlineImages = {
+  //   "Fly Jinnah": "/image/flyjinnah.png",
+  //   "Air Sial": "/image/airsial.png",
+  //   "Saudia": "/image/saudia.png",
+  //   "Serene Air": "/image/sereneair.png",
+  //   "Salam Air": "/image/salamair.png",
+  //   "Air Arabia": "/image/airarabia.png",
+  //   "Jazeera" : "/image/jazeera.png",
+  //   "Flynas": "/image/flynas.png",
+  // };
 
   useEffect(() => {
     const storedUserEmail = localStorage.getItem("userEmail");
@@ -163,15 +185,47 @@ const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelle
 
   const handleDownloadPDF = async (booking: Booking) => {
     const doc = new jsPDF();
+    let airlineImageUrl: string;
+
+    if (typeof booking.airlineImage === "string") {
+      // If airlineImage is a string (direct URL)
+      airlineImageUrl = booking.airlineImage;
+    } else if (booking.airlineImage?.asset?.url) {
+      // If airlineImage is an object with asset.url
+      airlineImageUrl = booking.airlineImage.asset.url;
+    } else {
+      console.error("Airline image URL not found");
+      return;
+    }
+  
+    // Convert relative URL to absolute URL if needed
+    const fullAirlineImageUrl = airlineImageUrl.startsWith("/")
+      ? `${window.location.origin}${airlineImageUrl}` // Add base URL
+      : airlineImageUrl;
   
     // Add airline image to the top right
-    const airlineImageUrl = airlineImages[booking.airlineName as keyof typeof airlineImages];
     const pageWidth = doc.internal.pageSize.getWidth();
-    const imageWidth = 60;
+    const imageWidth = 70;
     const imageHeight = 40;
     const imageX = pageWidth - imageWidth - 10;
-    doc.addImage(airlineImageUrl, "PNG", imageX, 10, imageWidth, imageHeight);
   
+    // Load image and add to PDF
+    try {
+      const img = new Image();
+      img.src = fullAirlineImageUrl;
+      img.crossOrigin = "anonymous"; // Allow cross-origin images
+  
+      // Wait for image to load
+      await new Promise((resolve, reject) => {
+        img.onload = () => resolve(true);
+        img.onerror = () => reject(new Error("Failed to load image"));
+      });
+  
+      // Add image to PDF
+      doc.addImage(img, "PNG", imageX, 10, imageWidth, imageHeight);
+    } catch (error) {
+      console.error("Failed to load airline image:", error);
+    }
    
 
     if (profileImage) {
@@ -252,7 +306,7 @@ const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelle
   doc.text("Time", 115, y + 5);
   doc.text("Baggage", 145, y + 5);
   doc.text("Meal", 175, y + 5);
-  y += 12;
+  y += 14;
 
   doc.setFont("helvetica", "normal");
   booking.flights.forEach((flight, idx) => {
@@ -288,7 +342,7 @@ doc.text("Passport No.", 85, y + 5); // Shortened heading
 doc.text("DOB", 125, y + 5);
 doc.text("Expiry", 155, y + 5); // Shortened heading
 doc.text("Nationality", 180, y + 5); // Shifted left
-y += 12;
+y += 14;
 
 // Table rows
 doc.setFont("helvetica", "normal");
@@ -300,14 +354,24 @@ booking.passengers.forEach((passenger, index) => {
       ? `Child ${index - booking.adults + 1}`
       : `Infant ${index - booking.adults - booking.children + 1}`;
 
-  doc.text(type, 12, y);
-  doc.text(`${passenger.name} ${passenger.surname}`, 40, y);
-  doc.text(passenger.passportNumber, 85, y); // Shifted left
-  doc.text(passenger.dob, 125, y);
-  doc.text(passenger.passportExpiry, 155, y); // Shifted left
-  doc.text(passenger.nationality, 180, y); // Shifted left
-  y += 8;
-});
+   // Add passenger type
+   doc.text(type, 12, y);
+
+   // Add passenger name with line wrapping
+   const fullName = `${passenger.surname} ${passenger.name}`;
+   const maxNameWidth = 40; // Maximum width for the name column
+   const nameLines = doc.splitTextToSize(fullName, maxNameWidth); // Split text into lines
+   doc.text(nameLines, 40, y); // Add name with line wrapping
+ 
+   // Add other passenger details
+   doc.text(passenger.passportNumber, 85, y); // Passport number
+   doc.text(passenger.dob, 125, y); // Date of birth
+   doc.text(passenger.passportExpiry, 155, y); // Passport expiry
+   doc.text(passenger.nationality, 180, y); // Nationality
+ 
+   // Adjust y position based on the number of lines in the name
+   y += 8 * nameLines.length; // Increase y by 8 units per line
+ });
 
 // Convert the PDF to a Blob URL
 const pdfBlob = doc.output("blob");
@@ -384,13 +448,13 @@ previewWindow.document.close();
 
   const Timer = ({ createdAt, status, isConfirmed }: { createdAt: string; status: string; isConfirmed: boolean }) => {
     const [remainingTime, setRemainingTime] = useState("");
-
+  
     useEffect(() => {
       const interval = setInterval(() => {
         const bookingTime = new Date(createdAt);
         const expiryTime = addHours(bookingTime, 3);
         const remainingTimeMs = differenceInMilliseconds(expiryTime, new Date());
-
+  
         if (remainingTimeMs <= 0 || status === "cancelled" || isConfirmed) {
           setRemainingTime("");
           clearInterval(interval);
@@ -401,10 +465,10 @@ previewWindow.document.close();
           setRemainingTime(`${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`);
         }
       }, 1000);
-
+  
       return () => clearInterval(interval);
     }, [createdAt, status, isConfirmed]);
-
+  
     if (status === "cancelled") {
       return <span className="text-red-600 text-center">Cancelled</span>;
     } else if (isConfirmed) {
@@ -453,11 +517,18 @@ previewWindow.document.close();
               <tr key={booking._id} className="text-left bg-blue-100">
                 <td className="border p-2 border-r border-gray-300 px-4">
                   <div className="flex flex-col text-left">
-                    <img
-                      src={airlineImages[booking.airlineName as keyof typeof airlineImages]}
-                      alt={booking.airlineName}
-                      className="w-20 h-16 object-contain"
-                    />
+                  {booking.airlineImage && (
+  <img
+    src={
+      typeof booking.airlineImage === "string"
+        ? booking.airlineImage // Direct URL
+        : booking.airlineImage.asset.url // URL from Sanity asset
+    }
+    alt="Airline"
+    className="w-20 h-16 object-contain"
+  />
+)}
+
                      <p className="font-semibold">{booking.airlineName}</p>
                     <p className="text-sm text-gray-600">
                       <b>Booking Reference (PNR)</b>: {booking.pnr}
@@ -481,10 +552,10 @@ previewWindow.document.close();
                     </div>
                   ))}
                 </td>
-                <td className="border p-2 border-r border-gray-300 px-4">
+                <td className="border text-sm p-2 border-r border-gray-300 px-4">
                   {booking.passengers.map((p, idx) => (
                     <div key={idx} className="text-left">
-                      <p>{p.name} {p.surname}</p>
+                      <p> {p.surname} {p.name} - (<b>{p.type}</b>)</p>
                       
                     </div>
                   ))}
@@ -495,7 +566,7 @@ previewWindow.document.close();
                 </td>
                 <td className="border p-2">
                   
-                  {booking.status !== "cancelled" &&(
+                {booking.status !== "cancelled" &&(
                     <div className="flex items-center justify-center gap-4">
                       {isCancellable(booking.createdAt) && (
                         <button
@@ -508,7 +579,7 @@ previewWindow.document.close();
                           <FaTimes />
                         </button>
                       )}
-                     {booking.status !== "cancelled"  && booking.isConfirmed && (
+                     {(booking.isConfirmed || remainingTime)  && (
           <button
             onClick={() => handleDownloadPDF(booking)}
             className="text-blue-600 hover:text-blue-800"

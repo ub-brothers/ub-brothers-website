@@ -10,6 +10,7 @@ export default {
         type: 'string',
         
       },
+
       {
         name: 'prize1',
         title: 'Price sharing',
@@ -20,6 +21,18 @@ export default {
         name: "sharingPriceForUsers",
         title: "Sharing Price for Login Users",
         type: "string",
+      },
+      {
+        name: 'usd1',
+        title: 'USD Price sharing',
+        type: 'string',
+              
+      },
+      {
+        name: 'usdLogin1',
+        title: 'USD Sharing Price for Login Users',
+        type: 'string',
+              
       },
       {
         name: 'prize2',
@@ -33,6 +46,18 @@ export default {
         type: "string",
       },
       {
+        name: 'usd2',
+        title: 'USD Price Triple',
+        type: 'string',
+              
+      },
+      {
+        name: 'usdLogin2',
+        title: 'USD Triple Price for Login Users',
+        type: 'string',
+              
+      },
+      {
         name: 'prize3',
         title: 'Price double',
         type: 'string',
@@ -42,6 +67,18 @@ export default {
         name: "doublePriceForUsers",
         title: "Double Price for Login Users",
         type: "string",
+      },
+      {
+        name: 'usd3',
+        title: 'USD Price Double',
+        type: 'string',
+              
+      },
+      {
+        name: 'usdLogin3',
+        title: 'USD Double Price for Login Users',
+        type: 'string',
+              
       },
       {
         name: 'shortDescription',

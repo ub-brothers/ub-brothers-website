@@ -102,9 +102,9 @@ export default function HajjCard(){
                 
                 <h3 className=" sm:text-xl text-md text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
                 <h3 className=" sm:text-lg text-sm text-left flex ml-4 gap-1  sm:gap-2 text-lg text-gray-600">{tour.shortDescription}</h3>
-                <h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Sharing: <b>{isApprovedUser ? tour.sharingPriceForUsers : tour.prize1}</b> PKR/-</h2>
-                <h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Triple: <b>{isApprovedUser ? tour.triplePriceForUsers : tour.prize2}</b> PKR/-</h2>
-                <h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Double: <b>{isApprovedUser ? tour.doublePriceForUsers : tour.prize3}</b> PKR/-</h2>
+                <h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Sharing: <b>{isApprovedUser ? tour.sharingPriceForUsers : tour.prize1}</b> PKR/- {isApprovedUser ?  tour.usdLogin1 : tour.usd1 }</h2>
+                <h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Triple: <b>{isApprovedUser ? tour.triplePriceForUsers : tour.prize2}</b> PKR/- {isApprovedUser ?  tour.usdLogin2 : tour.usd2 } </h2>
+                <h2 className="text-left text-gray-700 text-sm ml-4 sm:text-md mt-1">Double: <b>{isApprovedUser ? tour.doublePriceForUsers : tour.prize3}</b> PKR/- {isApprovedUser ?  tour.usdLogin3 : tour.usd3 }</h2>
                 <div className="text-center">
                 <button className="bg-orange-500 rounded-xl h-8 w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500  hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif text-center">Book Now</button> </div>
                 </Link>

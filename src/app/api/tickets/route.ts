@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     // ✅ Yeh Step Zaroori Hai (TypeScript Ko Bata Raha Hai ke yeh kis Type ka Data Hai)
     const {
       airlineName,
-     
+      airlineImage,
       meal,
       totalPrice,
       adults,
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
       userEmail,
     }: {
       airlineName: string;
-      
+      airlineImage:string,
       meal: string;
       totalPrice: number;
       adults: number;
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       children: number;
       pnr:string;
       passengers: Passenger[];
-      flights: Flight[];
+      flights: Flight[];  
       phoneNumber: string;
       storedUserEmail:string;
       emailAddress: string;
@@ -96,6 +96,7 @@ export async function POST(req: Request) {
     userEmail: storedUserEmail, 
     emailAddress, // Store user email
     airlineName,
+    airlineImage,
     pnr,
     createdAt: new Date().toISOString(),
     meal,
@@ -129,7 +130,7 @@ export async function POST(req: Request) {
     // Email content
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "ubbrothersticketing@gmail.com",
+      to: "samiaurooj386@gmail.com",
       subject: `New Ticket Booking - ${new Date().toLocaleString()}`,
       html: `
       ${storedUserEmail ? '<p><strong>This email is from a logged-in user</strong></p>' : ''}
