@@ -130,7 +130,7 @@ export async function POST(req: Request) {
     // Email content
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: "samiaurooj386@gmail.com",
+      to: "ubbrotherspk@gmail.com",
       subject: `New Ticket Booking - ${new Date().toLocaleString()}`,
       html: `
       ${storedUserEmail ? '<p><strong>This email is from a logged-in user</strong></p>' : ''}

@@ -124,7 +124,7 @@
         "type": "boolean"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.599Z",
+        "initialValue": "2025-03-19T19:35:10.192Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -168,6 +168,13 @@
       {
         "name": "airlineName",
         "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "airlineImage",
+        "type": "image"
       },
       {
         "name": "userEmail",
@@ -393,7 +400,7 @@
     ],
     "name": "destinations",
     "type": "document",
-    "title": "eVisa"
+    "title": "E Visa"
   },
   {
     "fields": [
@@ -575,8 +582,7 @@
       }
     ],
     "name": "stickerVisa",
-    "type": "document",
-    "title": "Sticker"
+    "type": "document"
   },
   {
     "fields": [
@@ -1214,6 +1220,16 @@
         "title": "Sharing Price for Login Users"
       },
       {
+        "name": "usd1",
+        "type": "string",
+        "title": "USD Price sharing"
+      },
+      {
+        "name": "usdLogin1",
+        "type": "string",
+        "title": "USD Sharing Price for Login Users"
+      },
+      {
         "name": "prize2",
         "type": "string",
         "title": "Price triple"
@@ -1224,6 +1240,16 @@
         "title": "Triple Price for Login Users"
       },
       {
+        "name": "usd2",
+        "type": "string",
+        "title": "USD Price Triple"
+      },
+      {
+        "name": "usdLogin2",
+        "type": "string",
+        "title": "USD Triple Price for Login Users"
+      },
+      {
         "name": "prize3",
         "type": "string",
         "title": "Price double"
@@ -1232,6 +1258,16 @@
         "name": "doublePriceForUsers",
         "type": "string",
         "title": "Double Price for Login Users"
+      },
+      {
+        "name": "usd3",
+        "type": "string",
+        "title": "USD Price Double"
+      },
+      {
+        "name": "usdLogin3",
+        "type": "string",
+        "title": "USD Double Price for Login Users"
       },
       {
         "name": "shortDescription",
@@ -1440,197 +1476,6 @@
       }
     ],
     "name": "hajjPackage",
-    "type": "document"
-  },
-  {
-    "fields": [
-      {
-        "name": "makkahHotelH",
-        "type": "string",
-        "title": "Makkah Hotel Head"
-      },
-      {
-        "name": "makkahHotel",
-        "type": "string"
-      },
-      {
-        "name": "madinaHotelH",
-        "type": "string",
-        "title": "Madina Hotel Head"
-      },
-      {
-        "name": "madinaHotel",
-        "type": "string"
-      },
-      {
-        "name": "foodHead",
-        "type": "string",
-        "title": "Food Heading"
-      },
-      {
-        "name": "food",
-        "type": "string",
-        "title": "Food Included"
-      },
-      {
-        "name": "transportHead",
-        "type": "string",
-        "title": "Transport Heading"
-      },
-      {
-        "name": "transport",
-        "type": "string",
-        "title": "Transport detail"
-      },
-      {
-        "name": "holyZiaratHead",
-        "type": "string",
-        "title": "Holy Ziarat Heading"
-      },
-      {
-        "name": "holyziarat",
-        "type": "string",
-        "title": "Holy Ziarat Detail"
-      },
-      {
-        "name": "ticketHead",
-        "type": "string",
-        "title": "Ticket Heading"
-      },
-      {
-        "name": "airlineName",
-        "type": "string"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "airlineImage",
-        "type": "image"
-      },
-      {
-        "name": "dep",
-        "type": "string",
-        "title": "Departure"
-      },
-      {
-        "name": "flightNum1",
-        "type": "string",
-        "title": "Flight Num Dep"
-      },
-      {
-        "name": "dateOfFlight1",
-        "type": "string",
-        "title": "Date Of Flight Dep"
-      },
-      {
-        "name": "route1",
-        "type": "string",
-        "title": "Route Dep"
-      },
-      {
-        "name": "time1",
-        "type": "string",
-        "title": "Time Of Dep"
-      },
-      {
-        "name": "return",
-        "type": "string",
-        "title": "Return Flight"
-      },
-      {
-        "name": "flightNum2",
-        "type": "string",
-        "title": "Flight Num Ret"
-      },
-      {
-        "name": "dateOfFlight2",
-        "type": "string",
-        "title": "Date Of Flight Ret"
-      },
-      {
-        "name": "route2",
-        "type": "string",
-        "title": "Route Ret"
-      },
-      {
-        "name": "time2",
-        "type": "string",
-        "title": "Time Ret"
-      },
-      {
-        "name": "azizaStay",
-        "type": "string",
-        "title": "Aziza Stay Head"
-      },
-      {
-        "name": "azizaStayDetail",
-        "type": "string"
-      },
-      {
-        "name": "azizaStay2",
-        "type": "string",
-        "title": "Aziza Stay Head 2"
-      },
-      {
-        "name": "azizaStayDetail2",
-        "type": "string"
-      },
-      {
-        "name": "makkahStay",
-        "type": "string",
-        "title": "Makkah Stay Head"
-      },
-      {
-        "name": "makkahStayDetail",
-        "type": "string"
-      },
-      {
-        "name": "madinaStay",
-        "type": "string",
-        "title": "Madina Stay Head"
-      },
-      {
-        "name": "madinaStayDetail",
-        "type": "string"
-      },
-      {
-        "name": "documentsH",
-        "type": "string",
-        "title": "Required Document Heading"
-      },
-      {
-        "name": "doc1",
-        "type": "string",
-        "title": "Required Document 1"
-      },
-      {
-        "name": "doc2",
-        "type": "string",
-        "title": "Required Document 2"
-      },
-      {
-        "name": "doc3",
-        "type": "string",
-        "title": "Required Document 3"
-      },
-      {
-        "name": "doc4",
-        "type": "string",
-        "title": "Required Document 4"
-      },
-      {
-        "name": "doc5",
-        "type": "string",
-        "title": "Required Document 5"
-      },
-      {
-        "name": "doc6",
-        "type": "string",
-        "title": "Required Document 6"
-      }
-    ],
-    "name": "hajjFeatures",
     "type": "document"
   },
   {
@@ -2199,7 +2044,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.621Z",
+        "initialValue": "2025-03-19T19:35:10.208Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2265,7 +2110,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.611Z",
+        "initialValue": "2025-03-19T19:35:10.199Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2332,7 +2177,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.633Z",
+        "initialValue": "2025-03-19T19:35:10.218Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2393,7 +2238,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.644Z",
+        "initialValue": "2025-03-19T19:35:10.226Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2455,7 +2300,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.656Z",
+        "initialValue": "2025-03-19T19:35:10.235Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2520,7 +2365,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.667Z",
+        "initialValue": "2025-03-19T19:35:10.243Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2617,7 +2462,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.677Z",
+        "initialValue": "2025-03-19T19:35:10.252Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2683,7 +2528,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.702Z",
+        "initialValue": "2025-03-19T19:35:10.262Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2745,7 +2590,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.710Z",
+        "initialValue": "2025-03-19T19:35:10.274Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2812,7 +2657,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.720Z",
+        "initialValue": "2025-03-19T19:35:10.290Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2892,7 +2737,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T11:56:16.734Z",
+        "initialValue": "2025-03-19T19:35:10.309Z",
         "name": "createdAt",
         "type": "datetime"
       },
