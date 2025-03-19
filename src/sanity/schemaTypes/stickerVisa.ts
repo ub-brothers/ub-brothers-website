@@ -1,7 +1,7 @@
   // Country Schema for Sanity (or your CMS)
   export default {
     name: 'stickerVisa',
-    title: 'Sticker',
+    title: 'Sticker Visa',
     type: 'document',
     fields: [
       {

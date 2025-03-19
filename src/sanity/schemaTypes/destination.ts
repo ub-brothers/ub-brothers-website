@@ -1,7 +1,7 @@
 
 export default {
     name: 'destinations',
-    title: 'eVisa',
+    title: 'E Visa',
     type: 'document',
     fields: [
       {

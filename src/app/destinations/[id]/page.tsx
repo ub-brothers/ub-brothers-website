@@ -82,7 +82,7 @@ export default function DetailPage({ params }: { params: { id: string } }) {
   }
 }, [currentVideo, videoIds]); // Dependency list me videoIds bhi add karain
 
-  if (!countries) return <p className="text-center mt-10 text-lg">Loading...</p>;
+  if (!countries) return <p className="text-center h-screen mt-10 text-lg">Loading...</p>;
 
   return (
     <div>
@@ -92,13 +92,14 @@ export default function DetailPage({ params }: { params: { id: string } }) {
             <video
               key={index}
               id={`video-${index}`}
-              className={`w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] rounded-lg shadow-lg ${
+              className={`w-[90%] xl:w-full rounded-lg shadow-lg ${
                 index === currentVideo ? "block" : "hidden"
               }`}
               src={video}
               autoPlay
               muted
               loop={false}
+              preload="auto" 
             />
           ))}
         </div>
