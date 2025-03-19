@@ -277,6 +277,29 @@ export default {
         },
    
       },
+      {
+        name: 'video1',
+        title: 'Video 1',
+        type: 'file',
+        options: {
+          accept: 'video/*'
+        }
+      },
+      {
+        name: 'video2',
+        title: 'Video 2',
+        type: 'file',
+        options: {
+          accept: 'video/*'
+        }
+      },
+      {
+        name: 'video3',
+        title: 'Video 3',
+        type: 'file',
+        options: {
+          accept: 'video/*'
+        }}
     
     ]
   }

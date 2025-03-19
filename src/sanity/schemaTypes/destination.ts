@@ -111,24 +111,28 @@ export default {
    
       },
       {
-        name: 'rating',
-        title: 'Rating',
-        type: 'number',
-        
-       
+        name: 'video1',
+        title: 'Video 1',
+        type: 'file',
+        options: {
+          accept: 'video/*'
+        }
       },
       {
-        name: 'availability',
-        title: 'Availability',
-        type: 'string',
+        name: 'video2',
+        title: 'Video 2',
+        type: 'file',
         options: {
-          list: [
-            { title: 'Available Now', value: 'available' },
-            { title: 'Coming Soon', value: 'comingSoon' }
-          ]
-        },
-          
-      }
+          accept: 'video/*'
+        }
+      },
+      {
+        name: 'video3',
+        title: 'Video 3',
+        type: 'file',
+        options: {
+          accept: 'video/*'
+        }}
     ]
   }
   

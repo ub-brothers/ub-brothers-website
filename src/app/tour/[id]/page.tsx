@@ -39,40 +39,45 @@ export default function TourDetail({ params }: { params: { id: string } }) {
     fetchData();
   }, [params.id]);
 
+   const [currentVideo, setCurrentVideo] = useState(0);
+      const videoIds = ["video-0", "video-1", "video-2"];
+      useEffect(() => {
+       const videoElement = document.getElementById(videoIds[currentVideo]) as HTMLVideoElement;
+     
+       if (videoElement) {
+         videoElement.play(); // Ensure video starts playing when it's updated
+     
+         const handleEnded = () => {
+           setCurrentVideo((prev) => (prev + 1) % videoIds.length);
+         };
+     
+         videoElement.addEventListener("ended", handleEnded);
+     
+         return () => {
+           videoElement.removeEventListener("ended", handleEnded);
+         };
+       }
+     }, [currentVideo, videoIds]);
+
   if (!tourCountries) return <p className="text-center mt-10">Loading...</p>;
 
   return (
     <div>
       <div key={tourCountries._id} className="mt-10">
-        <div className="text-center flex w-[100%] flex-wrap justify-center">
-          <motion.img
-            src={tourCountries.imageUrl2}
-            className="h-[300px] w-[370px] mx-auto hidden xl:block"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
-          <motion.img
-            src={tourCountries.imageUrl3}
-            className="sm:h-[300px] h-[240px] sm:w-[370px] hidden md:block w-[280px] mx-4 sm:mx-auto"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
-          <motion.img
-            src={tourCountries.imageUrl}
-            className="h-[300px] w-[370px] mx-auto hidden md:block"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
-          <motion.img
-            src={tourCountries.imageUrl4}
-            className="h-[170px] w-[200px] mx-4 md:hidden"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
+      <div className="text-center flex justify-center w-full relative">
+          {[tourCountries.videoUrl1, tourCountries.videoUrl2, tourCountries.videoUrl3].map((video, index) => (
+            <video
+              key={index}
+              id={`video-${index}`}
+              className={`w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] rounded-lg shadow-lg ${
+                index === currentVideo ? "block" : "hidden"
+              }`}
+              src={video}
+              autoPlay
+              muted
+              loop={false}
+            />
+          ))}
         </div>
 
         <div className="mx-6">

@@ -47,34 +47,45 @@ export default function DetailPage({ params }: { params: { id: string } }) {
     fetchData();
   }, [params.id]);
 
+   const [currentVideo, setCurrentVideo] = useState(0);
+   const videoIds = ["video-0", "video-1", "video-2"];
+   useEffect(() => {
+    const videoElement = document.getElementById(videoIds[currentVideo]) as HTMLVideoElement;
+  
+    if (videoElement) {
+      videoElement.play(); // Ensure video starts playing when it's updated
+  
+      const handleEnded = () => {
+        setCurrentVideo((prev) => (prev + 1) % videoIds.length);
+      };
+  
+      videoElement.addEventListener("ended", handleEnded);
+  
+      return () => {
+        videoElement.removeEventListener("ended", handleEnded);
+      };
+    }
+  }, [currentVideo, videoIds]);
+
   if (!countries) return <p>Loading...</p>;
 
   return (
     <div>
       <div key={countries._id} className="mt-10">
-        <div className="text-center flex w-[100%]">
-         
-          <motion.img
-            src={countries.imageUrl2}
-            className="h-[300px] w-[370px] mx-auto hidden xl:block"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
-          <motion.img
-            src={countries.imageUrl}
-            className="sm:h-[300px] h-[240px] sm:w-[370px] w-[280px] mx-4 sm:mx-auto "
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
-          <motion.img
-            src={countries.imageUrl3}
-            className="h-[300px] w-[370px] mx-auto hidden md:block"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          />
+      <div className="text-center flex justify-center w-full relative">
+          {[countries.videoUrl1, countries.videoUrl2, countries.videoUrl3].map((video, index) => (
+            <video
+              key={index}
+              id={`video-${index}`}
+              className={`w-[90%] sm:w-[80%] md:w-[60%] lg:w-[50%] rounded-lg shadow-lg ${
+                index === currentVideo ? "block" : "hidden"
+              }`}
+              src={video}
+              autoPlay
+              muted
+              loop={false}
+            />
+          ))}
         </div>
 
 

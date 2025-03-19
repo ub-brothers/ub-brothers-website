@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@sanity/image-url": "^1.1.0",
+    "@sanity/orderable-document-list": "^1.2.3",
     "@sanity/vision": "^3.72.1",
     "aos": "^2.3.4",
     "bcryptjs": "^3.0.2",

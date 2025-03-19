@@ -34,7 +34,7 @@ const FlightTable = () => {
 
 
     const fetchFlights = async () => {
-      const data: FlightGroup[] = await client.fetch('*[_type == "flights"] | order(_createdAt asc) { id , airline, "airlineLogo": airlineLogo.asset->url ,  flights[], meal, price,priceForUsers, airlineName,"airlineImage": airlineImage.asset->url, seats, childSeats, pnr }');
+      const data: FlightGroup[] = await client.fetch('*[_type == "flights"] | order(orderRank asc) { id , airline, "airlineLogo": airlineLogo.asset->url ,  flights[], meal, price,priceForUsers, airlineName,"airlineImage": airlineImage.asset->url, seats, childSeats, pnr }');
       setFlights(data);
     };
     fetchFlights();

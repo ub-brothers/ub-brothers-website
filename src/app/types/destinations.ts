@@ -27,6 +27,9 @@ export interface Destination {
     requirement17:string,
     requirement18:string,
     requirement19:string,
+    videoUrl2:string,
+    videoUrl1:string,
+    videoUrl3:string,
     requirement20:string,
     requirement21:string,
     imageUrl2: string,
@@ -84,7 +87,9 @@ export interface TourType {
     imageUrl2: string,
     imageUrl3: string,
     imageUrl4: string,
-    
+    videoUrl2:string,
+    videoUrl1:string,
+    videoUrl3:string,
     
 }
 
@@ -122,6 +127,9 @@ export interface FileCons {
     imageUrl2: string,
     imageUrl3: string,
     imageUrl :string,
+    videoUrl2:string,
+    videoUrl1:string,
+    videoUrl3:string,
     shortDescription: string,
 }
 

@@ -4,6 +4,18 @@ export default {
   type: 'document',
   fields: [
     {
+      name: "orderRank",
+      title: "Order Rank",
+      type: "string",
+      hidden: true, // Taake UI me na dikhe
+    },
+    {
+      name: "order",
+      title: "Order",
+      type: "number",
+      hidden: true, // Taake UI me na dikhe
+    },
+    {
       name: "internalTitle",
       title: "Internal Title (For Admin Only)",
       type: "string",
@@ -79,7 +91,19 @@ export default {
     },
     { name: 'airlineName', title: 'Airline Name', type: 'string' },
 
-  ]
-
+  ],
+  orderings: [
+    {
+      title: "Custom Order",
+      name: "customOrder",
+      by: [{ field: "order", direction: "asc" }]
+    }
+  ],
+  preview: {
+    select: {
+      title: "internalTitle", // Jo main title dikhana hai
+      media: "airlineLogo", // Agar image dikhani ho
+    },
+  },
 };
  
