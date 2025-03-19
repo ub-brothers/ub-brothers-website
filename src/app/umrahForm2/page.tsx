@@ -110,9 +110,7 @@ const token = localStorage.getItem("token");
     );
     const selectedMadinaCategoryPrice = selectedMadinaCategoryObj ? (isApprovedUser ? selectedMadinaCategoryObj.priceForUsers : selectedMadinaCategoryObj.price) * formData.madinaDay : 0;
 
-    const selectedDaysPrice = daysOptions.find((d) => d.days === selectedDays)?.price || 0;
-
-    let total = selectedDaysPrice + selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
+    let total =  selectedMakkahCategoryPrice + selectedMadinaCategoryPrice;
 
     const visaCost = daysOptions[0]?.visaCost || 0;
     if (visaStatus === "no" && proceedClicked) {

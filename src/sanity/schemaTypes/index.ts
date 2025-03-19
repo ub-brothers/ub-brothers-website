@@ -30,5 +30,5 @@ import hajjOfferBooking from './hajjOfferBooking'
 import umrahOfferBooking from './umrahOfferBooking'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [user,booking, destination, stickerVisa, tour, umrahDays, makkahHotel, madinaHotel , fileConsultancy, iran, hajj, ticketing, offer, umrahOffer,hajjOffer, iranOffer,stickerVisaBooking, visaBooking,fileBooking,tourBooking,hajjBooking,umrahBooking,iranBooking,visaOfferBooking,iranOfferBooking,hajjOfferBooking,umrahOfferBooking, ],
+  types: [user,booking, destination, stickerVisa, tour, fileConsultancy ,umrahDays, makkahHotel, madinaHotel ,  iran, hajj, ticketing, offer, umrahOffer,hajjOffer, iranOffer,stickerVisaBooking, visaBooking,fileBooking,tourBooking,hajjBooking,umrahBooking,iranBooking,visaOfferBooking,iranOfferBooking,hajjOfferBooking,umrahOfferBooking, ],
 }
