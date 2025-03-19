@@ -1,134 +1,17 @@
 'use client';
-import { useEffect, useState } from "react";
-import {client} from "@/sanity/lib/client"
+
 import Image from 'next/image';
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { motion } from 'framer-motion';
-import { FaPlane, FaHotel, FaUtensils, FaBus, FaMosque,FaFileAlt,FaCalendarAlt } from 'react-icons/fa';
-import Link from 'next/link';
+
+
 import PaymentDetails from '../payment/page';
-import { hajjPack } from '@/sanity/lib/queries';
-import { jwtDecode } from 'jwt-decode';
-import { hajjFeature } from "@/sanity/lib/queries";
-import Modal from "../components/modal";
-import { ModalContentType } from "../types/destinations";
+
 import HajjCard from "../hajjCard/page";
-interface Feature {
-  icon: JSX.Element;
-  title: string;
-  fields: (keyof ModalContentType)[];
-}
-
-
-const features:Feature[] = [
-  {
-    icon: <FaPlane size={50} className="text-blue-600" />,
-    title: 'Ticket',
-    fields: [
-      'ticketHead',
-      'airlineName',
-      'airlineImage',
-      'dep',
-      'flightNum1',
-      'dateOfFlight1',
-      'route1',
-      'time1',
-      'return',
-      'flightNum2',
-      'dateOfFlight2',
-      'route2',
-      'time2',
-    ],
-  },
-  {
-    icon: <FaHotel size={40} className="text-blue-600" />,
-    title: 'Hotel',
-    fields: ['makkahHotelH', 'makkahHotel', 'madinaHotelH', 'madinaHotel'],
-  },
-  {
-    icon: <FaUtensils size={40} className="text-blue-600" />,
-    title: 'Food',
-    fields: ['foodHead', 'food'],
-  },
-  {
-    icon: <FaBus size={40} className="text-blue-600" />,
-    title: 'Transport',
-    fields: ['transportHead', 'transport'],
-  },
-  {
-    icon: <FaMosque size={40} className="text-blue-600" />,
-    title: 'Ziyarat & Ibadat',
-    fields: ['holyZiaratHead', 'holyziarat'],
-  },
-  {
-    icon: <FaFileAlt size={40} className="text-blue-600" />,
-    title: 'Documents',
-    fields: ['documentsH', 'doc1', 'doc2', 'doc3', 'doc4', 'doc5', 'doc6'],
-  },
-  {
-    icon: <FaCalendarAlt size={40} className="text-blue-600" />,
-    title: 'Day Durations',
-    fields: ['azizaStay', 'azizaStayDetail','azizaStay2',"azizaStayDetail2", 'makkahStay', 'makkahStayDetail', 'madinaStay', 'madinaStayDetail'],
-  },
-];
 
 export default function HajjPackage() {
 
-  const [ tour, setTour ] = useState<ModalContentType[]>([])
-    const [isApprovedUser, setIsApprovedUser] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-
-
-    useEffect(() => {
-      async function fetchData() {
-        const data = await client.fetch(hajjFeature);
-        setTour(data);
-      }
-      fetchData();
-    }, []);
-
-    
-    useEffect(()=>{
-
-
-      const token = localStorage.getItem("token");
-
-      if (token) {
-        try {
-          const decoded: any = jwtDecode(token);
-       
-  
-          if (decoded.approved === true || decoded.approved === "true") {
-            setIsApprovedUser(true);
-          } else {
-            setIsApprovedUser(false);
-          }
-        } catch (error) {
-          console.error("Invalid token", error);
-        }
-      }
-  
-    }, [])
-    
-    const [clickedTitle, setClickedTitle] = useState<string | null>(null);
-    const [modalContent, setModalContent] = useState<ModalContentType | null>(null);
-
-    const handleIconClick = (title: string, fields: (keyof ModalContentType)[]) => {
-      // Find the relevant data from the `tour` array based on the clicked icon title
-      const content = tour.map((item) => {
-        const filteredData: Partial<ModalContentType> = {};
-        fields.forEach((field) => {
-          if (field in item) {
-            filteredData[field] = item[field] as ModalContentType[keyof ModalContentType];
-          }
-        });
-        return filteredData;
-      });
-      setModalContent(content[0] as ModalContentType); // Cast to ModalContentType
-      setClickedTitle(title); // Store the clicked icon's title
-      setIsModalOpen(true);
-    };
+   
   
   return (
     <div className="min-h-screen  flex flex-col items-center p-6">
