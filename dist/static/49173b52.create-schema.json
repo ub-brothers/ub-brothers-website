@@ -124,7 +124,7 @@
         "type": "boolean"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.192Z",
+        "initialValue": "2025-03-19T20:09:17.494Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -815,132 +815,6 @@
   {
     "fields": [
       {
-        "options": {
-          "list": [
-            7,
-            15,
-            21,
-            28
-          ]
-        },
-        "name": "days",
-        "type": "number",
-        "title": "Number of Days"
-      },
-      {
-        "name": "price",
-        "type": "number",
-        "title": "Package Price (Except hotel cost)"
-      },
-      {
-        "name": "priceForUsers",
-        "type": "number",
-        "title": "Package Price for Login Users (Except hotel cost)"
-      },
-      {
-        "name": "visaCost",
-        "type": "number"
-      }
-    ],
-    "name": "umrahDays",
-    "type": "document",
-    "title": "Umrah days"
-  },
-  {
-    "fields": [
-      {
-        "name": "hotelName",
-        "type": "string"
-      },
-      {
-        "of": [
-          {
-            "fields": [
-              {
-                "options": {
-                  "list": [
-                    "sharing",
-                    "penta",
-                    "quad",
-                    "triple",
-                    "doubled"
-                  ]
-                },
-                "name": "categoryName",
-                "type": "string"
-              },
-              {
-                "name": "price",
-                "type": "number",
-                "title": "Price (per night)"
-              },
-              {
-                "name": "priceForUsers",
-                "type": "number",
-                "title": "Price for Login Users"
-              }
-            ],
-            "type": "object"
-          }
-        ],
-        "name": "applicableCategories",
-        "type": "array",
-        "title": "Applicable Categories & Prices"
-      }
-    ],
-    "name": "makkahHotel",
-    "type": "document",
-    "title": "Umrah Makkah Hotels"
-  },
-  {
-    "fields": [
-      {
-        "name": "hotelName",
-        "type": "string"
-      },
-      {
-        "of": [
-          {
-            "fields": [
-              {
-                "options": {
-                  "list": [
-                    "sharing",
-                    "penta",
-                    "quad",
-                    "triple",
-                    "doubled"
-                  ]
-                },
-                "name": "categoryName",
-                "type": "string"
-              },
-              {
-                "name": "price",
-                "type": "number",
-                "title": "Price (per night)"
-              },
-              {
-                "name": "priceForUsers",
-                "type": "number",
-                "title": "Price for Login Users"
-              }
-            ],
-            "type": "object"
-          }
-        ],
-        "name": "applicableCategories",
-        "type": "array",
-        "title": "Applicable Categories & Prices"
-      }
-    ],
-    "name": "madinaHotel",
-    "type": "document",
-    "title": "Umrah Madina Hotels"
-  },
-  {
-    "fields": [
-      {
         "name": "countryName",
         "type": "string"
       },
@@ -1136,6 +1010,114 @@
     "name": "fileConsultancy",
     "type": "document",
     "title": "File and Consultancy"
+  },
+  {
+    "fields": [
+      {
+        "name": "days",
+        "type": "number",
+        "title": "Number of Days"
+      },
+      {
+        "name": "visaCost",
+        "type": "number"
+      }
+    ],
+    "name": "umrahDays",
+    "type": "document",
+    "title": "Umrah days"
+  },
+  {
+    "fields": [
+      {
+        "name": "hotelName",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    "sharing",
+                    "penta",
+                    "quad",
+                    "triple",
+                    "doubled"
+                  ]
+                },
+                "name": "categoryName",
+                "type": "string"
+              },
+              {
+                "name": "price",
+                "type": "number",
+                "title": "Price (per night)"
+              },
+              {
+                "name": "priceForUsers",
+                "type": "number",
+                "title": "Price for Login Users"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "applicableCategories",
+        "type": "array",
+        "title": "Applicable Categories & Prices"
+      }
+    ],
+    "name": "makkahHotel",
+    "type": "document",
+    "title": "Umrah Makkah Hotels"
+  },
+  {
+    "fields": [
+      {
+        "name": "hotelName",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    "sharing",
+                    "penta",
+                    "quad",
+                    "triple",
+                    "doubled"
+                  ]
+                },
+                "name": "categoryName",
+                "type": "string"
+              },
+              {
+                "name": "price",
+                "type": "number",
+                "title": "Price (per night)"
+              },
+              {
+                "name": "priceForUsers",
+                "type": "number",
+                "title": "Price for Login Users"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "applicableCategories",
+        "type": "array",
+        "title": "Applicable Categories & Prices"
+      }
+    ],
+    "name": "madinaHotel",
+    "type": "document",
+    "title": "Umrah Madina Hotels"
   },
   {
     "fields": [
@@ -2044,7 +2026,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.208Z",
+        "initialValue": "2025-03-19T20:09:17.509Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2110,7 +2092,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.199Z",
+        "initialValue": "2025-03-19T20:09:17.501Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2177,7 +2159,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.218Z",
+        "initialValue": "2025-03-19T20:09:17.517Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2238,7 +2220,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.226Z",
+        "initialValue": "2025-03-19T20:09:17.524Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2300,7 +2282,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.235Z",
+        "initialValue": "2025-03-19T20:09:17.530Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2365,7 +2347,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.243Z",
+        "initialValue": "2025-03-19T20:09:17.537Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2462,7 +2444,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.252Z",
+        "initialValue": "2025-03-19T20:09:17.545Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2528,7 +2510,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.262Z",
+        "initialValue": "2025-03-19T20:09:17.552Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2590,7 +2572,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.274Z",
+        "initialValue": "2025-03-19T20:09:17.558Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2657,7 +2639,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.290Z",
+        "initialValue": "2025-03-19T20:09:17.566Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2737,7 +2719,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-19T19:35:10.309Z",
+        "initialValue": "2025-03-19T20:09:17.574Z",
         "name": "createdAt",
         "type": "datetime"
       },

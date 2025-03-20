@@ -26,9 +26,11 @@ requirement18,
 requirement19,
 requirement20,
 requirement21,
- "videoUrl1": video1.asset->url,
-  "videoUrl2": video2.asset->url,
-  "videoUrl3": video3.asset->url,
+"videoUrl1": coalesce(video1.asset->url, null),
+
+  "videoUrl2": coalesce(video2.asset->url, null),
+
+  "videoUrl3": coalesce(video3.asset->url, null),
   "imageUrl": image.asset->url,
    "imageUrl2": image2.asset->url,
     "imageUrl3": image3.asset->url,
@@ -50,9 +52,12 @@ export const detailCountryEVisa = defineQuery(`*[_type == "destinations"  && _id
  requirement6,
  requirement7,
  requirement8,
- "videoUrl1": video1.asset->url,
-  "videoUrl2": video2.asset->url,
-  "videoUrl3": video3.asset->url,
+"videoUrl1": coalesce(video1.asset->url, null),
+
+  "videoUrl2": coalesce(video2.asset->url, null),
+
+  "videoUrl3": coalesce(video3.asset->url, null),
+
  "imageUrl": image.asset->url,
   "imageUrl2": image2.asset->url,
    "imageUrl3": image3.asset->url,
@@ -187,9 +192,11 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
     day8,
     heading9,
     day9,
-     "videoUrl1": video1.asset->url,
-  "videoUrl2": video2.asset->url,
-  "videoUrl3": video3.asset->url,
+    "videoUrl1": coalesce(video1.asset->url, null),
+
+  "videoUrl2": coalesce(video2.asset->url, null),
+
+  "videoUrl3": coalesce(video3.asset->url, null),
     "imageUrl": image.asset->url,
      "imageUrl2": image2.asset->url,
       "imageUrl3": image3.asset->url,
@@ -239,9 +246,11 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
   requirement22,
    requirement23,
     requirement24,
-     "videoUrl1": video1.asset->url,
-  "videoUrl2": video2.asset->url,
-  "videoUrl3": video3.asset->url,
+    "videoUrl1": coalesce(video1.asset->url, null),
+
+  "videoUrl2": coalesce(video2.asset->url, null),
+
+  "videoUrl3": coalesce(video3.asset->url, null),
    "imageUrl": image.asset->url,
     "imageUrl2": image2.asset->url,
      "imageUrl3": image3.asset->url,
