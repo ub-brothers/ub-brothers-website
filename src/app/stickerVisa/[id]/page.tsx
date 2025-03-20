@@ -5,7 +5,7 @@ import { Destination } from "@/app/types/destinations";
 import { sanityFetch } from "@/sanity/lib/client";
 import { detailCountry,  stickerVisa } from "@/sanity/lib/queries";
 import Link from 'next/link';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { jwtDecode } from 'jwt-decode';
 
@@ -67,6 +67,63 @@ export default function DetailPage({ params }: { params: { id: string } }) {
    }
  }, [currentVideo, videoIds]);
 
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+ 
+ 
+     
+      useEffect(() => {
+       const videoElements = videoRefs.current;
+       let timeoutId: NodeJS.Timeout;
+   
+       const playNextVideo = () => {
+         setCurrentVideo((prev) => (prev + 1) % videoElements.length);
+       };
+   
+       const handlePlay = (index: number) => {
+         const video = videoElements[index];
+         if (video) {
+           video.currentTime = 0; // Start from beginning
+           video.play();
+           
+           // Ensure max 8 seconds playtime
+           const duration = Math.min(video.duration || 8, 8) * 1000; // Convert to ms
+           timeoutId = setTimeout(() => {
+             video.pause();
+             playNextVideo();
+           }, duration);
+         }
+       };
+   
+       // Observer to detect visibility
+       const observerCallback = (entries: IntersectionObserverEntry[]) => {
+         entries.forEach((entry, index) => {
+           if (entry.isIntersecting) {
+             handlePlay(index);
+           } else {
+             videoElements[index]?.pause();
+             clearTimeout(timeoutId);
+           }
+         });
+       };
+   
+       const observer = new IntersectionObserver(observerCallback, {
+         root: null,
+         threshold: 0.5,
+       });
+   
+       videoElements.forEach((video) => {
+         if (video) observer.observe(video);
+       });
+   
+       return () => {
+         videoElements.forEach((video) => {
+           if (video) observer.unobserve(video);
+         });
+         clearTimeout(timeoutId);
+       };
+     }, [currentVideo]);
+   
+
   if (!countries) return <p>Loading...</p>;
 
   return (
@@ -76,6 +133,9 @@ export default function DetailPage({ params }: { params: { id: string } }) {
           {[countries.videoUrl1, countries.videoUrl2, countries.videoUrl3].map((video, index) => (
             <video
               key={index}
+              ref={(el) => {
+                if (el) videoRefs.current[index] = el;
+              }} 
               id={`video-${index}`}
               className={`w-[90%] xl:w-full rounded-lg shadow-lg ${
                 index === currentVideo ? "block" : "hidden"
@@ -84,7 +144,10 @@ export default function DetailPage({ params }: { params: { id: string } }) {
               autoPlay
               muted
               loop={false}
-              preload="auto" 
+              preload="auto"
+              playsInline // Required for iOS to prevent fullscreen mode
+                controls={false} // Hide default controls
+                style={{ pointerEvents: 'none' }}
             />
           ))}
         </div>

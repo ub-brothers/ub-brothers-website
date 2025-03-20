@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion'; 
 import { TourType } from "@/app/types/destinations";
 import { sanityFetch } from "@/sanity/lib/client";
@@ -58,6 +58,62 @@ export default function TourDetail({ params }: { params: { id: string } }) {
          };
        }
      }, [currentVideo, videoIds]);
+     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+
+    
+     useEffect(() => {
+      const videoElements = videoRefs.current;
+      let timeoutId: NodeJS.Timeout;
+  
+      const playNextVideo = () => {
+        setCurrentVideo((prev) => (prev + 1) % videoElements.length);
+      };
+  
+      const handlePlay = (index: number) => {
+        const video = videoElements[index];
+        if (video) {
+          video.currentTime = 0; // Start from beginning
+          video.play();
+          
+          // Ensure max 8 seconds playtime
+          const duration = Math.min(video.duration || 8, 8) * 1000; // Convert to ms
+          timeoutId = setTimeout(() => {
+            video.pause();
+            playNextVideo();
+          }, duration);
+        }
+      };
+  
+      // Observer to detect visibility
+      const observerCallback = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            handlePlay(index);
+          } else {
+            videoElements[index]?.pause();
+            clearTimeout(timeoutId);
+          }
+        });
+      };
+  
+      const observer = new IntersectionObserver(observerCallback, {
+        root: null,
+        threshold: 0.5,
+      });
+  
+      videoElements.forEach((video) => {
+        if (video) observer.observe(video);
+      });
+  
+      return () => {
+        videoElements.forEach((video) => {
+          if (video) observer.unobserve(video);
+        });
+        clearTimeout(timeoutId);
+      };
+    }, [currentVideo]);
+  
 
   if (!tourCountries) return <p className="text-center mt-10">Loading...</p>;
 
@@ -69,6 +125,9 @@ export default function TourDetail({ params }: { params: { id: string } }) {
             <video
               key={index}
               id={`video-${index}`}
+              ref={(el) => {
+                if (el) videoRefs.current[index] = el;
+              }} 
               className={`w-[90%] xl:w-full rounded-lg shadow-lg ${
                 index === currentVideo ? "block" : "hidden"
               }`}
@@ -77,6 +136,9 @@ export default function TourDetail({ params }: { params: { id: string } }) {
               muted
               loop={false}
               preload="auto" 
+              playsInline 
+              controls={false}
+              style={{ pointerEvents: 'none' }}
             />
           ))}
         </div>

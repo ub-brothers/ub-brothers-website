@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Destination } from '@/app/types/destinations';
@@ -64,6 +64,62 @@ export default function DetailPage({ params }: { params: { id: string } }) {
 
   const [currentVideo, setCurrentVideo] = useState(0);
  const videoIds = ["video-0", "video-1", "video-2"];
+     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+ 
+ 
+     
+      useEffect(() => {
+       const videoElements = videoRefs.current;
+       let timeoutId: NodeJS.Timeout;
+   
+       const playNextVideo = () => {
+         setCurrentVideo((prev) => (prev + 1) % videoElements.length);
+       };
+   
+       const handlePlay = (index: number) => {
+         const video = videoElements[index];
+         if (video) {
+           video.currentTime = 0; // Start from beginning
+           video.play();
+           
+           // Ensure max 8 seconds playtime
+           const duration = Math.min(video.duration || 8, 8) * 1000; // Convert to ms
+           timeoutId = setTimeout(() => {
+             video.pause();
+             playNextVideo();
+           }, duration);
+         }
+       };
+   
+       // Observer to detect visibility
+       const observerCallback = (entries: IntersectionObserverEntry[]) => {
+         entries.forEach((entry, index) => {
+           if (entry.isIntersecting) {
+             handlePlay(index);
+           } else {
+             videoElements[index]?.pause();
+             clearTimeout(timeoutId);
+           }
+         });
+       };
+   
+       const observer = new IntersectionObserver(observerCallback, {
+         root: null,
+         threshold: 0.5,
+       });
+   
+       videoElements.forEach((video) => {
+         if (video) observer.observe(video);
+       });
+   
+       return () => {
+         videoElements.forEach((video) => {
+           if (video) observer.unobserve(video);
+         });
+         clearTimeout(timeoutId);
+       };
+     }, [currentVideo]);
+
  useEffect(() => {
   const videoElement = document.getElementById(videoIds[currentVideo]) as HTMLVideoElement;
 
@@ -92,6 +148,9 @@ export default function DetailPage({ params }: { params: { id: string } }) {
             <video
               key={index}
               id={`video-${index}`}
+              ref={(el) => {
+                if (el) videoRefs.current[index] = el;
+              }} 
               className={`w-[90%] xl:w-full rounded-lg shadow-lg ${
                 index === currentVideo ? "block" : "hidden"
               }`}
@@ -99,7 +158,10 @@ export default function DetailPage({ params }: { params: { id: string } }) {
               autoPlay
               muted
               loop={false}
-              preload="auto" 
+               preload="auto"
+          playsInline // Required for iOS to prevent fullscreen mode
+            controls={false} // Hide default controls
+            style={{ pointerEvents: 'none' }}
             />
           ))}
         </div>
