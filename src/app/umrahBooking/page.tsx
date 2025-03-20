@@ -49,14 +49,12 @@ const UmrahBookings = () => {
   }, [userEmail]);
 
   if (loading) return <p className="text-center text-lg font-semibold">Loading bookings...</p>;
-
+  if (!loading && bookings.length === 0) return <p className="text-center">No bookings found.</p>;
+  
   return (
     <div className="">
      
 
-      {bookings.length === 0 ? (
-        <p className="text-center">No visa bookings found.</p>
-      ) : (
         <div className="overflow-x-auto">
           <table className="w-[1000px] border-collapse  border border-gray-300 shadow-md">
             {/* Table Headings */}
@@ -94,7 +92,7 @@ const UmrahBookings = () => {
             </tbody>
           </table>
         </div>
-      )}
+      
     </div>
   );
 };

@@ -50,7 +50,7 @@ const FileBookings = () => {
      
 
       {bookings.length === 0 ? (
-        <p className="text-center">No visa bookings found.</p>
+        <p className="text-center">No bookings found.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-[1000px] border-collapse border border-gray-300 shadow-md">
