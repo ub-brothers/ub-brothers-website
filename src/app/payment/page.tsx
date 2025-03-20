@@ -42,7 +42,7 @@ const PaymentDetails = () => {
             <p className="text-gray-600 mb-2">Account Name: UB BROTHERS TRAVEL & TOURS</p>
             <p className="text-gray-600 mb-2">Account Number: PK18 ABPA 0010 0948 0157 0041</p>
             <p className="text-gray-600 mb-2">Bank: ABL BANK</p>
-            <p className="text-gray-600 mb-2">Branch: Akbari Mandi LHR</p>
+            <p className="text-gray-600 mb-2">Branch: Akbari Mandi Lahore</p>
           
             <p className="text-gray-600 font-semibold mb-2">
              Bank 2:
@@ -50,7 +50,7 @@ const PaymentDetails = () => {
             <p className="text-gray-600 mb-2">Account Name: UB BROTHERS TRAVEL & TOURS</p>
             <p className="text-gray-600 mb-2">Account Number: PK57DUIB0000000027927003</p>
             <p className="text-gray-600 mb-2">Bank: DUBAI ISLAMIC BANK</p>
-            <p className="text-gray-600 mb-2">Branch: CIRCULAR ROAD LHR</p>
+            <p className="text-gray-600 mb-2">Branch: Circular Road Lahore</p>
             <Link href="/bankDetails">
             <button className="bg-orange-500 rounded-xl h-8 w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500  hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif text-center">View More..</button></Link>
           </motion.div>

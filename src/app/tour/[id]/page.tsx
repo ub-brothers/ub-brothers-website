@@ -45,7 +45,7 @@ export default function TourDetail({ params }: { params: { id: string } }) {
        const videoElement = document.getElementById(videoIds[currentVideo]) as HTMLVideoElement;
      
        if (videoElement) {
-         videoElement.play(); // Ensure video starts playing when it's updated
+         videoElement.play(); 
      
          const handleEnded = () => {
            setCurrentVideo((prev) => (prev + 1) % videoIds.length);
@@ -57,7 +57,9 @@ export default function TourDetail({ params }: { params: { id: string } }) {
            videoElement.removeEventListener("ended", handleEnded);
          };
        }
-     }, [currentVideo, videoIds]);
+     }, [currentVideo, videoIds ]);
+
+
      const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
 
@@ -75,6 +77,7 @@ export default function TourDetail({ params }: { params: { id: string } }) {
         if (video) {
           video.currentTime = 0; // Start from beginning
           video.play();
+          
           
           // Ensure max 8 seconds playtime
           const duration = Math.min(video.duration || 8, 8) * 1000; // Convert to ms
