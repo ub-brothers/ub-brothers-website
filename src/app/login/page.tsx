@@ -38,12 +38,12 @@ export default function Login() {
             const storage = rememberMe ? localStorage : sessionStorage; // Use localStorage if "Remember Me" is checked
             storage.setItem("userEmail", formData.email); // Save email
             storage.setItem("token", data.token); // Save token
-            router.push("/");
+            router.push("/myAccount");
           }
 
     
         alert("Login successful!");
-        router.push("/");
+        router.push("/myAccount");
     };
 
     return (
