@@ -110,7 +110,7 @@ const AboutUs = () => {
       className="w-24 h-24 rounded-full object-cover mb-3"
     />
     <h3 className="text-xl font-semibold">Mirza Ali</h3>
-    <p className="text-gray-700">Ticketing Sale Officer</p>
+    <p className="text-gray-700">Visa Consultant</p>
     <p className="text-gray-600"> 03414314000 </p>
   </div>
 
@@ -123,7 +123,7 @@ const AboutUs = () => {
       className="rounded-full object-cover mb-3"
     />
     <h3 className="text-xl font-semibold">Bilal Maqbool</h3>
-    <p className="text-gray-700">Sales Executive</p>
+    <p className="text-gray-700">Ticketing Assistant</p>
     <p className="text-gray-600">03414316000 </p>
   </div>
 
@@ -145,7 +145,7 @@ const AboutUs = () => {
       className="w-24 h-24 rounded-full object-cover mb-3"
     />
     <h3 className="text-xl font-semibold">Narmeen Mughal</h3>
-    <p className="text-gray-700">Admin</p>
+    <p className="text-gray-700">Ticketing & Umrah Executive</p>
     <p className="text-gray-600">03414312000</p>
   </div>
 
