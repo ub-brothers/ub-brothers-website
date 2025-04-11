@@ -15,7 +15,7 @@ export default {
         title: "Password (Hashed)",
         type: "string",
         readOnly: true,
-        hidden: false, // Taake frontend pe show na ho
+        hidden: true, // Taake frontend pe show na ho
       },
       {
         name: "approved",
