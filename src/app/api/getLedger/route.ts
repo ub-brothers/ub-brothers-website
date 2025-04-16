@@ -10,7 +10,7 @@ const sanityClient = createClient({
 });
 
 const ledgerQuery = `{
-  "Tickets": *[_type == "booking" && userEmail == $userEmail && isConfirmed == true] | order(createdAt asc),
+  "Tickets": *[_type == "booking" && userEmail == $userEmail] | order(createdAt asc),
   "File & Consultancy": *[_type == "fileBooking" && userEmail == $userEmail] | order(createdAt asc),
   "Iran Ziyarat": *[_type == "iranBooking" && (userEmail == $userEmail || storedUserEmail == $userEmail)] | order(createdAt asc),
   "Sticker Visa": *[_type == "stickerVisaBooking" && userEmail == $userEmail] | order(createdAt asc),

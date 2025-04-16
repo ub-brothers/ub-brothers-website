@@ -75,16 +75,6 @@ const MyBookings = ({ searchParams }: { searchParams: { filterStatus?: "cancelle
   
   const { profileImage } = useProfile();
 
-  // const airlineImages = {
-  //   "Fly Jinnah": "/image/flyjinnah.png",
-  //   "Air Sial": "/image/airsial.png",
-  //   "Saudia": "/image/saudia.png",
-  //   "Serene Air": "/image/sereneair.png",
-  //   "Salam Air": "/image/salamair.png",
-  //   "Air Arabia": "/image/airarabia.png",
-  //   "Jazeera" : "/image/jazeera.png",
-  //   "Flynas": "/image/flynas.png",
-  // };
 
   useEffect(() => {
     const storedUserEmail = localStorage.getItem("userEmail");

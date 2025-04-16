@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
+import { format, differenceInMilliseconds, addHours } from "date-fns";
+import { FaTimes, FaFilePdf } from "react-icons/fa";
 
 const cleanPrice = (price: any): number => {
   if (typeof price === "number") return price;
@@ -24,6 +26,16 @@ async function fetchLedger(storedUserEmail: string) {
   }
 
   const data = await res.json();
+  // Filter out cancelled or expired tickets
+  if (data.bookings && data.bookings.Tickets) {
+    data.bookings.Tickets = data.bookings.Tickets.filter((ticket: any) => {
+      const isCancelled = ticket.status === "cancelled";
+      const isExpired = !ticket.isConfirmed && 
+                        differenceInMilliseconds(new Date(), addHours(new Date(ticket.createdAt), 3)) > 0;
+      return !isCancelled && !isExpired;
+    });
+  }
+  
   return data;
 }
 type BookingType = "Tickets" | "Hajj Package" | "Umrah Package" | "Visa Offer" | "E-Visa"| "Umrah Offer" |"Tour Package"| "Sticker Visa"| "Iran Ziyarat Offer"| "Iran Ziyarat" | "Hajj Offer"|"File & Consultancy";
@@ -211,6 +223,46 @@ const BookingDetailsModal = ({ booking, onClose }: { booking: any; onClose: () =
   );
 };
 export default function Ledger() {
+
+  const Timer = ({ createdAt, status, isConfirmed }: { createdAt: string; status: string; isConfirmed: boolean }) => {
+    const [remainingTime, setRemainingTime] = useState("");
+  
+    useEffect(() => {
+      const interval = setInterval(() => {
+        const bookingTime = new Date(createdAt);
+        const expiryTime = addHours(bookingTime, 3);
+        const remainingTimeMs = differenceInMilliseconds(expiryTime, new Date());
+  
+        if (remainingTimeMs <= 0 || status === "cancelled" || isConfirmed) {
+          setRemainingTime("");
+          clearInterval(interval);
+        } else {
+          const hours = Math.floor(remainingTimeMs / (1000 * 60 * 60));
+          const minutes = Math.floor((remainingTimeMs % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((remainingTimeMs % (1000 * 60)) / 1000);
+          setRemainingTime(`${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`);
+        }
+      }, 1000);
+  
+      return () => clearInterval(interval);
+    }, [createdAt, status, isConfirmed]);
+  
+    if (status === "cancelled") {
+      return <span className="text-red-600 text-center">Cancelled</span>;
+    } else if (isConfirmed) {
+      return <span className="text-green-600">Confirmed</span>;
+    } else if (remainingTime) {
+      return (
+        <div className="flex flex-col items-center">
+          <span className="text-sm text-gray-600">Ticket on Hold</span>
+          <span className="text-yellow-600">{remainingTime}</span>
+        </div>
+      );
+    } else {
+      return <span className="text-red-600">Expired</span>;
+    }
+  };
+
   const [bookings, setBookings] = useState<Record<string, any[]>>({});
   const [filteredBookings, setFilteredBookings] = useState<Record<string, any[]>>({});
   const [totalCost, setTotalCost] = useState(0);
@@ -332,6 +384,7 @@ export default function Ledger() {
             <th className="border p-2">Date</th>
             <th className="border p-2">Details</th>
             <th className="border p-2">Remarks</th>
+            <th className="border p-2">Status</th> 
             <th className="border p-2">Amount</th>
             <th className="border p-2">Debit</th> {/* Add Paid column */}
             <th className="border p-2">Credit</th> 
@@ -364,6 +417,7 @@ export default function Ledger() {
                           </li>
                         ))}
                       </ul>
+
                     </div>
                   ) : category === "Hajj Package" ? (
                     <div>
@@ -431,7 +485,16 @@ export default function Ledger() {
     <h1>{item.markedPayment} - {item.bookingNumber}</h1>
   </div>
 </td>
-
+<td className="border p-2">
+{category === "Tickets" && (
+  <Timer 
+    createdAt={item.createdAt} 
+    status={item.status || ""} 
+    isConfirmed={item.isConfirmed || false} 
+  />
+)}
+{category !== "Tickets" && "N/A"}
+        </td>
                 <td className="border p-2 text-center text-md">
                   {cleanPrice(
                     item.totalPrice || item.prize || item.prizeForUsers || 
@@ -451,7 +514,7 @@ export default function Ledger() {
 
           {/* Total Cost Row */}
           <tr className="bg-gray-100 font-bold">
-            <td className="border p-2" colSpan={4}><u>Total</u></td>
+            <td className="border p-2" colSpan={5}><u>Total</u></td>
             <td className="border p-2 text-center">{totalCost} <span className="text-sm">PKR</span></td>
             <td className="border p-2 text-center">{totalPaid} <span className="text-sm">PKR</span></td> {/* Total Paid */}
             <td className="border p-2 text-center">{totalDue} <span className="text-sm">PKR</span></td> 

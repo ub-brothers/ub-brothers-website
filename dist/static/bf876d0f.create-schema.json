@@ -20,7 +20,7 @@
       },
       {
         "readOnly": true,
-        "hidden": false,
+        "hidden": true,
         "name": "password",
         "type": "string",
         "title": "Password (Hashed)"
@@ -124,7 +124,7 @@
         "type": "boolean"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.603Z",
+        "initialValue": "2025-04-11T10:38:35.326Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2026,7 +2026,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.617Z",
+        "initialValue": "2025-04-11T10:38:35.359Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2092,7 +2092,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.609Z",
+        "initialValue": "2025-04-11T10:38:35.341Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2159,7 +2159,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.624Z",
+        "initialValue": "2025-04-11T10:38:35.374Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2220,7 +2220,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.632Z",
+        "initialValue": "2025-04-11T10:38:35.390Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2282,7 +2282,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.638Z",
+        "initialValue": "2025-04-11T10:38:35.405Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2347,7 +2347,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.646Z",
+        "initialValue": "2025-04-11T10:38:35.419Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2444,7 +2444,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.654Z",
+        "initialValue": "2025-04-11T10:38:35.437Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2510,7 +2510,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.660Z",
+        "initialValue": "2025-04-11T10:38:35.453Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2572,7 +2572,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.666Z",
+        "initialValue": "2025-04-11T10:38:35.491Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2639,7 +2639,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.673Z",
+        "initialValue": "2025-04-11T10:38:35.559Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2719,7 +2719,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-03-20T14:58:47.680Z",
+        "initialValue": "2025-04-11T10:38:35.576Z",
         "name": "createdAt",
         "type": "datetime"
       },

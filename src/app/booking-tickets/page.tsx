@@ -7,6 +7,64 @@ import { jwtDecode } from 'jwt-decode';
 import { format, differenceInMilliseconds, addHours } from "date-fns";
 
 function TicketsContent(){
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+  
+    // Validate contact information
+    if (!phoneNumber.trim()) {
+      errors.phoneNumber = "Phone number is required";
+    } else if (!/^\d+$/.test(phoneNumber)) {
+      errors.phoneNumber = "Invalid phone number format";
+    }
+  
+    if (!emailAddress.trim()) {
+      errors.emailAddress = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddress)) {
+      errors.emailAddress = "Invalid email format";
+    }
+  
+    // Validate passenger counts
+    if (adults <= 0) {
+      errors.adults = "At least one adult is required";
+    }
+  
+    // Validate passenger details
+    passengers.forEach((passenger, index) => {
+      const prefix = `passenger${index + 1}`;
+      
+      if (!passenger.surname.trim()) {
+        errors[`${prefix}Surname`] = "Surname is required";
+      }
+      
+      if (!passenger.name.trim()) {
+        errors[`${prefix}Name`] = "Name is required";
+      }
+      
+      if (!passenger.passportNumber.trim()) {
+        errors[`${prefix}Passport`] = "Passport number is required";
+      }
+      
+      if (!passenger.dob) {
+        errors[`${prefix}Dob`] = "Date of birth is required";
+      }
+      
+      if (!passenger.passportExpiry) {
+        errors[`${prefix}Expiry`] = "Passport expiry is required";
+      } else if (new Date(passenger.passportExpiry) < new Date()) {
+        errors[`${prefix}Expiry`] = "Passport has expired";
+      }
+      
+      if (!passenger.nationality.trim()) {
+        errors[`${prefix}Nationality`] = "Nationality is required";
+      }
+    });
+  
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const [isConfirmed, setIsConfirmed] = useState(false);
 const searchParams = useSearchParams();
  const [isApprovedUser, setIsApprovedUser] = useState(false);
@@ -25,10 +83,18 @@ useEffect(() => {
     setIsLoggedIn(false); // User is not logged in
   }
 }, []);
+const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleConfirmBooking = async () => {
-  
+
+    if (isSubmitting) return; // Prevent multiple clicks
+    if (!validateForm()) {
+      return;
+    }
+    setIsSubmitting(true); // Start loading state
     setIsConfirmed(true);
+  
+ 
    
 
     try {
@@ -93,6 +159,9 @@ useEffect(() => {
       console.error("Error booking flight:", error);
       alert("Something went wrong!");
     }
+    finally {
+      setIsSubmitting(false); // Allow future submissions
+    }
   };
 
   
@@ -122,7 +191,7 @@ const [isInformationCorrect, setIsInformationCorrect] = useState(false); // Chec
   const [adults, setAdults] = useState(0);
   const [infants, setInfants] = useState(0);
  
-  const [passengers, setPassengers] = useState<{ type: string; id: number; surname: string; name: string; passportNumber: string; dob: string; passportExpiry: string; nationality: string }[]>([]);
+  const [passengers, setPassengers] = useState<{ type: string; id: number;title: string; surname: string; name: string; passportNumber: string; dob: string; passportExpiry: string; nationality: string }[]>([]);
  
   const [adultError, setAdultError] = useState("");
   const [childrenError, setChildrenError] = useState("");
@@ -291,11 +360,23 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
   <div>
   <p className="font-bold mb-2">Phone Number:</p>
   <input value={phoneNumber}
-      onChange={(e) => setPhoneNumber(e.target.value)} name="phone" placeholder="Enter your phone number" type="text" className="border p-2 text-black rounded w-full" required></input></div>
+      onChange={(e) => setPhoneNumber(e.target.value)} name="phone" placeholder="Enter your phone number" type="text" className={`border p-2 text-black rounded w-full ${
+        validationErrors.phoneNumber ? "border-red-500" : ""
+      }`} required></input>
+      {validationErrors.phoneNumber && (
+        <p className="text-red-500 text-sm mt-1">{validationErrors.phoneNumber}</p>
+      )}
+      </div>
   <div>
   <p className="font-bold mb-2">Email Address:</p>
   <input   value={emailAddress}
-      onChange={(e) => setEmailAddress(e.target.value)} name="email" type="email" placeholder="Enter your email address" className="border p-2 text-black rounded w-full" required></input></div>
+      onChange={(e) => setEmailAddress(e.target.value)} name="email" type="email" placeholder="Enter your email address" className={`border p-2 text-black rounded w-full ${
+        validationErrors.emailAddress ? "border-red-500" : ""
+      }`} required></input>
+        {validationErrors.emailAddress && (
+      <p className="text-red-500 text-sm mt-1">{validationErrors.emailAddress}</p>
+    )}
+    </div>
 </div>
 <h2 className="text-lg font-bold mt-6 mb-2 "><u>Passenger Details</u></h2>
       <div className=" rounded-xl bg-gray-100 shadow-lg">
@@ -381,6 +462,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
         <thead>
           <tr className="bg-gray-700 text-white">
             <th className="px-4 py-2 border w-[100px] text-sm"># </th>
+            <th className="px-4 py-2 border text-sm">Title</th>
             <th className="px-4 py-2 border text-sm">Surname</th>
             <th className="px-4 py-2 border text-sm">Name</th>
             <th className="px-4 py-2 border text-sm">Passport No.</th>
@@ -397,18 +479,34 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
      : index < adults + children 
        ? `Child ${index - adults + 1}` 
        : `Infant ${index - adults - children + 1}`;
-    
+       const prefix = `passenger${index + 1}`;
     return (
       <tr key={index} className="border-t text-sm">
         <td className="px-4 py-2 border">{type}</td>
+        <td className="px-4 py-2 border">
+  <select
+    value={passenger.title || "Mr"} // Default to "Mr" if not set
+    onChange={(e) => handlePassengerChange(index, "title", e.target.value)}
+    className="w-full bg-gray-200 border p-1"
+  >
+    <option value="Mr">Mr</option>
+    <option value="Ms">Ms</option>
+    <option value="Mrs">Mrs</option>
+  </select>
+</td>
         <td className="px-4 py-2 border">
           <input
             type="text"
             name="surname"
             value={passenger.surname}
             onChange={(e) => handlePassengerChange(index, "surname", e.target.value)}
-            className="w-full bg-gray-200 border p-1"
+            className={`w-full bg-gray-200 border p-1 ${
+              validationErrors[`${prefix}Surname`] ? "border-red-500" : ""
+            }`}
           />
+           {validationErrors[`${prefix}Surname`] && (
+          <p className="text-red-500 text-xs">{validationErrors[`${prefix}Surname`]}</p>
+        )}
         </td>
         <td className="px-4 py-2 border">
           <input
@@ -416,17 +514,30 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
             name="passenger"
             value={passenger.name}
             onChange={(e) => handlePassengerChange(index, "name", e.target.value)}
-            className="w-full bg-gray-200 border p-1"
+            className={`w-full bg-gray-200 border p-1 ${
+              validationErrors[`${prefix}Name`] ? "border-red-500" : ""
+            }`}
           />
+          {validationErrors[`${prefix}Name`] && (
+          <p className="text-red-500 text-xs">{validationErrors[`${prefix}Name`]}</p>
+        )}
         </td>
+
+
+
         <td className="px-4 py-2 border">
           <input
             type="text"
             name="passportNumber"
             value={passenger.passportNumber}
             onChange={(e) => handlePassengerChange(index, "passportNumber", e.target.value)}
-            className="w-full bg-gray-200 border p-1"
+            className={`w-full bg-gray-200 border p-1 ${
+              validationErrors[`${prefix}Passport`] ? "border-red-500" : ""
+            }`}
           />
+           {validationErrors[`${prefix}Passport`] && (
+          <p className="text-red-500 text-xs">{validationErrors[`${prefix}Passport`]}</p>
+        )}
         </td>
         <td className="px-4 py-2 border">
           <input
@@ -434,8 +545,13 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
             name="dob"
             value={passenger.dob}
             onChange={(e) => handlePassengerChange(index, "dob", e.target.value)}
-            className="w-full bg-gray-200 border p-1"
+            className={`w-full bg-gray-200 border p-1 ${
+              validationErrors[`${prefix}Dob`] ? "border-red-500" : ""
+            }`}
           />
+           {validationErrors[`${prefix}Dob`] && (
+          <p className="text-red-500 text-xs">{validationErrors[`${prefix}Dob`]}</p>
+        )}
         </td>
         <td className="px-4 py-2 border">
           <input
@@ -443,8 +559,13 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
             name="passportExpiry"
             value={passenger.passportExpiry}
             onChange={(e) => handlePassengerChange(index, "passportExpiry", e.target.value)}
-            className="w-full bg-gray-200 border p-1"
+            className={`w-full bg-gray-200 border p-1 ${
+              validationErrors[`${prefix}Expiry`] ? "border-red-500" : ""
+            }`}
           />
+           {validationErrors[`${prefix}Expiry`] && (
+          <p className="text-red-500 text-xs">{validationErrors[`${prefix}Expiry`]}</p>
+        )}
         </td>
         <td className="px-4 py-2 border">
           <input
@@ -452,8 +573,13 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
             name="nationality"
             value={passenger.nationality}
             onChange={(e) => handlePassengerChange(index, "nationality", e.target.value)}
-            className="w-full bg-gray-200 border p-1"
+            className={`w-full bg-gray-200 border p-1 ${
+              validationErrors[`${prefix}Nationality`] ? "border-red-500" : ""
+            }`}
           />
+           {validationErrors[`${prefix}Nationality`] && (
+          <p className="text-red-500 text-xs">{validationErrors[`${prefix}Nationality`]}</p>
+        )}
         </td>
       </tr>
     );
@@ -463,9 +589,12 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
      
       </table>
          <div className="text-center flex"> 
-           <button onClick={() => {
-  
-      setIsConfirmationModalOpen(true); // Open confirmation modal
+           <button   onClick={() => {
+      // Validate form before opening modal
+      if (!validateForm()) {
+        return; // Don't open modal if validation fails
+      }
+      setIsConfirmationModalOpen(true);
     }}
  // Disable button if not logged in
   className="w-[200px] bg-blue-500 hover:bg-orange-500 rounded-lg mx-4 mt-10 mb-4 h-10 text-white font-bold">Submit Booking</button>
@@ -490,16 +619,17 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
           Edit
         </button>
         <button
-          onClick={handleConfirmBooking} // Call booking function
-          disabled={!isInformationCorrect} // Disable if checkbox is not ticked
-          className={`${
-            isInformationCorrect
-              ? "bg-blue-500 hover:bg-blue-600"
-              : "bg-gray-400 cursor-not-allowed"
-          } text-white font-bold py-2 px-4 rounded`}
-        >
-          Submit
-        </button>
+  onClick={handleConfirmBooking}
+  disabled={!isInformationCorrect || isSubmitting}
+  className={`${
+    isInformationCorrect && !isSubmitting
+      ? "bg-blue-500 hover:bg-blue-600"
+      : "bg-gray-400 cursor-not-allowed"
+  } text-white font-bold py-2 px-4 rounded`}
+>
+  {isSubmitting ? "Submitting..." : "Submit"}
+</button>
+
       </div>
     </div>
   </div>
