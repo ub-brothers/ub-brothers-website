@@ -560,7 +560,7 @@ const toggleTicketOptions = () => {
     {croppedImage ? (
         <Image src={croppedImage} alt="Profile" onError={handleImageError} width={96} height={96} className="rounded-full" />
     ) : (
-        <div className="w-full text-center bg-gray-200 flex items-center justify-center text-gray-600">
+        <div className="w-full h-full text-center bg-gray-200 flex flex-col items-center justify-center text-gray-600">
             Upload Image
         </div>
     )}
@@ -636,7 +636,7 @@ const toggleTicketOptions = () => {
               >
                 Cancel
               </button>
-              <button
+              <button   
                 onClick={handleCropDone}
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
               >

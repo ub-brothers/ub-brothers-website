@@ -151,7 +151,7 @@ const AboutUs = () => {
 
 </div>
 
- <div>
+ <div className="my-5"> 
         <ClientReviews/>
       </div>
       <div className="my-5">

@@ -89,7 +89,7 @@ const filteredFlights = flights
 
 
   return (
-    <div className="w-full mb-6">
+    <div className="w-full mb-6 h-screen">
   <div className="max-h-[700px] w-full overflow-x-auto">
   
 
