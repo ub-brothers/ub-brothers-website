@@ -198,7 +198,7 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers") || "
         <label className="block text-lg font-semibold mb-2">Message</label>
         <textarea name="message" placeholder="Any Message" value={formData.message} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" rows={4}></textarea>
 
-        <button disabled={isSubmitting} type="submit" className={`w-full text-white py-2 rounded-md transition 
+        <button disabled={isSubmitting} type="submit" className={`w-full my-2 text-white py-2 rounded-md transition 
             ${isSubmitting 
               ? 'bg-gray-400 cursor-not-allowed' 
               : 'bg-blue-600 hover:bg-orange-500'}`}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>

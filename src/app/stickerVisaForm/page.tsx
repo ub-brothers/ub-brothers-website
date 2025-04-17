@@ -243,7 +243,7 @@ const [isApprovedUser, setIsApprovedUser] = useState(false);
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full text-white py-2 rounded-md transition 
+          className={`w-full my-2 text-white py-2 rounded-md transition 
             ${isSubmitting 
               ? 'bg-gray-400 cursor-not-allowed' 
               : 'bg-blue-600 hover:bg-orange-500'}`}

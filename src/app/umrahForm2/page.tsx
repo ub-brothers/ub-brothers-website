@@ -488,7 +488,7 @@ const generatePDF = () => {
       )}
         
 
-      <button type="button" onClick={calculateCost} className="w-full bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">
+      <button type="button" onClick={calculateCost} className="w-full bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold mb-2">
         Calculate Cost
       </button>
 
@@ -497,7 +497,7 @@ const generatePDF = () => {
           <p className="font-bold text-lg">Total Cost: {totalCost} SAR/-</p>
         </div>
       )}
-      <button disabled={isSubmitting} className={`w-full text-white py-2 rounded-md transition 
+      <button disabled={isSubmitting} className={`w-full my-2 text-white py-2 my-2 rounded-md transition 
             ${isSubmitting 
               ? 'bg-gray-400 cursor-not-allowed' 
               : 'bg-blue-600 hover:bg-orange-500'}`}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
@@ -505,7 +505,7 @@ const generatePDF = () => {
         <button
         type="button"
          onClick={generatePDF}
-          className="w-full bg-blue-600 mt-4 text-white py-2 rounded-md hover:bg-orange-500 transition"
+          className="w-full mt-2 bg-blue-600  text-white py-2 rounded-md hover:bg-orange-500 transition"
         >
           Download Form Details (PDF)
         </button>)} 

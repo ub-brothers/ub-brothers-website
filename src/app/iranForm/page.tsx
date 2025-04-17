@@ -173,7 +173,7 @@ function BookFormContent() {
           <label className="block mb-2 font-semibold text-gray-700">Your Message</label>
           <textarea value={userMessage} onChange={(e) => setUserMessage(e.target.value)} className="w-full p-2 mb-4 border rounded" placeholder="Enter your message (optional)" rows={3} />
 
-          <button  disabled={isSubmitting} type="submit" className={`w-full text-white py-2 rounded-md transition 
+          <button  disabled={isSubmitting} type="submit" className={`w-full my-2 text-white py-2 rounded-md transition 
           ${isSubmitting 
             ? 'bg-gray-400 cursor-not-allowed' 
             : 'bg-blue-600 hover:bg-orange-500'}`}>

@@ -495,17 +495,17 @@ export default function Ledger() {
 )}
 {category !== "Tickets" && "N/A"}
         </td>
-                <td className="border p-2 text-center text-md">
+                <td className="border p-2 text-center font-bold text-gray-600 text-md">
                   {cleanPrice(
                     item.totalPrice || item.prize || item.prizeForUsers || 
                     item.price || item.priceForUsers || item.selectedPrize || 
                     item.totalCost || item.Prize || item.discountedPriceForUsers || 0
                   )}  <span className="text-sm">PKR</span>
                 </td>
-                <td className="border p-2  text-center text-md">
+                <td className="border p-2  font-bold text-gray-600 text-center text-md">
                   {cleanPrice(item.paid || 0)} <span className="text-sm">PKR</span> {/* Display Paid */}
                 </td>
-                <td className="border p-2  text-center text-md">
+                <td className="border p-2 font-bold text-gray-600  text-center text-md">
                   {cleanPrice(item.due || 0)} <span className="text-sm">PKR</span> {/* Display Due */}
                 </td>
               </tr>

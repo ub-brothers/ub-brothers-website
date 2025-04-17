@@ -397,7 +397,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
        
       </section>
       <div className="text-center mt-6">
-        <button disabled={isSubmitting} className={`w-full text-white py-2 rounded-md transition 
+        <button disabled={isSubmitting} className={`w-full my-2 text-white py-2 rounded-md transition 
             ${isSubmitting 
               ? 'bg-gray-400 cursor-not-allowed' 
               : 'bg-blue-600 hover:bg-orange-500'}`}>

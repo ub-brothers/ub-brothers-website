@@ -250,7 +250,7 @@ function BookFormContent() {
         
         <button
          disabled={isSubmitting}
-        type="submit" className={`w-full text-white py-2 rounded-md transition 
+        type="submit" className={`w-full my-2 text-white py-2 rounded-md transition 
           ${isSubmitting 
             ? 'bg-gray-400 cursor-not-allowed' 
             : 'bg-blue-600 hover:bg-orange-500'}`}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
