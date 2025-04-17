@@ -463,8 +463,8 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
           <tr className="bg-gray-700 text-white">
             <th className="px-4 py-2 border w-[100px] text-sm"># </th>
             <th className="px-4 py-2 border text-sm">Title</th>
-            <th className="px-4 py-2 border text-sm">Surname</th>
-            <th className="px-4 py-2 border text-sm">Name</th>
+            <th className="px-4 py-2 border text-sm">First Name</th>
+            <th className="px-4 py-2 border text-sm">Last Name</th>
             <th className="px-4 py-2 border text-sm">Passport No.</th>
             <th className="px-4 py-2 border text-sm">DOB</th>
             <th className="px-4 py-2 border text-sm">Passport Expiry</th>
@@ -494,6 +494,22 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
     <option value="Mrs">Mrs</option>
   </select>
 </td>
+
+<td className="px-4 py-2 border">
+          <input
+            type="text"
+            name="passenger"
+            value={passenger.name}
+            onChange={(e) => handlePassengerChange(index, "name", e.target.value)}
+            className={`w-full bg-gray-200 border p-1 ${
+              validationErrors[`${prefix}Name`] ? "border-red-500" : ""
+            }`}
+          />
+          {validationErrors[`${prefix}Name`] && (
+          <p className="text-red-500 text-xs">{validationErrors[`${prefix}Name`]}</p>
+        )}
+        </td>
+        
         <td className="px-4 py-2 border">
           <input
             type="text"
@@ -508,20 +524,7 @@ const price = extractedPrice ? Number(extractedPrice[0].replace(/,/g, "")) : 0;
           <p className="text-red-500 text-xs">{validationErrors[`${prefix}Surname`]}</p>
         )}
         </td>
-        <td className="px-4 py-2 border">
-          <input
-            type="text"
-            name="passenger"
-            value={passenger.name}
-            onChange={(e) => handlePassengerChange(index, "name", e.target.value)}
-            className={`w-full bg-gray-200 border p-1 ${
-              validationErrors[`${prefix}Name`] ? "border-red-500" : ""
-            }`}
-          />
-          {validationErrors[`${prefix}Name`] && (
-          <p className="text-red-500 text-xs">{validationErrors[`${prefix}Name`]}</p>
-        )}
-        </td>
+       
 
 
 
