@@ -7,10 +7,11 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e:any) => {
     e.preventDefault();
-
+ setIsSubmitting(true);
     try {
       const response = await fetch('/api/forgot-password', {
         method: 'POST',
@@ -30,6 +31,9 @@ const ForgotPassword = () => {
     } catch (err) {
       setError('Something went wrong. Please try again.');
       setMessage('');
+    }
+    finally {
+      setIsSubmitting(false); // 👈 Re-enable button
     }
   };
 
@@ -52,12 +56,18 @@ const ForgotPassword = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-         <motion.button 
+      <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
-          >Send Reset Link</motion.button>
+            disabled={isSubmitting}
+            className={`py-2 rounded-md text-white transition 
+              ${isSubmitting 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-blue-500 hover:bg-blue-600'}`}
+          >
+            {isSubmitting ? 'Sending...' : 'Send Reset Link'}
+          </motion.button>
       
       </form>
       {message && <p className="text-green-300 mt-4">{message}</p>}

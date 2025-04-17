@@ -27,7 +27,7 @@ const discountedPriceForUsers = searchParams.get("discountedPriceForUsers")||"";
 
 const title = searchParams.get("title") || "";
   const [isConfirmed, setIsConfirmed] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false); 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setIsConfirmed(true);
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,6 +35,7 @@ const title = searchParams.get("title") || "";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const storedEmail = localStorage.getItem("userEmail");
     try {
       const response = await fetch("/api/offerForm", {
@@ -57,6 +58,9 @@ const title = searchParams.get("title") || "";
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Failed to submit form. Please try again.");
+    }
+    finally {
+      setIsSubmitting(false); // 👈 enable button again
     }
   };
 
@@ -181,7 +185,10 @@ const title = searchParams.get("title") || "";
         <label className="block text-lg font-semibold mb-2">Message</label>
         <textarea name="message" placeholder="Any Message" value={formData.message} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" rows={4} required></textarea>
 
-        <button type="submit" className="w-full bg-blue-500 hover:bg-orange-500 text-white font-bold rounded-lg p-3">Submit</button>
+        <button disabled={isSubmitting} type="submit" className={`w-full text-white py-2 rounded-md transition 
+          ${isSubmitting 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-blue-600 hover:bg-orange-500'}`}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
         {isConfirmed && (
         <button
         type="button"

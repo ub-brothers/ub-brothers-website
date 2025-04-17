@@ -43,106 +43,102 @@ export async function POST(req: Request) {
       .patch(existingUser._id)
       .set({ resetToken, tokenExpiry })
       .commit();
-
+      const now = new Date().toLocaleString('en-US', { timeZone: 'Asia/Karachi' });
     // Send email with reset link
     const resetUrl = `https://ub-brothers-website-qlou.vercel.app/reset-password?token=${resetToken}`;
     const mailOptions = {
       from: `<ubbrotherspk@gmail.com>`,
       to: existingUser.email,
-      subject: 'Password Reset Request',
+      subject:  `Password Reset Request - UB Brothers [${now}]`,
       html: `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Password Reset Request</title>
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-          background-color: #f4f4f4;
-        }
-        .email-container {
-          max-width: 600px;
-          margin: 0 auto;
-          background-color: #ffffff;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .email-header {
-          background-color: #007bff;
-          color: #ffffff;
-          text-align: center;
-          padding: 20px;
-        }
-        .email-header h1 {
-          margin: 0;
-          font-size: 24px;
-        }
-        .email-body {
-          padding: 20px;
-          color: #333333;
-        }
-        .email-body p {
-          font-size: 16px;
-          line-height: 1.5;
-        }
-        .reset-button {
-          display: inline-block;
-          background-color:rgb(143, 197, 255);
-          color: #ffffff;
-          padding: 12px 24px;
-          
-          text-decoration: none;
-          border-radius: 5px;
-          font-size: 16px;
-          margin: 20px 0;
-        }
-        .email-footer {
-          text-align: center;
-          padding: 20px;
-          background-color: #f4f4f4;
-          color: #777777;
-          font-size: 14px;
-        }
-        .email-footer a {
-          color: #007bff;
-          text-decoration: none;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="email-container">
-        <!-- Header -->
-        <div class="email-header">
-          <h1>Password Reset Request</h1>
-        </div>
-
-        <!-- Body -->
-        <div class="email-body">
-          <p>Hello,</p>
-          <p>We received a request to reset your password. Click the button below to reset it:</p>
-          <a href="${resetUrl}" class="reset-button">Reset Password</a>
-          <p>If you did not request this, please ignore this email.</p>
-          <p>Thank you,<br>UB Brothers</p>
-        </div>
-
-        <!-- Footer -->
-        <div class="email-footer">
-          <p>If you have any questions, feel free to <a href="mailto:ubbrotherspk@gmail.com">contact us</a>.</p>
-          <p>&copy; 2025 UB Brothers Travel & Tours. All rights reserved.</p>
-        </div>
-      </div>
-    </body>
-    </html>
-  `,
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Reset</title>
+  <style>
+    body {
+      background-color: #f9fafb;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #007bff, #00bfff);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .content {
+      padding: 30px 20px;
+      color: #333333;
+    }
+    .content p {
+      margin: 16px 0;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .button {
+      display: inline-block;
+      margin: 20px 0;
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: white !important;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+      color: #888888;
+    }
+    .footer a {
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Reset Your Password</h1>
+    </div>
+    <div class="content">
+      <p>Hi there,</p>
+      <p>We received a request to reset the password for your account. If this was you, simply click the button below to choose a new password.</p>
+      <p style="text-align:center;">
+        <a href="${resetUrl}" class="button">Reset Password</a>
+      </p>
+      <p>If you did not request this, no action is needed — your password is still secure.</p>
+      <p>Warm regards,<br><strong>UB Brothers Support Team</strong></p>
+    </div>
+    <div class="footer">
+      <p>Need help? <a href="mailto:ubbrotherspk@gmail.com">Contact us</a></p>
+      <p>© 2025 UB Brothers Travel & Tours. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
+`,
     };
 
     await transporter.sendMail(mailOptions);
-    return NextResponse.json({ message: "A password reset link has been sent to your email. If you don't see it in your inbox, please check your spam folder." }, { status: 200 });
+    return NextResponse.json({ message: "A password reset link has been sent to your email. Please check your spam folder if you don't see it." }, { status: 200 });
   } catch (error) {
     console.error("Error in Forgot Password:", error);
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });

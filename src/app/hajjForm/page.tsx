@@ -88,10 +88,11 @@ function BookFormContent() {
   const [userMessage, setUserMessage] = useState("");
 
   const [isConfirmed, setIsConfirmed] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (e:any) => {
     setIsConfirmed(true);
     e.preventDefault();
+    setIsSubmitting(true);
     const selectedPrize = selectedCategory === "sharing" ? (isApprovedUser ? sharingPriceForUsers : prize1) : selectedCategory === "triple" ? (isApprovedUser ? triplePriceForUsers : prize2) :  (isApprovedUser ? doublePriceForUsers : prize3);
     const storedEmail = localStorage.getItem("userEmail");
     const formData = { userName, userNumber, userEmail, shortDescription, selectedCategory, selectedPrize, userMessage, storedUserEmail:storedEmail, makkahHotel,madinaHotel };
@@ -115,6 +116,9 @@ function BookFormContent() {
       }
     } catch (error) {
       console.error("Error:", error);
+    }
+    finally {
+      setIsSubmitting(false); // 👈 enable button again
     }
   };
 
@@ -244,7 +248,13 @@ function BookFormContent() {
         <label className="block font-semibold">Your Message</label>
         <textarea value={userMessage} onChange={(e) => setUserMessage(e.target.value)} className="w-full p-2 mb-4 border rounded" placeholder="Enter your message (optional)" rows={3} />
         
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-orange-500 hover:shadow-md">Submit</button>
+        <button
+         disabled={isSubmitting}
+        type="submit" className={`w-full text-white py-2 rounded-md transition 
+          ${isSubmitting 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-blue-600 hover:bg-orange-500'}`}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
+
         {isConfirmed && (
            <button type='button' onClick={generatePDF} className="w-full mt-4 bg-blue-500 text-white p-2 rounded hover:bg-orange-500 hover:shadow-md">Download Hajj Form Details (PDF)</button>
         )}

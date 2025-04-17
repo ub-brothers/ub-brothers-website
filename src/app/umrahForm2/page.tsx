@@ -137,10 +137,12 @@ const handleConfirmProceed = () => {
 const [personalPhoto, setPersonalPhoto] = useState<File | null>(null);
 const [passportScan, setPassportScan] = useState<File | null>(null);
 const [isConfirmed, setIsConfirmed] = useState(false);
-
+const [isSubmitting, setIsSubmitting] = useState(false); 
 const handleSubmit = async (e: React.FormEvent) => {
   setIsConfirmed(true);
   e.preventDefault();
+  setIsSubmitting(true);
+  try {
 
   const formDataToSend = new FormData();
   formDataToSend.append("name", formData.name);
@@ -178,6 +180,13 @@ const handleSubmit = async (e: React.FormEvent) => {
   } else {
     alert("Failed to Submit Booking");
   }
+  
+}catch (error) {
+  console.error("Error submitting form:", error);
+  alert("Something went wrong. Please try again.");
+} finally {
+  setIsSubmitting(false); // ✅ always re-enable button
+}
 };
 
 
@@ -488,7 +497,10 @@ const generatePDF = () => {
           <p className="font-bold text-lg">Total Cost: {totalCost} SAR/-</p>
         </div>
       )}
-      <button className="w-full mt-2 bg-blue-500 hover:bg-orange-500 text-white p-3 rounded-md font-semibold">Submit</button>
+      <button disabled={isSubmitting} className={`w-full text-white py-2 rounded-md transition 
+            ${isSubmitting 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-blue-600 hover:bg-orange-500'}`}>{isSubmitting ? 'Submitting...' : 'Submit'}</button>
       {isConfirmed && (
         <button
         type="button"

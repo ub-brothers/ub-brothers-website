@@ -47,7 +47,7 @@ function TourContent(){
     message: '',
     userEmail:'',
   });
-
+  const [isSubmitting, setIsSubmitting] = useState(false); 
   const handleChange = (e:any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -57,7 +57,7 @@ function TourContent(){
   const handleSubmit = async (e:any) => {
     setIsConfirmed(true);
     e.preventDefault();
-
+    setIsSubmitting(true);
     const updatedFormData = {
       ...formData,
       country: countryName || "", 
@@ -86,6 +86,9 @@ function TourContent(){
     } catch (error) {
       console.error('Error:', error);
       alert('Something went wrong. Please try again later.');
+    }
+    finally {
+      setIsSubmitting(false); // 👈 enable button again
     }
   };
 
@@ -230,9 +233,13 @@ function TourContent(){
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-orange-500 transition"
+          disabled={isSubmitting}
+          className={`w-full text-white py-2 rounded-md transition 
+            ${isSubmitting 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-blue-600 hover:bg-orange-500'}`}
         >
-          Submit
+           {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
         {isConfirmed && (
         <button

@@ -28,7 +28,7 @@ const prize = searchParams.get("prize") || "";
 const prizeForUsers = searchParams.get("prizeForUsers")||"";
 console.log("Prize For Users:", searchParams.get("prizeForUsers"));
 
-
+const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     visaType: "",
@@ -53,8 +53,10 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
   const handleSubmit = async (e: any) => {
     setIsConfirmed(true);
     e.preventDefault();
-  
+    setIsSubmitting(true);
+    try {
     const formDataToSend = new FormData();
+
     formDataToSend.append("visaType", formData.visaType);
     formDataToSend.append("nationality", formData.nationality);
     formDataToSend.append("firstName", formData.firstName);
@@ -97,7 +99,13 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
   
     const result = await response.json();
     alert(result.message);
-  };
+  } catch (error) {
+    console.error("Error submitting visa form:", error);
+    alert("Something went wrong while submitting the form.");
+  } finally {
+    setIsSubmitting(false); // ✅ Always reset the button state
+  }
+};
 
 
 
@@ -389,8 +397,11 @@ console.log("Prize For Users:", searchParams.get("prizeForUsers"));
        
       </section>
       <div className="text-center mt-6">
-        <button className="bg-blue-500 w-full hover:bg-orange-500 text-white px-4 py-2 rounded">
-          Submit
+        <button disabled={isSubmitting} className={`w-full text-white py-2 rounded-md transition 
+            ${isSubmitting 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-blue-600 hover:bg-orange-500'}`}>
+        {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
         {isConfirmed && (
         <button

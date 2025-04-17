@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 const ContactForm = () => {
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,7 +11,7 @@ const ContactForm = () => {
     message: '',
   });
 
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -23,26 +24,33 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-  if (data.success) {
-    alert("Form submitted successfully!");
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
-    });
-  } else {
-    alert("Failed to send email. Please try again.");
-  }
-};
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Form submitted successfully!");
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+        });
+      } else {
+        alert("Failed to send email. Please try again.");
+      }
+    } catch (error) {
+      alert("Something went wrong.");
+    } finally {
+      setIsSubmitting(false); // 👈 enable button again
+    }
+  };
 
   return (
     <div className="max-w-lg sm:mx-auto mx-4  p-6 bg-gray shadow-lg rounded-lg">
@@ -64,7 +72,10 @@ const ContactForm = () => {
         <label className="block font-medium">Your Message/ Request</label>
         <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Your Message" className="w-full h-[150px] p-2 border rounded" required />
         
-        <button type="submit" className="w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-600">Submit</button>
+        <button
+        disabled={isSubmitting}
+        
+        type="submit" className={`w-full p-2 rounded text-white ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}> {isSubmitting ? 'Submitting...' : 'Submit'}</button>
       </form>
     </div>
   );
