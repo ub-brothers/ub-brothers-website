@@ -124,7 +124,7 @@
         "type": "boolean"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.326Z",
+        "initialValue": "2025-04-17T10:22:06.598Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -1076,6 +1076,36 @@
   {
     "fields": [
       {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string",
+                "title": "Hotel Name"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "hotels",
+        "type": "array"
+      }
+    ],
+    "name": "makkahHotelImg",
+    "type": "document",
+    "title": "Makkah Hotel Images"
+  },
+  {
+    "fields": [
+      {
         "name": "hotelName",
         "type": "string"
       },
@@ -1118,6 +1148,36 @@
     "name": "madinaHotel",
     "type": "document",
     "title": "Umrah Madina Hotels"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "name",
+                "type": "string",
+                "title": "Hotel Name"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "hotels",
+        "type": "array"
+      }
+    ],
+    "name": "madinaHotelImg",
+    "type": "document",
+    "title": "Madina Hotel Images"
   },
   {
     "fields": [
@@ -2026,7 +2086,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.359Z",
+        "initialValue": "2025-04-17T10:22:06.612Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2092,7 +2152,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.341Z",
+        "initialValue": "2025-04-17T10:22:06.604Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2159,7 +2219,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.374Z",
+        "initialValue": "2025-04-17T10:22:06.618Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2220,7 +2280,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.390Z",
+        "initialValue": "2025-04-17T10:22:06.623Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2282,7 +2342,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.405Z",
+        "initialValue": "2025-04-17T10:22:06.630Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2347,7 +2407,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.419Z",
+        "initialValue": "2025-04-17T10:22:06.646Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2444,7 +2504,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.437Z",
+        "initialValue": "2025-04-17T10:22:06.652Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2510,7 +2570,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.453Z",
+        "initialValue": "2025-04-17T10:22:06.658Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2572,7 +2632,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.491Z",
+        "initialValue": "2025-04-17T10:22:06.664Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2639,7 +2699,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.559Z",
+        "initialValue": "2025-04-17T10:22:06.672Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2719,7 +2779,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-11T10:38:35.576Z",
+        "initialValue": "2025-04-17T10:22:06.678Z",
         "name": "createdAt",
         "type": "datetime"
       },

@@ -3,7 +3,7 @@
 import React, { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation'; // Use useSearchParams in App Router
 import { motion } from "framer-motion";
-
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 const ResetPasswordForm = () => {
   const searchParams = useSearchParams(); // Extract search parameters
   const token = searchParams.get('token'); // Get token from URL
@@ -12,7 +12,9 @@ const ResetPasswordForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
   const handleSubmit = async (e:any) => {
     e.preventDefault();
 
@@ -54,22 +56,39 @@ const ResetPasswordForm = () => {
       <h1 className="text-2xl font-bold mb-2">Reset Password</h1>
       <p className='text-sm text-blue-200 mb-4'>Enter New Password</p>
       <form onSubmit={handleSubmit} className="flex flex-col">
-        <input
-          type="password"
-          className="p-2 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-black"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          className="p-2 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-black"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
+      <div className="relative mb-4">
+            <input
+              type={showNewPassword ? "text" : "password"}
+              className="p-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-black"
+              placeholder="New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+            <span
+              className="absolute right-3 top-3 cursor-pointer text-black"
+              onClick={() => setShowNewPassword(!showNewPassword)}
+            >
+              {showNewPassword ?<FiEye /> :<FiEyeOff />  }
+            </span>
+          </div>
+
+          <div className="relative mb-4">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              className="p-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-black"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+            <span
+              className="absolute right-3 top-3 cursor-pointer text-black"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? <FiEye />: <FiEyeOff />  }
+            </span>
+          </div>
          <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

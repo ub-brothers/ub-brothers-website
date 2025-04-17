@@ -9,8 +9,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: process.env.EMAIL_USER, // Your email
-    pass: process.env.EMAIL_PASS, // Your email password
+    user: "ubbrotherspk@gmail.com", // Your email
+    pass: "rcts rwwf iwhb dqmw", // Your email password
   },
 });
 
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
     // Send email with reset link
     const resetUrl = `https://ub-brothers-website-qlou.vercel.app/reset-password?token=${resetToken}`;
     const mailOptions = {
-      from: `<${process.env.EMAIL_USER}>`,
+      from: `<ubbrotherspk@gmail.com>`,
       to: existingUser.email,
       subject: 'Password Reset Request',
       html: `
@@ -142,7 +142,7 @@ export async function POST(req: Request) {
     };
 
     await transporter.sendMail(mailOptions);
-    return NextResponse.json({ message: 'Password reset email sent' }, { status: 200 });
+    return NextResponse.json({ message: "A password reset link has been sent to your email. If you don't see it in your inbox, please check your spam folder." }, { status: 200 });
   } catch (error) {
     console.error("Error in Forgot Password:", error);
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
