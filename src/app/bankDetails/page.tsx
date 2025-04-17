@@ -1,79 +1,118 @@
-"use client"
+"use client";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import imageUrlBuilder from "@sanity/image-url";
+import { client } from "@/sanity/lib/client";
 
-const banks = [
-  {
-    id: 1,
-    name: "Allied Bank Limited",
-    logo: "/image/bank3.png",
-    accountTitle:"UB BROTHERS TRAVEL & TOURS",
-    account: "PK18 ABPA 0010 0948 0157 0041",
-    branch:"Akbari Mandi Lahore"
-  },
-  {
-    id: 2,
-    name: "Dubai Islamic Bank",
-    logo: "/image/bank4.1.webp",
-    accountTitle:"UB BROTHERS TRAVEL & TOURS",
-    account: "PK57DUIB0000000027927003",
-    branch:"Circular Road Lahore"
-  },
-  {
-    id: 3,
-    name: "Al Baraka Bank",
-    logo: "/image/bank5.png",
-    accountTitle:"UB BROTHERS TRAVEL & TOURS",
-    account: "PK34AIIN 0000 1025 3754 1010",
-    branch:"Mall Road Lahore"
-  },
-  {
-    id: 4,
-    name: "MCB Bank",
-    logo: "/image/bank2.png",
-    accountTitle:"UB BROTHERS",
-    account: "PK36 MUCB 0518 0844 1100 0919",
-    branch:"Misri Shah Lahore"
-  },
-  {
-    id: 5,
-    name: "Allied Bank Limited",
-    logo: "/image/bank3.png",
-    accountTitle:"UB BROTHERS",
-    account: "PK25 ABPA 0010 0948 0157 0012",
-    branch:"Akbari Mandi Lahore"
-  },
- 
-  {
-    id: 6,
-    name: "Summit Bank",
-    logo: "/image/bankk.png",
-    accountTitle:"UB BROTHERS",
-    account: "PK91 SUMB 0329 0271 4012 7980",
-    branch:"Egerton Road Lahore"
-  }
-];
+const builder = imageUrlBuilder(client);
+const urlFor = (source: any) => builder.image(source);
+
+type Bank = {
+  _id: string;
+  name: string;
+  logo: any;
+  accountTitle: string;
+  account: string;
+  branch: string;
+};
 
 export default function BankCards() {
+  const [banks, setBanks] = useState<Bank[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await client.fetch(
+        `*[_type == "bank"] | order(order asc){
+          _id,
+          name,
+          logo,
+          accountTitle,
+          account,
+          branch
+        }`
+      );
+      setBanks(data);
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
-      {banks.map((bank, index) => (
-        <motion.div
-          key={bank.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.2 }}
-        >
-          <div className="p-4 shadow-lg rounded-xl bg-blue-100 border border-gray-200 hover:shadow-xl transition flex flex-col text-left space-y-3 h-[350px] w-10/14 mx-auto">
-          <div className="w-full bg-gray-100 p-4 flex justify-center items-center rounded-t-xl shadow-md">
-              <img src={bank.logo} alt={bank.name} className="w-20 h-20 object-contain" />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+      <div className="text-center mb-16">
+        <h1 className="sm:text-4xl text-2xl font-bold text-gray-900 mb-4 font-sans">
+          Our Bank Details
+        </h1>
+        <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 mx-auto"></div>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {banks.map((bank, index) => (
+          <motion.div
+            key={bank._id}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ y: -5 }}
+          >
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 flex justify-center">
+                <img
+                  src={urlFor(bank.logo).width(150).url()}
+                  alt={bank.name}
+                  className="h-16 object-contain"
+                />
+              </div>
+              
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4 font-sans">
+                  {bank.name}
+                </h3>
+                
+                <div className="space-y-3">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 pt-1">
+                      <svg className="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm text-gray-600 font-bold">Account Title</p>
+                      <p className="text-sm font-medium text-gray-900">{bank.accountTitle}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 pt-1">
+                      <svg className="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm text-gray-600 font-bold">Account Number</p>
+                      <p className="text-sm font-medium text-gray-900">{bank.account}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 pt-1">
+                      <svg className="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm text-gray-600 font-bold">Branch</p>
+                      <p className="text-sm font-medium text-gray-900">{bank.branch}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
             </div>
-            <h2 className="text-lg font-semibold">Bank: {bank.name}</h2>
-            <h2 className="text-sm "><b>Account Title:</b> {bank.accountTitle}</h2>
-            <p className="text-sm"><b>Account Number:</b> {bank.account}</p>
-            <h2 className="text-sm"><b>Branch:</b> {bank.branch}</h2>
-          </div>
-        </motion.div>
-      ))}
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
