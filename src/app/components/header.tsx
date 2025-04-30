@@ -94,7 +94,7 @@ const handleLogout = useCallback(() => {
        
         <div className="flex items-center space-x-8">
           
-          <img src="/image/logo.jpeg" alt="Logo" className="w-12 h-12 rounded-3xl" />
+          <Link href="/"><img src="/image/logo.jpeg" alt="Logo" className="w-12 h-12 rounded-3xl" /></Link>
 
           
           <nav className="hidden lg:flex space-x-6 font-serif">
