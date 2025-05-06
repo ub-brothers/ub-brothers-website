@@ -7,6 +7,10 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import PaymentDetails from '../payment/page';
 import jsPDF from 'jspdf';
 import { jwtDecode } from 'jwt-decode';
+import { FaBus, FaPassport, FaTicketAlt, FaHotel, FaUtensils } from "react-icons/fa";
+
+
+
 
 function BookFormContent() {
   const searchParams = useSearchParams();
@@ -21,6 +25,29 @@ function BookFormContent() {
   const [isApprovedUser, setIsApprovedUser] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); 
+
+  const getFilteredPackages = (routeType: string) => {
+    const allPackages = [
+      { icon: <FaBus size={30} className="text-blue-500" />, title: "Transport" },
+      { icon: <FaPassport size={30} className="text-blue-500" />, title: "Visa" },
+      { icon: <FaTicketAlt size={30} className="text-blue-500" />, title: "Ticket" },
+      { icon: <FaHotel size={30} className="text-blue-500" />, title: "Hotel" },
+      { icon: <FaUtensils size={30} className="text-blue-500" />, title: "Meal" },
+    ];
+  
+    if (routeType.toLowerCase().includes("by road")) {
+      // Exclude Visa and Ticket for road travel
+      return allPackages.filter(pkg => pkg.title !== "Visa" && pkg.title !== "Ticket");
+    }
+  
+    // For air and other types, show all
+    return allPackages;
+  };
+  
+  const filteredPackages = getFilteredPackages(shortDescription);
+  
+
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsConfirmed(true);
     e.preventDefault();
@@ -189,6 +216,22 @@ function BookFormContent() {
         </button>)}
         </form>
       </div>
+      <h2 className="text-2xl font-semibold text-gray-800 text-center my-6">Package Includes</h2>
+<div className="grid md:grid-cols-5 sm:grid-cols-2 gap-4 mx-2 justify-center">
+  {filteredPackages.map((pkg, index) => (
+    <motion.div
+      key={index}
+      className="border border-blue-500 rounded-lg p-4 flex flex-col items-center"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+    >
+      {pkg.icon}
+      <h3 className="text-lg font-medium text-gray-700 mt-2">{pkg.title}</h3>
+    </motion.div>
+  ))}
+</div>
+
     </div>
   );
 }
@@ -203,6 +246,8 @@ export default function BookForm() {
       <BookFormContent />
     </Suspense>
     <h1 className="text-center mx-2 font-semibold my-5"><i>Thank you for reaching out! We will get back to you as soon as possible.</i></h1>
+  
+
     <div className="w-full p-8 mt-10 bg-gray-100">
       <h2 className="text-3xl font-semibold font-sans mb-4 text-center text-black"><u>You Can Directly Contact:</u></h2>
 

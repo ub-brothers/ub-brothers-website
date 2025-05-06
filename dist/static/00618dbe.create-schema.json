@@ -162,7 +162,7 @@
         "type": "boolean"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.886Z",
+        "initialValue": "2025-05-06T09:48:12.166Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -1052,6 +1052,18 @@
   {
     "fields": [
       {
+        "initialValue": false,
+        "name": "showComingSoonMessage",
+        "type": "boolean",
+        "title": "Coming Soon"
+      }
+    ],
+    "name": "umrahAvailability",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
         "name": "days",
         "type": "number",
         "title": "Number of Days"
@@ -1282,6 +1294,18 @@
     "name": "iranIraq",
     "type": "document",
     "title": "Iran Iraq Ziyarat"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": false,
+        "name": "showNotAvailableMessage",
+        "type": "boolean",
+        "title": "Not Available"
+      }
+    ],
+    "name": "hajjAvailability",
+    "type": "document"
   },
   {
     "fields": [
@@ -2124,7 +2148,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.910Z",
+        "initialValue": "2025-05-06T09:48:12.180Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2190,7 +2214,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.897Z",
+        "initialValue": "2025-05-06T09:48:12.172Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2257,7 +2281,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.922Z",
+        "initialValue": "2025-05-06T09:48:12.187Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2318,7 +2342,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.935Z",
+        "initialValue": "2025-05-06T09:48:12.192Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2380,7 +2404,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.945Z",
+        "initialValue": "2025-05-06T09:48:12.200Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2445,7 +2469,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.956Z",
+        "initialValue": "2025-05-06T09:48:12.207Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2542,7 +2566,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.970Z",
+        "initialValue": "2025-05-06T09:48:12.214Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2608,7 +2632,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.979Z",
+        "initialValue": "2025-05-06T09:48:12.220Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2670,7 +2694,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.988Z",
+        "initialValue": "2025-05-06T09:48:12.229Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2737,7 +2761,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:26.997Z",
+        "initialValue": "2025-05-06T09:48:12.235Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2817,7 +2841,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-04-17T18:49:27.014Z",
+        "initialValue": "2025-05-06T09:48:12.241Z",
         "name": "createdAt",
         "type": "datetime"
       },

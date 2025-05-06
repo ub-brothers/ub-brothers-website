@@ -20,9 +20,12 @@ const packages = [
 ];
 
 const IranIraq = ()=>{
+  const [activeTab, setActiveTab] = useState("By Air");
+  
     const [ tour, setTour ] = useState<IranType[]>([])
     const [isApprovedUser, setIsApprovedUser] = useState(false);
-
+    const byAirTours = tour.filter(t => t.shortDescription?.toLowerCase().includes("by air"));
+    const byRoadTours = tour.filter(t => t.shortDescription?.toLowerCase().includes("by road"));
     useEffect(()=>{
 
       const token = localStorage.getItem("token");
@@ -112,38 +115,48 @@ const IranIraq = ()=>{
 
 <h2 className="sm:text-4xl text-2xl sm:mt-[100px] mt-6 mb-4 font-semibold">Our journey is set to begin in the <b>Second Week of Shawwal.</b> Reserve your spot today!</h2>
 <h1 className="text-center mx-2 my-4">Below are our specially designed Ziyarat packages for Iran, Iraq, and Shaam. Choose your journey and book now for a seamless pilgrimage experience!</h1>
-
-      <div className="flex grid lg:grid-cols-3 grid-cols-2 mb-8">
-            {tour.map ((tour)=>(
-             
-                <div key={tour._id} className="sm:w-[290px]  w-[150px] rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
-                    <Link href={{
-      pathname: "/iranForm",
-      query: {
-      countryName: tour.countryName,
-      shortDescription: tour.shortDescription,
-      prize: tour.prize,
-      priceForUsers : tour.priceForUsers,
-      },
-    }} >
-                    <div className="relative group text-center">
-  <img src={tour.imageUrl2} alt={tour.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
- 
-</div> 
-
-                  <h3 className=" sm:text-xl text-md text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
-                  <h3 className=" sm:text-lg text-sm text-left flex ml-4 gap-1  sm:gap-2 text-lg text-gray-600">{tour.shortDescription}</h3>
-                   <h2 className="text-left font-semibold text-sm ml-4 sm:text-md mt-1">{isApprovedUser ? tour.priceForUsers: tour.prize} PKR/-</h2>
-                 
-                 <div className="text-center">
-                    <button className="bg-orange-500 rounded-xl h-8 w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500  hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif text-center">Book Now</button> </div>
-                    </Link>
-                   
-                </div>
-            ))}
+<div className="flex justify-center my-6 gap-4">
+  <button
+    onClick={() => setActiveTab("By Air")}
+    className={`px-6 py-2 rounded-full font-semibold ${activeTab === "By Air" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"}`}
+  >
+    By Air
+  </button>
+  <button
+    onClick={() => setActiveTab("By Road")}
+    className={`px-6 py-2 rounded-full font-semibold ${activeTab === "By Road" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"}`}
+  >
+    By Road
+  </button>
+</div>
+<div className="flex grid lg:grid-cols-3 grid-cols-2 mb-8">
+  {(activeTab === "By Air" ? byAirTours : byRoadTours).map((tour) => (
+    <div key={tour._id} className="sm:w-[290px]  w-[150px] rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
+      <Link href={{
+        pathname: "/iranForm",
+        query: {
+          countryName: tour.countryName,
+          shortDescription: tour.shortDescription,
+          prize: tour.prize,
+          priceForUsers : tour.priceForUsers,
+        },
+      }}>
+        <div className="relative group text-center">
+          <img src={tour.imageUrl2} alt={tour.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
+        </div> 
+        <h3 className=" sm:text-xl text-md text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
+        <h3 className=" sm:text-lg text-sm text-left flex ml-4 gap-1  sm:gap-2 text-lg text-gray-600">{tour.shortDescription}</h3>
+        <h2 className="text-left font-semibold text-sm ml-4 sm:text-md mt-1">{isApprovedUser ? tour.priceForUsers : tour.prize} PKR/-</h2>
+        <div className="text-center">
+          <button className="bg-orange-500 rounded-xl h-8 w-[100px] sm:w-[130px] text-white text-sm sm:text-md mb-4 mt-4 hover:bg-blue-500  hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-300 shadow-lg font-serif text-center">Book Now</button>
         </div>
+      </Link>
+    </div>
+  ))}
+</div>
 
 
+{/* 
       <h2 className="text-2xl font-semibold text-gray-800 my-6">Package Includes</h2>
       <div className="grid md:grid-cols-5 sm:grid-cols-2 gap-4">
         {packages.map((pkg, index) => (
@@ -158,7 +171,7 @@ const IranIraq = ()=>{
             <h3 className="text-lg font-medium text-gray-700 mt-2">{pkg.title}</h3>
           </motion.div>
         ))}
-      </div>
+      </div> */}
 
       <motion.div
         className="mt-10 text-center"
