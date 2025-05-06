@@ -8,6 +8,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { motion } from 'framer-motion'; 
 import { FaBus, FaPassport, FaTicketAlt, FaHotel, FaUtensils } from "react-icons/fa";
 import { jwtDecode } from 'jwt-decode';
+import { MdOutlineDoNotDisturbOnTotalSilence } from "react-icons/md";
 
 
 const packages = [
@@ -50,6 +51,23 @@ const IranIraq = ()=>{
         fetchedTour();
     }, [])
 
+    if (tour.length === 0) {
+      return (
+         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-blue-400 to-blue-200">
+             <motion.div
+               initial={{ opacity: 0, y: 50 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.8, ease: 'easeOut' }}
+               className="bg-white/20 backdrop-blur-xl p-10 rounded-2xl shadow-2xl border border-white/30"
+             >
+               <h1 className="text-white text-5xl flex gap-2 font-extrabold text-center drop-shadow-lg">
+              <MdOutlineDoNotDisturbOnTotalSilence/>   Not Available Now!
+               </h1>
+              
+             </motion.div>
+           </div>
+      );
+    }
 
     return(
         <div>

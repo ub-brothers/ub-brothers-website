@@ -16,9 +16,9 @@ export default function Home() {
     <div>
  
       <Hero/>
-
+{/* 
       <div className="my-10">
-<UmrahPage/>  </div>
+<UmrahPage/>  </div> */}
 
       <div className="mt-5 bg-gray-100">
         <h2 className="text-gray-100">.</h2>
