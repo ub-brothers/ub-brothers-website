@@ -144,6 +144,10 @@ export interface IranType {
     sharingPriceForUsers:string;
     triplePriceForUsers:string;
     doublePriceForUsers:string;
+    meal:string;
+    ticket:string;
+    hotel:string;
+    visa:string;
     usd1:string,
     usdLogin1:string,
     usd2:string,

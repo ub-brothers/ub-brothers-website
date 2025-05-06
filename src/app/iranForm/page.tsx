@@ -18,6 +18,26 @@ function BookFormContent() {
   const shortDescription = searchParams.get("shortDescription") || "";
   const prize = searchParams.get("prize") || "";
   const priceForUsers = searchParams.get("priceForUsers") || "";
+
+  const modalContent = {
+    transport : searchParams.get("transport") ,
+    meal : searchParams.get("meal") ,
+    hotel : searchParams.get("hotel") ,
+    visa : searchParams.get("visa") ,
+    ticket : searchParams.get("ticket") ,
+    airlineName: searchParams.get("airlineName"),
+    airlineImage: searchParams.get("airlineImage"),
+    flightNum1: searchParams.get("flightNum1"),
+    dateOfFlight1: searchParams.get("dateOfFlight1"),
+    route1: searchParams.get("route1"),
+    time1: searchParams.get("time1"),
+    flightNum2: searchParams.get("flightNum2"),
+    dateOfFlight2: searchParams.get("dateOfFlight2"),
+    route2: searchParams.get("route2"),
+    time2: searchParams.get("time2"),
+  }
+
+
   const [userName, setUserName] = useState("");
   const [userNumber, setUserNumber] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -25,7 +45,50 @@ function BookFormContent() {
   const [isApprovedUser, setIsApprovedUser] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); 
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentModalContent, setCurrentModalContent] = useState("");
+  const [currentModalTitle, setCurrentModalTitle] = useState("");
+  const openModal = (title: string) => {
+    setCurrentModalTitle(title);
+    let content = "";
+    
+    switch(title.toLowerCase()) {
+      case "transport":
+        content = modalContent.transport || "Transport details not available";
+        break;
+      case "visa":
+        content = modalContent.visa || "Visa details not available";
+        break;
+      case "ticket":
+        content = modalContent.ticket || "";
+        // For ticket, you might want to show flight details too
+        if (modalContent.airlineName) {
+          content += `\n\nAirline: ${modalContent.airlineName}`;
+          content += `\nFlight Number 1: ${modalContent.flightNum1}`;
+          content += `\nDate: ${modalContent.dateOfFlight1}`;
+          content += `\nRoute: ${modalContent.route1}`;
+          content += `\nTime: ${modalContent.time1}`;
+          if (modalContent.flightNum2) {
+            content += `\n\nFlight Number 2: ${modalContent.flightNum2}`;
+            content += `\nDate: ${modalContent.dateOfFlight2}`;
+            content += `\nRoute: ${modalContent.route2}`;
+            content += `\nTime: ${modalContent.time2}`;
+          }
+        }
+        break;
+      case "hotel":
+        content = modalContent.hotel || "Hotel details not available";
+        break;
+      case "meal":
+        content = modalContent.meal || "Meal details not available";
+        break;
+      default:
+        content = "Details not available";
+    }
+    
+    setCurrentModalContent(content);
+    setIsModalOpen(true);
+  };
   const getFilteredPackages = (routeType: string) => {
     const allPackages = [
       { icon: <FaBus size={30} className="text-blue-500" />, title: "Transport" },
@@ -217,21 +280,190 @@ function BookFormContent() {
         </form>
       </div>
       <h2 className="text-2xl font-semibold text-gray-800 text-center my-6">Package Includes</h2>
-<div className="grid md:grid-cols-5 sm:grid-cols-2 gap-4 mx-2 justify-center">
-  {filteredPackages.map((pkg, index) => (
-    <motion.div
-      key={index}
-      className="border border-blue-500 rounded-lg p-4 flex flex-col items-center"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
-    >
-      {pkg.icon}
-      <h3 className="text-lg font-medium text-gray-700 mt-2">{pkg.title}</h3>
-    </motion.div>
-  ))}
-</div>
+      <div className="grid  md:grid-cols-5 sm:grid-cols-2 gap-4 mx-2 justify-center">
+        {filteredPackages.map((pkg, index) => (
+          <motion.div
+            key={index}
+            className="border border-blue-500 rounded-lg p-4 flex flex-col items-center cursor-pointer hover:bg-blue-50"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+            onClick={() => openModal(pkg.title)}
+          >
+            {pkg.icon}
+            <h3 className="text-lg font-medium text-gray-700 mt-2">{pkg.title}</h3>
+          </motion.div>
+        ))}
+      </div>
 
+      {isModalOpen && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold text-gray-800">{currentModalTitle} Details</h3>
+          <button 
+            onClick={() => setIsModalOpen(false)}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Special Ticket/Flight Section */}
+        {currentModalTitle === "Ticket" ? (
+          <div>
+            {/* Airline Info */}
+            {(modalContent.airlineName || modalContent.airlineImage) && (
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+                {modalContent.airlineImage && (
+                  <img 
+                    src={modalContent.airlineImage} 
+                    alt="Airline Logo" 
+                    className="w-32 h-auto object-contain border p-2 rounded"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                )}
+                {modalContent.airlineName && (
+                  <div>
+                    <h4 className="text-lg font-semibold">Airline Information</h4>
+                    <p className="text-gray-700">{modalContent.airlineName}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Flight Schedule Table */}
+            {(modalContent.flightNum1 || modalContent.flightNum2) && (
+              <div className="mt-4">
+                <h4 className="text-lg font-semibold mb-3">Flight Schedule</h4>
+                
+                {/* Desktop Table */}
+                <div className="hidden sm:block overflow-x-auto">
+                  <table className="min-w-full bg-white border border-gray-200 text-sm">
+                    <thead>
+                      <tr className="bg-gray-100">
+                        <th className="py-2 px-4 border-b text-left">Type</th>
+                        <th className="py-2 px-4 border-b text-left">Flight #</th>
+                        <th className="py-2 px-4 border-b text-left">Date</th>
+                        <th className="py-2 px-4 border-b text-left">Route</th>
+                        <th className="py-2 px-4 border-b text-left">Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {modalContent.flightNum1 && (
+                        <tr>
+                          <td className="py-2 px-4 border-b font-medium text-blue-600">Departure</td>
+                          <td className="py-2 px-4 border-b">{modalContent.flightNum1}</td>
+                          <td className="py-2 px-4 border-b">{modalContent.dateOfFlight1}</td>
+                          <td className="py-2 px-4 border-b">{modalContent.route1}</td>
+                          <td className="py-2 px-4 border-b">{modalContent.time1}</td>
+                        </tr>
+                      )}
+                      {modalContent.flightNum2 && (
+                        <tr>
+                          <td className="py-2 px-4 border-b font-medium text-blue-600">Return</td>
+                          <td className="py-2 px-4 border-b">{modalContent.flightNum2}</td>
+                          <td className="py-2 px-4 border-b">{modalContent.dateOfFlight2}</td>
+                          <td className="py-2 px-4 border-b">{modalContent.route2}</td>
+                          <td className="py-2 px-4 border-b">{modalContent.time2}</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Mobile Cards */}
+                <div className="sm:hidden space-y-4">
+                  {modalContent.flightNum1 && (
+                    <div className="border border-gray-200 rounded-lg p-4 bg-blue-50">
+                      <div className="font-semibold text-blue-700 mb-2 text-lg">Departure Flight</div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <div className="text-sm text-gray-500">Flight #</div>
+                          <div className="font-medium">{modalContent.flightNum1}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">Date</div>
+                          <div className="font-medium">{modalContent.dateOfFlight1}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">Route</div>
+                          <div className="font-medium">{modalContent.route1}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">Time</div>
+                          <div className="font-medium">{modalContent.time1}</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {modalContent.flightNum2 && (
+                    <div className="border border-gray-200 rounded-lg p-4 bg-blue-50">
+                      <div className="font-semibold text-blue-700 mb-2 text-lg">Return Flight</div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <div className="text-sm text-gray-500">Flight #</div>
+                          <div className="font-medium">{modalContent.flightNum2}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">Date</div>
+                          <div className="font-medium">{modalContent.dateOfFlight2}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">Route</div>
+                          <div className="font-medium">{modalContent.route2}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500">Time</div>
+                          <div className="font-medium">{modalContent.time2}</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Additional ticket information if any */}
+            {currentModalContent && (
+              <div className="mt-6 pt-4 border-t">
+                <h4 className="text-lg font-semibold mb-3">Additional Information</h4>
+                <div className="text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-lg">
+                  {currentModalContent.split('\n').filter(line => line.trim() !== '').map((paragraph, index) => (
+                    <p key={index} className="mb-3">{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          /* For non-Ticket modals (Transport, Visa, Hotel, Meal) */
+          <div className="text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-lg">
+            {currentModalContent.split('\n').filter(line => line.trim() !== '').map((paragraph, index) => (
+              <p key={index} className="mb-3">{paragraph}</p>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+        
     </div>
   );
 }

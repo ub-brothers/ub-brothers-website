@@ -35,7 +35,7 @@ export default function DestinationLayout( {children,
           </button>
         </Link>
         
-        <Link href="/iranIraq" className="mx-2">
+        {/* <Link href="/iranIraq" className="mx-2">
           <button
             className={`${
               pathname.startsWith ("/iranIraq") ? "bg-blue-500" : "bg-orange-500"
@@ -43,7 +43,7 @@ export default function DestinationLayout( {children,
           >
             Iran Iraq Ziyarat
           </button>
-        </Link>
+        </Link> */}
        
     
         <div className="sm:text-right text-center m-4 sm:text-md text-sm">

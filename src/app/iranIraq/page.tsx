@@ -6,18 +6,8 @@ import { iranZiyarat} from "@/sanity/lib/queries"
 import Link from "next/link"
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { motion } from 'framer-motion'; 
-import { FaBus, FaPassport, FaTicketAlt, FaHotel, FaUtensils } from "react-icons/fa";
 import { jwtDecode } from 'jwt-decode';
 import { MdOutlineDoNotDisturbOnTotalSilence } from "react-icons/md";
-
-
-const packages = [
-  { icon: <FaBus size={30} className="text-blue-500" />, title: "Transport" },
-  { icon: <FaPassport size={30} className="text-blue-500" />, title: "Visa" },
-  { icon: <FaTicketAlt size={30} className="text-blue-500" />, title: "Ticket" },
-  { icon: <FaHotel size={30} className="text-blue-500" />, title: "Hotel" },
-  { icon: <FaUtensils size={30} className="text-blue-500" />, title: "Meal" },
-];
 
 const IranIraq = ()=>{
   const [activeTab, setActiveTab] = useState("By Air");
@@ -113,7 +103,7 @@ const IranIraq = ()=>{
         />
       </div>
 
-<h2 className="sm:text-4xl text-2xl sm:mt-[100px] mt-6 mb-4 font-semibold">Our journey is set to begin in the <b>Second Week of Shawwal.</b> Reserve your spot today!</h2>
+<h2 className="sm:text-4xl text-2xl sm:mt-[100px] mt-6 mb-4 font-semibold"> Reserve your spot today!</h2>
 <h1 className="text-center mx-2 my-4">Below are our specially designed Ziyarat packages for Iran, Iraq, and Shaam. Choose your journey and book now for a seamless pilgrimage experience!</h1>
 <div className="flex justify-center my-6 gap-4">
   <button
@@ -139,6 +129,23 @@ const IranIraq = ()=>{
           shortDescription: tour.shortDescription,
           prize: tour.prize,
           priceForUsers : tour.priceForUsers,
+          transport: tour.transport,
+          hotel:tour.hotel,
+          meal: tour.meal,
+          visa :tour.visa,
+          ticket:tour.ticket,
+          airlineName:tour.airlineName,
+          airlineImage:tour.airlineImage,
+          dep:tour.dep,
+          flightNum1:tour.flightNum1,
+          dateOfFlight1 :tour.dateOfFlight1,
+          route1:tour.route1,
+          time1:tour.time1,
+          return:tour.return,
+          flightNum2:tour.flightNum2,
+          dateOfFlight2:tour.dateOfFlight2,
+          route2:tour.route2,
+          time2:tour.time2,
         },
       }}>
         <div className="relative group text-center">
@@ -155,23 +162,6 @@ const IranIraq = ()=>{
   ))}
 </div>
 
-
-{/* 
-      <h2 className="text-2xl font-semibold text-gray-800 my-6">Package Includes</h2>
-      <div className="grid md:grid-cols-5 sm:grid-cols-2 gap-4">
-        {packages.map((pkg, index) => (
-          <motion.div
-            key={index}
-            className="border border-blue-500 rounded-lg p-4 flex flex-col items-center"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-          >
-            {pkg.icon}
-            <h3 className="text-lg font-medium text-gray-700 mt-2">{pkg.title}</h3>
-          </motion.div>
-        ))}
-      </div> */}
 
       <motion.div
         className="mt-10 text-center"

@@ -272,7 +272,21 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
   tourInclude2,
   tourInclude3,
   tourInclude4,
- 
+    transport ,
+    meal,
+    hotel ,
+    visa ,
+    ticket   ,
+    airlineName ,
+    airlineImage ,
+    flightNum1,
+    dateOfFlight1,
+    route1 ,
+    time1 ,
+    flightNum2 ,
+    dateOfFlight2 ,
+    route2 ,
+    time2,
   "imageUrl": image.asset->url,
    "imageUrl2": image2.asset->url
   }`)
