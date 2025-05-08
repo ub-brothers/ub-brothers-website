@@ -100,7 +100,7 @@ const handleLogout = useCallback(() => {
           <nav className="hidden xl:flex space-x-6 font-serif">
             <Link href="/" className={getLinkClassName("/")}>Home</Link>
             <Link href="/umrah" className={getLinkClassName("/umrah")}>Hajj & Umrah Packages</Link>
-            <Link href="/iranIraq" className={getLinkClassName("/iranIraq")}>Iran Ziyarat</Link>
+            <Link href="/iranIraq" className={getLinkClassName("/iranIraq")}>Iran & Iraq Ziyarat</Link>
             <Link href="/book-tickets" className={getLinkClassName("/book-tickets")}>Ticketing</Link>
              <Link href="/destinations" className={getLinkClassName("/destinations")}>Destinations</Link>
              <Link href="/bankDetails" className={getLinkClassName("/bankDetails")}>Bank Details</Link>
@@ -208,7 +208,7 @@ const handleLogout = useCallback(() => {
           <Link href="/" className={`w-full text-center py-2 ${getLinkClassName("/")}`} onClick={toggleMenu}>Home</Link>
          
           <Link href="/umrah" className={`w-full text-center py-2 ${getLinkClassName("/umrah")}`} onClick={toggleMenu}>Hajj & Umrah Packages</Link>
-          <Link href="/iranIraq" className={`w-full text-center py-2 ${getLinkClassName("/iranIraq")}`} onClick={toggleMenu}>Iran Ziyarat</Link>
+          <Link href="/iranIraq" className={`w-full text-center py-2 ${getLinkClassName("/iranIraq")}`} onClick={toggleMenu}>Iran & Iraq Ziyarat</Link>
           <Link href="/book-tickets" className={`w-full text-center py-2 ${getLinkClassName("/book-tickets")}`} onClick={toggleMenu}>Ticketing</Link>
            <Link href="/destinations" className={`w-full text-center py-2 ${getLinkClassName("/destinations")}`} onClick={toggleMenu}>Destinations</Link>
            {isLoggedIn && (
