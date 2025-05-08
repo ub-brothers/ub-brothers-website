@@ -44,6 +44,14 @@ const IranIraq = ()=>{
         fetchedTour();
     }, [])
 
+if (tour.length === 0){
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+  )
+}
+
     if (tour.length === 0) {
       return (
          <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-blue-400 to-blue-200">
