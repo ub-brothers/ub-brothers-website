@@ -60,7 +60,7 @@ export default function BankCards() {
                 <img
                   src={urlFor(bank.logo).width(150).url()}
                   alt={bank.name}
-                  className="h-16 object-contain"
+                  className="h-20 object-contain"
                 />
               </div>
               

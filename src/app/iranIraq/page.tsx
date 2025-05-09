@@ -128,7 +128,13 @@ if (tour.length === 0){
   </button>
 </div>
 <div className="flex grid lg:grid-cols-3 grid-cols-2 mb-8">
-  {(activeTab === "By Air" ? byAirTours : byRoadTours).map((tour) => (
+   {(activeTab === "By Air" ? byAirTours : byRoadTours).length === 0 ? (
+    <div className="col-span-full text-center text-red-600 font-semibold text-xl my-10 flex flex-col items-center gap-2 mb-20">
+      <MdOutlineDoNotDisturbOnTotalSilence className="text-4xl" />
+      No Ziyarat available for {activeTab.toLowerCase()}.
+    </div>
+  ) : (
+  (activeTab === "By Air" ? byAirTours : byRoadTours).map((tour) => (
     <div key={tour._id} className="sm:w-[290px]  w-[150px] rounded-xl border-2  border-gray-300  bg-gray-100 xl:mx-10 mx-2 sm:mx-4 hover:shadow-md hover:shadow-black  text-left my-3">
       <Link href={{
         pathname: "/iranForm",
@@ -167,7 +173,7 @@ if (tour.length === 0){
         </div>
       </Link>
     </div>
-  ))}
+  )))}
 </div>
 
 
