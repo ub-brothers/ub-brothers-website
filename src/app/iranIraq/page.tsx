@@ -207,7 +207,7 @@ if (tour.length === 0){
               <FaMapMarkerAlt /> Office Locations
             </h2>
             <p className="text-gray-600 text-lg flex items-center justify-center mb-2">
-          7-Amin Arcade (Hotel Ambassador) Durand Road, Near Shimla Pahari, Lahore Pakistan.
+          UGF/24-42, Empress Tower 46-Empress Road,Lahore, Pakistan.
             </p>
             <hr/>
             <p className="text-gray-600 text-lg flex items-center justify-center mt-2">
