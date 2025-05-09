@@ -135,23 +135,29 @@ const AboutUs = () => {
       </motion.p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 text-center">
-        {data.teamMembers?.map((member: any, idx: number) => (
-          <div
-            key={idx}
-            className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center"
-          >
-            <Image
-              src={urlFor(member.photo).url()}
-              width={96}
-              height={96}
-              alt={member.name}
-              className="w-24 h-24 rounded-full object-cover mb-3"
-            />
-            <h3 className="text-xl font-semibold">{member.name}</h3>
-            <p className="text-gray-700">{member.role}</p>
-            <p className="text-gray-600">{member.phone}</p>
-          </div>
-        ))}
+      {data.teamMembers?.map((member: any, idx: number) => (
+  <div
+    key={idx}
+    className="p-4 bg-orange-100 rounded-lg shadow-md flex flex-col items-center"
+  >
+    {member.photo ? (
+      <Image
+        src={urlFor(member.photo).url()}
+        width={96}
+        height={96}
+        alt={member.name}
+        className="w-24 h-24 rounded-full object-cover mb-3"
+      />
+    ) : (
+      <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center mb-3">
+        <span className="text-sm text-gray-600">No Image</span>
+      </div>
+    )}
+    <h3 className="text-xl font-semibold">{member.name}</h3>
+    <p className="text-gray-700">{member.role}</p>
+    <p className="text-gray-600">{member.phone}</p>
+  </div>
+))}
       </div>
 
       <div className="my-5">
