@@ -168,7 +168,7 @@ if (tour.length === 0){
         </div> 
         <h3 className=" sm:text-xl text-md text-left flex ml-4 gap-1 font-bold sm:gap-2 text-lg text-black">{tour.countryName}</h3>
         <h3 className=" sm:text-lg text-sm text-left flex ml-4 gap-1  sm:gap-2 text-lg text-gray-600">{tour.shortDescription}</h3>
-        <h2 className="text-left font-semibold text-sm ml-4 sm:text-md mt-1">{isApprovedUser ? tour.priceForUsers : tour.prize} PKR/-</h2>
+        <h2 className="text-left font-semibold text-md ml-4 mb-2 sm:text-md mt-1">${isApprovedUser ? tour.priceForUsers : tour.prize}</h2>
         <h3 className=" sm:text-lg text-sm text-left flex ml-4 gap-1  sm:gap-2 text-lg text-gray-600">{tour.shortDescriptionReal}</h3>
         
         

@@ -33,10 +33,22 @@ const cleanPrice = (price: any): number => {
   // Convert to a number
   return parseFloat(cleanedPrice) || 0;
 };
-const SAR_TO_PKR_RATE = 75;
-const convertSARtoPKR = (priceInSAR: number): number => {
-  return priceInSAR * SAR_TO_PKR_RATE;
-};
+
+const exchangeRateQuery = `*[_type == "exchangeRate"][0] {
+  sarToPkr,
+  usdToPkr
+}`;
+
+const { sarToPkr = 75, usdToPkr = 280 } = await sanityClient.fetch(exchangeRateQuery);
+
+// Conversion helpers
+const convertSARtoPKR = (price: number) => price * sarToPkr;
+const convertUSDtoPKR = (price: number) => price * usdToPkr;
+ 
+// const SAR_TO_PKR_RATE = 75;
+// const convertSARtoPKR = (priceInSAR: number): number => {
+//   return priceInSAR * SAR_TO_PKR_RATE;
+// };
 
 export const POST = async (req: Request) => {
   try {
@@ -68,10 +80,15 @@ export const POST = async (req: Request) => {
           let totalCostField = cleanPrice(item.totalCost); 
           const Prize = cleanPrice(item.Prize);
 
-           if (category === "Umrah Package") {
-            totalCostField = convertSARtoPKR(totalCostField);
-            item.totalCost = totalCostField;
-          }
+         if (category === "Umrah Package") {
+  totalCostField = convertSARtoPKR(totalCostField);
+  item.totalCost = totalCostField;
+}
+
+if (category === "Iran Ziyarat" || category === "Iran Ziyarat Offer") {
+  totalCostField = convertUSDtoPKR(totalCostField);
+  item.totalCost = totalCostField;
+}
 
 
             totalCost +=

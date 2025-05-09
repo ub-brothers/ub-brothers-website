@@ -36,8 +36,9 @@ import hajjAvailability from './hajjAvailability'
 import reviews from './reviews'
 import aboutUs from './aboutUs'
 import contactInfo from './contactInfo'
+import exchangeRates from './exchangeRates'
 
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [user,bank,reviews,aboutUs,contactInfo,booking, destination, stickerVisa, tour, fileConsultancy, umrahAvailability ,umrahDays, makkahHotel,makkahHotelImg, madinaHotel ,madinaHotelImg,  iran, hajjAvailability,hajj, ticketing, offer, umrahOffer,hajjOffer, iranOffer,stickerVisaBooking, visaBooking,fileBooking,tourBooking,hajjBooking,umrahBooking,iranBooking,visaOfferBooking,iranOfferBooking,hajjOfferBooking,umrahOfferBooking, ],
+  types: [booking,user,bank,reviews,aboutUs,contactInfo, destination, stickerVisa, tour, fileConsultancy,iran,  umrahAvailability ,umrahDays, makkahHotel,makkahHotelImg, madinaHotel ,madinaHotelImg,  hajjAvailability,hajj, ticketing, offer, umrahOffer,hajjOffer, iranOffer,stickerVisaBooking, visaBooking,fileBooking,tourBooking,hajjBooking,umrahBooking,iranBooking,visaOfferBooking,iranOfferBooking,hajjOfferBooking,umrahOfferBooking,exchangeRates ],
 }

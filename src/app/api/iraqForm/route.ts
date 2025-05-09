@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         <p><strong>Email:</strong> ${userEmail}</p>
         <p><strong>Ziyarat To:</strong> ${countryName}</p>
         <p><strong>Ziyarat Route:</strong> ${shortDescription}</p>
-        <p><strong>Price:</strong> ${priceForUsers || prize} PKR/-</p>
+        <p><strong>Price:</strong> $${priceForUsers || prize}</p>
         <p><strong>Message:</strong> ${userMessage || "No message provided"}</p>
       `,
     };

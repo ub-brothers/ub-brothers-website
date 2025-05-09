@@ -258,7 +258,7 @@ function BookFormContent() {
           <input type="text" value={shortDescription} readOnly className="w-full p-2 mb-4 border rounded bg-gray-100" />
 
           <label className="block mb-2 font-semibold text-gray-700">Price</label>
-          <input type="text" value={`${isApprovedUser ? priceForUsers : prize} PKR/-`} readOnly className="w-full p-2 mb-4 border rounded bg-gray-100" />
+          <input type="text" value={`$${isApprovedUser ? priceForUsers : prize} `} readOnly className="w-full p-2 mb-4 border rounded bg-gray-100" />
 
           <label className="block mb-2 font-semibold text-gray-700">Your Message</label>
           <textarea value={userMessage} onChange={(e) => setUserMessage(e.target.value)} className="w-full p-2 mb-4 border rounded" placeholder="Enter your message (optional)" rows={3} />

@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         
         <p><strong>Destination:</strong> ${destination}</p>
           <p><strong>Route:</strong> ${route}</p>
-        <p><strong>Discounted Price:</strong> PKR ${discountedPriceForUsers || discountedPrice}</p>
+        <p><strong>Discounted Price:</strong> $${discountedPriceForUsers || discountedPrice}</p>
         <p><strong>Message:</strong> ${message}</p>
       `,
     };

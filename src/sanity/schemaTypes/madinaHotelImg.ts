@@ -1,6 +1,6 @@
 export default {
     name: 'madinaHotelImg',
-    title: 'Madina Hotel Images',
+    title: 'Umrah Madina Hotel Images',
     type: 'document',
     fields: [
         {

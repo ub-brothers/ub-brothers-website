@@ -181,7 +181,7 @@ const title = searchParams.get("title") || "";
         <input type="text" value={`${route}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
 
         <label className="block text-lg font-semibold mb-2">Discounted Price</label>
-        <input type="text" value={`PKR ${isApprovedUser? discountedPriceForUsers: discountedPrice}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
+        <input type="text" value={`$${isApprovedUser? discountedPriceForUsers: discountedPrice}`} readOnly className="w-full p-3 border bg-gray-200 rounded-lg mb-4" />
 
         <label className="block text-lg font-semibold mb-2">Nationality</label>
         <input type="text" name="nationality" placeholder="Your Nationality" value={formData.nationality} onChange={handleChange} className="w-full p-3 border bg-gray-100 rounded-lg mb-4" required />

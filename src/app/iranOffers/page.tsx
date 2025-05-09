@@ -115,8 +115,8 @@ const handleApplyNow = () => {
         <p className="text-gray-700 text-lg mt-2 text-center"><span className="font-semibold">Route: {offer.route}</span></p>
        
         <div className="mt-6 flex justify-center items-center text-center">
-          <p className="text-gray-500 text-2xl line-through mr-4">Rs. {isApprovedUser ? offer.originalPriceForUsers: offer.originalPrice}</p>
-          <p className="text-3xl font-bold text-green-600">Rs. {isApprovedUser ? offer.discountedPriceForUsers: offer.discountedPrice}</p>
+          <p className="text-gray-500 text-2xl line-through mr-4">${isApprovedUser ? offer.originalPriceForUsers: offer.originalPrice}</p>
+          <p className="text-3xl font-bold text-green-600">${isApprovedUser ? offer.discountedPriceForUsers: offer.discountedPrice}</p>
         </div>
         <div className="flex justify-center mt-6">
           <button onClick={handleApplyNow} className="px-8 py-3 bg-blue-600 text-white text-lg rounded-lg hover:bg-blue-700 transition">Book Now</button>
