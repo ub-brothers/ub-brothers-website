@@ -39,11 +39,6 @@ const exchangeRateQuery = `*[_type == "exchangeRate"][0] {
   usdToPkr
 }`;
 
-const { sarToPkr = 75, usdToPkr = 280 } = await sanityClient.fetch(exchangeRateQuery);
-
-// Conversion helpers
-const convertSARtoPKR = (price: number) => price * sarToPkr;
-const convertUSDtoPKR = (price: number) => price * usdToPkr;
  
 // const SAR_TO_PKR_RATE = 75;
 // const convertSARtoPKR = (priceInSAR: number): number => {
@@ -57,6 +52,13 @@ export const POST = async (req: Request) => {
     if (!storedUserEmail) {
       return NextResponse.json({ error: "User email is required" }, { status: 400 });
     }
+
+const { sarToPkr = 75, usdToPkr = 280 } = await sanityClient.fetch(exchangeRateQuery);
+
+// Conversion helpers
+const convertSARtoPKR = (price: number) => price * sarToPkr;
+const convertUSDtoPKR = (price: number) => price * usdToPkr;
+
 
     // Fetch data from Sanity using the ledgerQuery
     const bookings = await sanityClient.fetch(ledgerQuery, { userEmail: storedUserEmail });
