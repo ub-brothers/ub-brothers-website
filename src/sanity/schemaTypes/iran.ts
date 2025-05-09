@@ -24,7 +24,13 @@ export default {
 
       {
         name: 'shortDescription',
-        title: 'Short Description / Route',
+        title: 'Route',
+        type: 'text',
+          
+      },
+        {
+        name: 'shortDescriptionReal',
+        title: 'Short Description',
         type: 'text',
           
       },

@@ -141,6 +141,7 @@ export interface IranType {
     prize: number,
     priceForUsers:number,
     shortDescription: string,
+    shortDescriptionReal : string;
     sharingPriceForUsers:string;
     triplePriceForUsers:string;
     doublePriceForUsers:string;

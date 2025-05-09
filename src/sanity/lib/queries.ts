@@ -267,6 +267,7 @@ export const stickerVisa = defineQuery(`*[_type == "stickerVisa"]{
   prize,
   priceForUsers,
   shortDescription,
+  shortDescriptionReal,
   tourIncludeHeading,
   tourInclude1,
   tourInclude2,
