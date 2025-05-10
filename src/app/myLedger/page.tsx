@@ -26,7 +26,7 @@ async function fetchLedger(storedUserEmail: string) {
   }
 
   const data = await res.json();
-  // Filter out cancelled or expired tickets
+
   if (data.bookings && data.bookings.Tickets) {
     data.bookings.Tickets = data.bookings.Tickets.filter((ticket: any) => {
       const isCancelled = ticket.status === "cancelled";
@@ -119,7 +119,6 @@ const bookingFieldsMapping: Record<BookingType, { key: string; label: string }[]
 };
 
 const BookingDetailsModal = ({ booking, onClose }: { booking: any; onClose: () => void }) => {
-  // Determine the booking type based on the _type field
   const normalizeCategory = (booking: any): BookingType => {
     switch (booking._type) {
       case "umrahBooking":
@@ -151,8 +150,8 @@ const BookingDetailsModal = ({ booking, onClose }: { booking: any; onClose: () =
           case "umrahOfferBooking":
           return "Umrah Offer";
       default:
-        console.warn("Unknown booking type:", booking._type); // Debugging
-        return "Tickets"; // Default
+        console.warn("Unknown booking type:", booking._type); 
+        return "Tickets"; 
     }
   };
 
@@ -306,11 +305,11 @@ export default function Ledger() {
 
   const handleSearch = () => {
     const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0); // Start of the day
+    start.setHours(0, 0, 0, 0); 
 
     const end = new Date(endDate);
-    end.setHours(23, 59, 59, 999); // End of the day
-
+    end.setHours(23, 59, 59, 999); 
+    
     const filtered = Object.entries(bookings).reduce((acc, [category, items]) => {
       const filteredItems = items.filter((item) => {
         const itemDate = new Date(item.createdAt).getTime();
