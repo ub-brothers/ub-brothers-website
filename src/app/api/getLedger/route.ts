@@ -39,11 +39,7 @@ const exchangeRateQuery = `*[_type == "exchangeRate"][0] {
   usdToPkr
 }`;
 
- 
-// const SAR_TO_PKR_RATE = 75;
-// const convertSARtoPKR = (priceInSAR: number): number => {
-//   return priceInSAR * SAR_TO_PKR_RATE;
-// };
+
 
 export const POST = async (req: Request) => {
   try {
@@ -60,10 +56,10 @@ const convertSARtoPKR = (price: number) => price * sarToPkr;
 const convertUSDtoPKR = (price: number) => price * usdToPkr;
 
 
-    // Fetch data from Sanity using the ledgerQuery
+
+    
     const bookings = await sanityClient.fetch(ledgerQuery, { userEmail: storedUserEmail });
 
-    // Calculate total cost
     
     let totalCost = 0;
     let totalPaid = 0;
@@ -72,45 +68,47 @@ const convertUSDtoPKR = (price: number) => price * usdToPkr;
     categories.forEach((category) => {
       if (bookings[category]) {
         bookings[category].forEach((item: any) => {
-          const totalPrice = cleanPrice(item.totalPrice);
-          const prize = cleanPrice(item.prize);
-          const prizeForUsers = cleanPrice(item.prizeForUsers);
-          const price = cleanPrice(item.price);
-          const priceForUsers = cleanPrice(item.priceForUsers);
-          const selectedPrize = cleanPrice(item.selectedPrize);
-          const discountedPriceForUsers = cleanPrice(item.discountedPriceForUsers);
-          let totalCostField = cleanPrice(item.totalCost); 
-          const Prize = cleanPrice(item.Prize);
+            let basePrice =
+            cleanPrice(item.totalCost) ||
+            cleanPrice(item.totalPrice) ||
+            cleanPrice(item.prize) ||
+            cleanPrice(item.prizeForUsers) ||
+            cleanPrice(item.price) ||
+            cleanPrice(item.priceForUsers) ||
+            cleanPrice(item.selectedPrize) ||
+            cleanPrice(item.Prize) ||
+            cleanPrice(item.discountedPriceForUsers) ||
+            0;
 
-         if (category === "Umrah Package") {
-  totalCostField = convertSARtoPKR(totalCostField);
-  item.totalCost = totalCostField;
-}
+ let paid = cleanPrice(item.paid || 0);
+          let due = cleanPrice(item.due || 0);
+     if (category === "Umrah Package") {
+            basePrice = convertSARtoPKR(basePrice);
+           
+            paid = convertSARtoPKR(paid);
+            due = convertSARtoPKR(due);
+          }
 
-if (category === "Iran Ziyarat" || category === "Iran Ziyarat Offer") {
-  totalCostField = convertUSDtoPKR(totalCostField);
-  item.totalCost = totalCostField;
-}
+          if (category === "Iran Ziyarat" || category === "Iran Ziyarat Offer") {
+            basePrice = convertUSDtoPKR(basePrice);
+        
+              paid = convertUSDtoPKR(paid);
+            due = convertUSDtoPKR(due);
+          }
 
+          item.totalCost = basePrice;
+          item.paid = paid;
+          item.due = due;
 
-            totalCost +=
-            totalPrice +
-            discountedPriceForUsers+
-            prize +
-            prizeForUsers +
-            price +
-            priceForUsers +
-            selectedPrize +
-            totalCostField +
-            Prize;
+          totalCost += basePrice;
+          totalPaid += paid;
+          totalDue += due;
 
-            totalPaid += cleanPrice(item.paid || 0);
-            totalDue += cleanPrice(item.due || 0);
         });
       }
     });
 
-    return NextResponse.json({ bookings, totalCost, totalPaid,totalDue }, { status: 200 });
+    return NextResponse.json({ bookings, totalCost, totalPaid,totalDue, exchangeRates: { sarToPkr, usdToPkr } }, { status: 200 });
   } catch (error) {
     console.error("Error fetching ledger data:", error);
     return NextResponse.json({ error: "Failed to fetch ledger data" }, { status: 500 });

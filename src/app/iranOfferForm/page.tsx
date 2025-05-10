@@ -133,7 +133,7 @@ const title = searchParams.get("title") || "";
     addField("Nationality", formData.nationality);
     addField("Destination", `${destination}`);
     addField("Route", `${route}`);
-    addField("Discounted Price", `PKR ${isApprovedUser? discountedPriceForUsers : discountedPrice}`);
+    addField("Discounted Price", `$${isApprovedUser? discountedPriceForUsers : discountedPrice}`);
 
    
     doc.setFont("helvetica", "bold");

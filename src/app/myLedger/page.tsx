@@ -36,7 +36,11 @@ async function fetchLedger(storedUserEmail: string) {
     });
   }
   
-  return data;
+  return {bookings: data.bookings,
+    totals: {
+      cost: data.totalCost,
+      paid: data.totalPaid,
+      due: data.totalDue}};
 }
 type BookingType = "Tickets" | "Hajj Package" | "Umrah Package" | "Visa Offer" | "E-Visa"| "Umrah Offer" |"Tour Package"| "Sticker Visa"| "Iran Ziyarat Offer"| "Iran Ziyarat" | "Hajj Offer"|"File & Consultancy";
 const bookingFieldsMapping: Record<BookingType, { key: string; label: string }[]> = {
@@ -57,7 +61,7 @@ const bookingFieldsMapping: Record<BookingType, { key: string; label: string }[]
     { key: "days", label: "Total Days" },
     { key: "makkahHotel", label: "Makkah Hotel" },
     { key: "madinaHotel", label: "Madina Hotel" },
-    { key: "totalCost", label: "Total Cost (PKR)" },
+    { key: "totalCost", label: "Total Cost (SAR)" },
   ],
   "Visa Offer": [
     {key: "title",label:"Offer"},
@@ -90,14 +94,14 @@ const bookingFieldsMapping: Record<BookingType, { key: string; label: string }[]
   ],
   "Iran Ziyarat Offer": [
     {key: "title",label:"Offer"},
-    { key: "destination", label: "Places Of Ziyarat" },
+    { key: "destination", label: "Place Of Ziyarat" },
     { key: "route", label: "Route" },
-    { key: "discountedPriceForUsers", label: "Total Cost (PKR)" },
+    { key: "discountedPriceForUsers", label: "Total Cost ($USD)" },
   ],
   "Iran Ziyarat": [
-    {key: "countryName",label:"Places Of Ziyarat"},
+    {key: "countryName",label:"Place Of Ziyarat"},
     { key: "shortDescription", label: "Route" },
-    { key: "prize", label: "Total Cost (PKR)" },
+    { key: "prize", label: "Total Cost ($USD)" },
   ],
   "Hajj Offer": [
     {key: "title",label:"Offer"},
@@ -290,33 +294,15 @@ export default function Ledger() {
       if (result) {
         setBookings(result.bookings);
         setFilteredBookings(result.bookings); // Initialize filtered bookings with all bookings
-        calculateTotals(result.bookings); // Calculate totals for all bookings initially
+         setTotalCost(result.totals.cost);
+      setTotalPaid(result.totals.paid);
+      setTotalDue(result.totals.due);// Calculate totals for all bookings initially
       }
     }
     loadLedger();
   }, [storedUserEmail]);
 
-  const calculateTotals = (bookings: Record<string, any[]>) => {
-    let cost = 0;
-    let paid = 0;
-    let due = 0;
 
-    Object.values(bookings).forEach((items) => {
-      items.forEach((item) => {
-        cost += cleanPrice(
-          item.totalPrice || item.prize || item.prizeForUsers ||
-          item.price || item.priceForUsers || item.selectedPrize ||
-          item.totalCost || item.Prize || item.discountedPriceForUsers || 0
-        );
-        paid += cleanPrice(item.paid || 0);
-        due += cleanPrice(item.due || 0);
-      });
-    });
-
-    setTotalCost(cost);
-    setTotalPaid(paid);
-    setTotalDue(due);
-  };
 
   const handleSearch = () => {
     const start = new Date(startDate);
@@ -337,8 +323,22 @@ export default function Ledger() {
     }, {} as Record<string, any[]>);
 
     setFilteredBookings(filtered);
-    calculateTotals(filtered); // Recalculate totals for filtered bookings
-  };
+    let cost = 0;
+  let paid = 0;
+  let due = 0;
+  
+  Object.values(filtered).forEach(items => {
+    items.forEach(item => {
+      cost += cleanPrice(item.totalCost || 0);
+      paid += cleanPrice(item.paid || 0);
+      due += cleanPrice(item.due || 0);
+    });
+  });
+  
+  setTotalCost(cost);
+  setTotalPaid(paid);
+  setTotalDue(due);
+};
 
   if (loading) {
     return (
@@ -480,7 +480,7 @@ export default function Ledger() {
 
                 <td className="border p-2 text-gray-500">
   <div className="flex flex-col space-y-1">
-    <h1>{item.amountReceive} {item.personName}</h1>
+    <h1>{item.amountReceive} <br/> {item.personName}</h1>
     <h1>{item.bankName}</h1>
     <h1>{item.markedPayment} - {item.bookingNumber}</h1>
   </div>
@@ -495,13 +495,9 @@ export default function Ledger() {
 )}
 {category !== "Tickets" && "N/A"}
         </td>
-                <td className="border p-2 text-center font-bold text-gray-600 text-md">
-                  {cleanPrice(
-                    item.totalPrice || item.prize || item.prizeForUsers || 
-                    item.price || item.priceForUsers || item.selectedPrize || 
-                    item.totalCost || item.Prize || item.discountedPriceForUsers || 0
-                  )}  <span className="text-sm">PKR</span>
-                </td>
+              <td className="border p-2 text-center font-bold text-gray-600 text-md">
+  {cleanPrice(item.totalCost)} <span className="text-sm">PKR</span>
+</td>
                 <td className="border p-2  font-bold text-gray-600 text-center text-md">
                   {cleanPrice(item.paid || 0)} <span className="text-sm">PKR</span> {/* Display Paid */}
                 </td>

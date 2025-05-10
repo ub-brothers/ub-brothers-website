@@ -63,9 +63,9 @@ export default function IranBookings() {
                 <th className="border border-gray-300 px-4 py-2">#</th>
                 <th className="border border-gray-300 px-4 py-2">Date of Booking</th>
                 <th className="border border-gray-300 px-4 py-2">Full Name</th>
-                <th className="border border-gray-300 px-4 py-2">Ziyarat Places</th>
+                <th className="border border-gray-300 px-4 py-2">Ziyarat Place</th>
                 <th className="border border-gray-300 px-4 py-2">Route</th>
-                <th className="border border-gray-300 px-4 py-2">Price (PKR)</th>
+                <th className="border border-gray-300 px-4 py-2">Price ($USD)</th>
               </tr>
             </thead>
 

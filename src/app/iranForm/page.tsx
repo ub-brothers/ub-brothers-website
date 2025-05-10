@@ -211,7 +211,7 @@ function BookFormContent() {
     addField("Email Address", userEmail);
     addField("Ziyarat to", countryName);
     addField("Ziyarat Route", shortDescription);
-    addField("Price", `${isApprovedUser ? priceForUsers : prize} PKR/-`);
+    addField("Price", `$${isApprovedUser ? priceForUsers : prize} `);
 
     // Add Message field with multi-line support
     doc.setFont("helvetica", "bold");

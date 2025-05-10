@@ -111,6 +111,11 @@ export default {
         title: "Total Cost",
         type: "number",
       },
+      {
+  name: "sarRateAtBooking",
+  title: "SAR to PKR Rate at Booking",
+  type: "number",
+},
     ],
     preview: {
       select: {

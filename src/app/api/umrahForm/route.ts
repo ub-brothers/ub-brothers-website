@@ -80,7 +80,12 @@ export async function POST(req: NextRequest) {
     await transporter.sendMail(mailOptions);
 
     if (userEmail) {
+
+const rateQuery = `*[_type == "exchangeRate"][0]{ sarToPkr }`;
+      const { sarToPkr } = await sanityClient.fetch(rateQuery);
+
       const umrahDoc = {
+
         _type: "umrahBooking",
         userEmail: userEmail,
         createdAt: new Date().toISOString(),
@@ -94,6 +99,7 @@ export async function POST(req: NextRequest) {
         madinaCategory:madinaCategory,
         totalCost:totalCost,
         visaStatus:visaStatus,
+        sarRateAtBooking: sarToPkr,
       };
 
       await sanityClient.create(umrahDoc);

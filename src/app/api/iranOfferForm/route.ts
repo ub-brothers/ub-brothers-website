@@ -44,6 +44,9 @@ export async function POST(req: Request) {
     await transporter.sendMail(mailOptions);
 
     if (userEmail) { 
+
+       const { usdToPkr = 280 } = await sanityClient.fetch(`*[_type == "exchangeRate"][0] { usdToPkr }`);
+
       const iranOfferDoc = {
       _type: 'iranOfferBooking',
       title:title,
@@ -52,7 +55,7 @@ export async function POST(req: Request) {
       destination:destination,
       route:route,
     discountedPriceForUsers: discountedPriceForUsers,
-     
+     usdRateAtBooking: usdToPkr
     };
 
     await sanityClient.create(iranOfferDoc);

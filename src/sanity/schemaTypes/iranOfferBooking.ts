@@ -71,6 +71,10 @@ export default {
         title: "Discounted Price for Login Users",
         type: "number",
       },
+       { name: "usdRateAtBooking",
+  title: "USD to PKR Rate at Booking",
+  type: "number",
+},
     ],
     preview: {
         select: {

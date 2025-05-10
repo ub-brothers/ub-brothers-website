@@ -70,6 +70,11 @@ export default {
         type: 'string',
         title: 'Prize',
       },
+      {
+  name: "usdRateAtBooking",
+  title: "USD to PKR Rate at Booking",
+  type: "number",
+},
     ],
     preview: {
       select: {
