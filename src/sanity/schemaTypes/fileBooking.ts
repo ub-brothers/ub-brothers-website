@@ -1,6 +1,6 @@
 export default {
     name: "fileBooking",
-    title: "File Booking",
+    title: "File & Consultancy Booking",
     type: "document",
     fields: [
       {

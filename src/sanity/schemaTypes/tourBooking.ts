@@ -1,6 +1,6 @@
 export default {
     name: "tourBooking",
-    title: "Tour Booking",
+    title: "Tour Package Booking",
     type: "document",
     fields: [
       {

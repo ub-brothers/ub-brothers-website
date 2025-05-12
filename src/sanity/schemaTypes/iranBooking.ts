@@ -1,6 +1,6 @@
 export default {
     name: "iranBooking",
-    title: "Iran Booking",
+    title: "Iran Ziyarat Booking",
     type: "document",
     fields: [
       {
