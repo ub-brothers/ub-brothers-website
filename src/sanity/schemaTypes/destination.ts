@@ -84,24 +84,6 @@ export default {
       },
     
       {
-        name: 'image2',
-        title: 'Image2',
-        type: 'image',
-        options: {
-          hotspot: true
-        },
-   
-      },
-      {
-        name: 'image3',
-        title: 'Image3',
-        type: 'image',
-        options: {
-          hotspot: true
-        },
-   
-      },
-      {
         name: 'image',
         title: 'Image',
         type: 'image',

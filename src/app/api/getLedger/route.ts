@@ -82,18 +82,20 @@ const convertUSDtoPKR = (price: number) => price * usdToPkr;
 
  let paid = cleanPrice(item.paid || 0);
           let due = cleanPrice(item.due || 0);
+
+const sarRate = item.sarRateAtBooking || sarToPkr;
+const usdRate = item.usdRateAtBooking || usdToPkr;
+
      if (category === "Umrah Package") {
-            basePrice = convertSARtoPKR(basePrice);
-           
-            paid = convertSARtoPKR(paid);
-            due = convertSARtoPKR(due);
+         basePrice = basePrice * sarRate;
+  paid = paid * sarRate;
+  due = due * sarRate;
           }
 
           if (category === "Iran Ziyarat" || category === "Iran Ziyarat Offer") {
-            basePrice = convertUSDtoPKR(basePrice);
-        
-              paid = convertUSDtoPKR(paid);
-            due = convertUSDtoPKR(due);
+             basePrice = basePrice * usdRate;
+  paid = paid * usdRate;
+  due = due * usdRate;
           }
 
           item.totalCost = basePrice;
