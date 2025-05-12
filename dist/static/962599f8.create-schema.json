@@ -7,7 +7,7 @@
         "type": "boolean"
       },
       {
-        "initialValue": "2025-05-09T19:40:39.952Z",
+        "initialValue": "2025-05-12T16:39:00.167Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -598,22 +598,6 @@
         "options": {
           "hotspot": true
         },
-        "name": "image2",
-        "type": "image",
-        "title": "Image2"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "image3",
-        "type": "image",
-        "title": "Image3"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
         "name": "image",
         "type": "image"
       },
@@ -776,22 +760,6 @@
         "name": "requirement21",
         "type": "text",
         "title": "Requirements21"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "image2",
-        "type": "image",
-        "title": "Image2"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "image3",
-        "type": "image",
-        "title": "Image3"
       },
       {
         "options": {
@@ -1000,32 +968,9 @@
         "options": {
           "hotspot": true
         },
-        "name": "image2",
-        "type": "image",
-        "title": "Image2"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "image3",
-        "type": "image",
-        "title": "Image3"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
         "name": "image4",
         "type": "image",
         "title": "Image4"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "image",
-        "type": "image"
       },
       {
         "options": {
@@ -1197,22 +1142,6 @@
         "name": "requirement24",
         "type": "text",
         "title": "Requirements24"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "image2",
-        "type": "image",
-        "title": "Image2"
-      },
-      {
-        "options": {
-          "hotspot": true
-        },
-        "name": "image3",
-        "type": "image",
-        "title": "Image3"
       },
       {
         "options": {
@@ -2412,7 +2341,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:39.966Z",
+        "initialValue": "2025-05-12T16:39:00.201Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2478,7 +2407,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:39.959Z",
+        "initialValue": "2025-05-12T16:39:00.180Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2545,7 +2474,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:39.973Z",
+        "initialValue": "2025-05-12T16:39:00.228Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2596,7 +2525,8 @@
       }
     ],
     "name": "fileBooking",
-    "type": "document"
+    "type": "document",
+    "title": "File & Consultancy Booking"
   },
   {
     "fields": [
@@ -2606,7 +2536,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:39.979Z",
+        "initialValue": "2025-05-12T16:39:00.256Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2658,7 +2588,8 @@
       }
     ],
     "name": "tourBooking",
-    "type": "document"
+    "type": "document",
+    "title": "Tour Package Booking"
   },
   {
     "fields": [
@@ -2668,7 +2599,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:39.985Z",
+        "initialValue": "2025-05-12T16:39:00.283Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2733,7 +2664,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:39.992Z",
+        "initialValue": "2025-05-12T16:39:00.299Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2817,6 +2748,11 @@
       {
         "name": "totalCost",
         "type": "number"
+      },
+      {
+        "name": "sarRateAtBooking",
+        "type": "number",
+        "title": "SAR to PKR Rate at Booking"
       }
     ],
     "name": "umrahBooking",
@@ -2830,7 +2766,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:39.998Z",
+        "initialValue": "2025-05-12T16:39:00.311Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2883,10 +2819,16 @@
       {
         "name": "prize",
         "type": "string"
+      },
+      {
+        "name": "usdRateAtBooking",
+        "type": "number",
+        "title": "USD to PKR Rate at Booking"
       }
     ],
     "name": "iranBooking",
-    "type": "document"
+    "type": "document",
+    "title": "Iran Ziyarat Booking"
   },
   {
     "fields": [
@@ -2896,7 +2838,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:40.004Z",
+        "initialValue": "2025-05-12T16:39:00.320Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -2958,7 +2900,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:40.013Z",
+        "initialValue": "2025-05-12T16:39:00.334Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -3011,6 +2953,11 @@
         "name": "discountedPriceForUsers",
         "type": "number",
         "title": "Discounted Price for Login Users"
+      },
+      {
+        "name": "usdRateAtBooking",
+        "type": "number",
+        "title": "USD to PKR Rate at Booking"
       }
     ],
     "name": "iranOfferBooking",
@@ -3025,7 +2972,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:40.023Z",
+        "initialValue": "2025-05-12T16:39:00.367Z",
         "name": "createdAt",
         "type": "datetime"
       },
@@ -3105,7 +3052,7 @@
         "title": "Login User"
       },
       {
-        "initialValue": "2025-05-09T19:40:40.029Z",
+        "initialValue": "2025-05-12T16:39:00.400Z",
         "name": "createdAt",
         "type": "datetime"
       },

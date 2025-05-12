@@ -83,7 +83,7 @@ export const allDestinations = defineQuery(`*[_type == "destinations"]{
 }`)
 
 
-export const featuredestinations = defineQuery(`*[_type == "destinations"][5..12]{
+export const featuredestinations = defineQuery(`*[_type == "destinations"][0..12]{
   _id,
   countryName,
   "imageUrl": image.asset->url,
