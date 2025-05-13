@@ -62,7 +62,7 @@ export default function VisaOffer() {
     if (!offer || Object.keys(offer).length === 0) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
-                <h1 className="text-6xl font-bold text-gray-500">No Offer Available Now!</h1>
+                <h1 className="sm:text-6xl text-3xl text-center font-bold text-gray-500">No Offer Available Now!</h1>
             </div>
         );
     }
