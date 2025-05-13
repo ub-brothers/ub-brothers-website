@@ -62,6 +62,7 @@ const aboutUs = {
               { name: 'name', title: 'Name', type: 'string' },
               { name: 'role', title: 'Role', type: 'string' },
               { name: 'phone', title: 'Phone Number', type: 'string' },
+              { name: 'email', title: 'E-Mail', type: 'string' },
               { name: 'photo', title: 'Photo', type: 'image', options: { hotspot: true } },
             ],
           },

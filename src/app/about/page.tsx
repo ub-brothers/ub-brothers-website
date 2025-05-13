@@ -156,6 +156,7 @@ const AboutUs = () => {
     <h3 className="text-xl font-semibold">{member.name}</h3>
     <p className="text-gray-700">{member.role}</p>
     <p className="text-gray-600">{member.phone}</p>
+    <p className="text-gray-700">{member.email}</p>
   </div>
 ))}
       </div>
