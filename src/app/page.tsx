@@ -10,15 +10,24 @@ import TourPackage from "./tour/page";
 import ContactInfo from "./contactDiv/page";
 import WhatAreWe from "./whatAreWe/page";
 import UmrahPage from "./umrahPage/page";
+import { getUmrahAvailability } from "@/sanity/lib/umrahAvailability";
+import { getTourPackages } from "@/sanity/lib/getPackages";
+export default async function Home() {
 
-export default function Home() {
+  const tour = await getTourPackages(); // ✅ Tour packages fetched from Sanity
+  const hasTour = tour.length > 0;       
+ const showComingSoonMessage = await getUmrahAvailability();
+
   return (
     <div>
  
       <Hero/>
-{/* 
-      <div className="my-10">
-<UmrahPage/>  </div> */}
+
+       {!showComingSoonMessage && (
+        <div className="my-10">
+          <UmrahPage />
+        </div>
+      )}
 
       <div className="mt-5 bg-gray-100">
         <h2 className="text-gray-100">.</h2>
@@ -31,8 +40,12 @@ export default function Home() {
   <div className="my- bg-gray-200 text-center">
     <h1>.</h1>
    
-
-  <TourPackage/>
+  {/* ✅ Only show Tour section if there is data */}
+      {hasTour && (
+        <div className="bg-gray-200 text-center">
+          <TourPackage />
+        </div>
+      )}
  
   </div>
 
