@@ -7,6 +7,7 @@ import { Destination } from '@/app/types/destinations';
 import { sanityFetch } from '@/sanity/lib/client';
 import { detailCountryEVisa, allDestinations } from '@/sanity/lib/queries';
 import { jwtDecode } from 'jwt-decode';
+import LocationInfo from '@/app/locationInfo/page';
 
 
 export default function DetailPage({ params }: { params: { id: string } }) {
@@ -229,9 +230,13 @@ export default function DetailPage({ params }: { params: { id: string } }) {
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
         <p className="text-sm text-gray-500 mt-2">03414314000</p>
-        <p className="text-sm text-gray-500">&#9993;  ubbrothersconsultant@gmail.com</p>
+        <p className="text-sm text-gray-500">&#9993;  visa@ubbrothers.com</p>
       </div>
     </div>
+
+     <div className="my-6 flex items-center justify-center ">
+          <LocationInfo/>
+        </div>
 
       <div className="my-8 w-full bg-gray-200">
         <h1>.</h1>

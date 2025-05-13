@@ -44,6 +44,18 @@ const DestinationList =()=>{
       }
       fetchedDestination()
   },[])
+
+ if (destination.length === 0) {
+    return (
+      <div className="text-center my-10 h-screen mt-20">
+        <h2 className="text-xl sm:text-3xl font-serif">Not Available Now!</h2>
+        <p className="sm:mt-4 text-lg text-gray-600">Please check back later.</p>
+      </div>
+    );
+  }
+
+
+
   return (
     <div>
    
@@ -94,7 +106,7 @@ const DestinationList =()=>{
       <div className="text-center">
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
         <p className="text-sm text-gray-500 mt-2">03414314000</p>
-        <p className="text-sm text-gray-500">&#9993;  ubbrothersconsultant@gmail.com</p>
+        <p className="text-sm text-gray-500">&#9993;  visa@ubbrothers.com</p>
       </div>
     </div>
     </div>

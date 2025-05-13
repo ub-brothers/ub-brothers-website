@@ -38,6 +38,16 @@ const TourPackage = ()=>{
         fetchedTour();
     }, [])
 
+     if (tour.length === 0) {
+    return (
+      <div className="text-center my-10 h-screen mt-20">
+        <h2 className="text-xl sm:text-3xl font-serif">Not Available Now!</h2>
+        <p className="sm:mt-4 text-lg text-gray-600">Please check back later.</p>
+      </div>
+    );
+  }
+
+
 
     return(
         <div>

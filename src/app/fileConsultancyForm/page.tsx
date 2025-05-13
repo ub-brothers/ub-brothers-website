@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import PaymentDetails from '../payment/page';
 import jsPDF from 'jspdf';
 import { jwtDecode } from 'jwt-decode';
+import LocationInfo from "../locationInfo/page";
 
 function FileContent(){
   const [isApprovedUser, setIsApprovedUser] = useState(false);
@@ -271,27 +272,12 @@ function FileContent(){
         <p className="sm:text-2xl text-lg font-semibold font-serif">Mirza Ali</p>
         <p className="text-sm text-gray-500 mt-2">03414314000</p>
      
-        <p className="text-sm text-gray-500">&#9993;  ubbrothersconsultant@gmail.com</p>
+        <p className="text-sm text-gray-500">&#9993;  visa@ubbrothers.com</p>
       </div>
     </div>
-     <motion.div 
-                initial={{ opacity: 0, y: 20 }} 
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white shadow-lg my-6 rounded-2xl mx-auto p-6 w-full md:w-1/3 text-center border-t-4 border-orange-500"
-              >
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center gap-2">
-                  <FaMapMarkerAlt /> Office Locations
-                </h2>
-                <p className="text-gray-600 text-lg flex items-center justify-center mb-2">
-              UGF/24-42, Empress Tower 46-Empress Road,Lahore, Pakistan.
-                </p>
-                <hr/>
-                <p className="text-gray-600 text-lg flex items-center justify-center mt-2">
-               H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore Pakistan.
-                </p>
-              </motion.div> 
+  <div className="my-6 flex items-center justify-center ">
+       <LocationInfo/>
+     </div> 
     <PaymentDetails/>
     </div>
   );

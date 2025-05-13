@@ -56,7 +56,7 @@ const Footer = () => {
            H9W3+P5F, Tariq Shaheed Road, Bhagatpura, Lahore, Pakistan.
           </p>
           <p className="text-sm text-gray-200 flex items-center">
-            <FaEnvelope className="mr-2" /> ubbrotherspk@gmail.com
+            <FaEnvelope className="mr-2" /> ceo@ubbrothers.com
           </p>
          
           
