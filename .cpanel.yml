@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export NODE_ENV=production
+    - npm install
+    - npm run build
+    - /bin/cp -rf dist/* /home/ubbrioic/public_html/ub-travel/
