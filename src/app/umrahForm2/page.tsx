@@ -17,10 +17,11 @@ const UmrahBookingForm2 = () => {
   const [daysOptions, setDaysOptions] = useState<{ days: number; price: number, priceForUsers:number, visaCost:number }[]>([]);
   const [categories, setCategories] = useState<{ categoryName: string; price: number, priceForUsers:number }[]>([]);
   const [selectedDays, setSelectedDays] = useState<number>(7);
+  const [errorMessageOnDays, setErrorMessageOnDays] = useState("");
   
   const [availableMakkahCategories, setAvailableMakkahCategories] = useState< { categoryName: string; price: number, priceForUsers:number }[]>([]);
   const [availableMadinaCategories, setAvailableMadinaCategories] = useState< { categoryName: string; price: number,priceForUsers:number }[]>([]);
-
+  
   type Hotel = {
     hotelName: string;
     price: number;
@@ -189,6 +190,15 @@ const handleSubmit = async (e: React.FormEvent) => {
   setIsSubmitting(false); // ✅ always re-enable button
 }
 };
+
+useEffect(() => {
+  const totalStay = formData.makkahDay + formData.madinaDay;
+  if (totalStay > selectedDays) {
+    setErrorMessage(`Total stay days (${totalStay}) exceed selected days (${selectedDays})`);
+  } else {
+    setErrorMessage(""); // Clear the error if everything is fine
+  }
+}, [formData.makkahDay, formData.madinaDay, selectedDays]);
 
 
 const generatePDF = () => {
@@ -402,6 +412,9 @@ const generatePDF = () => {
       <div>
       <p className="font-semibold">Days of Stay:</p>
       <input type="number"  min="0"  name="makkahDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, makkahDay: Number(e.target.value) })} className="w-full p-3 mb-5 border rounded-md" required></input>
+       {errorMessage && (
+    <p className="text-red-600 font-semibold mb-3">{errorMessage}</p>
+  )}
       </div>
       
 </div>
@@ -443,7 +456,9 @@ const generatePDF = () => {
 <div>
       <p className="font-semibold">Days of Stay:</p>
       <input type="number"  min="0"  name="madinaDay" placeholder="Enter number of days"  onChange={(e) => setFormData({ ...formData, madinaDay: Number(e.target.value) })} className="w-full p-3 mb-5 border rounded-md" required></input>
-
+ {errorMessage && (
+    <p className="text-red-600 font-semibold mb-3">{errorMessage}</p>
+  )}
 </div>
 
 </div>
