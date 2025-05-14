@@ -15,7 +15,6 @@ export default function DetailPage({ params }: { params: { id: string } }) {
   const [randomCountries, setRandomCountries] = useState<Destination[]>([]);
   const [isApprovedUser, setIsApprovedUser] = useState(false);
 
- 
 
 
   useEffect(() => {

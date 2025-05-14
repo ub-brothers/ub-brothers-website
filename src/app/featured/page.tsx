@@ -74,7 +74,7 @@ const Featured = () => {
                 className="mx-auto mb-4 h-[200px] w-[250px] sm:h-[300px] rounded-lg sm:w-[350px] transition duration-300 group-hover:brightness-75"
               />
               <div className="absolute inset-0 bg-white bg-opacity-50 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
-                <h3 className="sm:text-xl text-lg font-bold font-serif text-black">{destination.countryName}</h3>
+                <h3 className="sm:text-md text-sm font-bold font-serif text-black">{destination.countryName}</h3>
               </div>
             </div>
             

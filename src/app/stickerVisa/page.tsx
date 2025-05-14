@@ -65,7 +65,7 @@ const StickerVisa =()=>{
                     <div className="relative group">
   <img src={destination.imageUrl} alt={destination.countryName} className="mx-auto my-4 sm:h-[250px] h-[100px] w-[130px] rounded-lg sm:w-[270px] transition duration-300 group-hover:brightness-75 " />
   <div className="absolute inset-0 bg-white  bg-opacity-50 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
-    <h3 className="sm:text-xl text-sm font-bold font-serif text-black">{destination.countryName}</h3>
+    <h3 className="sm:text-md text-sm font-bold font-serif text-black">{destination.countryName}</h3>
   </div>
 </div> 
 

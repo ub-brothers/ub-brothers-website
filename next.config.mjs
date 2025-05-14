@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
-  images: {
-    unoptimized: true // Important to avoid Next.js image optimization on export
-  },
     eslint: {
         ignoreDuringBuilds:true,
     },
